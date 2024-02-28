@@ -41,6 +41,8 @@
           inputs.agenix.nixosModules.default
           # Load the disko module
           inputs.disko.nixosModules.disko
+          # Load our root configuration
+          ./nixos/configuration.nix
         ];
       };
 
