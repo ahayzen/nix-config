@@ -35,6 +35,10 @@
         specialArgs = { inherit developer games headless hostname inputs outputs platform stateVersion; };
 
         modules = [
+          # Load secrets
+          ./secrets
+          # Load the Agenix module
+          inputs.agenix.nixosModules.default
         ];
       };
 
