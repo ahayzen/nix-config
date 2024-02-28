@@ -39,6 +39,8 @@
           ./secrets
           # Load the Agenix module
           inputs.agenix.nixosModules.default
+          # Load the disko module
+          inputs.disko.nixosModules.disko
         ];
       };
 
