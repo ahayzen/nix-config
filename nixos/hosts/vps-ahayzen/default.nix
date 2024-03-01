@@ -24,5 +24,10 @@
   };
 
   # https://github.com/rapiz1/rathole instead of SSH?
-  ahayzen.docker-compose-file = "/srv/config/docker-compose-custom.yml";
+
+  # Specify the docker file we are using
+  ahayzen.docker-compose-file = ./docker-compose.yml;
+  environment.etc = {
+    "caddy/Caddyfile".source = ./Caddyfile;
+  };
 }

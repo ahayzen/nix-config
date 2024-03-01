@@ -4,8 +4,7 @@
 
 { config, lib, pkgs, ... }: {
   options.ahayzen.docker-compose-file = lib.mkOption {
-    default = "/srv/config/docker-compose.yml";
-    type = lib.types.str;
+    type = lib.types.path;
   };
 
   config = {

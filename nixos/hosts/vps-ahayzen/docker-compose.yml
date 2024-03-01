@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+version: "3.7"
+
+services:
+  # Reverse proxy to other services
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    cap_add:
+      # Allow for increasing buffer size for HTTP/3
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      # For HTTP/3
+      - "443:443/udp"
+    volumes:
+      # Caddy configuration file
+      - /etc/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+
+      # Static data to be served to caddy
+      - /srv/caddy/static:/srv
+      # Persistent data (eg TLS storage)
+      - /srv/caddy/persistent:/data
+      # Persistent configuration
+      - /srv/caddy/config:/config

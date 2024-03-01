@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+# ahayzen.com site
+ahayzen.com www.ahayzen.com {
+	reverse_proxy localhost:9000
+
+    # Flathub stats data
+    file_server /direct/* {
+        root /srv/flathub_stats/
+    }
+
+    # Wagtail media files
+    file_server /media/* {
+        root /srv/wagtail/media/
+    }
+
+    # Wagtail static files
+    file_server /static/* {
+        root /srv/wagtail/static/
+    }
+
+    # Any server error goes to the static template
+    handle_errors {
+        @5xx `{err.status_code} >= 500 && {err.status_code} < 600`
+        handle @5xx {
+            rewrite * /srv/webapp/static/templates/500.html
+            file_server
+        }
+    }
+}
+
+# Bitwarden proxy
+bitwarden.ahayzen.com {
+    reverse_proxy localhost:9001
+}
+
+# Video proxy
+video.ahayzen.com {
+    reverse_proxy localhost:9888
+}
