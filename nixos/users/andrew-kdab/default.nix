@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, pkgs, ... }: {
+{ config, ... }: {
   age.secrets.password_andrew-kdab.file = ../../../secrets/password_andrew-kdab.age;
 
   users.users.andrew-kdab = {
@@ -15,6 +15,5 @@
     ];
     hashedPasswordFile = config.age.secrets.password_andrew-kdab.path;
     isNormalUser = true;
-    shell = pkgs.bashInteractive;
   };
 }

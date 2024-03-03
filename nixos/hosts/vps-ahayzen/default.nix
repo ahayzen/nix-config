@@ -34,7 +34,6 @@
   # TODO: investigate using something like https://github.com/rapiz1/rathole
   users.users.tunneller = {
     isNormalUser = true;
-    shell = pkgs.bashInteractive;
 
     openssh.authorizedKeys.keys = config.ahayzen.publicKeys.user__synology-nas__tunneller;
   };
