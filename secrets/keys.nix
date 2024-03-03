@@ -36,6 +36,9 @@ in
   # Decryption settings for Agenix secrets
   #
 
+  # Host key for ahayzen com
+  host-vps-ahayzen-com = [];
+
   # Hosts that require access to desktop secrets
   #
   # This is for automatic upgrades
