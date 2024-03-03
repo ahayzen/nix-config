@@ -25,7 +25,7 @@ ahayzen.com www.ahayzen.com {
     handle_errors {
         @5xx `{err.status_code} >= 500 && {err.status_code} < 600`
         handle @5xx {
-            rewrite * /srv/webapp/static/templates/500.html
+            rewrite * /srv/wagtail/static/templates/500.html
             file_server
         }
     }
