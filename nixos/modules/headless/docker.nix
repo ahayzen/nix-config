@@ -40,7 +40,7 @@
         };
       };
 
-      # Every day try to upgrade the docker containers
+      # Every hour try to upgrade the docker containers
       services."docker-compose-upgrade" = {
         script = ''
           ${pkgs.systemd}/bin/systemctl reload-or-restart docker-compose-runner.service
@@ -52,21 +52,19 @@
       timers."docker-compose-upgrade" = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          # TODO: choose the time to upgrade
-          OnCalendar = "daily";
+          OnCalendar = "hourly";
           Unit = "docker-compose-upgrade.service";
         };
       };
     };
 
-    # timer
-    # /bin/systemctl reload-or-restart docker-compose.service
-
     virtualisation.docker = {
       enable = true;
 
-      # TODO: link this to when we update docker-compose?
-      autoPrune.enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "daily";
+      };
       rootless = {
         enable = true;
 
