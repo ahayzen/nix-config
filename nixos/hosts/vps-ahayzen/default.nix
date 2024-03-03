@@ -23,11 +23,19 @@
     systemd-boot.enable = lib.mkForce false;
   };
 
-  # https://github.com/rapiz1/rathole instead of SSH?
-
   # Specify the docker file we are using
   ahayzen.docker-compose-file = ./docker-compose.yml;
   environment.etc = {
     "caddy/Caddyfile".source = ./Caddyfile;
+  };
+
+  # Create a tunneller user for SSH tunnels
+  #
+  # TODO: investigate using something like https://github.com/rapiz1/rathole
+  users.users.tunneller = {
+    isNormalUser = true;
+    shell = pkgs.bashInteractive;
+
+    openssh.authorizedKeys.keys = config.ahayzen.publicKeys.user__synology-nas__tunneller;
   };
 }
