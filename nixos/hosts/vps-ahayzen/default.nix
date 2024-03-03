@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ inputs, lib, ... }:
+{ config, inputs, lib, ... }:
 {
   imports = [
     ./disko-config.nix
@@ -35,6 +35,6 @@
   users.users.tunneller = {
     isNormalUser = true;
 
-    openssh.authorizedKeys.keys = config.ahayzen.publicKeys.user__synology-nas__tunneller;
+    openssh.authorizedKeys.keys = config.ahayzen.publicKeys.users-openssh-vps-tunneller-authorized;
   };
 }
