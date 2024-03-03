@@ -25,7 +25,11 @@
 
   # Specify the docker file we are using
   ahayzen.docker-compose-file = ./docker-compose.yml;
+
+  # Config files for caddy and wagtail
+  age.secrets.local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age;
   environment.etc = {
+    "ahayzen.com/local.py".source = config.age.secrets.local-py_ahayzen-com.path;
     "caddy/Caddyfile".source = ./Caddyfile;
   };
 
