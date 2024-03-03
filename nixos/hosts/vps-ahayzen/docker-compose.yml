@@ -27,3 +27,21 @@ services:
       - /srv/caddy/persistent:/data
       # Persistent configuration
       - /srv/caddy/config:/config
+
+  # Wagtail
+  wagtail:
+    image: registry.gitlab.com/ahayzen/ahayzen.com/wagtail-image:latest
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      # Wagtail sqlite database
+      - /srv/wagtail/db:/srv/webapp/db
+      # Wagtail media data
+      - /srv/wagtail/media:/srv/webapp/media
+      # Wagtail static data
+      - /srv/wagtail/static:/srv/webapp/static
+      # Wagtail local settings file
+      - /etc/ahayzen.com/local.py:/srv/webapp/ahayzen.com/settings/local.py:ro
+      # Wagtail docs folder
+      - /srv/wagtail/docs:/srv/webapp/docs
