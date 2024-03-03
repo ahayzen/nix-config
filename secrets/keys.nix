@@ -50,8 +50,11 @@ in
   # Access settings for OpenSSH authorizedKeys
   #
 
-  # Users that so might need access to headless hosts
+  # Users that might need access to headless hosts
   users-openssh-headless-authorized = [ user__thinkpad-t480__andrew-kdab user__xps-13-9360__andrew ];
+
+  # Users that can create tunnels via VPS hosts
+  users-openssh-vps-tunneller-authorized = [ user__synology-nas__tunneller ];
 
   # Hosts that are authorized to access headless hosts (eg for backup)
   hosts-openssh-headless-authorized = [ ];
