@@ -17,6 +17,8 @@ let
   publicKeys = import ./keys.nix;
 in
 {
+  "local-py_ahayzen-com.age".publicKeys = publicKeys.host-vps-ahayzen-com ++ publicKeys.users-secrets-desktop;
+
   # mkpasswd -m sha-512
   #
   # TODO: check if trailing new line is OK for these
