@@ -21,12 +21,17 @@ services:
       # Caddy configuration file
       - /etc/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
 
-      # Static data to be served to caddy
-      - /srv/caddy/static:/srv
       # Persistent data (eg TLS storage)
       - /srv/caddy/persistent:/data
       # Persistent configuration
       - /srv/caddy/config:/config
+
+      # Wagtail media data
+      - /srv/wagtail/media:/srv/wagtail/media:ro
+      # Wagtail static data
+      - /srv/wagtail/static:/srv/wagtail/static:ro
+
+  # TODO: flathub_stats service
 
   # Wagtail
   wagtail:
