@@ -16,17 +16,13 @@
       services."docker-compose-runner" = {
         path = [ pkgs.docker-compose ];
         after = [ "docker.service" "docker.socket" "network-online.target" ];
-
-        # TODO: we want this to run as a user somewhere
         wantedBy = [ "multi-user.target" ];
 
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
           Restart = "on-failure";
-
-          # TODO: check that we do not need pull on boot to increase boot speed
-          # ExecStartPre = "-${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} pull --quiet";
+          User = "headless";
 
           ExecStart = "${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans";
           # Use stop here so that we can reuse the same container on reboot (instead of down)
@@ -35,7 +31,7 @@
           # Upon reload pull new container images and restart any containers
           ExecReload = ''
             ${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} pull --quiet
-            ${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} up --detach--remove-orphans
+            ${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans
           '';
         };
       };
