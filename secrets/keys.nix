@@ -37,7 +37,7 @@ in
   #
 
   # Host key for ahayzen com
-  host-vps-ahayzen-com = [];
+  host-vps-ahayzen-com = [ ];
 
   # Hosts that require access to desktop secrets
   #
