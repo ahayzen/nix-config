@@ -20,15 +20,6 @@ ahayzen.com www.ahayzen.com {
     file_server /static/* {
         root /srv/wagtail/static/
     }
-
-    # Any server error goes to the static template
-    handle_errors {
-        @5xx `{err.status_code} >= 500 && {err.status_code} < 600`
-        handle @5xx {
-            rewrite * /srv/wagtail/static/templates/500.html
-            file_server
-        }
-    }
 }
 
 # Bitwarden proxy
