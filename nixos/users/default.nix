@@ -2,10 +2,8 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ lib, pkgs, ... }: {
-  # TODO: loop through users on system
-  imports = [ ./andrew ./andrew-kdab ./headless ];
-  # ++ lib.optional (builtins.pathExists (./. + "/${username}")) ./${username};
+{ lib, pkgs, usernames, ... }: {
+  imports = map (username: ./${username}) usernames;
 
   users.defaultUserShell = pkgs.bashInteractive;
 }
