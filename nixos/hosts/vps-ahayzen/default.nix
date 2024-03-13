@@ -46,6 +46,9 @@
 
   # Ensure the folders exist with the right permissions
   system.activationScripts.makeSrvDockerComposeDirs = ''
+    chmod 777 /srv/
+  '';
+  system.userActivationScripts.makeSrvDockerComposeDirs = ''
     mkdir -p /srv/caddy/
     chown headless:headless /srv/caddy/
     mkdir -p /srv/caddy/persistent/
