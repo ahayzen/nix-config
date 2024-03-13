@@ -2,17 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-# Create or edit secrets with
-#
-# ```console
-# nix run github:ryantm/agenix -- -e password_andrew-kdab.age
-# ```
-#
-# Rekey secrets with
-#
-# ```console
-# nix run github:ryantm/agenix -- --rekey
-# ```
 let
   publicKeys = import ./keys.nix;
 in
