@@ -17,7 +17,7 @@ let
   publicKeys = import ./keys.nix;
 in
 {
-  "local-py_ahayzen-com.age".publicKeys = publicKeys.host-vps-ahayzen-com ++ publicKeys.users-secrets-desktop;
+  "local-py_ahayzen-com.age".publicKeys = publicKeys.host-vps-ahayzen ++ publicKeys.users-secrets-desktop;
 
   # mkpasswd -m sha-512
   #
