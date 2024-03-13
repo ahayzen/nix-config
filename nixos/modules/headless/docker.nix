@@ -50,6 +50,8 @@
         timerConfig = {
           OnCalendar = "hourly";
           Unit = "docker-compose-upgrade.service";
+          RandomizedDelaySec = "30m";
+          Persistent = true;
         };
       };
     };

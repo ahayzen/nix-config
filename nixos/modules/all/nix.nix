@@ -11,24 +11,24 @@
 
   nix = {
     # Enable garbage collection
-    #
-    # TODO: instead run manually with out own script ?
-    # - collect garbage for preview +N profiles
-    # - upgrade the host
-    # - optimise the store
-    # - reboot
     gc = {
       automatic = true;
-      options = "--delete-older-than 30d";
-      # every Monday or every 4 hours try to upgrade
       randomizedDelaySec = "30m";
-      dates = if headless then "Mon *-*-* 22:00" else "0/4:30";
-      # on start don't trigger if missed, wait until the next
-      persistent = false;
+      dates = "daily";
+
+      # TODO: instead change to +3 from nix-env --delete-generations
+      options = "--delete-older-than 30d";
     };
 
     # Automatically optimise the store
-    settings.auto-optimise-store = true;
+    #
+    # Note we don't use auto-optimise-store as this increases load during rebuilds
+    optimise = {
+      automatic = true;
+      dates = "daily";
+
+      # Has randomizedDelaySec of 30m by default
+    };
   };
 
   # Define the platform that we are using
@@ -39,15 +39,13 @@
     autoUpgrade = {
       enable = true;
       flake = "github:ahayzen/nix-config";
+      randomizedDelaySec = "30m";
+      dates = "hourly";
+
       # don't auto reboot unless in headless mode
       allowReboot = headless;
-      # apply on next reboot, not now
-      operation = "boot";
-      # every Wednesday or every 4 hours try to upgrade
-      randomizedDelaySec = "30m";
-      dates = if headless then "Wed *-*-* 22:00" else "0/4:00";
-      # on start don't trigger if missed, wait until the next
-      persistent = false;
+      # apply on next reboot unless in headless mode
+      operation = if headless then "switch" else "boot";
     };
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
