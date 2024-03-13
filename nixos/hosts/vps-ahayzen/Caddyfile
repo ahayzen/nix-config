@@ -13,12 +13,12 @@ ahayzen.com www.ahayzen.com {
 
     # Wagtail media files
     file_server /media/* {
-        root /srv/wagtail/media/
+        root /srv/wagtail-ahayzen/media/
     }
 
     # Wagtail static files
     file_server /static/* {
-        root /srv/wagtail/static/
+        root /srv/wagtail-ahayzen/static/
     }
 }
 

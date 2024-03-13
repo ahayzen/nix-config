@@ -27,9 +27,9 @@ services:
       - /srv/caddy/config:/config
 
       # Wagtail media data
-      - /srv/wagtail/media:/srv/wagtail/media:ro
+      - /srv/wagtail-ahayzen/media:/srv/wagtail-ahayzen/media:ro
       # Wagtail static data
-      - /srv/wagtail/static:/srv/wagtail/static:ro
+      - /srv/wagtail-ahayzen/static:/srv/wagtail-ahayzen/static:ro
 
   # TODO: flathub_stats service
 
@@ -41,12 +41,12 @@ services:
       - "8080:8080"
     volumes:
       # Wagtail sqlite database
-      - /srv/wagtail/db:/srv/webapp/db
+      - /srv/wagtail-ahayzen/db:/srv/webapp/db
       # Wagtail media data
-      - /srv/wagtail/media:/srv/webapp/media
+      - /srv/wagtail-ahayzen/media:/srv/webapp/media
       # Wagtail static data
-      - /srv/wagtail/static:/srv/webapp/static
+      - /srv/wagtail-ahayzen/static:/srv/webapp/static
       # Wagtail local settings file
       - /etc/ahayzen.com/local.py:/srv/webapp/ahayzen.com/settings/local.py:ro
       # Wagtail docs folder
-      - /srv/wagtail/docs:/srv/webapp/docs
+      - /srv/wagtail-ahayzen/docs:/srv/webapp/docs
