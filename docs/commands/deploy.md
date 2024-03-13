@@ -16,10 +16,16 @@ $ cat /etc/ssh/ssh_host_ed25519_key.pub
 
 Add this to the relevent host in [keys.nix](../secrets/key.nix) and [rekey](./secrets.md#rekey). This allows for access to secrets during deployment and automatic upgrades.
 
+> Test that the flake builds using a vm with the following command
+>
+> ```console
+> $ nix run github:nix-community/nixos-anywhere -- --copy-host-keys --flake .#machine-name --vm-test
+> ```
+
 Then run `nixos-anywhere` with the target host.
 
 ```console
-$ nix run github:nixos-community/nixos-anywhere -- --copy-host-keys --flake .#machine-name user@host
+$ nix run github:nix-community/nixos-anywhere -- --copy-host-keys --flake .#machine-name user@host
 ```
 
 # `nixos-rebuild`
