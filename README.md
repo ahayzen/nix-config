@@ -42,26 +42,3 @@ The concept for both desktop and headless has three layers
 |            Services           |
 |-------------------------------|
 ```
-
-## `nixos-anywhere`
-
-```console
-nix run github:nixos-community/nixos-anywhere -- --flake .#machine-name user@host
-```
-
-After installation of a new host ensure that the host key is added to secrets and that secrets are rekeyed,
-otherwise automatic upgrades are not possible.
-
-## `nixos-rebuild`
-
-For rebuilding remote systems
-
-```console
-NIX_SSHOPTS="-o RequestTTY=force" nixos-rebuild switch --build-host user@host --target-host user@host --use-remote-sudo --flake .#machine-name
-```
-
-For rebuilding local systems
-
-```console
-nixos-rebuild switch --flake .#machine-name
-```
