@@ -25,7 +25,7 @@
     # Note we don't use auto-optimise-store as this increases load during rebuilds
     optimise = {
       automatic = true;
-      dates = "daily";
+      dates = [ "daily" ];
 
       # Has randomizedDelaySec of 30m by default
     };
