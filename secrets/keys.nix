@@ -29,6 +29,8 @@ let
   # VPS
   #
 
+  host__vps-ahayzen = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINc+WsXykbIO1CzcI5W069+i4VxpRU0wNsEHVl1db+pk root@vps731315";
+
 
 in
 {
@@ -37,7 +39,7 @@ in
   #
 
   # Host key for ahayzen com
-  host-vps-ahayzen-com = [ ];
+  host-vps-ahayzen = [ host__vps-ahayzen ];
 
   # Hosts that require access to desktop secrets
   #
