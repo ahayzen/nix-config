@@ -56,16 +56,16 @@
     mkdir -p /srv/flathub_stats/
     chown headless:headless /srv/flathub_stats/
 
-    mkdir -p /srv/wagtail/
-    chown headless:headless /srv/wagtail/
-    mkdir -p /srv/wagtail/db/
-    chown headless:headless /srv/wagtail/db/
-    mkdir -p /srv/wagtail/media/
-    chown headless:headless /srv/wagtail/media/
-    mkdir -p /srv/wagtail/static/
-    chown headless:headless /srv/wagtail/static/
-    mkdir -p /srv/wagtail/docs/
-    chown headless:headless /srv/wagtail/docs/
+    mkdir -p /srv/wagtail-ahayzen/
+    chown headless:headless /srv/wagtail-ahayzen/
+    mkdir -p /srv/wagtail-ahayzen/db/
+    chown headless:headless /srv/wagtail-ahayzen/db/
+    mkdir -p /srv/wagtail-ahayzen/media/
+    chown headless:headless /srv/wagtail-ahayzen/media/
+    mkdir -p /srv/wagtail-ahayzen/static/
+    chown headless:headless /srv/wagtail-ahayzen/static/
+    mkdir -p /srv/wagtail-ahayzen/docs/
+    chown headless:headless /srv/wagtail-ahayzen/docs/
   '';
 
   # Create a tunneller user for SSH tunnels
