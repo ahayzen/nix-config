@@ -4,7 +4,7 @@
 
 # ahayzen.com site
 ahayzen.com www.ahayzen.com {
-	reverse_proxy localhost:8080
+    reverse_proxy localhost:8080
 
     # Flathub stats data
     file_server /direct/* {
