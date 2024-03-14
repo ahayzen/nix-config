@@ -31,20 +31,19 @@
           RemainAfterExit = true;
           Restart = "on-failure";
           User = "headless";
-          Group = "headless";
           StateDirectory = "docker-compose-runner";
           StateDirectoryMode = "0750";
 
-          ExecStart = "${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans";
+          ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans";
           # Use stop here so that we can reuse the same container on reboot (instead of down)
-          ExecStop = "${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} stop";
-
-          # Upon reload pull new container images and restart any containers
-          ExecReload = ''
-            ${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} pull --quiet
-            ${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans
-          '';
+          ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} stop";
         };
+
+        # Upon reload pull new container images and restart any containers
+        reload = ''
+          ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} pull --quiet
+          ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans
+        '';
       };
 
       # Every hour try to upgrade the docker containers
