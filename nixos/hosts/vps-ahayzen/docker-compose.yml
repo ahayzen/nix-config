@@ -34,7 +34,7 @@ services:
   # TODO: flathub_stats service
 
   # Wagtail
-  wagtail:
+  wagtail-ahayzen:
     image: registry.gitlab.com/ahayzen/ahayzen.com/wagtail-image:latest
     restart: unless-stopped
     ports:
