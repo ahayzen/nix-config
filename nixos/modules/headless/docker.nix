@@ -31,6 +31,9 @@
           RemainAfterExit = true;
           Restart = "on-failure";
           User = "headless";
+          Group = "headless";
+          StateDirectory = "docker-compose-runner";
+          StateDirectoryMode = "0750";
 
           ExecStart = "${pkgs.docker-compose} --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans";
           # Use stop here so that we can reuse the same container on reboot (instead of down)
