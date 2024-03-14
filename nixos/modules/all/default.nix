@@ -9,5 +9,6 @@
     ./locale.nix
     ./network.nix
     ./nix.nix
+    ./swap.nix
   ];
 }
