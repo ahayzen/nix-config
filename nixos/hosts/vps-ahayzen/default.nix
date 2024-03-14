@@ -44,33 +44,6 @@
     "caddy/Caddyfile".source = ./Caddyfile;
   };
 
-  # Ensure the folders exist with the right permissions
-  system.activationScripts.makeSrvDockerComposeDirs = ''
-    chmod 777 /srv/
-  '';
-  system.userActivationScripts.makeSrvDockerComposeDirs = ''
-    mkdir -p /srv/caddy/
-    chown headless:headless /srv/caddy/
-    mkdir -p /srv/caddy/persistent/
-    chown headless:headless /srv/caddy/persistent/
-    mkdir -p /srv/caddy/config/
-    chown headless:headless /srv/caddy/config/
-
-    mkdir -p /srv/flathub_stats/
-    chown headless:headless /srv/flathub_stats/
-
-    mkdir -p /srv/wagtail-ahayzen/
-    chown headless:headless /srv/wagtail-ahayzen/
-    mkdir -p /srv/wagtail-ahayzen/db/
-    chown headless:headless /srv/wagtail-ahayzen/db/
-    mkdir -p /srv/wagtail-ahayzen/media/
-    chown headless:headless /srv/wagtail-ahayzen/media/
-    mkdir -p /srv/wagtail-ahayzen/static/
-    chown headless:headless /srv/wagtail-ahayzen/static/
-    mkdir -p /srv/wagtail-ahayzen/docs/
-    chown headless:headless /srv/wagtail-ahayzen/docs/
-  '';
-
   # Create a tunneller user for SSH tunnels
   #
   # TODO: investigate using something like https://github.com/rapiz1/rathole

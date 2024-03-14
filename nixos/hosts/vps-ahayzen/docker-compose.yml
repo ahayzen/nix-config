@@ -22,14 +22,14 @@ services:
       - /etc/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
 
       # Persistent data (eg TLS storage)
-      - /srv/caddy/persistent:/data
+      - /var/lib/docker-compose-runner/caddy/persistent:/data
       # Persistent configuration
-      - /srv/caddy/config:/config
+      - /var/lib/docker-compose-runner/caddy/config:/config
 
       # Wagtail media data
-      - /srv/wagtail-ahayzen/media:/srv/wagtail-ahayzen/media:ro
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/media:/srv/wagtail-ahayzen/media:ro
       # Wagtail static data
-      - /srv/wagtail-ahayzen/static:/srv/wagtail-ahayzen/static:ro
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/static:/srv/wagtail-ahayzen/static:ro
 
   # TODO: flathub_stats service
 
@@ -41,12 +41,12 @@ services:
       - "8080:8080"
     volumes:
       # Wagtail sqlite database
-      - /srv/wagtail-ahayzen/db:/srv/webapp/db
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/db:/srv/webapp/db
       # Wagtail media data
-      - /srv/wagtail-ahayzen/media:/srv/webapp/media
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/media:/srv/webapp/media
       # Wagtail static data
-      - /srv/wagtail-ahayzen/static:/srv/webapp/static
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/static:/srv/webapp/static
       # Wagtail local settings file
       - /etc/ahayzen.com/local.py:/srv/webapp/ahayzen.com/settings/local.py:ro
       # Wagtail docs folder
-      - /srv/wagtail-ahayzen/docs:/srv/webapp/docs
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/docs:/srv/webapp/docs
