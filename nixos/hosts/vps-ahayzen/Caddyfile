@@ -4,21 +4,27 @@
 
 # ahayzen.com site
 ahayzen.com www.ahayzen.com {
-    reverse_proxy wagtail-ahayzen:8080
-
     # Flathub stats data
-    file_server /direct/* {
-        root /srv/flathub_stats/
+    handle_path /direct/* {
+        root * /srv/flathub_stats
+        file_server
     }
 
     # Wagtail media files
-    file_server /media/* {
-        root /srv/wagtail-ahayzen/media/
+    handle_path /media/* {
+        root * /srv/wagtail-ahayzen/media/
+        file_server
     }
 
     # Wagtail static files
-    file_server /static/* {
-        root /srv/wagtail-ahayzen/static/
+    handle_path /static/* {
+        root * /srv/wagtail-ahayzen/static/
+        file_server
+    }
+
+    # Anything else goes to wagtail
+    handle {
+        reverse_proxy wagtail-ahayzen:8080
     }
 }
 
