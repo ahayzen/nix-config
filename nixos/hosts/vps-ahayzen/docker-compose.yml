@@ -12,6 +12,8 @@ services:
     cap_add:
       # Allow for increasing buffer size for HTTP/3
       - NET_ADMIN
+    links:
+      - wagtail-ahayzen
     ports:
       - "80:80"
       - "443:443"
@@ -37,8 +39,8 @@ services:
   wagtail-ahayzen:
     image: registry.gitlab.com/ahayzen/ahayzen.com/wagtail-image:latest
     restart: unless-stopped
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"
     volumes:
       # Wagtail sqlite database
       - /var/lib/docker-compose-runner/wagtail-ahayzen/db:/srv/webapp/db
