@@ -3,9 +3,35 @@
 # SPDX-License-Identifier: MPL-2.0
 
 { config, ... }: {
-  users.users.headless = {
-    isNormalUser = true;
+  # Allow for passwordless sudo with headless user
+  security.sudo.extraRules = [
+    {
+      users = [ "headless" ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" "SETENV" ];
+        }
+      ];
+    }
+  ];
 
-    openssh.authorizedKeys.keys = config.ahayzen.publicKeys.hosts-openssh-headless-authorized ++ config.ahayzen.publicKeys.users-openssh-headless-authorized;
+  users.users = {
+    # User for management
+    headless = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+      ];
+
+      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.hosts-openssh-headless-authorized ++ config.ahayzen.publicKeys.users-openssh-headless-authorized;
+    };
+
+    # User for docker containers
+    unpriv = {
+      isNormalUser = true;
+
+      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.hosts-openssh-headless-authorized ++ config.ahayzen.publicKeys.users-openssh-headless-authorized;
+    };
   };
 }
