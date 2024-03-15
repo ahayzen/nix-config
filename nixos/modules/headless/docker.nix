@@ -30,7 +30,6 @@
           Type = "oneshot";
           RemainAfterExit = true;
           Restart = "on-failure";
-          User = "headless";
           StateDirectory = "docker-compose-runner";
           StateDirectoryMode = "0750";
 
@@ -73,12 +72,21 @@
         enable = true;
         dates = "daily";
       };
-      rootless = {
-        enable = true;
 
-        # Set DOCKER_HOST for users
-        setSocketVariable = true;
+      daemon.settings = {
+        dns = ["9.9.9.9"];
+        no-new-privileges = true;
+        userns-remap = "unpriv:users";
       };
+
+      # rootless is too problematic as it requires services to run as user services
+      # which has issues with linger on nix and the DOCKER_HOST is not set in systemd
+      # rootless = {
+      #   enable = true;
+      #
+      #   # Set DOCKER_HOST for users
+      #   setSocketVariable = true;
+      # };
     };
   };
 }
