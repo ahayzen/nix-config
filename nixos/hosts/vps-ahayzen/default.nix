@@ -40,8 +40,11 @@
   # Config files for caddy and wagtail
   age.secrets.local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age;
   environment.etc = {
-    "ahayzen.com/local.py".source = config.age.secrets.local-py_ahayzen-com.path;
-    "caddy/Caddyfile".source = ./Caddyfile;
+    "ahayzen.com/local.1.py".source =
+      if builtins.pathExists config.age.secrets.local-py_ahayzen-com.path
+      then config.age.secrets.local-py_ahayzen-com.path
+      else ./fallback.local.py;
+    "caddy/Caddyfile.1".source = ./Caddyfile;
   };
 
   # Create a tunneller user for SSH tunnels
