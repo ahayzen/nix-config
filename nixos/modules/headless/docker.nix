@@ -74,7 +74,7 @@
       };
 
       daemon.settings = {
-        dns = ["9.9.9.9"];
+        dns = [ "9.9.9.9" ];
         no-new-privileges = true;
         userns-remap = "unpriv:users";
       };
