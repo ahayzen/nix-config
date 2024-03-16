@@ -52,6 +52,9 @@
       else ./Caddyfile;
   };
 
+  # Increase disk size for build VM
+  virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
+
   # Create a tunneller user for SSH tunnels
   #
   # TODO: investigate using something like https://github.com/rapiz1/rathole
