@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, inputs, lib, ... }:
+{ config, inputs, lib, options, ... }:
 {
   imports = [
     ./disko-config.nix
@@ -41,10 +41,15 @@
   age.secrets.local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age;
   environment.etc = {
     "ahayzen.com/local.1.py".source =
-      if builtins.pathExists config.age.secrets.local-py_ahayzen-com.path
-      then config.age.secrets.local-py_ahayzen-com.path
-      else ./fallback.local.py;
-    "caddy/Caddyfile.1".source = ./Caddyfile;
+      # TODO: is there a better way of checking if we are build.vm?
+      if options.virtualisation ? qemu
+      then ./local.vm.py
+      else config.age.secrets.local-py_ahayzen-com.path;
+    "caddy/Caddyfile.1".source =
+      # TODO: is there a better way of checking if we are build.vm?
+      if options.virtualisation ? qemu
+      then ./Caddyfile.vm
+      else ./Caddyfile;
   };
 
   # Create a tunneller user for SSH tunnels
