@@ -31,8 +31,8 @@
       inherit (self) outputs;
 
       # Helper method for building hosts
-      mkHost = { developer ? false, games ? false, headless, hostname, platform ? "x86_64-linux", usernames }: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit developer games headless hostname inputs outputs platform stateVersion usernames; };
+      mkHost = { developer ? false, games ? false, headless, hostname, platform ? "x86_64-linux", testing ? false, usernames }: nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit developer games headless hostname inputs outputs platform stateVersion testing usernames; };
 
         modules = [
           # Load secrets
@@ -57,6 +57,7 @@
       nixosConfigurations = {
         # Servers
         vps-ahayzen = mkHost { developer = false; games = false; headless = true; hostname = "vps-ahayzen"; usernames = [ "headless" ]; };
+        vps-ahayzen-test = mkHost { developer = false; games = false; headless = true; hostname = "vps-ahayzen"; testing = true; usernames = [ "headless" ]; };
       };
     };
 }

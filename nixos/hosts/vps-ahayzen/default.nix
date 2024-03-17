@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, inputs, lib, options, ... }:
+{ config, inputs, lib, options, testing, ... }:
 {
   imports = [
     ./disko-config.nix
@@ -38,16 +38,14 @@
   ahayzen.docker-compose-file = ./docker-compose.yml;
 
   # Config files for caddy and wagtail
-  age.secrets.local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age;
+  age.secrets = lib.mkIf (!testing) { local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age; };
   environment.etc = {
     "ahayzen.com/local.1.py".source =
-      # TODO: is there a better way of checking if we are build.vm?
-      if options.virtualisation ? qemu
+      if testing
       then ./local.vm.py
       else config.age.secrets.local-py_ahayzen-com.path;
     "caddy/Caddyfile.1".source =
-      # TODO: is there a better way of checking if we are build.vm?
-      if options.virtualisation ? qemu
+      if testing
       then ./Caddyfile.vm
       else ./Caddyfile;
   };
