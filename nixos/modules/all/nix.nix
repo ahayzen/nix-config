@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ headless, pkgs, platform, stateVersion, ... }: {
+{ config, pkgs, ... }: {
   # For nix flakes to work
   environment.systemPackages = with pkgs; map lib.lowPrio [
     curl
@@ -32,7 +32,7 @@
   };
 
   # Define the platform that we are using
-  nixpkgs.hostPlatform = "${platform}";
+  nixpkgs.hostPlatform = config.ahayzen.platform;
 
   system = {
     # Enble automatic upgrades
@@ -43,12 +43,12 @@
       dates = "hourly";
 
       # don't auto reboot unless in headless mode
-      allowReboot = headless;
+      allowReboot = config.ahayzen.headless;
       # apply on next reboot unless in headless mode
-      operation = if headless then "switch" else "boot";
+      operation = if config.ahayzen.headless then "switch" else "boot";
     };
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = stateVersion;
+    stateVersion = "23.11";
   };
 }

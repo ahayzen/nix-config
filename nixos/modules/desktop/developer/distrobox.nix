@@ -2,11 +2,12 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ pkgs, ... }: {
+{ lib, pkgs, ... }: {
   # TODO: set default container to ubuntu
   #
   # TODO: investigate distrobox assemble
-  environment.systemPackages = with pkgs; [
-    distrobox
-  ];
+  environment.systemPackages =
+    if config.ahayzen.developer
+    then with pkgs; [ distrobox ]
+    else [ ];
 }

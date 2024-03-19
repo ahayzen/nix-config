@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ inputs, platform, ... }: {
+{ config, inputs, ... }: {
   # Tell age where the ssh keys are likely to be
   age = {
     identityPaths = [
@@ -18,6 +18,6 @@
 
   # Ensure that agenix is installed on systems so that they can autoupdate
   environment.systemPackages = [
-    inputs.agenix.packages.${platform}.agenix
+    inputs.agenix.packages.${config.ahayzen.platform}.agenix
   ];
 }

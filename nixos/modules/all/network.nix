@@ -2,7 +2,11 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ hostname, ... }: {
+{ config, lib, ... }: {
+  options.ahayzen.hostName = lib.mkOption {
+    type = lib.types.str;
+  };
+
   # Define the hostname of the device
-  networking.hostName = "${hostname}";
+  config.networking.hostName = config.ahayzen.hostName;
 }

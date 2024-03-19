@@ -2,23 +2,23 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ developer, games, lib, ... }: {
+{
   imports = [
     ./bluetooth.nix
     ./boot.nix
+    ./developer.nix
     ./firewall.nix
     ./flatpak.nix
     ./fonts.nix
     ./fwupd.nix
+    ./games.nix
     ./gnome.nix
     ./locale.nix
     ./network.nix
     ./pipewire.nix
     ./printing.nix
     ./developer
-  ]
-  # Include developer config
-  ++ lib.optional (developer) ./developer
-  # Include games config
-  ++ lib.optional (games) ./games;
+  ];
+
+  config.ahayzen.headless = false;
 }

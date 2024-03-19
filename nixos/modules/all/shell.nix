@@ -2,8 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ lib, pkgs, usernames, ... }: {
-  imports = map (username: ./${username}) usernames;
-
+{ pkgs, ... }: {
   users.defaultUserShell = pkgs.bashInteractive;
 }

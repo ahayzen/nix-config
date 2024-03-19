@@ -3,8 +3,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 {
-  boot.consoleLogLevel = 0;
-  boot.initrd.systemd.enable = true;
-  boot.kernelParams = [ "quiet" "udev.log_level=3" ];
-  boot.plymouth.enable = true;
+  boot = {
+    consoleLogLevel = 0;
+    initrd.systemd.enable = true;
+    kernelParams = [ "quiet" "udev.log_level=3" ];
+    plymouth.enable = true;
+  };
 }
