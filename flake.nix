@@ -29,37 +29,51 @@
     } @ inputs:
     let
       inherit (self) outputs;
-
-      # Helper method for building hosts
-      mkHost = {}: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-
-        modules = [
-          # Load secrets
-          ./secrets
-          # Load the Agenix module
-          inputs.agenix.nixosModules.default
-          # Load the disko module
-          inputs.disko.nixosModules.disko
-          # Load our root configuration
-          ./nixos/modules/all
-          # Load our headless configuration
-          ./nixos/modules/headless
-          # Load our vps-ahayzen
-          ./nixos/hosts/vps-ahayzen
-          # Load our headless user
-          ./nixos/users/headless
-        ];
-      };
     in
     {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
 
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#your-hostname'
+
+      # Create nixos modules which are then used by nixconfiguration and by tests
+      nixosModules = {
+        commonSystem = {
+          imports = [
+            # Load secrets
+            ./secrets
+            # Load the Agenix module
+            inputs.agenix.nixosModules.default
+            # Load the disko module
+            inputs.disko.nixosModules.disko
+            # Load our common configuration
+            ./nixos/modules/all
+          ];
+        };
+
+        headlessSystem = [
+          self.nixosModules.commonSystem
+          # Load our headless configuration
+          ./nixos/modules/headless
+        ];
+
+        desktopSystem = [
+          self.nixosModules.commonSystem
+          # Load our desktop configuration
+          ./nixos/modules/desktop
+        ];
+      };
+
       nixosConfigurations = {
         # Servers
-        vps-ahayzen = mkHost { };
+        vps-ahayzen = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+
+          modules = self.nixosModules.headlessSystem ++ [
+            ./nixos/hosts/vps-ahayzen/default.nix
+            ./nixos/users/headless
+          ];
+        };
       };
     };
 }
