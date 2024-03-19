@@ -2,7 +2,12 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{
+{ lib, ... }: {
+  options.ahayzen.developer = lib.mkOption {
+    default = false;
+    type = lib.types.bool;
+  };
+
   imports = [
     ./distrobox.nix
     ./podman.nix

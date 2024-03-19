@@ -31,8 +31,8 @@
       inherit (self) outputs;
 
       # Helper method for building hosts
-      mkHost = { developer ? false, games ? false, headless, hostname, platform ? "x86_64-linux", testing ? false, usernames }: nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit developer games headless hostname inputs outputs platform stateVersion testing usernames; };
+      mkHost = {}: nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
 
         modules = [
           # Load secrets
@@ -42,12 +42,15 @@
           # Load the disko module
           inputs.disko.nixosModules.disko
           # Load our root configuration
-          ./nixos/configuration.nix
+          ./nixos/modules/all
+          # Load our headless configuration
+          ./nixos/modules/headless
+          # Load our vps-ahayzen
+          ./nixos/hosts/vps-ahayzen
+          # Load our headless user
+          ./nixos/users/headless
         ];
       };
-
-      # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-      stateVersion = "23.11";
     in
     {
       formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixpkgs-fmt;
@@ -56,8 +59,7 @@
       # Available through 'nixos-rebuild --flake .#your-hostname'
       nixosConfigurations = {
         # Servers
-        vps-ahayzen = mkHost { developer = false; games = false; headless = true; hostname = "vps-ahayzen"; usernames = [ "headless" ]; };
-        vps-ahayzen-test = mkHost { developer = false; games = false; headless = true; hostname = "vps-ahayzen"; testing = true; usernames = [ "headless" ]; };
+        vps-ahayzen = mkHost { };
       };
     };
 }

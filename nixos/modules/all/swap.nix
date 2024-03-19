@@ -2,12 +2,12 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ headless, ... }: {
+{ config, ... }: {
   # Create a swapfile of 1GB for headless and 2GB for desktop
   swapDevices = [
     {
       device = "/var/lib/swapfile";
-      size = if headless then 1024 else 2 * 1024;
+      size = if config.ahayzen.headless then 1024 else 2 * 1024;
     }
   ];
 

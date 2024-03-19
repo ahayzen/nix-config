@@ -7,4 +7,6 @@
     ./docker.nix
     ./ssh.nix
   ];
+
+  config.ahayzen.headless = true;
 }

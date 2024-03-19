@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, inputs, lib, options, testing, ... }:
+{ config, inputs, lib, options, ... }:
 {
   imports = [
     ./disko-config.nix
@@ -34,18 +34,22 @@
     systemd-boot.enable = lib.mkForce false;
   };
 
-  # Specify the docker file we are using
-  ahayzen.docker-compose-file = ./docker-compose.yml;
+  ahayzen = {
+    # Specify the docker file we are using
+    docker-compose-file = ./docker-compose.yml;
+
+    hostName = "vps-ahayzen";
+  };
 
   # Config files for caddy and wagtail
-  age.secrets = lib.mkIf (!testing) { local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age; };
+  age.secrets = lib.mkIf (!config.ahayzen.testing) { local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age; };
   environment.etc = {
     "ahayzen.com/local.1.py".source =
-      if testing
+      if config.ahayzen.testing
       then ./local.vm.py
       else config.age.secrets.local-py_ahayzen-com.path;
     "caddy/Caddyfile.1".source =
-      if testing
+      if config.ahayzen.testing
       then ./Caddyfile.vm
       else ./Caddyfile;
   };
