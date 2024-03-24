@@ -26,3 +26,11 @@ $ result/bin/run-<machine>-vm
 ```console
 $ ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no admin@localhost -p 2221
 ```
+
+## Flake check
+
+We need the sandbox disabled as we need network access
+
+```console
+$ nix flake --option sandbox false check -L --show-trace
+```
