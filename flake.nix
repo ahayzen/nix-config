@@ -81,5 +81,23 @@
           ];
         };
       };
+
+      checks = {
+        x86_64-linux =
+          let
+            checkArgs = {
+              lib = nixpkgs.lib;
+              # reference to nixpkgs for the current system
+              pkgs = nixpkgs.legacyPackages.x86_64-linux;
+              inherit inputs;
+              # this gives us a reference to our flake but also all flake inputs
+              inherit self;
+            };
+          in
+          {
+            # import our test
+            vps-ahayzen-test = import ./tests/vps-ahayzen.nix checkArgs;
+          };
+      };
     };
 }
