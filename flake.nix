@@ -38,7 +38,7 @@
 
       # Create nixos modules which are then used by nixconfiguration and by tests
       nixosModules = {
-        commonSystem = {
+        headlessSystem = {
           imports = [
             # Load secrets
             ./secrets
@@ -48,20 +48,25 @@
             inputs.disko.nixosModules.disko
             # Load our common configuration
             ./nixos/modules/all
+            # Load our headless configuration
+            ./nixos/modules/headless
           ];
         };
 
-        headlessSystem = [
-          self.nixosModules.commonSystem
-          # Load our headless configuration
-          ./nixos/modules/headless
-        ];
-
-        desktopSystem = [
-          self.nixosModules.commonSystem
-          # Load our desktop configuration
-          ./nixos/modules/desktop
-        ];
+        desktopSystem = {
+          imports = [
+            # Load secrets
+            ./secrets
+            # Load the Agenix module
+            inputs.agenix.nixosModules.default
+            # Load the disko module
+            inputs.disko.nixosModules.disko
+            # Load our common configuration
+            ./nixos/modules/all
+            # Load our desktop configuration
+            ./nixos/modules/desktop
+          ];
+        };
       };
 
       nixosConfigurations = {
@@ -69,7 +74,8 @@
         vps-ahayzen = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
-          modules = self.nixosModules.headlessSystem ++ [
+          modules = [
+            self.nixosModules.headlessSystem
             ./nixos/hosts/vps-ahayzen/default.nix
             ./nixos/users/headless
           ];
