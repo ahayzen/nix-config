@@ -13,7 +13,7 @@ let
 
   # ThinkPad T480
   host__thinkpad-t480 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFyQGokh7SHDi+mSwd3MgMAH0I0IF/BxG/tRiCYxKgPF";
-  user__thinkpad-t480__andrew-kdab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM7mlMIrnPEXlFDYBp8Eflpl9E0nDu03LiVQrtXbNLFS andrew@ThinkPad-T480";
+  user__thinkpad-t480__andrew = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM7mlMIrnPEXlFDYBp8Eflpl9E0nDu03LiVQrtXbNLFS andrew@ThinkPad-T480";
 
   # XPS 13 9360
   host__xps-13-9360 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1+V0m26Ni1WjixUmmYlSV7oE/zCvz/CHaafk3CmL+L";
@@ -49,14 +49,14 @@ in
   # Users that require access to desktop secrets
   #
   # This is for developers to manage secrets or manually deploy flakes
-  users-secrets-desktop = [ user__thinkpad-t480__andrew-kdab user__xps-13-9360__andrew ];
+  users-secrets-desktop = [ user__thinkpad-t480__andrew user__xps-13-9360__andrew ];
 
   #
   # Access settings for OpenSSH authorizedKeys
   #
 
   # Users that might need access to headless hosts
-  users-openssh-headless-authorized = [ user__thinkpad-t480__andrew-kdab user__xps-13-9360__andrew ];
+  users-openssh-headless-authorized = [ user__thinkpad-t480__andrew user__xps-13-9360__andrew ];
 
   # Users that can create tunnels via VPS hosts
   users-openssh-vps-tunneller-authorized = [ user__synology-nas__tunneller ];

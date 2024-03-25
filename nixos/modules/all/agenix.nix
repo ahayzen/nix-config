@@ -12,7 +12,6 @@
       # other places that the ssh key might be
       # TODO: loop through possibles users?
       "/home/andrew/.ssh/id_rsa"
-      "/home/andrew-kdab/.ssh/id_rsa"
     ];
   };
 

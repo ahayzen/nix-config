@@ -8,7 +8,7 @@ SPDX-License-Identifier: MPL-2.0
 
 ```console
 $ cd secrets/
-$ nix run github:ryantm/agenix -- -e password_andrew-kdab.age
+$ nix run github:ryantm/agenix -- -e password_andrew.age
 ```
 
 # Rekey

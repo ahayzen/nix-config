@@ -12,5 +12,4 @@ in
   #
   # TODO: check if trailing new line is OK for these
   "password_andrew.age".publicKeys = publicKeys.hosts-secrets-desktop ++ publicKeys.users-secrets-desktop;
-  "password_andrew-kdab.age".publicKeys = publicKeys.hosts-secrets-desktop ++ publicKeys.users-secrets-desktop;
 }
