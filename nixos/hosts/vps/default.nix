@@ -38,7 +38,7 @@
     # Specify the docker file we are using
     docker-compose-file = ./docker-compose.yml;
 
-    hostName = "vps-ahayzen";
+    hostName = "vps";
   };
 
   # Config files for caddy and wagtail

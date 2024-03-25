@@ -71,12 +71,12 @@
 
       nixosConfigurations = {
         # Servers
-        vps-ahayzen = nixpkgs.lib.nixosSystem {
+        vps = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
           modules = [
             self.nixosModules.headlessSystem
-            ./nixos/hosts/vps-ahayzen/default.nix
+            ./nixos/hosts/vps/default.nix
             ./nixos/users/headless
           ];
         };
@@ -95,8 +95,7 @@
             };
           in
           {
-            # import our test
-            vps-ahayzen-test = import ./tests/vps-ahayzen.nix checkArgs;
+            vps-test = import ./tests/vps.nix checkArgs;
           };
       };
     };

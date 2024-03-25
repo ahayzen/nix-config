@@ -29,7 +29,7 @@ let
   # VPS
   #
 
-  host__vps-ahayzen = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINc+WsXykbIO1CzcI5W069+i4VxpRU0wNsEHVl1db+pk root@vps731315";
+  host__vps = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINc+WsXykbIO1CzcI5W069+i4VxpRU0wNsEHVl1db+pk root@vps731315";
 
 
 in
@@ -38,8 +38,8 @@ in
   # Decryption settings for Agenix secrets
   #
 
-  # Host key for ahayzen com
-  host-vps-ahayzen = [ host__vps-ahayzen ];
+  # Host key for VPS
+  host-vps = [ host__vps ];
 
   # Hosts that require access to desktop secrets
   #

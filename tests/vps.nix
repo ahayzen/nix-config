@@ -3,13 +3,13 @@
 # SPDX-License-Identifier: MPL-2.0
 
 (import ./lib.nix) {
-  name = "vps-ahayzen test";
+  name = "vps test";
   nodes = {
     machine = { self, pkgs, ... }: {
       imports =
         [
           self.nixosModules.headlessSystem
-          ../nixos/hosts/vps-ahayzen/default.nix
+          ../nixos/hosts/vps/default.nix
           ../nixos/users/headless
         ];
 
