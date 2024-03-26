@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # ahayzen.com site
-http://localhost {
+http://ahayzen.com {
     # Flathub stats data
     handle_path /direct/* {
         root * /srv/flathub_stats

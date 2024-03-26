@@ -17,6 +17,10 @@
 
       # Extra packages for the test
       environment.systemPackages = [ pkgs.curl ];
+
+      networking.hosts = {
+        "127.0.0.1" = [ "ahayzen.com" ];
+      };
     };
   };
 
@@ -33,7 +37,10 @@
     machine.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "\[INFO\] Listening at: http:\/\/0\.0\.0\.0:8080"', timeout=60)
 
     # Test that admin page exists
-    output = machine.succeed("curl --silent localhost:80/admin/login/?next=/admin/")
+    output = machine.succeed("curl --silent ahayzen.com:80/admin/login/?next=/admin/")
     assert "Sign in" in output, f"'{output}' does not contain 'Sign in'"
+
+    # Test that wagtail port is not open externally
+    machine.fail("curl --silent ahayzen.com:8080")
   '';
 }
