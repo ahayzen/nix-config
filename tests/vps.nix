@@ -21,26 +21,16 @@
   };
 
   testScript = ''
-    import time
-
     start_all()
 
     # Wait for docker runner
-    machine.wait_for_unit("docker-compose-runner")
+    machine.wait_for_unit("docker-compose-runner", timeout=90)
 
     # Wait for caddy to start
-    machine.wait_for_open_port(80)
+    machine.wait_for_open_port(80, timeout=60)
 
-    # Wait long enough for wagtail migrations
-    #
-    # TODO: can we instead wait for "Listening at" from the syslog?
-    attempts = 30
-    while attempts:
-      (status, output) = machine.execute("curl --silent localhost:80/admin/login/?next=/admin/")
-      if "Sign in" in output:
-        break
-      time.sleep(1)
-      attempts -= 1
+    # Wait for wagtail to start
+    machine.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "\[INFO\] Listening at: http:\/\/0\.0\.0\.0:8080"', timeout=60)
 
     # Test that admin page exists
     output = machine.succeed("curl --silent localhost:80/admin/login/?next=/admin/")
