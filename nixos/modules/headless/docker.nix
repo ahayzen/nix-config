@@ -8,14 +8,6 @@
   };
 
   config = {
-    # Allow for rootless docker to bind to privileged ports
-    # our lowest is http at 80
-    #
-    # TODO: can we limit this to just the docker process
-    boot.kernel.sysctl = {
-      "net.ipv4.ip_unprivileged_port_start" = 80;
-    };
-
     environment.systemPackages = with pkgs; [
       docker-compose
     ];
