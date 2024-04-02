@@ -63,6 +63,6 @@
   users.users.tunneller = {
     isNormalUser = true;
 
-    openssh.authorizedKeys.keys = config.ahayzen.publicKeys.users-openssh-vps-tunneller-authorized;
+    openssh.authorizedKeys.keys = [ config.ahayzen.publicKeys.user.synology-nas-tunneller ];
   };
 }

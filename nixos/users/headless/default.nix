@@ -24,14 +24,14 @@
         "wheel"
       ];
 
-      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.hosts-openssh-headless-authorized ++ config.ahayzen.publicKeys.users-openssh-headless-authorized;
+      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
     };
 
     # User for docker containers
     unpriv = {
       isNormalUser = true;
 
-      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.hosts-openssh-headless-authorized ++ config.ahayzen.publicKeys.users-openssh-headless-authorized;
+      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
     };
   };
 }
