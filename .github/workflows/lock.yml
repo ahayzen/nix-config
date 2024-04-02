@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+name: nix flake update
+
+on:
+  schedule:
+    - cron: '22 00 * * *'
+  workflow_dispatch:
+
+jobs:
+  lock-updater:
+    name: nix flake update
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v10
+      - uses: DeterminateSystems/magic-nix-cache-action@v4
+      - uses: DeterminateSystems/update-flake-lock@v21
+        with:
+          pr-title: "chore: update flake.lock"
