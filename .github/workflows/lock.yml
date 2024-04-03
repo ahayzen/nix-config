@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-name: nix flake update
+name: lock update
 
 on:
   schedule:
@@ -16,7 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v10
-      - uses: DeterminateSystems/magic-nix-cache-action@v4
       - uses: DeterminateSystems/update-flake-lock@v21
         with:
           pr-title: "chore: update flake.lock"
