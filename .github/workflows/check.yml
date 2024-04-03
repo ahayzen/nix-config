@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-name: nix flake check
+name: check
 
 on:
   push:
@@ -12,13 +12,37 @@ on:
   workflow_dispatch:
 
 jobs:
-  nix-flake-check:
-    name: nix flake check
+  license-check:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: REUSE Compliance Check
+        uses: fsfe/reuse-action@v3
+
+  flake-checker:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/flake-checker-action@v5
+
+  nix-fmt:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v10
       - uses: DeterminateSystems/magic-nix-cache-action@v4
-      - uses: DeterminateSystems/flake-checker-action@v5
+      - name: nix fmt
+        run: nix fmt
+      - name: git diff
+        run: git diff --exit-code
+
+  nix-flake-check:
+    # Run after pre checks
+    needs: [license-check, flake-checker, nix-fmt]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v10
+      - uses: DeterminateSystems/magic-nix-cache-action@v4
       - name: nix flake check
         run: nix flake --option sandbox false check -L
