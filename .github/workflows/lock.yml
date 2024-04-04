@@ -42,3 +42,14 @@ jobs:
               workflow_id: 'check.yml',
               ref: 'update_flake_lock_action',
             })
+
+      - name: trigger auto merge
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'auto-merge.yml',
+              ref: 'update_flake_lock_action',
+            })
