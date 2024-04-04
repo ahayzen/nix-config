@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+name: lock auto merge
+
+on: pull_request_target
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  dependabot-auto-merge:
+    runs-on: ubuntu-22.04
+    if: |
+      ${{ github.event.pull_request.user.login == 'github-actions[bot]' && github.event.pull_request.title == 'chore: update flake.lock' }}
+    steps:
+      - name: approve the pr
+        run: gh pr review $PR_URL --approve
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: auto-merge the pr
+        run: gh pr merge --auto --delete-branch --rebase "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
