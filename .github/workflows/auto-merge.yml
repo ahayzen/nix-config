@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-name: dependabot auto merge
+name: auto merge
 
 on: pull_request_target
 
@@ -11,9 +11,12 @@ permissions:
   contents: write
 
 jobs:
-  dependabot-auto-merge:
+  auto-merge:
     runs-on: ubuntu-22.04
-    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    # Auto merge if this is
+    # - dependabot
+    # - update of flake.lock
+    if: "${{ github.event.pull_request.user.login == 'dependabot[bot]' || (github.event.pull_request.user.login == 'github-actions[bot]' && github.event.pull_request.title == 'chore: update flake.lock') }}"
     steps:
       - name: approve the pr
         run: gh pr review $PR_URL --approve
