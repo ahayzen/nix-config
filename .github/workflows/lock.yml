@@ -12,13 +12,6 @@ on:
     - cron: '1 22 * * *'
   workflow_dispatch:
 
-permissions:
-  # So that we can trigger the workflow
-  actions: write
-  # So that a pull request and commit can be created
-  pull-requests: write
-  contents: write
-
 jobs:
   lock-updater:
     name: nix flake update
@@ -26,30 +19,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v10
+
+      # Github action workflows can't trigger another workflow
+      # so we need to have a different token to do this
+      # https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#triggering-further-workflow-runs
+      #
+      # Using a Github app allows us a token limited to this repo
+      # https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
+      - uses: actions/create-github-app-token@v1
+        id: generate-token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - uses: DeterminateSystems/update-flake-lock@v21
         with:
           pr-title: "chore: update flake.lock"
-
-      # We need to manually trigger CI status checks
-      # as github prevents workflows automatically running to prevent loops
-      - name: trigger ci status checks
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'check.yml',
-              ref: 'update_flake_lock_action',
-            })
-
-      - name: trigger auto merge
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.actions.createWorkflowDispatch({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'auto-merge.yml',
-              ref: 'update_flake_lock_action',
-            })
+          token: ${{ steps.generate-token.outputs.token }}
