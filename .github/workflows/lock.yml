@@ -35,4 +35,10 @@ jobs:
       - uses: DeterminateSystems/update-flake-lock@v21
         with:
           pr-title: "chore: update flake.lock"
+          pr-body: |
+            Automated changes by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
+
+            ```
+            {{ env.GIT_COMMIT_MESSAGE }}
+            ```
           token: ${{ steps.generate-token.outputs.token }}
