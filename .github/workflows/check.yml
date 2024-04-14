@@ -36,9 +36,19 @@ jobs:
       - name: git diff
         run: git diff --exit-code
 
+  shellcheck:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      # Shellcheck should already be installed on github runners
+      - name: install shellcheck
+        run: sudo apt install --yes shellcheck
+      - name: shellcheck
+        run: shellcheck scripts/*.sh
+
   nix-flake-check:
     # Run after pre checks
-    needs: [license-check, flake-checker, nix-fmt]
+    needs: [license-check, flake-checker, nix-fmt, shellcheck]
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
