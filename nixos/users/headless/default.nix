@@ -16,22 +16,13 @@
     }
   ];
 
-  users.users = {
-    # User for management
-    headless = {
-      isNormalUser = true;
-      extraGroups = [
-        "wheel"
-      ];
+  # User for management
+  users.users.headless = {
+    isNormalUser = true;
+    extraGroups = [
+      "wheel"
+    ];
 
-      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
-    };
-
-    # User for docker containers
-    unpriv = {
-      isNormalUser = true;
-
-      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
-    };
+    openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
   };
 }
