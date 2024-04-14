@@ -1,0 +1,6 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+Host vps
+    IdentityFile /etc/ssh/test_ssh_id_ed25519
