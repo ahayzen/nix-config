@@ -60,8 +60,6 @@
     # Define the unpriv user for docker
     users.users.unpriv = {
       isNormalUser = true;
-
-      openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
     };
 
     virtualisation.docker = {
