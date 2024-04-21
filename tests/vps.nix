@@ -98,6 +98,9 @@
     with subtest("Attempt to run a backup"):
       backup.succeed("mkdir -p /tmp/backup-root")
 
+      # Check that the permissions are correct
+      vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
       # Run the backup
       backup.succeed("/etc/ahayzen.com/backup.sh vps headless@vps /tmp/backup-root")
 
@@ -108,8 +111,9 @@
       backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/media")
       backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/static")
 
-      # Check that known files exist
+      # Check that known files exist and permissions are correct
       backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("Attempt to run a restore"):
       # Check the home does not contain restore key
@@ -122,12 +126,16 @@
       backup.succeed("cp -R /etc/ahayzen.com/restore/fixtures/* /tmp/restore-root/")
       backup.succeed("chown -R 2000:2000 /tmp/restore-root/")
 
-      # Check files exist
+      # Check files exist and permissions are correct
       backup.succeed("test -d /tmp/restore-root/test-page/docker-compose-runner/wagtail-ahayzen/db")
       backup.succeed("test -e /tmp/restore-root/test-page/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
+      backup.succeed("ls -nd /tmp/restore-root/test-page/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Run the restore
       backup.succeed("/etc/ahayzen.com/restore.sh vps headless@vps /tmp/restore-root/test-page")
+
+      # Check that the permissions are still correct
+      vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Wait for services to restart and second occurance of Listening at
       vps.wait_for_unit("docker-compose-runner", timeout=90)

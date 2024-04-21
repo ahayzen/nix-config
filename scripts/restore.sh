@@ -15,7 +15,7 @@ if [ ! -x "$(command -v rsync)" ]; then
     echo "rsync command not found, cannot restore"
     exit 1
 fi
-RSYNC_ARGS=(--archive --human-readable --partial --progress --rsync-path="sudo rsync")
+RSYNC_ARGS=(--archive --human-readable --numeric-ids --partial --progress --rsync-path="sudo rsync")
 
 HEADLESS_SYSTEM=false
 USER_HOST=$2
@@ -51,7 +51,7 @@ if [ $HEADLESS_SYSTEM ]; then
     ssh "$USER_HOST" sudo systemctl stop docker-compose-runner.service
 
     # Restore all of the docker data
-    "$(command -v rsync)" "${RSYNC_ARGS[@]}" "$DOCKER_COMPOSE_RUNNER_SRC" "$USER_HOST:/var/lib/docker-compose-runner/"
+    sudo "$(command -v rsync)" "${RSYNC_ARGS[@]}" "$DOCKER_COMPOSE_RUNNER_SRC" "$USER_HOST:/var/lib/docker-compose-runner/"
 
     # Restart services
     ssh "$USER_HOST" sudo systemctl start docker-compose-runner.service
