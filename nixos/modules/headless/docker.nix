@@ -22,8 +22,6 @@
           Type = "oneshot";
           RemainAfterExit = true;
           Restart = "on-failure";
-          StateDirectory = "docker-compose-runner";
-          StateDirectoryMode = "0750";
 
           ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans";
           # Use stop here so that we can reuse the same container on reboot (instead of down)
@@ -35,6 +33,21 @@
           ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} pull --quiet
           ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans
         '';
+      };
+      # Do not use StateDirectory as it changes ownership to the service user on startup
+      # eg this causes ownership to change to root rather than unpriv
+      # Instead use a tmpfile rule with no age to cleanup
+      tmpfiles.settings = {
+        "99-docker-compose-runner" = {
+          "/var/lib/docker-compose-runner" = {
+            d = {
+              age = "-";
+              group = "unpriv";
+              mode = "0750";
+              user = "unpriv";
+            };
+          };
+        };
       };
 
       # Every hour try to upgrade the docker containers

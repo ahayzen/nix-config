@@ -15,7 +15,7 @@ if [ ! -x "$(command -v rsync)" ]; then
     echo "rsync command not found, cannot backup"
     exit 1
 fi
-RSYNC_ARGS=(--archive --human-readable --partial --progress --rsync-path="sudo rsync")
+RSYNC_ARGS=(--archive --human-readable --numeric-ids --partial --progress --rsync-path="sudo rsync")
 
 HEADLESS_SYSTEM=false
 USER_HOST=$2
@@ -45,7 +45,7 @@ if [ $HEADLESS_SYSTEM ]; then
     mkdir -p "$DOCKER_COMPOSE_RUNNER_DEST"
 
     # Backup all of the docker data
-    "$(command -v rsync)" "${RSYNC_ARGS[@]}" "$USER_HOST:/var/lib/docker-compose-runner/" "$DOCKER_COMPOSE_RUNNER_DEST"
+    sudo "$(command -v rsync)" "${RSYNC_ARGS[@]}" "$USER_HOST:/var/lib/docker-compose-runner/" "$DOCKER_COMPOSE_RUNNER_DEST"
 fi
 
 # Ensure the filesystem is synced
