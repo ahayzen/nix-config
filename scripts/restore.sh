@@ -15,7 +15,7 @@ if [ ! -x "$(command -v rsync)" ]; then
     echo "rsync command not found, cannot restore"
     exit 1
 fi
-RSYNC_ARGS=(--archive --human-readable --numeric-ids --partial --progress --rsync-path="sudo rsync")
+RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsync-path="sudo rsync")
 
 HEADLESS_SYSTEM=false
 USER_HOST=$2
