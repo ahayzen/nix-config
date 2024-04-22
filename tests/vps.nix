@@ -120,7 +120,7 @@
       output = vps.succeed("curl --silent ahayzen.com:80/")
       assert "Restore Unit Test" not in output, f"'{output}' does contain 'Restore Unit Test'"
 
-      # Copy fixtures to a /tmp folder so that we can ix permissions
+      # Copy fixtures to a /tmp folder so that we can fix permissions
       # as environment.etc.<name>.user only affects files
       backup.succeed("mkdir -p /tmp/restore-root")
       backup.succeed("cp -R /etc/ahayzen.com/restore/fixtures/* /tmp/restore-root/")
