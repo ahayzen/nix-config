@@ -6,7 +6,7 @@
 ahayzen.com www.ahayzen.com {
     # Flathub stats data
     handle_path /direct/* {
-        root * /srv/flathub_stats
+        root * /srv/flathub_stats/
         file_server
     }
 
