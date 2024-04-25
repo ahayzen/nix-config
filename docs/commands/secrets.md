@@ -11,6 +11,8 @@ $ cd secrets/
 $ nix run github:ryantm/agenix -- -e password_andrew.age
 ```
 
+> Use `EDITOR="nano --nonewlines"` to prevent automatic new lines being added to password files
+
 # Rekey
 
 ```console
