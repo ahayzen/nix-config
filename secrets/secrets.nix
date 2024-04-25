@@ -6,12 +6,12 @@ let
   publicKeys = import ./keys.nix;
 in
 {
-  "local-py_ahayzen-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.user.developers;
+  "local-py_ahayzen-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
 
   # mkpasswd -m sha-512
   #
   # TODO: check if trailing new line is OK for these
-  "password_andrew.age".publicKeys = publicKeys.group.host.desktops ++ publicKeys.group.user.developers;
+  "password_andrew.age".publicKeys = publicKeys.group.hosts.desktop ++ publicKeys.group.users.developer;
 
-  "password_headless_recovery.age".publicKeys = publicKeys.group.host.headless ++ publicKeys.group.user.developers;
+  "password_headless_recovery.age".publicKeys = publicKeys.group.hosts.headless ++ publicKeys.group.users.developer;
 }

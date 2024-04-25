@@ -22,8 +22,8 @@ in
 
   # Groups
   group = {
-    host = {
-      desktops = [
+    hosts = {
+      desktop = [
         host.thinkpad-t480
         host.xps-13-9360
       ];
@@ -33,8 +33,8 @@ in
       ];
     };
 
-    user = {
-      developers = [
+    users = {
+      developer = [
         user.thinkpad-t480-andrew
         user.xps-13-9360-andrew
       ];

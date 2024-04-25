@@ -35,7 +35,7 @@
           "wheel"
         ];
 
-        openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
+        openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.users.developer;
       };
     };
   };

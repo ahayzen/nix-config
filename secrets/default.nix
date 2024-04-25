@@ -15,12 +15,12 @@
     };
 
     group = {
-      host = lib.mkOption {
+      hosts = lib.mkOption {
         default = { };
         type = lib.types.attrsOf (lib.types.listOf lib.types.str);
       };
 
-      user = lib.mkOption {
+      users = lib.mkOption {
         default = { };
         type = lib.types.attrsOf (lib.types.listOf lib.types.str);
       };
