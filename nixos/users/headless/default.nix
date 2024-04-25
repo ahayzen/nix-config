@@ -17,12 +17,26 @@
   ];
 
   # User for management
-  users.users.headless = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-    ];
+  age.secrets.password_headless_recovery.file = ../../../secrets/password_headless_recovery.age;
 
-    openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
+  users = {
+    # Do not allow for changing users on a headless system manually
+    mutableUsers = false;
+
+    users = {
+      # Set a recovery password for the root user
+      root = {
+        hashedPasswordFile = config.age.secrets.password_headless_recovery.path;
+      };
+
+      headless = {
+        isNormalUser = true;
+        extraGroups = [
+          "wheel"
+        ];
+
+        openssh.authorizedKeys.keys = config.ahayzen.publicKeys.group.user.developers;
+      };
+    };
   };
 }
