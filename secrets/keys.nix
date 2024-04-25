@@ -27,6 +27,10 @@ in
         host.thinkpad-t480
         host.xps-13-9360
       ];
+
+      headless = [
+        host.vps
+      ];
     };
 
     user = {
