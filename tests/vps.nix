@@ -112,6 +112,8 @@
       backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/static")
 
       # Check that known files exist and permissions are correct
+      backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
       backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 

@@ -2,11 +2,18 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{
+{ pkgs, ... }: {
   imports = [
     ./docker.nix
     ./ssh.nix
   ];
 
-  config.ahayzen.headless = true;
+  config = {
+    ahayzen.headless = true;
+
+    # Install sqlite3 so that backups can take snapshots of databases
+    environment.systemPackages = with pkgs; [
+      sqlite
+    ];
+  };
 }
