@@ -44,6 +44,12 @@ if [ $HEADLESS_SYSTEM ]; then
     export DOCKER_COMPOSE_RUNNER_DEST="$BACKUP_DEST/docker-compose-runner/"
     mkdir -p "$DOCKER_COMPOSE_RUNNER_DEST"
 
+    # Snapshot of any databases so that we don't download a partial database
+    #
+    # This uses the online backup API as described in how to backup while transactions are active
+    # https://www.sqlite.org/howtocorrupt.html#_backup_or_restore_while_a_transaction_is_active
+    ssh "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 '.backup /var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3'"
+
     # Backup all of the docker data
     sudo "$(command -v rsync)" "${RSYNC_ARGS[@]}" "$USER_HOST:/var/lib/docker-compose-runner/" "$DOCKER_COMPOSE_RUNNER_DEST"
 fi
