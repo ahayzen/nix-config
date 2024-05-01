@@ -19,13 +19,21 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "ahayzen.com" ];
+        "127.0.0.1" = [ "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Allow test ssh authentication
       users.users.headless.openssh.authorizedKeys.keyFiles = [
         ./files/test_ssh_id_ed25519.pub
       ];
+
+      # Match VPS specifications
+      virtualisation = {
+        cores = 1;
+        # Increase so we can fit docker images
+        diskSize = 2 * 1024;
+        memorySize = 2 * 1024;
+      };
     };
 
     backup = { self, pkgs, ... }: {
@@ -69,22 +77,30 @@
     # Test that the VPS boots and shows wagtail admin
     #
 
-    with subtest("Ensure docker starts and wagtail admin works"):
+    with subtest("Ensure docker starts and caddy starts"):
       # Wait for docker runner
-      vps.wait_for_unit("docker-compose-runner", timeout=90)
+      vps.wait_for_unit("docker-compose-runner", timeout=120)
 
       # Wait for caddy to start
       vps.wait_for_open_port(80, timeout=60)
 
-      # Wait for wagtail to start
-      vps.wait_until_succeeds(wait_for_wagtail_cmd, timeout=60)
+    with subtest("Ensure wagtail has started"):
+      # Wait for at least two wagtails to start
+      vps.wait_until_succeeds(wait_for_wagtail_cmd + " | wc -l | awk '{if ($1 > 1) {exit 0} else {exit 1}}'", timeout=60)
 
-      # Test that admin page exists
+      # Test that ahayzen admin page exists
       output = vps.succeed("curl --silent ahayzen.com:80/admin/login/?next=/admin/")
       assert "Sign in" in output, f"'{output}' does not contain 'Sign in'"
 
       # Test that wagtail port is not open externally
       vps.fail("curl --silent ahayzen.com:8080")
+
+      # Test that yumekasaito admin page exists
+      output = vps.succeed("curl --silent yumekasaito.com:80/admin/login/?next=/admin/")
+      assert "Sign in" in output, f"'{output}' does not contain 'Sign in'"
+
+      # Test that wagtail port is not open externally
+      vps.fail("curl --silent yumekasaito.com:8080")
 
     #
     # Test that we can backup and restore the VPS
@@ -100,6 +116,7 @@
 
       # Check that the permissions are correct
       vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Run the backup
       backup.succeed("/etc/ahayzen.com/backup.sh vps headless@vps /tmp/backup-root")
@@ -110,6 +127,9 @@
       backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db")
       backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/media")
       backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/static")
+      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db")
+      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/media")
+      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/static")
 
       # Check that known files exist and permissions are correct
       backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3")
@@ -117,7 +137,13 @@
       backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
       backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
-    with subtest("Attempt to run a restore"):
+      backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+    # TODO: note this does not restore wagtail-yumekasaito
+    with subtest("Attempt to run a restore (only wagtail-ahayzen)"):
       # Check the home does not contain restore key
       output = vps.succeed("curl --silent ahayzen.com:80/")
       assert "Restore Unit Test" not in output, f"'{output}' does contain 'Restore Unit Test'"
@@ -142,10 +168,26 @@
       # Wait for services to restart and second occurance of Listening at
       vps.wait_for_unit("docker-compose-runner", timeout=90)
       vps.wait_for_open_port(80, timeout=60)
-      vps.wait_until_succeeds(wait_for_wagtail_cmd + " | wc -l | awk '{if ($1 > 1) {exit 0} else {exit 1}}'", timeout=60)
+      vps.wait_until_succeeds(wait_for_wagtail_cmd + " | wc -l | awk '{if ($1 > 3) {exit 0} else {exit 1}}'", timeout=60)
 
       # Check the home does contain restore key
       output = vps.succeed("curl --silent ahayzen.com:80/")
       assert "Restore Unit Test" in output, f"'{output}' does not contain 'Restore Unit Test'"
+
+    with subtest("General metrics"):
+      output = vps.succeed("ps auxf")
+      print(output)
+
+      output = vps.succeed("free -h")
+      print(output)
+
+      output = vps.succeed("df -h")
+      print(output)
+
+      output = vps.succeed("docker images")
+      print(output)
+
+      output = vps.succeed("docker stats --no-stream")
+      print(output)
   '';
 }

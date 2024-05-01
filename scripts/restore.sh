@@ -7,7 +7,7 @@
 set -e
 
 #
-# restore <machine-name> <restore-source>
+# restore <machine-name> <user@host> <restore-source>
 #
 
 # Check that rsync exists

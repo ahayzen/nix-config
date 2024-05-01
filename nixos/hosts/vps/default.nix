@@ -42,12 +42,19 @@
   };
 
   # Config files for caddy and wagtail
-  age.secrets = lib.mkIf (!config.ahayzen.testing) { local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age; };
+  age.secrets = lib.mkIf (!config.ahayzen.testing) {
+    local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age;
+    local-py_yumekasaito-com.file = ../../../secrets/local-py_yumekasaito-com.age;
+  };
   environment.etc = {
     "ahayzen.com/local.1.py".source =
       if config.ahayzen.testing
       then ./local.vm.py
       else config.age.secrets.local-py_ahayzen-com.path;
+    "yumekasaito.com/local.1.py".source =
+      if config.ahayzen.testing
+      then ./local.vm.py
+      else config.age.secrets.local-py_yumekasaito-com.path;
     "caddy/Caddyfile.1".source =
       if config.ahayzen.testing
       then ./Caddyfile.vm

@@ -7,6 +7,7 @@ let
 in
 {
   "local-py_ahayzen-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
+  "local-py_yumekasaito-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
 
   # mkpasswd -m sha-512
   "password_andrew.age".publicKeys = publicKeys.group.hosts.desktop ++ publicKeys.group.users.developer;
