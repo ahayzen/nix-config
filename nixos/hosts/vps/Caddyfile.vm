@@ -37,3 +37,23 @@ http://ahayzen.com {
 # video.ahayzen.com {
 #     reverse_proxy localhost:9888
 # }
+
+# yumekasaito.com site
+http://yumekasaito.com {
+    # Wagtail media files
+    handle_path /media/* {
+        root * /srv/wagtail-yumekasaito/media/
+        file_server
+    }
+
+    # Wagtail static files
+    handle_path /static/* {
+        root * /srv/wagtail-yumekasaito/static/
+        file_server
+    }
+
+    # Anything else goes to wagtail
+    handle {
+        reverse_proxy wagtail-yumekasaito:8080
+    }
+}
