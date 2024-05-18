@@ -5,6 +5,7 @@
 { pkgs, ... }: {
   imports = [
     ./docker.nix
+    ./docker-compose.nix
     ./ssh.nix
   ];
 
