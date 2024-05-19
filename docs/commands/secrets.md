@@ -19,3 +19,9 @@ $ nix run github:ryantm/agenix -- -e password_andrew.age
 $ cd secrets/
 $ nix run github:ryantm/agenix -- --rekey
 ```
+
+# Quirks
+
+Had issues where changing permissions or contents of agenix files didn't appear when rebuilding.
+
+Running `nix-collect-garbage` helped here.
