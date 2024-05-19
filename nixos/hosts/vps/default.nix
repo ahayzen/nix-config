@@ -39,6 +39,10 @@
     docker-compose-file = ./docker-compose.yml;
 
     hostName = "vps";
+
+    # Enable testing for now until DNS points to the correct place
+    # and to see how NixOS performs
+    testing = true;
   };
 
   # Config files for caddy and wagtail
