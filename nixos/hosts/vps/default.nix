@@ -45,14 +45,14 @@
     local-py_ahayzen-com = {
       file = ../../../secrets/local-py_ahayzen-com.age;
       # Set correct owner otherwise docker cannot read the file
-      mode = "0400";
+      mode = "0444";
       owner = "unpriv";
       group = "unpriv";
     };
     local-py_yumekasaito-com = {
       file = ../../../secrets/local-py_yumekasaito-com.age;
       # Set correct owner otherwise docker cannot read the file
-      mode = "0400";
+      mode = "0444";
       owner = "unpriv";
       group = "unpriv";
     };
