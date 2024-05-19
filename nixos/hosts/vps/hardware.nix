@@ -25,7 +25,7 @@
 
   boot.initrd.availableKernelModules = [ "ata_piix" "virtio_pci" "virtio_scsi" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -33,16 +33,7 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.br-3712864cdae2.useDHCP = lib.mkDefault true;
-  # networking.interfaces.br-6be2f64815bc.useDHCP = lib.mkDefault true;
-  # networking.interfaces.br-77b86f5b676c.useDHCP = lib.mkDefault true;
-  # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.eth0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth6c7dc59.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth7e2805c.useDHCP = lib.mkDefault true;
-  # networking.interfaces.veth9d12282.useDHCP = lib.mkDefault true;
-  # networking.interfaces.vethaf48364.useDHCP = lib.mkDefault true;
-  # networking.interfaces.vethe5af1a6.useDHCP = lib.mkDefault true;
+  # networking.interfaces.ens3.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
