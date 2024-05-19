@@ -7,10 +7,15 @@
   # for automatic boot assessment with systemd-boot
   # https://github.com/NixOS/nixpkgs/pull/284135/
   boot = {
-    # Enable systemd for stage 1
-    #
-    # TODO: FUTURE: this might become default
-    initrd.systemd.enable = true;
+    initrd = {
+      # Enable systemd for stage 1
+      #
+      # TODO: FUTURE: this might become default
+      systemd.enable = true;
+
+      # When using systemd enable LVM support otherwise cannot boot
+      services.lvm.enable = true;
+    };
 
     loader = {
       efi = {
