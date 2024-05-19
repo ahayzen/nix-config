@@ -30,8 +30,15 @@
       # Has randomizedDelaySec of 30m by default
     };
 
-    # Ensure that nix-command and flakes are enabled
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings = {
+      # Ensure that nix-command and flakes are enabled
+      experimental-features = [ "nix-command" "flakes" ];
+
+      # Do not cache tarballs that are downloaded
+      # otherwise by default the flake tarball is cached 3600 seconds
+      # which means rebuilds appear not to work
+      tarball-ttl = 0;
+    };
   };
 
   # Define the platform that we are using
