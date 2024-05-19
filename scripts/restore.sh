@@ -7,7 +7,7 @@
 set -e
 
 #
-# restore <machine-name> <user@host> <restore-source>
+# restore <machine-name> <identity-file> <user@host> <restore-source>
 #
 
 SSH_PORT=8022
@@ -17,10 +17,14 @@ if [ ! -x "$(command -v rsync)" ]; then
     echo "rsync command not found, cannot restore"
     exit 1
 fi
-RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsh="ssh -p $SSH_PORT" --rsync-path="sudo rsync")
 
 HEADLESS_SYSTEM=false
-USER_HOST=$2
+IDENTITY_FILE=$2
+if [ ! -f "$IDENTITY_FILE" ]; then
+    echo "Failed to find identity file"
+    exit 1
+fi
+USER_HOST=$3
 
 # Check that the machine name is known
 case $1 in
@@ -34,12 +38,15 @@ case $1 in
 esac
 
 # Check that the source folder exists
-USER_SRC=$3
+USER_SRC=$4
 if [ ! -d "$USER_SRC" ]; then
     echo "Failed to find restore source"
     exit 1
 fi
 RESTORE_SRC="$USER_SRC"
+
+# Prepare the rsync args
+RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsh="ssh -i $IDENTITY_FILE -p $SSH_PORT" --rsync-path="sudo rsync")
 
 # This is a normal headless system
 if [ $HEADLESS_SYSTEM ]; then

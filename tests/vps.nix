@@ -119,7 +119,7 @@
       vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Run the backup
-      backup.succeed("/etc/ahayzen.com/backup.sh vps headless@vps /tmp/backup-root")
+      backup.succeed("/etc/ahayzen.com/backup.sh vps /etc/ssh/test_ssh_id_ed25519 headless@vps /tmp/backup-root")
 
       # Check volumes are appearing
       backup.succeed("test -d /tmp/backup-root/docker-compose-runner/caddy/persistent")
@@ -160,7 +160,7 @@
       backup.succeed("ls -nd /tmp/restore-root/test-page/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Run the restore
-      backup.succeed("/etc/ahayzen.com/restore.sh vps headless@vps /tmp/restore-root/test-page")
+      backup.succeed("/etc/ahayzen.com/restore.sh vps /etc/ssh/test_ssh_id_ed25519 headless@vps /tmp/restore-root/test-page")
 
       # Check that the permissions are still correct
       vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")

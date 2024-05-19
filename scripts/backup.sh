@@ -7,7 +7,7 @@
 set -e
 
 #
-# backup <machine-name> <user@host> <backup-dest>
+# backup <machine-name> <identity-file> <user@host> <backup-dest>
 #
 
 SSH_PORT=8022
@@ -17,10 +17,14 @@ if [ ! -x "$(command -v rsync)" ]; then
     echo "rsync command not found, cannot backup"
     exit 1
 fi
-RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsh="ssh -p $SSH_PORT" --rsync-path="sudo rsync")
 
 HEADLESS_SYSTEM=false
-USER_HOST=$2
+IDENTITY_FILE=$2
+if [ ! -f "$IDENTITY_FILE" ]; then
+    echo "Failed to find identity file"
+    exit 1
+fi
+USER_HOST=$3
 
 # Check that the machine name is known
 case $1 in
@@ -34,12 +38,15 @@ case $1 in
 esac
 
 # Check that the target folder exists
-USER_DEST=$3
+USER_DEST=$4
 if [ ! -d "$USER_DEST" ]; then
     echo "Failed to find backup target"
     exit 1
 fi
 BACKUP_DEST="$USER_DEST"
+
+# Prepare the rsync args
+RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsh="ssh -i $IDENTITY_FILE -p $SSH_PORT" --rsync-path="sudo rsync")
 
 # This is a normal headless system
 if [ $HEADLESS_SYSTEM ]; then
