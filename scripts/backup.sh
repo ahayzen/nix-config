@@ -10,12 +10,14 @@ set -e
 # backup <machine-name> <user@host> <backup-dest>
 #
 
+SSH_PORT=8022
+
 # Check that rsync exists
 if [ ! -x "$(command -v rsync)" ]; then
     echo "rsync command not found, cannot backup"
     exit 1
 fi
-RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsync-path="sudo rsync")
+RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsh="ssh -p $SSH_PORT" --rsync-path="sudo rsync")
 
 HEADLESS_SYSTEM=false
 USER_HOST=$2
@@ -48,8 +50,8 @@ if [ $HEADLESS_SYSTEM ]; then
     #
     # This uses the online backup API as described in how to backup while transactions are active
     # https://www.sqlite.org/howtocorrupt.html#_backup_or_restore_while_a_transaction_is_active
-    ssh "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 '.backup /var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3'"
-    ssh "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 '.backup /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3'"
+    ssh -p "$SSH_PORT" "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 '.backup /var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3'"
+    ssh -p "$SSH_PORT" "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 '.backup /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3'"
 
     # Backup all of the docker data
     sudo "$(command -v rsync)" "${RSYNC_ARGS[@]}" "$USER_HOST:/var/lib/docker-compose-runner/" "$DOCKER_COMPOSE_RUNNER_DEST"
