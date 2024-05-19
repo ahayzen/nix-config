@@ -75,6 +75,20 @@
       else ./Caddyfile;
   };
 
+  # Ports to allow for SSH tunnels
+  networking.firewall.allowedTCPPorts = [
+    # Audio
+    9881
+    # Video
+    9888
+    # VPN
+    9194
+    # Bitwarden
+    9821
+    # WebDAV
+    9506
+  ];
+
   # Increase disk size for build VM
   virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
 
