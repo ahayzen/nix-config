@@ -42,8 +42,16 @@
 
   # Config files for caddy and wagtail
   age.secrets = lib.mkIf (!config.ahayzen.testing) {
-    local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age;
-    local-py_yumekasaito-com.file = ../../../secrets/local-py_yumekasaito-com.age;
+    local-py_ahayzen-com = {
+      file = ../../../secrets/local-py_ahayzen-com.age;
+      # do not symlink otherwise docker cannot read the file
+      symlink = false;
+    };
+    local-py_yumekasaito-com = {
+      file = ../../../secrets/local-py_yumekasaito-com.age;
+      # do not symlink otherwise docker cannot read the file
+      symlink = false;
+    };
   };
 
   environment.etc = {
