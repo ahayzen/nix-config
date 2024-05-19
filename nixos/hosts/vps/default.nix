@@ -26,6 +26,7 @@
     local-py_ahayzen-com.file = ../../../secrets/local-py_ahayzen-com.age;
     local-py_yumekasaito-com.file = ../../../secrets/local-py_yumekasaito-com.age;
   };
+
   environment.etc = {
     "ahayzen.com/local.1.py".source =
       if config.ahayzen.testing
