@@ -107,9 +107,9 @@
     #
 
     with subtest("Access hostkey"):
-        vps.wait_for_open_port(22, timeout=30)
+        vps.wait_for_open_port(8022, timeout=30)
         # Ensure we allow the host key
-        backup.succeed("ssh -vvv -o StrictHostKeyChecking=accept-new headless@vps exit")
+        backup.succeed("ssh -vvv -p 8022 -o StrictHostKeyChecking=accept-new headless@vps exit")
 
     with subtest("Attempt to run a backup"):
       backup.succeed("mkdir -p /tmp/backup-root")

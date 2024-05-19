@@ -10,12 +10,14 @@ set -e
 # restore <machine-name> <user@host> <restore-source>
 #
 
+SSH_PORT=8022
+
 # Check that rsync exists
 if [ ! -x "$(command -v rsync)" ]; then
     echo "rsync command not found, cannot restore"
     exit 1
 fi
-RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsync-path="sudo rsync")
+RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsh="ssh -p $SSH_PORT" --rsync-path="sudo rsync")
 
 HEADLESS_SYSTEM=false
 USER_HOST=$2
@@ -48,13 +50,13 @@ if [ $HEADLESS_SYSTEM ]; then
     fi
 
     # Stop services as we are about to mutate data
-    ssh "$USER_HOST" sudo systemctl stop docker-compose-runner.service
+    ssh -p "$SSH_PORT" "$USER_HOST" sudo systemctl stop docker-compose-runner.service
 
     # Restore all of the docker data
     sudo "$(command -v rsync)" "${RSYNC_ARGS[@]}" "$DOCKER_COMPOSE_RUNNER_SRC" "$USER_HOST:/var/lib/docker-compose-runner/"
 
     # Restart services
-    ssh "$USER_HOST" sudo systemctl start docker-compose-runner.service
+    ssh -p "$SSH_PORT" "$USER_HOST" sudo systemctl start docker-compose-runner.service
 fi
 
 echo "Restore complete!"

@@ -6,6 +6,9 @@
   services.openssh = {
     enable = true;
     openFirewall = true;
+    ports = [
+      8022
+    ];
     settings = {
       PasswordAuthentication = false;
       PermitRootLogin = lib.mkDefault "no";
