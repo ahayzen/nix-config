@@ -10,7 +10,7 @@
     ./hardware.nix
   ];
 
-  # OVH uses BIOS (?) so we need to disable systemd-boot and use grub
+  # OVH uses BIOS so we need to disable systemd-boot and use grub
   #
   # But we still allow for potentially using EFI boot in the future
   boot.loader = {
@@ -18,7 +18,6 @@
     # and we don't have an EFI mountpoint so install in the root
     efi = {
       canTouchEfiVariables = lib.mkForce false;
-      efiSysMountPoint = lib.mkForce "/boot";
     };
 
     grub = {

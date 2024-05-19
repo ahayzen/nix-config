@@ -21,7 +21,6 @@
       efi = {
         # Allow for reordering the boot entries
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
       };
 
       # Enable systemd boot
