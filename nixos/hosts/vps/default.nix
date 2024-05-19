@@ -55,14 +55,22 @@
   };
 
   environment.etc = {
-    "ahayzen.com/local.1.py".source =
-      if config.ahayzen.testing
-      then ./local.vm.py
-      else config.age.secrets.local-py_ahayzen-com.path;
-    "yumekasaito.com/local.1.py".source =
-      if config.ahayzen.testing
-      then ./local.vm.py
-      else config.age.secrets.local-py_yumekasaito-com.path;
+    "ahayzen.com/local.1.py" = {
+      # do not symlink otherwise docker cannot read the file
+      mode = "0644";
+      source =
+        if config.ahayzen.testing
+        then ./local.vm.py
+        else config.age.secrets.local-py_ahayzen-com.path;
+    };
+    "yumekasaito.com/local.1.py" = {
+      # do not symlink otherwise docker cannot read the file
+      mode = "0644";
+      source =
+        if config.ahayzen.testing
+        then ./local.vm.py
+        else config.age.secrets.local-py_yumekasaito-com.path;
+    };
     "caddy/Caddyfile.1".source =
       if config.ahayzen.testing
       then ./Caddyfile.vm
