@@ -6,7 +6,7 @@ let
   # Hosts
   host = {
     thinkpad-t480 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFyQGokh7SHDi+mSwd3MgMAH0I0IF/BxG/tRiCYxKgPF";
-    vps = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9P5LN3dtqKzHAm0VnPnRd/yYEHQggI0KdqQ5fiJgqQ root@vps-904e01b6";
+    vps = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLzml0N0siR1R9l5Cfy9b8xURbCsYuheShVKyVAFu/d root@vps-904e01b6";
     xps-13-9360 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1+V0m26Ni1WjixUmmYlSV7oE/zCvz/CHaafk3CmL+L";
   };
 
