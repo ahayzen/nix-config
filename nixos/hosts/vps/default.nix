@@ -10,6 +10,30 @@
     ./hardware.nix
   ];
 
+  # OVH uses BIOS (?) so we need to disable systemd-boot and use grub
+  #
+  # But we still allow for potentially using EFI boot in the future
+  boot.loader = {
+    # We need to disable so that efiInstallAsRemovable can be enabled
+    # and we don't have an EFI mountpoint so install in the root
+    efi = {
+      canTouchEfiVariables = lib.mkForce false;
+      efiSysMountPoint = lib.mkForce "/boot";
+    };
+
+    grub = {
+      enable = true;
+      configurationLimit = 10;
+      # disko automatically adds devices that have a EF02 partition
+      # devices = [ "/dev/sda" ];
+      efiSupport = true;
+      # We need to enable this as we are currently booted in BIOS
+      efiInstallAsRemovable = true;
+      splashImage = null;
+    };
+    systemd-boot.enable = lib.mkForce false;
+  };
+
   ahayzen = {
     # Specify the docker file we are using
     docker-compose-file = ./docker-compose.yml;
