@@ -29,6 +29,9 @@
 
       # Has randomizedDelaySec of 30m by default
     };
+
+    # Ensure that nix-command and flakes are enabled
+    settings.experimental-features = [ "nix-command" "flakes" ];
   };
 
   # Define the platform that we are using
