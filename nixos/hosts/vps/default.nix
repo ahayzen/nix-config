@@ -75,7 +75,7 @@
       else ./Caddyfile;
   };
 
-  # Ports to allow for SSH tunnels
+  # Ports to allow for SSH proxies
   networking.firewall.allowedTCPPorts = [
     # Audio
     9881
@@ -88,6 +88,9 @@
     # WebDAV
     9506
   ];
+
+  # Allow for SSH proxies to bind on the host rather than loopback
+  services.openssh.settings.GatewayPorts = "clientspecified";
 
   # Increase disk size for build VM
   virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
