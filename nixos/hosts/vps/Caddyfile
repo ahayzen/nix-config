@@ -35,7 +35,7 @@ bitwarden.ahayzen.com {
 
 # Video proxy
 video.ahayzen.com {
-    reverse_proxy ahayzen.com:9888
+    reverse_proxy https://ahayzen.com:9888
 }
 
 # yumekasaito.com site
