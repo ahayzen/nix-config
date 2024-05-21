@@ -56,3 +56,14 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v6
       - name: nix flake check
         run: nix flake --option sandbox false check -L
+
+  nixos-anywhere-vm-test-check:
+    # Run after pre checks
+    needs: [license-check, flake-checker, nix-fmt, shellcheck]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v11
+      - uses: DeterminateSystems/magic-nix-cache-action@v6
+      - name: nixos-anywhere vm-test vps
+        run: nix run github:nix-community/nixos-anywhere -- --flake .#vps --vm-test
