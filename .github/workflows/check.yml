@@ -109,3 +109,25 @@ jobs:
         # nix flake check doesn't have a way to specify a specific test to run
         # https://github.com/NixOS/nix/issues/8881
         run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.vps-wagtail-test
+
+  nixos-anywhere-vm-test-lab:
+    # Run after pre checks
+    needs: [nix-flake-check-no-build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: DeterminateSystems/nix-installer-action@v12
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: nixos-anywhere vm-test lab
+        run: nix run github:nix-community/nixos-anywhere -- --flake .#lab --vm-test
+
+  nixos-anywhere-vm-test-vps:
+    # Run after pre checks
+    needs: [nix-flake-check-no-build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: DeterminateSystems/nix-installer-action@v12
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: nixos-anywhere vm-test vps
+        run: nix run github:nix-community/nixos-anywhere -- --flake .#vps --vm-test
