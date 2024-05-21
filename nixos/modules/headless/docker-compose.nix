@@ -33,6 +33,11 @@
           ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} pull --quiet
           ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans
         '';
+
+        # Restart if the docker-compose file changes
+        restartTriggers = [
+          (builtins.hashFile "sha256" config.ahayzen.docker-compose-file)
+        ];
       };
       # Do not use StateDirectory as it changes ownership to the service user on startup
       # eg this causes ownership to change to root rather than unpriv
