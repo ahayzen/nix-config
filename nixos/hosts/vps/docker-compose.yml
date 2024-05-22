@@ -9,6 +9,9 @@ services:
   caddy:
     image: caddy:latest
     restart: unless-stopped
+    # Limit to 1 CPU core and 500MB of RAM
+    cpus: '1.0'
+    mem_limit: 500M
     cap_add:
       # Allow for increasing buffer size for HTTP/3
       - NET_ADMIN
@@ -50,6 +53,9 @@ services:
   wagtail-ahayzen:
     image: registry.gitlab.com/ahayzen/ahayzen.com/wagtail-image:latest
     restart: unless-stopped
+    # Limit to 1 CPU core and 500MB of RAM
+    cpus: '1.0'
+    mem_limit: 500M
     expose:
       - "8080"
     volumes:
@@ -67,6 +73,9 @@ services:
   wagtail-yumekasaito:
     image: registry.gitlab.com/ahayzen/yumekasaito.com/wagtail-image:latest
     restart: unless-stopped
+    # Limit to 1 CPU core and 500MB of RAM
+    cpus: '1.0'
+    mem_limit: 500M
     expose:
       - "8080"
     volumes:
