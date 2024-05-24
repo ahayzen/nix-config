@@ -36,7 +36,9 @@ bitwarden.ahayzen.com {
 # Video proxy
 video.ahayzen.com {
     reverse_proxy https://ahayzen.com:9888 {
-        header_up Host {upstream_hostport}
+        transport http {
+            tls_insecure_skip_verify
+        }
     }
 }
 
