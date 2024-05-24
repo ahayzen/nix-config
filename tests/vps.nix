@@ -19,7 +19,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Allow test ssh authentication
@@ -29,13 +29,44 @@
 
       # Match VPS specifications
       virtualisation = {
-        cores = 1;
+        cores = 2;
         # Increase so we can fit docker images
         diskSize = 2 * 1024;
         memorySize = 2 * 1024;
       };
     };
 
+    lab = { self, pkgs, ... }: {
+      imports =
+        [
+          self.nixosModules.headlessSystem
+          ../nixos/hosts/lab/default.nix
+          ../nixos/users/headless
+        ];
+
+      ahayzen.testing = true;
+
+      # Extra packages for the test
+      environment.systemPackages = [ pkgs.curl ];
+
+      networking.hosts = {
+        "vps" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
+      };
+
+      # Allow test ssh authentication
+      users.users.headless.openssh.authorizedKeys.keyFiles = [
+        ./files/test_ssh_id_ed25519.pub
+      ];
+
+      virtualisation = {
+        cores = 2;
+        # Increase so we can fit docker images
+        diskSize = 4 * 1024;
+        memorySize = 2 * 1024;
+      };
+    };
+
+    # TODO: backup on lab ? or test independently ?
     backup = { self, pkgs, ... }: {
       environment = {
         etc = {
@@ -63,7 +94,7 @@
 
       services.openssh.enable = true;
 
-      # Setup IdentityFile for vps
+      # Setup IdentityFile
       programs.ssh.extraConfig = builtins.readFile ./files/ssh_config;
     };
   };
@@ -107,40 +138,40 @@
     #
 
     with subtest("Access hostkey"):
-        vps.wait_for_open_port(8022, timeout=30)
-        # Ensure we allow the host key
-        backup.succeed("ssh -vvv -p 8022 -o StrictHostKeyChecking=accept-new headless@vps exit")
+      vps.wait_for_open_port(8022, timeout=30)
+      # Ensure we allow the host key
+      backup.succeed("ssh -vvv -p 8022 -o StrictHostKeyChecking=accept-new headless@vps exit")
 
     with subtest("Attempt to run a backup"):
-      backup.succeed("mkdir -p /tmp/backup-root")
+      backup.succeed("mkdir -p /tmp/backup-root-vps")
 
       # Check that the permissions are correct
       vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Run the backup
-      backup.succeed("/etc/ahayzen.com/backup.sh vps /etc/ssh/test_ssh_id_ed25519 headless@vps /tmp/backup-root")
+      backup.succeed("/etc/ahayzen.com/backup.sh vps /etc/ssh/test_ssh_id_ed25519 headless@vps /tmp/backup-root-vps")
 
       # Check volumes are appearing
-      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/caddy/persistent")
-      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/caddy/config")
-      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db")
-      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/media")
-      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/static")
-      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db")
-      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/media")
-      backup.succeed("test -d /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/static")
+      backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/caddy/persistent")
+      backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/caddy/config")
+      backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db")
+      backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/media")
+      backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/static")
+      backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db")
+      backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/media")
+      backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/static")
 
       # Check that known files exist and permissions are correct
-      backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3")
-      backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
-      backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
-      backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3")
-      backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
-      backup.succeed("ls -nd /tmp/backup-root/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     # TODO: note this does not restore wagtail-yumekasaito
     with subtest("Attempt to run a restore (only wagtail-ahayzen)"):
@@ -174,20 +205,87 @@
       output = vps.succeed("curl --silent ahayzen.com:80/")
       assert "Restore Unit Test" in output, f"'{output}' does not contain 'Restore Unit Test'"
 
-    with subtest("General metrics"):
-      output = vps.succeed("ps auxf")
-      print(output)
+    #
+    # Test that Lab works
+    #
 
-      output = vps.succeed("free -h")
-      print(output)
+    with subtest("Ensure docker starts"):
+      lab.wait_for_unit("docker-compose-runner", timeout=120)
 
-      output = vps.succeed("df -h")
-      print(output)
+    with subtest("Rathole connection"):
+      # Check we have a server control channel
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=actual"' , timeout=10)
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=bitwarden"' , timeout=10)
 
-      output = vps.succeed("docker images")
-      print(output)
+      # Check we have a client control channel
+      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
 
-      output = vps.succeed("docker stats --no-stream")
-      print(output)
+    with subtest("Test actual"):
+      # Wait for actual to start
+      wait_for_actual_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening on :::5006..."'
+      lab.wait_until_succeeds(wait_for_actual_cmd, timeout=60)
+
+      # Test login page
+      output = vps.succeed("curl --silent actual.ahayzen.com:80/login")
+      assert "Actual" in output, f"'{output}' does not contain 'Actual'"
+
+    with subtest("Test bitwarden"):
+      # Wait for bitwarden to start
+      wait_for_bitwarden_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "INFO success: nginx entered RUNNING state"'
+      lab.wait_until_succeeds(wait_for_bitwarden_cmd, timeout=60)
+
+      # Test login page
+      output = vps.succeed("curl --silent bitwarden.ahayzen.com:80/#/login")
+      assert "Bitwarden" in output, f"'{output}' does not contain 'Bitwarden'"
+
+    #
+    # Test that we can backup lab
+    #
+
+    with subtest("Access hostkey"):
+      lab.wait_for_open_port(8022, timeout=30)
+      # Ensure we allow the host key
+      backup.succeed("ssh -vvv -p 8022 -o StrictHostKeyChecking=accept-new headless@lab exit")
+
+    with subtest("Attempt to run lab backup"):
+      backup.succeed("mkdir -p /tmp/backup-root-lab")
+
+      # Check that the permissions are correct
+      lab.succeed("ls -nd /var/lib/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("ls -nd /var/lib/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+      # Run the backup
+      backup.succeed("/etc/ahayzen.com/backup.sh lab /etc/ssh/test_ssh_id_ed25519 headless@lab /tmp/backup-root-lab")
+
+      # Check volumes are appearing
+      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/actual/data")
+      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/bitwarden/config")
+
+      # Check that known files exist and permissions are correct
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot.sqlite")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account.sqlite")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot.db")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault.db")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+    with subtest("General metrics (lab)"):
+      print(lab.succeed("cat /etc/hosts"))
+      print(lab.succeed("ps auxf"))
+      print(lab.succeed("free -h"))
+      print(lab.succeed("df -h"))
+      print(lab.succeed("docker images"))
+      print(lab.succeed("docker stats --no-stream"))
+
+    with subtest("General metrics (vps)"):
+      print(vps.succeed("cat /etc/hosts"))
+      print(vps.succeed("ps auxf"))
+      print(vps.succeed("free -h"))
+      print(vps.succeed("df -h"))
+      print(vps.succeed("docker images"))
+      print(vps.succeed("docker stats --no-stream"))
   '';
 }
