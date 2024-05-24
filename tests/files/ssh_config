@@ -2,5 +2,8 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+Host lab
+    IdentityFile /etc/ssh/test_ssh_id_ed25519
+
 Host vps
     IdentityFile /etc/ssh/test_ssh_id_ed25519

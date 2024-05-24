@@ -16,5 +16,8 @@
     environment.systemPackages = with pkgs; [
       sqlite
     ];
+
+    # If we are a laptop ignore the lid being shut
+    services.logind.lidSwitch = "ignore";
   };
 }

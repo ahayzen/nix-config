@@ -28,11 +28,16 @@ http://ahayzen.com {
     }
 }
 
-# # Bitwarden proxy
-# bitwarden.ahayzen.com {
-#     reverse_proxy localhost:9001
-# }
-#
+# Actual proxy
+http://actual.ahayzen.com {
+    reverse_proxy rathole:8506
+}
+
+# Bitwarden proxy
+http://bitwarden.ahayzen.com {
+    reverse_proxy rathole:8080
+}
+
 # # Video proxy
 # video.ahayzen.com {
 #     reverse_proxy localhost:9888

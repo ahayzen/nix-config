@@ -56,6 +56,13 @@
       owner = "unpriv";
       group = "unpriv";
     };
+    rathole_toml = {
+      file = ../../../secrets/rathole_toml.age;
+      # Set correct owner otherwise docker cannot read the file
+      mode = "0600";
+      owner = "unpriv";
+      group = "unpriv";
+    };
   };
 
   environment.etc = {
@@ -73,10 +80,17 @@
       if config.ahayzen.testing
       then ./Caddyfile.vm
       else ./Caddyfile;
+    "rathole/config.1.toml".
+    source =
+      if config.ahayzen.testing
+      then ./rathole.vm.toml
+      else config.age.secrets.rathole_toml.path;
   };
 
   # Ports to allow for SSH proxies
   networking.firewall.allowedTCPPorts = [
+    # Rathole server
+    8333
     # Audio
     9881
     # Video
@@ -84,6 +98,7 @@
     # VPN
     9194
     # Bitwarden
+    # TODO: remove
     9821
     # WebDAV
     9506

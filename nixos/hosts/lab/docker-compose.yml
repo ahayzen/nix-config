@@ -1,0 +1,49 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+version: "3.7"
+
+services:
+  actual:
+    image: docker.io/actualbudget/actual-server:latest
+    expose:
+      - "5006"
+    restart: unless-stopped
+    volumes:
+      - /var/lib/docker-compose-runner/actual/data:/data
+
+  bitwarden:
+    image: docker.io/bitwarden/self-host:beta
+    env_file:
+      - /etc/bitwarden/settings.1.env
+    # https://bitwarden.com/help/environment-variables/
+    environment:
+      BW_DOMAIN: "bitwarden.ahayzen.com"
+      # Use sqlite
+      BW_DB_PROVIDER: "sqlite"
+      BW_DB_FILE: "/etc/bitwarden/vault.db"
+      # Disable serving icons to save memory
+      BW_ENABLE_ICONS: false
+      BW_ICONS_PROXY_TO_CLOUD: true
+      # We are using userns so run as root in the container but unpriv outside
+      PUID: 0
+      PGID: 0
+      # Disable account registration
+      globalSettings__disableUserRegistration: true
+      # TODO: https?
+    expose:
+      - "8080"
+    mem_limit: 1024m
+    restart: unless-stopped
+    volumes:
+      - /var/lib/docker-compose-runner/bitwarden/config:/etc/bitwarden
+
+  rathole:
+    image: docker.io/rapiz1/rathole:latest
+    command: --client /etc/rathole/config.toml
+    links:
+      - actual
+      - bitwarden
+    volumes:
+      - /etc/rathole/config.1.toml:/etc/rathole/config.toml:ro

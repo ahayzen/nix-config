@@ -80,6 +80,17 @@
             ./nixos/users/headless
           ];
         };
+
+        # NAS
+        lab = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+
+          modules = [
+            self.nixosModules.headlessSystem
+            ./nixos/hosts/lab/default.nix
+            ./nixos/users/headless
+          ];
+        };
       };
 
       checks = {
@@ -95,6 +106,7 @@
             };
           in
           {
+            # TODO: rename headless test
             vps-test = import ./tests/vps.nix checkArgs;
           };
       };

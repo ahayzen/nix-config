@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+[server]
+bind_addr = "0.0.0.0:8333"
+default_token = "CHANGEME"
+
+[server.services.actual]
+bind_addr = "0.0.0.0:8506"
+
+[server.services.bitwarden]
+bind_addr = "0.0.0.0:8080"

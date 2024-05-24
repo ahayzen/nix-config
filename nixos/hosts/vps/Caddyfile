@@ -28,14 +28,28 @@ ahayzen.com www.ahayzen.com {
     }
 }
 
-# Bitwarden proxy
-bitwarden.ahayzen.com {
-    reverse_proxy ahayzen.com:9821
+# Actual proxy
+actual.ahayzen.com {
+    reverse_proxy rathole:8506
 }
 
-# Video proxy
-video.ahayzen.com {
-    reverse_proxy https://ahayzen.com:9888 {
+# Bitwarden proxy
+bitwarden.ahayzen.com {
+    reverse_proxy rathole:8080
+}
+
+# DSAudio proxy
+dsaudio.ahayzen.com {
+    reverse_proxy https://rathole:8801 {
+        transport http {
+            tls_insecure_skip_verify
+        }
+    }
+}
+
+# DSVideo proxy
+dsvideo.ahayzen.com {
+    reverse_proxy https://rathole:8808 {
         transport http {
             tls_insecure_skip_verify
         }
