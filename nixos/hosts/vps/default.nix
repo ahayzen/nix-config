@@ -87,26 +87,6 @@
       else config.age.secrets.rathole_toml.path;
   };
 
-  # Ports to allow for SSH proxies
-  networking.firewall.allowedTCPPorts = [
-    # Rathole server
-    8333
-    # Audio
-    9881
-    # Video
-    9888
-    # VPN
-    9194
-    # Bitwarden
-    # TODO: remove
-    9821
-    # WebDAV
-    9506
-  ];
-
-  # Allow for SSH proxies to bind on the host rather than loopback
-  services.openssh.settings.GatewayPorts = "clientspecified";
-
   # Reload if static files change
   #
   # Note agenix files are not possible and will need the version bumping
@@ -117,13 +97,4 @@
 
   # Increase disk size for build VM
   virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
-
-  # Create a tunneller user for SSH tunnels
-  #
-  # TODO: investigate using something like https://github.com/rapiz1/rathole
-  users.users.tunneller = {
-    isNormalUser = true;
-
-    openssh.authorizedKeys.keys = [ config.ahayzen.publicKeys.user.synology-nas-tunneller ];
-  };
 }
