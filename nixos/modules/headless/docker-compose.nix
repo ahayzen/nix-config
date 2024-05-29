@@ -34,8 +34,8 @@
           ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans
         '';
 
-        # Restart if the docker-compose file changes
-        restartTriggers = [
+        # Reload if the docker-compose file changes
+        reloadTriggers = [
           (builtins.hashFile "sha256" config.ahayzen.docker-compose-file)
         ];
       };
