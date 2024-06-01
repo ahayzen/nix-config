@@ -71,6 +71,9 @@
       else config.age.secrets.rathole_toml.path;
   };
 
+  # Enable thermal control as this is an intel laptop
+  services.thermald.enable = true;
+
   # Increase disk size for build VM
   virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
 }
