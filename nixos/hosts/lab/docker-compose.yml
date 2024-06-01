@@ -30,7 +30,9 @@ services:
       PUID: 0
       PGID: 0
       # Disable account registration
-      globalSettings__disableUserRegistration: true
+      #
+      # Allow for now to setup accounts
+      globalSettings__disableUserRegistration: false
       # TODO: https?
     expose:
       - "8080"
