@@ -23,9 +23,6 @@ services:
       # Use sqlite
       BW_DB_PROVIDER: "sqlite"
       BW_DB_FILE: "/etc/bitwarden/vault.db"
-      # Disable serving icons to save memory
-      BW_ENABLE_ICONS: false
-      BW_ICONS_PROXY_TO_CLOUD: true
       # We are using userns so run as root in the container but unpriv outside
       PUID: 0
       PGID: 0
