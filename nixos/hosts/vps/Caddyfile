@@ -28,6 +28,12 @@ ahayzen.com www.ahayzen.com {
     }
 }
 
+#
+# Note that sub domains require a A or CNAME record in the DNS
+#
+# eg actual IN CNAME ahayzen.com.
+#
+
 # Actual proxy
 actual.ahayzen.com {
     reverse_proxy rathole:8506
