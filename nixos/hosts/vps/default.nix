@@ -59,7 +59,9 @@
     rathole_toml = {
       file = ../../../secrets/rathole_toml.age;
       # Set correct owner otherwise docker cannot read the file
-      mode = "0600";
+      #
+      # Note rathole uses ID 1000 inside the container
+      mode = "0666";
       owner = "unpriv";
       group = "unpriv";
     };
