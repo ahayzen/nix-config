@@ -81,7 +81,7 @@
           ];
         };
 
-        # NAS
+        # Home Lab
         lab = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
@@ -106,8 +106,7 @@
             };
           in
           {
-            # TODO: rename headless test
-            vps-test = import ./tests/vps.nix checkArgs;
+            headless-test = import ./tests/headless.nix checkArgs;
           };
       };
     };
