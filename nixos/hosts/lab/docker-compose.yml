@@ -27,7 +27,7 @@ services:
       # Disable account registration
       #
       # Allow for now to setup accounts
-      globalSettings__disableUserRegistration: false
+      globalSettings__disableUserRegistration: true
       # TODO: https?
     expose:
       - "8080"
