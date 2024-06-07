@@ -17,6 +17,7 @@
         path = [ pkgs.docker-compose ];
         after = [ "docker.service" "docker.socket" "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
+        wants = [ "network-online.target" ];
 
         serviceConfig = {
           Type = "oneshot";
