@@ -2,8 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-version: "3.7"
-
 services:
   actual:
     image: docker.io/actualbudget/actual-server:latest
