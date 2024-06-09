@@ -4,7 +4,7 @@
 
 services:
   actual:
-    image: docker.io/actualbudget/actual-server:latest
+    image: docker.io/actualbudget/actual-server:24.6.0@sha256:5263bdcfc51a09076be7c39f88c16a901610abe7e89ff54ef5ea690e04753efc
     expose:
       - "5006"
     restart: unless-stopped
@@ -12,7 +12,7 @@ services:
       - /var/lib/docker-compose-runner/actual/data:/data
 
   bitwarden:
-    image: docker.io/bitwarden/self-host:beta
+    image: docker.io/bitwarden/self-host:2024.5.0-beta@sha256:82dd3318e3483492364c09a27819f6c14753e9bb721a4d81cf9c624b99057407
     env_file:
       - /etc/bitwarden/settings.1.env
     # https://bitwarden.com/help/environment-variables/
@@ -37,7 +37,7 @@ services:
       - /var/lib/docker-compose-runner/bitwarden/config:/etc/bitwarden
 
   rathole:
-    image: docker.io/rapiz1/rathole:latest
+    image: docker.io/rapiz1/rathole:v0.5.0@sha256:a31b9178e985d4a84f46d4c3af6aa200ee0c5e7f821c7075a1f6669fb77392b1
     command: --client /etc/rathole/config.toml
     links:
       - actual
