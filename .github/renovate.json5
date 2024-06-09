@@ -8,6 +8,7 @@
     "forkProcessing": "disabled",
     "extends": [
         "config:recommended",
+        ":disableDependencyDashboard",
         ":rebaseStalePrs",
         "docker:enableMajor",
     ],
