@@ -17,7 +17,7 @@ jobs:
     name: nix flake update
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.6
       - uses: DeterminateSystems/nix-installer-action@v11
 
       # Github action workflows can't trigger another workflow
@@ -26,7 +26,7 @@ jobs:
       #
       # Using a Github app allows us a token limited to this repo
       # https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@v1.10.1
         id: generate-token
         with:
           app-id: ${{ secrets.APP_ID }}
