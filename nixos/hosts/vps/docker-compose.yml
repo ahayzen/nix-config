@@ -5,7 +5,7 @@
 services:
   # Reverse proxy to other services
   caddy:
-    image: caddy:latest
+    image: caddy:2.8.4@sha256:9a8e0e6f0f0af954626903b1ae5aac3536f45222131c01e1f2433e8b1ecb3937
     restart: unless-stopped
     cap_add:
       # Allow for increasing buffer size for HTTP/3
@@ -46,7 +46,7 @@ services:
   # - /var/lib/docker-compose-runner/flathub-stats/data:/srv/flathub_stats:ro
 
   rathole:
-    image: docker.io/rapiz1/rathole:latest
+    image: docker.io/rapiz1/rathole:v0.5.0@sha256:a31b9178e985d4a84f46d4c3af6aa200ee0c5e7f821c7075a1f6669fb77392b1
     command: --server /etc/rathole/config.toml
     expose:
       # Bitwarden
@@ -67,7 +67,7 @@ services:
 
   # Wagtail
   wagtail-ahayzen:
-    image: registry.gitlab.com/ahayzen/ahayzen.com/wagtail-image:latest
+    image: registry.gitlab.com/ahayzen/ahayzen.com/wagtail-image:latest@sha256:3ac663424fdc3cf0fda1c41244c35198322579d52ed5f675ac8ea778160ada0e
     restart: unless-stopped
     expose:
       - "8080"
@@ -84,7 +84,7 @@ services:
       - /var/lib/docker-compose-runner/wagtail-ahayzen/docs:/srv/webapp/docs
 
   wagtail-yumekasaito:
-    image: registry.gitlab.com/ahayzen/yumekasaito.com/wagtail-image:latest
+    image: registry.gitlab.com/ahayzen/yumekasaito.com/wagtail-image:latest@sha256:2fc1f8eb6e1458c9c175e63178136f9a3f4ec8b83609573cf0fb76cbf5d20ea8
     restart: unless-stopped
     expose:
       - "8080"
