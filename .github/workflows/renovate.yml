@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+name: renovate
+
+on:
+  schedule:
+    # Note this is in UTC
+    #
+    # 2200 is 0700 in Japan and 2200 or 2300 in UK so has minimal impact
+    - cron: '30 22 * * *'
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4.1.6
+
+      - id: generate-token
+        uses: actions/create-github-app-token@v1.10.1
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Self-hosted Renovate
+        uses: renovatebot/github-action@v40.1.11
+        with:
+          configurationFile: .github/renovate-config.js
+          token: ${{ steps.generate-token.outputs.token }}
