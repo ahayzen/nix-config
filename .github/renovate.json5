@@ -7,8 +7,12 @@
     "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
     "forkProcessing": "disabled",
     "extends": [
-        "config:base",
+        "config:recommended",
+        ":rebaseStalePrs",
         "docker:enableMajor",
+    ],
+    "enabledManagers": [
+        "docker-compose"
     ],
     "packageRules": [
         {
