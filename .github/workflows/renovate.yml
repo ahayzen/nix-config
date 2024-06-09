@@ -14,7 +14,7 @@ on:
 
 jobs:
   renovate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4.1.6
 
@@ -27,5 +27,5 @@ jobs:
       - name: Self-hosted Renovate
         uses: renovatebot/github-action@v40.1.11
         with:
-          configurationFile: .github/renovate-config.js
+          configurationFile: .github/renovate.json
           token: ${{ steps.generate-token.outputs.token }}
