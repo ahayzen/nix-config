@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-name: renovate
+name: renovate docker-compose
 
 on:
   schedule:
@@ -29,3 +29,5 @@ jobs:
         with:
           configurationFile: .github/workflows/renovate-self-host.js
           token: ${{ steps.generate-token.outputs.token }}
+        env:
+          LOG_LEVEL: 'debug'
