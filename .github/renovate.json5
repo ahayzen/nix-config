@@ -3,17 +3,8 @@
 // SPDX-License-Identifier: MPL-2.0
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "branchPrefix": "update-renovate/",
-    "gitAuthor": "Renovate Bot <bot@renovateapp.com>",
-    "onboarding": false,
-    "platform": "github",
     "extends": [
-        "config:recommended",
         "docker:enableMajor",
-    ],
-    "forkProcessing": "disabled",
-    "repositories": [
-        "ahayzen/nix-config",
     ],
     "packageRules": [
         {
