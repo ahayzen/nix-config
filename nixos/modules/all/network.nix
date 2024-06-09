@@ -7,6 +7,22 @@
     type = lib.types.str;
   };
 
-  # Define the hostname of the device
-  config.networking.hostName = config.ahayzen.hostName;
+  config = {
+    services = {
+      # Enable avahi for discovery of .local domains
+      avahi = {
+        enable = true;
+        nssmdns4 = true;
+
+        publish = {
+          enable = true;
+          addresses = true;
+          domain = true;
+        };
+      };
+    };
+
+    # Define the hostname of the device
+    networking.hostName = config.ahayzen.hostName;
+  };
 }
