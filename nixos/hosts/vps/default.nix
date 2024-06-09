@@ -97,6 +97,9 @@
     (builtins.hashFile "sha256" config.environment.etc."caddy/Caddyfile.1".source)
   ];
 
+  # We do not need avahi on a VPS
+  services.avahi.enable = lib.mkForce false;
+
   # Increase disk size for build VM
   virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
 }
