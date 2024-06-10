@@ -32,7 +32,7 @@ jobs:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
-      - uses: DeterminateSystems/update-flake-lock@v21
+      - uses: DeterminateSystems/update-flake-lock@v22
         with:
           pr-title: "chore: update flake.lock"
           pr-body: |
