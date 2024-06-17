@@ -15,20 +15,20 @@ jobs:
   license-check:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@v3
 
   flake-checker:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - uses: DeterminateSystems/flake-checker-action@v8
 
   nix-fmt:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - uses: DeterminateSystems/nix-installer-action@v12
       - uses: DeterminateSystems/magic-nix-cache-action@v7
       - name: nix fmt
@@ -39,7 +39,7 @@ jobs:
   shellcheck:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       # Shellcheck should already be installed on github runners
       - name: install shellcheck
         run: sudo apt install --yes shellcheck
@@ -51,7 +51,7 @@ jobs:
     needs: [license-check, flake-checker, nix-fmt, shellcheck]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - uses: DeterminateSystems/nix-installer-action@v12
       - uses: DeterminateSystems/magic-nix-cache-action@v7
       - name: nix flake check
