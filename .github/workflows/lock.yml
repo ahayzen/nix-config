@@ -17,7 +17,7 @@ jobs:
     name: nix flake update
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - uses: DeterminateSystems/nix-installer-action@v12
 
       # Github action workflows can't trigger another workflow
