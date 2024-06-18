@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-22.04
     # Auto merge if this is
     # - dependabot
-    # - update of flake.lock
-    if: "${{ github.event.pull_request.user.login == 'dependabot[bot]' || (github.event.pull_request.user.login == 'ahayzen-nix-config-bot[bot]' && github.event.pull_request.title == 'chore: update flake.lock') }}"
+    # - ahayzen-nix-config-bot performing a chore
+    if: "${{ github.event.pull_request.user.login == 'dependabot[bot]' || (github.event.pull_request.user.login == 'ahayzen-nix-config-bot[bot]' && startsWith(github.event.pull_request.title, 'chore')) }}"
     steps:
       - name: approve the pr
         run: gh pr review $PR_URL --approve
