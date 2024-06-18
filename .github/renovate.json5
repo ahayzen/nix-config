@@ -13,14 +13,14 @@
         "docker:enableMajor",
     ],
     "enabledManagers": [
-        "docker-compose"
+        "docker-compose",
     ],
     "packageRules": [
         {
             "matchDatasources": [
-                "docker"
+                "docker",
             ],
-            "versioning": "semver",
+            "versioning": "semver-coerced",
         },
     ],
 }
