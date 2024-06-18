@@ -22,5 +22,14 @@
             ],
             "versioning": "semver-coerced",
         },
+        {
+            "matchDatasources": [
+                "docker",
+            ],
+            "matchPackageNames": [
+                "docker.io/bitwarden/self-host"
+            ],
+            "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\-(?<compatibility>.*)$",
+        },
     ],
 }
