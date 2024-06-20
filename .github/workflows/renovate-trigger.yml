@@ -11,6 +11,12 @@ on:
   workflow_dispatch:
 
 jobs:
+  debug:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: debug
+        run: echo "${{toJSON(github.event)}}"
+
   auto-merge:
     runs-on: ubuntu-22.04
     if: "${{ github.event.push.head_commit.author.login == 'dependabot[bot]' || github.event.push.head_commit.author.login == 'renovate-bot' }}"
