@@ -5,7 +5,7 @@
 services:
   # Reverse proxy to other services
   caddy:
-    image: caddy:2.8.4@sha256:60199fbf2046892e0aa4b19c7d3adf71f530c36abc65728627422148a75b3475
+    image: caddy:2.8.4@sha256:f0e166675bfcce01ff4fa0e05311577b79fa590cc804907deeff68ad164a0a29
     restart: unless-stopped
     cap_add:
       # Allow for increasing buffer size for HTTP/3
