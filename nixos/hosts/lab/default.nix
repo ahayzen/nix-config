@@ -88,7 +88,6 @@
       options =
         [
           "_netdev"
-          "x-systemd.automount"
 
           "allow_other"
 
@@ -96,7 +95,8 @@
           "Port=8022"
 
           "reconnect"
-          "ServerAliveInterval=15"
+          "ServerAliveInterval=10"
+          "ServerAliveCountMax=3"
 
           "follow_symlinks"
 
@@ -114,7 +114,6 @@
       options =
         [
           "_netdev"
-          "x-systemd.automount"
 
           # might need user_allow_other in fuse cofig?
           "allow_other"
@@ -123,7 +122,8 @@
           "Port=8022"
 
           "reconnect"
-          "ServerAliveInterval=15"
+          "ServerAliveInterval=10"
+          "ServerAliveCountMax=3"
 
           "follow_symlinks"
 
