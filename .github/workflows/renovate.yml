@@ -10,9 +10,9 @@ on:
     #
     # 2200 is 0700 in Japan and 2200 or 2300 in UK so has minimal impact
     #
-    # Run every 10 mins in the hour so that we attempt to resolve any rebases
+    # Run a few times in the hour so that we attempt to resolve any rebases
     # or land multiple commits
-    - cron: '1/10 22 * * *'
+    - cron: '29,44,59 22 * * *'
   workflow_dispatch:
 
 jobs:
