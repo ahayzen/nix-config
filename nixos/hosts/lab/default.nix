@@ -8,6 +8,7 @@
     ./disko-config.nix
     inputs.nixos-hardware.nixosModules.common-cpu-intel-sandy-bridge
     ./hardware.nix
+    ./backup.nix
     ./periodic.nix
     ./sshfs.nix
   ];

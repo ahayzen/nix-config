@@ -24,7 +24,8 @@
 
       # Allow test ssh authentication
       users.users.headless.openssh.authorizedKeys.keyFiles = [
-        ./files/test_ssh_id_ed25519.pub
+        ./files/test_backup_ssh_id_ed25519.pub
+        ./files/test_lab_ssh_id_ed25519.pub
       ];
 
       # Match VPS specifications
@@ -50,12 +51,24 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "vps" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
+        # TODO: can we fix the IP addresses of the testing hosts?
+        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
+      };
+
+      # Preseed host hey so we can run automatic backups
+      services.openssh.hostKeys = [ ];
+      environment.etc = {
+        # Map the test SSH key for backups
+        "ssh/ssh_host_ed25519_key" = {
+          mode = "0400";
+          source = ./files/test_lab_ssh_id_ed25519;
+        };
+        "ssh/ssh_host_ed25519_key.pub".source = ./files/test_lab_ssh_id_ed25519.pub;
       };
 
       # Allow test ssh authentication
       users.users.headless.openssh.authorizedKeys.keyFiles = [
-        ./files/test_ssh_id_ed25519.pub
+        ./files/test_backup_ssh_id_ed25519.pub
       ];
 
       virtualisation = {
@@ -66,7 +79,6 @@
       };
     };
 
-    # TODO: backup on lab ? or test independently ?
     backup = { self, pkgs, ... }: {
       environment = {
         etc = {
@@ -80,9 +92,9 @@
           # Map the test SSH key for backups
           "ssh/test_ssh_id_ed25519" = {
             mode = "0400";
-            source = ./files/test_ssh_id_ed25519;
+            source = ./files/test_backup_ssh_id_ed25519;
           };
-          "ssh/test_ssh_id_ed25519.pub".source = ./files/test_ssh_id_ed25519.pub;
+          "ssh/test_ssh_id_ed25519.pub".source = ./files/test_backup_ssh_id_ed25519.pub;
         };
 
         # Extra packages for the test
@@ -103,6 +115,9 @@
     import datetime
 
     start_all()
+
+    labdayofweek = ""
+    vpsdayofweek = ""
 
     wait_for_wagtail_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "\[INFO\] Listening at: http:\/\/0\.0\.0\.0:8080"'
 
@@ -152,7 +167,7 @@
       vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
-      dayofweek = datetime.datetime.today().strftime('%w')
+      vpsdayofweek = datetime.datetime.today().strftime('%w')
       vps.succeed("systemctl start periodic-daily.service")
 
       # Run the backup
@@ -169,13 +184,13 @@
       backup.succeed("test -d /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/static")
 
       # Check that known files exist and permissions are correct
-      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + dayofweek + ".sqlite3")
-      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + dayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + vpsdayofweek + ".sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
       backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
-      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + dayofweek + ".sqlite3")
-      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + dayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3")
+      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
       backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
@@ -261,7 +276,7 @@
       lab.succeed("ls -nd /var/lib/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
-      dayofweek = datetime.datetime.today().strftime('%w')
+      labdayofweek = datetime.datetime.today().strftime('%w')
       lab.succeed("systemctl start periodic-daily.service")
 
       # Run the backup
@@ -272,15 +287,71 @@
       backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/bitwarden/config")
 
       # Check that known files exist and permissions are correct
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot-" + dayofweek + ".sqlite")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot-" + dayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account.sqlite")
       backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot-" + dayofweek + ".db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot-" + dayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault.db")
       backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+    #
+    # Test auto backup in lab
+    #
+    # Do this after other backups so that we have snapshots
+    with subtest("Test Auto Backup Machines"):
+      # Ensure we allow the host key
+      lab.succeed("ssh -vvv -i /etc/ssh/ssh_host_ed25519_key -p 8022 -o StrictHostKeyChecking=accept-new headless@ahayzen.com exit")
+
+      # Run backup command
+      lab.succeed("systemctl start backup-machines.service")
+
+      #
+      # Check lab is correct
+      #
+
+      # Check volumes are appearing
+      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/actual/data")
+      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config")
+
+      # Check that known files exist and permissions are correct
+      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite")
+      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account.sqlite")
+      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db")
+      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config/vault.db")
+      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+      #
+      # Check vps is correct
+      #
+
+      # Check volumes are appearing
+      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/caddy/persistent")
+      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/caddy/config")
+      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db")
+      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/media")
+      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/static")
+      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db")
+      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/media")
+      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/static")
+
+      # Check that known files exist and permissions are correct
+      lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + vpsdayofweek + ".sqlite3")
+      lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
+      lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+      lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3")
+      lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
+      lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
