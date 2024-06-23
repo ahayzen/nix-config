@@ -9,10 +9,10 @@
       script = ''
         /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /mnt/data/backup/lab/backup/docker-compose-runner
         /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /mnt/data/backup/lab/latest/docker-compose-runner
-        /run/wrappers/bin/sudo ${pkgs.rsync}/bin/rsync --archive --backup-dir=/mnt/data/backup/lab/backup/docker-compose-runner --delete --human-readable --ignore-times --numeric-ids --partial --progress /var/lib/docker-compose-runner/ /mnt/data/backup/lab/latest/docker-compose-runner
+        /run/wrappers/bin/sudo ${pkgs.rsync}/bin/rsync --archive --backup-dir=/mnt/data/backup/lab/backup/docker-compose-runner --checksum --delete --human-readable --ignore-times --numeric-ids --partial --progress /var/lib/docker-compose-runner/ /mnt/data/backup/lab/latest/docker-compose-runner
         /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /mnt/data/backup/vps/backup/docker-compose-runner
         /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /mnt/data/backup/vps/latest/docker-compose-runner
-        /run/wrappers/bin/sudo ${pkgs.rsync}/bin/rsync --archive --backup-dir=/mnt/data/backup/vps/backup/docker-compose-runner --delete --human-readable --ignore-times --numeric-ids --partial --progress --rsh="${pkgs.openssh}/bin/ssh -i /etc/ssh/ssh_host_ed25519_key -p 8022" --rsync-path="sudo rsync" headless@ahayzen.com:/var/lib/docker-compose-runner/ /mnt/data/backup/vps/latest/docker-compose-runner
+        /run/wrappers/bin/sudo ${pkgs.rsync}/bin/rsync --archive --backup-dir=/mnt/data/backup/vps/backup/docker-compose-runner --checksum --delete --human-readable --ignore-times --numeric-ids --partial --progress --rsh="${pkgs.openssh}/bin/ssh -i /etc/ssh/ssh_host_ed25519_key -p 8022" --rsync-path="sudo rsync" headless@ahayzen.com:/var/lib/docker-compose-runner/ /mnt/data/backup/vps/latest/docker-compose-runner
       '';
       serviceConfig = {
         Type = "oneshot";

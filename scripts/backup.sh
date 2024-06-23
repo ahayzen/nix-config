@@ -49,7 +49,7 @@ fi
 BACKUP_DEST="$USER_DEST"
 
 # Prepare the rsync args
-RSYNC_ARGS=(--archive --human-readable --ignore-times --numeric-ids --partial --progress --rsh="ssh -i $IDENTITY_FILE -p $SSH_PORT" --rsync-path="sudo rsync")
+RSYNC_ARGS=(--archive --checksum --human-readable --ignore-times --numeric-ids --partial --progress --rsh="ssh -i $IDENTITY_FILE -p $SSH_PORT" --rsync-path="sudo rsync")
 
 # This is a normal headless system
 if [ $HEADLESS_SYSTEM ]; then
