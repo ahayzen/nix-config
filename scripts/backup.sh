@@ -27,21 +27,12 @@ fi
 USER_HOST=$3
 
 # Check that the machine name is known
-#
-# Snapshot of any databases so that we don't download a partial database
-#
-# This uses the online backup API as described in how to backup while transactions are active
-# https://www.sqlite.org/howtocorrupt.html#_backup_or_restore_while_a_transaction_is_active
 case $1 in
     lab)
         HEADLESS_SYSTEM=true
-        ssh -p "$SSH_PORT" "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/actual/data/server-files/account.sqlite '.backup /var/lib/docker-compose-runner/actual/data/server-files/account-snapshot.sqlite'"
-        ssh -p "$SSH_PORT" "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/bitwarden/config/vault.db '.backup /var/lib/docker-compose-runner/bitwarden/config/vault-snapshot.db'"
         ;;
     vps)
         HEADLESS_SYSTEM=true
-        ssh -p "$SSH_PORT" "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 '.backup /var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot.sqlite3'"
-        ssh -p "$SSH_PORT" "$USER_HOST" "sudo --user=unpriv sqlite3 /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 '.backup /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot.sqlite3'"
         ;;
     *)
         echo "Unknown machine name"

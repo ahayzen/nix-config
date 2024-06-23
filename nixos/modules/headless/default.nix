@@ -6,6 +6,7 @@
   imports = [
     ./docker.nix
     ./docker-compose.nix
+    ./periodic.nix
     ./ssh.nix
   ];
 

@@ -8,6 +8,7 @@
     ./disko-config.nix
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     ./hardware.nix
+    ./periodic.nix
   ];
 
   # OVH uses BIOS so we need to disable systemd-boot and use grub
