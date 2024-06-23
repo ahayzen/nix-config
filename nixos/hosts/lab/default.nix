@@ -8,6 +8,7 @@
     ./disko-config.nix
     inputs.nixos-hardware.nixosModules.common-cpu-intel-sandy-bridge
     ./hardware.nix
+    ./periodic.nix
   ];
 
   # System76 Pangolin Performance uses BIOS so we need to disable systemd-boot and use grub

@@ -28,6 +28,9 @@ USER_HOST=$3
 
 # Check that the machine name is known
 case $1 in
+    lab)
+        HEADLESS_SYSTEM=true
+        ;;
     vps)
         HEADLESS_SYSTEM=true
         ;;
