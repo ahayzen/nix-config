@@ -22,6 +22,17 @@
         "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
       };
 
+      # Preseed host key
+      services.openssh.hostKeys = [ ];
+      environment.etc = {
+        # Map the test SSH key for backups
+        "ssh/ssh_host_ed25519_key" = {
+          mode = "0400";
+          source = ./files/test_vps_ssh_id_ed25519;
+        };
+        "ssh/ssh_host_ed25519_key.pub".source = ./files/test_vps_ssh_id_ed25519.pub;
+      };
+
       # Allow test ssh authentication
       users.users.headless.openssh.authorizedKeys.keyFiles = [
         ./files/test_backup_ssh_id_ed25519.pub
@@ -56,7 +67,17 @@
       };
 
       # Preseed host hey so we can run automatic backups
-      services.openssh.hostKeys = [ ];
+      services.openssh = {
+        hostKeys = [ ];
+
+        # Seed known hosts
+        knownHosts = {
+          vps = {
+            extraHostNames = [ "ahayzen.com" ];
+            publicKeyFile = ./files/test_vps_ssh_id_ed25519.pub;
+          };
+        };
+      };
       environment.etc = {
         # Map the test SSH key for backups
         "ssh/ssh_host_ed25519_key" = {
@@ -104,7 +125,18 @@
         ];
       };
 
-      services.openssh.enable = true;
+      services.openssh = {
+        enable = true;
+
+        # Seed known hosts
+        knownHosts = {
+          lab.publicKeyFile = ./files/test_lab_ssh_id_ed25519.pub;
+          vps = {
+            extraHostNames = [ "ahayzen.com" ];
+            publicKeyFile = ./files/test_vps_ssh_id_ed25519.pub;
+          };
+        };
+      };
 
       # Setup IdentityFile
       programs.ssh.extraConfig = builtins.readFile ./files/ssh_config;
@@ -154,10 +186,8 @@
     # Test that we can backup and restore the VPS
     #
 
-    with subtest("Access hostkey"):
+    with subtest("Ensure SSH is ready"):
       vps.wait_for_open_port(8022, timeout=30)
-      # Ensure we allow the host key
-      backup.succeed("ssh -vvv -p 8022 -o StrictHostKeyChecking=accept-new headless@vps exit")
 
     with subtest("Attempt to run a backup"):
       backup.succeed("mkdir -p /tmp/backup-root-vps")
@@ -263,10 +293,8 @@
     # Test that we can backup lab
     #
 
-    with subtest("Access hostkey"):
+    with subtest("Ensure SSH is ready"):
       lab.wait_for_open_port(8022, timeout=30)
-      # Ensure we allow the host key
-      backup.succeed("ssh -vvv -p 8022 -o StrictHostKeyChecking=accept-new headless@lab exit")
 
     with subtest("Attempt to run lab backup"):
       backup.succeed("mkdir -p /tmp/backup-root-lab")
@@ -302,9 +330,6 @@
     #
     # Do this after other backups so that we have snapshots
     with subtest("Test Auto Backup Machines"):
-      # Ensure we allow the host key
-      lab.succeed("ssh -vvv -i /etc/ssh/ssh_host_ed25519_key -p 8022 -o StrictHostKeyChecking=accept-new headless@ahayzen.com exit")
-
       # Run backup command
       lab.succeed("systemctl start backup-machines.service")
 

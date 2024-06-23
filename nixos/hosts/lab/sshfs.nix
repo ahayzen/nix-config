@@ -24,8 +24,6 @@
           "ServerAliveInterval=10"
           "ServerAliveCountMax=3"
 
-          "StrictHostKeyChecking=accept-new"
-
           "follow_symlinks"
 
           "idmap=user"
@@ -50,8 +48,6 @@
           "reconnect"
           "ServerAliveInterval=10"
           "ServerAliveCountMax=3"
-
-          "StrictHostKeyChecking=accept-new"
 
           "follow_symlinks"
 

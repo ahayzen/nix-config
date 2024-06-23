@@ -76,6 +76,12 @@
       else config.age.secrets.rathole_toml.path;
   };
 
+  # Seed host keys for places we SSH to
+  services.openssh.knownHosts = {
+    "diskstation.local".publicKey = config.ahayzen.publicKeys.host.diskstation;
+    "ahayzen.com".publicKey = config.ahayzen.publicKeys.host.vps;
+  };
+
   # Enable thermal control as this is an intel laptop
   services.thermald.enable = true;
 
