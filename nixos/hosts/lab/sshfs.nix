@@ -8,9 +8,7 @@
   system.fsPackages = [ pkgs.sshfs ];
   fileSystems = lib.mkIf (!config.ahayzen.testing) {
     mntbackuprestic = {
-      # TODO: can we use name?
-      # https://github.com/ahayzen/nix-config/issues/141
-      device = "restic@192.168.1.196:/restic/repository";
+      device = "restic@diskstation.local:/restic/repository";
       mountPoint = "/mnt/backup-restic";
       fsType = "sshfs";
       options =
@@ -34,9 +32,7 @@
         ];
     };
     mntdata = {
-      # TODO: can we use name?
-      # https://github.com/ahayzen/nix-config/issues/141
-      device = "restic@192.168.1.196:/restic/data";
+      device = "restic@diskstation.local:/restic/data";
       mountPoint = "/mnt/data";
       fsType = "sshfs";
       options =
