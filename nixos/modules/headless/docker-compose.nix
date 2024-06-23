@@ -36,6 +36,10 @@
         '';
 
         # Reload if the docker-compose file changes
+        #
+        # Note that we use digest sha's so these change via nixos upgrade
+        # and renovate automatically is finding these updates and committing them.
+        # This avoids the need for a specific docker-compose-upgrade timer.
         reloadTriggers = [
           (builtins.hashFile "sha256" config.ahayzen.docker-compose-file)
         ];
@@ -53,25 +57,6 @@
               user = "unpriv";
             };
           };
-        };
-      };
-
-      # Every hour try to upgrade the docker containers
-      services."docker-compose-upgrade" = {
-        script = ''
-          ${pkgs.systemd}/bin/systemctl reload-or-restart docker-compose-runner.service
-        '';
-        serviceConfig = {
-          Type = "oneshot";
-        };
-      };
-      timers."docker-compose-upgrade" = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnCalendar = "hourly";
-          Unit = "docker-compose-upgrade.service";
-          RandomizedDelaySec = "30m";
-          Persistent = true;
         };
       };
     };
