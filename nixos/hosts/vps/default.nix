@@ -101,6 +101,9 @@
   # We do not need avahi on a VPS
   services.avahi.enable = lib.mkForce false;
 
+  # Allow lab to login so that backups can occur
+  users.users.headless.openssh.authorizedKeys.keys = [ config.ahayzen.publicKeys.host.lab ];
+
   # Increase disk size for build VM
   virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
 }
