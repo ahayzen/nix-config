@@ -17,5 +17,5 @@ SPDX-License-Identifier: MPL-2.0
 
 | Timer | Frequency | Purpose |
 |-------|-----------|---------|
-| `docker-compose-upgrade` | `hourly` | Update containers |
+| `periodic-daily` | `daily` | Snapshots of database and management commands |
 | `virtualisation.docker.autoPrune.enable` | `daily` | Clean old containers |
