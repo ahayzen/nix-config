@@ -35,3 +35,8 @@ dsvideo.ahayzen.com {
         }
     }
 }
+
+# Immich proxy
+immich.ahayzen.com {
+    reverse_proxy rathole:8301
+}

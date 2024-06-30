@@ -6,7 +6,7 @@
 # Test the following
 #
 # Lab
-# - actual
+# - immich
 # - rathole
 # - backup machines of lab
 #
@@ -18,7 +18,7 @@
 # - backup script
 
 (import ./lib.nix) {
-  name = "lab-actual-test";
+  name = "lab-immich-test";
   nodes = {
     vps = { self, pkgs, ... }: {
       imports =
@@ -42,7 +42,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -83,9 +83,9 @@
         testing = true;
 
         lab = {
-          actual = true;
+          actual = false;
           bitwarden = false;
-          immich = false;
+          immich = true;
           rathole = true;
         };
       };
@@ -127,7 +127,7 @@
       virtualisation = {
         cores = 2;
         # Increase so we can fit docker images
-        diskSize = 4 * 1024;
+        diskSize = 6 * 1024;
         memorySize = 2 * 1024;
       };
     };
@@ -201,23 +201,26 @@
     #
 
     with subtest("Ensure docker starts"):
-      lab.wait_for_unit("docker-compose-runner", timeout=120)
+      lab.wait_for_unit("docker-compose-runner", timeout=300)
 
     with subtest("Rathole connection"):
       # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=actual"' , timeout=10)
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=immich"' , timeout=10)
 
       # Check we have a client control channel
       lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
 
-    with subtest("Test actual"):
-      # Wait for actual to start
-      wait_for_actual_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening on :::5006..."'
-      lab.wait_until_succeeds(wait_for_actual_cmd, timeout=60)
+    with subtest("Test immich"):
+      # Wait for immich to start
+      wait_for_immich_server_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Immich Server is listening on"'
+      lab.wait_until_succeeds(wait_for_immich_server_cmd, timeout=60)
+
+      wait_for_immich_microservice_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Immich Microservices is running"'
+      lab.wait_until_succeeds(wait_for_immich_microservice_cmd, timeout=60)
 
       # Test login page
-      output = vps.succeed("curl --silent actual.ahayzen.com:80/login")
-      assert "Actual" in output, f"'{output}' does not contain 'Actual'"
+      output = vps.succeed("curl --silent immich.ahayzen.com:80")
+      assert "immich" in output, f"'{output}' does not contain 'immich'"
 
     #
     # Test that we can backup lab
@@ -229,9 +232,6 @@
     with subtest("Attempt to run lab backup"):
       backup.succeed("mkdir -p /tmp/backup-root-lab")
 
-      # Check that the permissions are correct
-      lab.succeed("ls -nd /var/lib/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
       # Trigger a snapshot
       labdayofweek = datetime.datetime.today().strftime('%w')
       lab.succeed("systemctl start periodic-daily.service")
@@ -240,14 +240,13 @@
       backup.succeed("/etc/ahayzen.com/backup.sh lab /etc/ssh/test_ssh_id_ed25519 headless@lab /tmp/backup-root-lab")
 
       # Check volumes are appearing
-      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/actual/data")
+      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/immich/server/profile")
+      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/immich/postgres")
 
-      # Check that known files exist and permissions are correct
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account.sqlite")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/immich/postgres/immich-database-snapshot-" + labdayofweek + ".sql")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/immich/postgres/immich-database-snapshot-" + labdayofweek + ".sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/immich/postgres/immich-database.sql")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/immich/postgres/immich-database.sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     #
     # Test auto backup in lab
@@ -262,13 +261,14 @@
       #
 
       # Check volumes are appearing
-      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/actual/data")
+      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/immich/server/profile")
+      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres")
+      lab.succeed("test -d /mnt/data/app/immich")
 
-      # Check that known files exist and permissions are correct
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account.sqlite")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database-snapshot-" + labdayofweek + ".sql")
+      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database-snapshot-" + labdayofweek + ".sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database.sql")
+      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database.sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))

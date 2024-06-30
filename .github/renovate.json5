@@ -22,14 +22,28 @@
             ],
             "versioning": "semver-coerced",
         },
+        // Bitwarden uses date for versioning
         {
             "matchDatasources": [
                 "docker",
             ],
             "matchPackageNames": [
-                "docker.io/bitwarden/self-host"
+                "docker.io/bitwarden/self-host",
             ],
             "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\-(?<compatibility>.*)$",
+        },
+        // Do not update immich containers automatically as they need to be pinned for now
+        {
+            "matchDatasources": [
+                "docker"
+            ],
+            "matchPackageNames": [
+                "ghcr.io/immich-app/immich-server",
+                "ghcr.io/immich-app/immich-machine-learning",
+                "docker.io/redis",
+                "docker.io/tensorchord/pgvecto-rs",
+            ],
+            "enabled": false,
         },
     ],
 }
