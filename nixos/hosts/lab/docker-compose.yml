@@ -3,7 +3,12 @@
 # SPDX-License-Identifier: MPL-2.0
 
 services:
+  #
+  # Single container services
+  #
+
   actual:
+    container_name: actual
     image: docker.io/actualbudget/actual-server:24.6.0@sha256:5263bdcfc51a09076be7c39f88c16a901610abe7e89ff54ef5ea690e04753efc
     expose:
       - "5006"
@@ -12,6 +17,7 @@ services:
       - /var/lib/docker-compose-runner/actual/data:/data
 
   bitwarden:
+    container_name: bitwarden
     image: docker.io/bitwarden/self-host:2024.6.1-beta@sha256:3aec1bb03bd24e03cefba9f3902a33f88d4b56d268e9d515d43ef5f222daa318
     env_file:
       - /etc/bitwarden/settings.1.env
@@ -37,6 +43,7 @@ services:
       - /var/lib/docker-compose-runner/bitwarden/config:/etc/bitwarden
 
   rathole:
+    container_name: rathole
     image: docker.io/rapiz1/rathole:v0.5.0@sha256:a31b9178e985d4a84f46d4c3af6aa200ee0c5e7f821c7075a1f6669fb77392b1
     command: --client /etc/rathole/config.toml
     links:
@@ -44,3 +51,69 @@ services:
       - bitwarden
     volumes:
       - /etc/rathole/config.1.toml:/etc/rathole/config.toml:ro
+
+  #
+  # immich
+  #
+
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:v1.106.4@sha256:d39cb7ecbcc9924f2c51a3e0deb8a469075996c6ba9e1384eb2ddb550984848e
+    # From hwaccel.transcoding.yml should allow for VAAPI to work
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # Our data
+      - /mnt/data/app/immich:/usr/src/app/upload
+      # External libraries
+      - /mnt/data/camera:/mnt/data/camera:ro
+      # Custom locations of internals
+      #
+      # Profile picture
+      - /var/lib/docker-compose-runner/immich/server/profile:/usr/src/app/upload/profile
+      # Run generate thumbnail job
+      - /var/cache/docker-compose-runner/immich/server/thumbs:/usr/src/app/upload/thumbs
+      # Run transcode job
+      - /var/cache/docker-compose-runner/immich/server/encoded-video:/usr/src/app/upload/encoded-video
+    env_file:
+      - /etc/immich/settings.1.env
+    expose:
+      - 3001
+    depends_on:
+      - imich-redis
+      - imich-database
+    restart: always
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:v1.106.4@sha256:1dcebde9a0c02c7f90ea93f64f883423f8067eef297ff2330d65001e32ce12fd
+    volumes:
+      - /var/cache/docker-compose-runner/immich/machine-learning-cache:/cache
+    env_file:
+      - /etc/immich/settings.1.env
+    restart: always
+
+  imich-redis:
+    container_name: immich_redis
+    image: docker.io/redis:6.2-alpine@sha256:d6c2911ac51b289db208767581a5d154544f2b2fe4914ea5056443f62dc6e900
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  imich-database:
+    container_name: immich_postgres
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    environment:
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    env_file:
+      - /etc/immich/settings.1.env
+    volumes:
+      - /var/lib/docker-compose-runner/immich/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready --dbname='immich' || exit 1; Chksum="$$(psql --dbname='immich' --username='postgres' --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
+      interval: 5m
+      start_interval: 30s
+      start_period: 5m
+    command: ["postgres", "-c" ,"shared_preload_libraries=vectors.so", "-c", 'search_path="$$user", public, vectors', "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
+    restart: always
