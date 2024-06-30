@@ -108,6 +108,7 @@
           {
             lab-actual-test = import ./tests/lab-actual.nix checkArgs;
             lab-bitwarden-test = import ./tests/lab-bitwarden.nix checkArgs;
+            lab-immich-test = import ./tests/lab-immich.nix checkArgs;
             vps-wagtail-test = import ./tests/vps-wagtail.nix checkArgs;
           };
       };

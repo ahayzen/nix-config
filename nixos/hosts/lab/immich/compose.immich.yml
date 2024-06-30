@@ -1,0 +1,70 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  immich-server:
+    container_name: immich_server
+    image: ghcr.io/immich-app/immich-server:v1.107.2@sha256:75746006b35a7bc61408cd4d124dc73344f0a087c2d9769c4715ca84a1d87591
+    # From hwaccel.transcoding.yml should allow for VAAPI to work
+    devices:
+      - /dev/dri:/dev/dri
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      # Our data
+      - /mnt/data/app/immich:/usr/src/app/upload
+      # External libraries
+      - /mnt/data/camera:/mnt/data/camera:ro
+      # Custom locations of internals
+      #
+      # Profile picture
+      - /var/lib/docker-compose-runner/immich/server/profile:/usr/src/app/upload/profile
+      # Run generate thumbnail job
+      - /var/cache/docker-compose-runner/immich/server/thumbs:/usr/src/app/upload/thumbs
+      # Run transcode job
+      - /var/cache/docker-compose-runner/immich/server/encoded-video:/usr/src/app/upload/encoded-video
+    env_file:
+      - /etc/immich/settings.env
+      - /etc/immich/settings_secrets.1.env
+    expose:
+      - 3001
+    depends_on:
+      - immich-database
+      - immich-redis
+    restart: always
+
+  immich-machine-learning:
+    container_name: immich_machine_learning
+    image: ghcr.io/immich-app/immich-machine-learning:v1.107.2@sha256:f22d949f5f3e16d1c3dcf0aa3ca5f7a73f053b51d2883ac864f9742d3053576b
+    volumes:
+      - /var/cache/docker-compose-runner/immich/machine-learning-cache:/cache
+    env_file:
+      - /etc/immich/settings.env
+      - /etc/immich/settings_secrets.1.env
+    restart: always
+
+  immich-redis:
+    container_name: immich_redis
+    image: docker.io/redis:6.2-alpine@sha256:328fe6a5822256d065debb36617a8169dbfbd77b797c525288e465f56c1d392b
+    healthcheck:
+      test: redis-cli ping || exit 1
+    restart: always
+
+  immich-database:
+    container_name: immich_postgres
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    environment:
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    env_file:
+      - /etc/immich/settings.env
+      - /etc/immich/settings_secrets.1.env
+    volumes:
+      - /var/cache/docker-compose-runner/immich/postgres:/var/lib/postgresql/data
+      - /var/lib/docker-compose-runner/immich/postgres:/var/lib/docker-compose-runner/immich/postgres
+    #healthcheck:
+    #  test: pg_isready --dbname='immich' || exit 1; Chksum="$$(psql --dbname='immich' --username='postgres' --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
+    #  interval: 5m
+    #  start_interval: 30s
+    #  start_period: 5m
+    command: ["postgres", "-c" ,"shared_preload_libraries=vectors.so", "-c", 'search_path="$$user", public, vectors', "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
+    restart: always

@@ -11,3 +11,8 @@ http://actual.ahayzen.com {
 http://bitwarden.ahayzen.com {
     reverse_proxy rathole:8080
 }
+
+# Immich proxy
+http://immich.ahayzen.com {
+    reverse_proxy rathole:8301
+}

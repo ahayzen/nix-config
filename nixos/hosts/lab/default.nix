@@ -13,6 +13,7 @@
     # Include services
     ./actual
     ./bitwarden
+    ./immich
     ./rathole
   ];
 

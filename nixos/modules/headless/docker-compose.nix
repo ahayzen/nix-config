@@ -53,7 +53,18 @@
       # eg this causes ownership to change to root rather than unpriv
       # Instead use a tmpfile rule with no age to cleanup
       tmpfiles.settings = {
-        "99-docker-compose-runner" = {
+        "99-var-cache-docker-compose-runner" = {
+          "/var/cache/docker-compose-runner" = {
+            d = {
+              age = "-";
+              group = "unpriv";
+              mode = "0750";
+              user = "unpriv";
+            };
+          };
+        };
+
+        "99-var-lib-docker-compose-runner" = {
           "/var/lib/docker-compose-runner" = {
             d = {
               age = "-";

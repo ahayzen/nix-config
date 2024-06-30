@@ -10,6 +10,7 @@ in
   "local-py_yumekasaito-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
 
   "bitwarden_env.age".publicKeys = [ publicKeys.host.lab ] ++ publicKeys.group.users.developer;
+  "immich_env.age".publicKeys = [ publicKeys.host.lab ] ++ publicKeys.group.users.developer;
   "rathole_toml.age".publicKeys = [ publicKeys.host.lab publicKeys.host.vps ] ++ publicKeys.group.users.developer;
 
   # mkpasswd -m sha-512
