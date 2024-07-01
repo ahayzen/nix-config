@@ -261,7 +261,7 @@
     #
 
     with subtest("Ensure docker starts"):
-      lab.wait_for_unit("docker-compose-runner", timeout=120)
+      lab.wait_for_unit("docker-compose-runner", timeout=300)
 
     with subtest("Rathole connection"):
       # Check we have a server control channel
@@ -288,6 +288,16 @@
       # Test login page
       output = vps.succeed("curl --silent bitwarden.ahayzen.com:80/#/login")
       assert "Bitwarden" in output, f"'{output}' does not contain 'Bitwarden'"
+
+    with subtest("Test immich"):
+      # Wait for immich to start
+      # TODO
+
+      # Test login page
+      # TODO
+      output = vps.succeed("curl --silent immich.ahayzen.com:80")
+      print(output)
+      assert "Immich" in output, f"'{output}' does not contain 'Immich'"
 
     #
     # Test that we can backup lab

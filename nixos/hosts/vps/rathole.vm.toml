@@ -11,3 +11,6 @@ bind_addr = "0.0.0.0:8506"
 
 [server.services.bitwarden]
 bind_addr = "0.0.0.0:8080"
+
+[server.services.immich]
+bind_addr = "0.0.0.0:8301"

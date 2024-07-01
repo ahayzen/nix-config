@@ -69,6 +69,7 @@
       if config.ahayzen.testing
       then ./bitwarden.vm.env
       else config.age.secrets.bitwarden_env.path;
+    "immich/settings.1.env".source = ./immich.env;
     "rathole/config.1.toml".
     source =
       if config.ahayzen.testing

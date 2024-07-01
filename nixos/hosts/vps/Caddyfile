@@ -62,6 +62,11 @@ dsvideo.ahayzen.com {
     }
 }
 
+# Immich proxy
+immich.ahayzen.com {
+    reverse_proxy rathole:8301
+}
+
 # yumekasaito.com site
 yumekasaito.com www.yumekasaito.com {
     # Wagtail media files

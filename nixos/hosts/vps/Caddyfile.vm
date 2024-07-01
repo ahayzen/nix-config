@@ -38,6 +38,11 @@ http://bitwarden.ahayzen.com {
     reverse_proxy rathole:8080
 }
 
+# Immich proxy
+http://immich.ahayzen.com {
+    reverse_proxy rathole:8301
+}
+
 # # Video proxy
 # video.ahayzen.com {
 #     reverse_proxy localhost:9888
