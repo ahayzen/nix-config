@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  caddy:
+    links:
+      - wagtail-yumekasaito
+    volumes:
+      # Caddy configuration file
+      - /etc/caddy/sites/yumekasaito.Caddyfile:/etc/caddy/sites/yumekasaito.Caddyfile:ro
+
+      # Wagtail media data
+      - /var/lib/docker-compose-runner/wagtail-yumekasaito/media:/srv/wagtail-yumekasaito/media:ro
+      # Wagtail static data
+      - /var/lib/docker-compose-runner/wagtail-yumekasaito/static:/srv/wagtail-yumekasaito/static:ro
+
+  wagtail-yumekasaito:
+    image: registry.gitlab.com/ahayzen/yumekasaito.com/wagtail-image:latest@sha256:2fc1f8eb6e1458c9c175e63178136f9a3f4ec8b83609573cf0fb76cbf5d20ea8
+    restart: unless-stopped
+    expose:
+      - "8080"
+    volumes:
+      # Wagtail sqlite database
+      - /var/lib/docker-compose-runner/wagtail-yumekasaito/db:/srv/webapp/db
+      # Wagtail media data
+      - /var/lib/docker-compose-runner/wagtail-yumekasaito/media:/srv/webapp/media
+      # Wagtail static data
+      - /var/lib/docker-compose-runner/wagtail-yumekasaito/static:/srv/webapp/static
+      # Wagtail local settings file
+      - /etc/yumekasaito.com/local.1.py:/srv/webapp/yumekasaito.com/yumekasaito/settings/local.py:ro
