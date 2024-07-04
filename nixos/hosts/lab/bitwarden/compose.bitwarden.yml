@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  bitwarden:
+    image: docker.io/bitwarden/self-host:2024.6.2-beta@sha256:7ff2af1463b665e990d1cc12aa3e8f85fda9a7d9a69f38de0d9718e91d0c649e
+    env_file:
+      - /etc/bitwarden/settings.1.env
+    # https://bitwarden.com/help/environment-variables/
+    environment:
+      BW_DOMAIN: "bitwarden.ahayzen.com"
+      # Use sqlite
+      BW_DB_PROVIDER: "sqlite"
+      BW_DB_FILE: "/etc/bitwarden/vault.db"
+      # We are using userns so run as root in the container but unpriv outside
+      PUID: 0
+      PGID: 0
+      # Disable account registration
+      #
+      # Allow for now to setup accounts
+      globalSettings__disableUserRegistration: true
+      # TODO: https?
+    expose:
+      - "8080"
+    mem_limit: 1024m
+    restart: unless-stopped
+    volumes:
+      - /var/lib/docker-compose-runner/bitwarden/config:/etc/bitwarden

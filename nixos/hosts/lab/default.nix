@@ -11,6 +11,8 @@
     ./backup.nix
     ./periodic.nix
     ./sshfs.nix
+    # Include services
+    ./bitwarden
   ];
 
   # System76 Pangolin Performance uses BIOS so we need to disable systemd-boot and use grub
@@ -45,13 +47,6 @@
 
   # Config files for caddy and wagtail
   age.secrets = lib.mkIf (!config.ahayzen.testing) {
-    bitwarden_env = {
-      file = ../../../secrets/bitwarden_env.age;
-      # Set correct owner otherwise docker cannot read the file
-      mode = "0600";
-      owner = "unpriv";
-      group = "unpriv";
-    };
     rathole_toml = {
       file = ../../../secrets/rathole_toml.age;
       # Set correct owner otherwise docker cannot read the file
@@ -64,11 +59,6 @@
   };
 
   environment.etc = {
-    "bitwarden/settings.1.env".
-    source =
-      if config.ahayzen.testing
-      then ./bitwarden.vm.env
-      else config.age.secrets.bitwarden_env.path;
     "rathole/config.1.toml".
     source =
       if config.ahayzen.testing
