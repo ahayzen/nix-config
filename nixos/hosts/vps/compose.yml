@@ -10,8 +10,6 @@ services:
     cap_add:
       # Allow for increasing buffer size for HTTP/3
       - NET_ADMIN
-    links:
-      - rathole
     ports:
       - "80:80"
       - "443:443"
@@ -32,23 +30,3 @@ services:
   # TODO: flathub_stats service
   # - /var/lib/docker-compose-runner/flathub-stats/cache:/var/cache/flathub_stats
   # - /var/lib/docker-compose-runner/flathub-stats/data:/srv/flathub_stats:ro
-
-  rathole:
-    image: docker.io/rapiz1/rathole:v0.5.0@sha256:a31b9178e985d4a84f46d4c3af6aa200ee0c5e7f821c7075a1f6669fb77392b1
-    command: --server /etc/rathole/config.toml
-    expose:
-      # Bitwarden
-      - "8080"
-      # Actual
-      - "8506"
-      # DSAudio
-      - "8801"
-      # DSVideo
-      - "8808"
-    ports:
-      # Expose the server
-      - "8333:8333"
-      # Expose OpenVPN
-      - "9194:9194"
-    volumes:
-      - /etc/rathole/config.1.toml:/etc/rathole/config.toml:ro
