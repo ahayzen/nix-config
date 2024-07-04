@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: MPL-2.0
 
 { config, lib, pkgs, ... }: {
-  options.ahayzen.docker-compose-file = lib.mkOption {
-    type = lib.types.path;
+  options.ahayzen.docker-compose-files = lib.mkOption {
+    type = lib.types.listOf lib.types.path;
   };
 
   config = {
@@ -13,37 +13,39 @@
     ];
 
     systemd = {
-      services."docker-compose-runner" = {
-        path = [ pkgs.docker-compose ];
-        after = [ "docker.service" "docker.socket" "network-online.target" ];
-        wantedBy = [ "multi-user.target" ];
-        wants = [ "network-online.target" ];
+      services."docker-compose-runner" =
+        let
+          docker-compose-file-args = builtins.foldl' (args: path: "${args} --file ${path}") "" config.ahayzen.docker-compose-files;
+        in
+        {
+          path = [ pkgs.docker-compose ];
+          after = [ "docker.service" "docker.socket" "network-online.target" ];
+          wantedBy = [ "multi-user.target" ];
+          wants = [ "network-online.target" ];
 
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          Restart = "on-failure";
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            Restart = "on-failure";
 
-          ExecStart = "${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans";
-          # Use stop here so that we can reuse the same container on reboot (instead of down)
-          ExecStop = "${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} stop";
+            ExecStart = "${pkgs.docker-compose}/bin/docker-compose ${docker-compose-file-args} up --detach --remove-orphans";
+            # Use stop here so that we can reuse the same container on reboot (instead of down)
+            ExecStop = "${pkgs.docker-compose}/bin/docker-compose ${docker-compose-file-args} stop";
+          };
+
+          # Upon reload pull new container images and restart any containers
+          reload = ''
+            ${pkgs.docker-compose}/bin/docker-compose ${docker-compose-file-args} pull --quiet
+            ${pkgs.docker-compose}/bin/docker-compose ${docker-compose-file-args} up --detach --remove-orphans
+          '';
+
+          # Reload if the docker-compose file changes
+          #
+          # Note that we use digest sha's so these change via nixos upgrade
+          # and renovate automatically is finding these updates and committing them.
+          # This avoids the need for a specific docker-compose-upgrade timer.
+          reloadTriggers = map (path: builtins.hashFile "sha256" path) config.ahayzen.docker-compose-files;
         };
-
-        # Upon reload pull new container images and restart any containers
-        reload = ''
-          ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} pull --quiet
-          ${pkgs.docker-compose}/bin/docker-compose --file ${config.ahayzen.docker-compose-file} up --detach --remove-orphans
-        '';
-
-        # Reload if the docker-compose file changes
-        #
-        # Note that we use digest sha's so these change via nixos upgrade
-        # and renovate automatically is finding these updates and committing them.
-        # This avoids the need for a specific docker-compose-upgrade timer.
-        reloadTriggers = [
-          (builtins.hashFile "sha256" config.ahayzen.docker-compose-file)
-        ];
-      };
       # Do not use StateDirectory as it changes ownership to the service user on startup
       # eg this causes ownership to change to root rather than unpriv
       # Instead use a tmpfile rule with no age to cleanup

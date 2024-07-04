@@ -38,7 +38,7 @@
 
   ahayzen = {
     # Specify the docker file we are using
-    docker-compose-file = ./docker-compose.yml;
+    docker-compose-files = [ ./docker-compose.yml ];
 
     hostName = "lab";
   };
