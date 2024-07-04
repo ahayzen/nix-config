@@ -2,6 +2,8 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+import "/etc/caddy/sites/*.Caddyfile"
+
 # ahayzen.com site
 ahayzen.com www.ahayzen.com {
     # Flathub stats data
@@ -59,25 +61,5 @@ dsvideo.ahayzen.com {
         transport http {
             tls_insecure_skip_verify
         }
-    }
-}
-
-# yumekasaito.com site
-yumekasaito.com www.yumekasaito.com {
-    # Wagtail media files
-    handle_path /media/* {
-        root * /srv/wagtail-yumekasaito/media/
-        file_server
-    }
-
-    # Wagtail static files
-    handle_path /static/* {
-        root * /srv/wagtail-yumekasaito/static/
-        file_server
-    }
-
-    # Anything else goes to wagtail
-    handle {
-        reverse_proxy wagtail-yumekasaito:8080
     }
 }

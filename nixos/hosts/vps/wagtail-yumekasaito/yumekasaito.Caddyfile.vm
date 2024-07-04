@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+http://yumekasaito.com {
+    # Wagtail media files
+    handle_path /media/* {
+        root * /srv/wagtail-yumekasaito/media/
+        file_server
+    }
+
+    # Wagtail static files
+    handle_path /static/* {
+        root * /srv/wagtail-yumekasaito/static/
+        file_server
+    }
+
+    # Anything else goes to wagtail
+    handle {
+        reverse_proxy wagtail-yumekasaito:8080
+    }
+}

@@ -9,6 +9,7 @@
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     ./hardware.nix
     ./periodic.nix
+    ./wagtail-yumekasaito
   ];
 
   # OVH uses BIOS so we need to disable systemd-boot and use grub
@@ -36,7 +37,7 @@
 
   ahayzen = {
     # Specify the docker file we are using
-    docker-compose-files = [ ./docker-compose.yml ];
+    docker-compose-files = [ ./compose.yml ];
 
     hostName = "vps";
   };
@@ -45,13 +46,6 @@
   age.secrets = lib.mkIf (!config.ahayzen.testing) {
     local-py_ahayzen-com = {
       file = ../../../secrets/local-py_ahayzen-com.age;
-      # Set correct owner otherwise docker cannot read the file
-      mode = "0600";
-      owner = "unpriv";
-      group = "unpriv";
-    };
-    local-py_yumekasaito-com = {
-      file = ../../../secrets/local-py_yumekasaito-com.age;
       # Set correct owner otherwise docker cannot read the file
       mode = "0600";
       owner = "unpriv";
@@ -74,11 +68,6 @@
       if config.ahayzen.testing
       then ./local.vm.py
       else config.age.secrets.local-py_ahayzen-com.path;
-    "yumekasaito.com/local.1.py".
-    source =
-      if config.ahayzen.testing
-      then ./local.vm.py
-      else config.age.secrets.local-py_yumekasaito-com.path;
     "caddy/Caddyfile.1".source =
       if config.ahayzen.testing
       then ./Caddyfile.vm

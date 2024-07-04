@@ -13,7 +13,6 @@ services:
     links:
       - rathole
       - wagtail-ahayzen
-      - wagtail-yumekasaito
     ports:
       - "80:80"
       - "443:443"
@@ -35,11 +34,6 @@ services:
       - /var/lib/docker-compose-runner/wagtail-ahayzen/media:/srv/wagtail-ahayzen/media:ro
       # Wagtail static data
       - /var/lib/docker-compose-runner/wagtail-ahayzen/static:/srv/wagtail-ahayzen/static:ro
-
-      # Wagtail media data
-      - /var/lib/docker-compose-runner/wagtail-yumekasaito/media:/srv/wagtail-yumekasaito/media:ro
-      # Wagtail static data
-      - /var/lib/docker-compose-runner/wagtail-yumekasaito/static:/srv/wagtail-yumekasaito/static:ro
 
   # TODO: flathub_stats service
   # - /var/lib/docker-compose-runner/flathub-stats/cache:/var/cache/flathub_stats
@@ -82,18 +76,3 @@ services:
       - /etc/ahayzen.com/local.1.py:/srv/webapp/ahayzen.com/ahayzen/settings/local.py:ro
       # Wagtail docs folder
       - /var/lib/docker-compose-runner/wagtail-ahayzen/docs:/srv/webapp/docs
-
-  wagtail-yumekasaito:
-    image: registry.gitlab.com/ahayzen/yumekasaito.com/wagtail-image:latest@sha256:2fc1f8eb6e1458c9c175e63178136f9a3f4ec8b83609573cf0fb76cbf5d20ea8
-    restart: unless-stopped
-    expose:
-      - "8080"
-    volumes:
-      # Wagtail sqlite database
-      - /var/lib/docker-compose-runner/wagtail-yumekasaito/db:/srv/webapp/db
-      # Wagtail media data
-      - /var/lib/docker-compose-runner/wagtail-yumekasaito/media:/srv/webapp/media
-      # Wagtail static data
-      - /var/lib/docker-compose-runner/wagtail-yumekasaito/static:/srv/webapp/static
-      # Wagtail local settings file
-      - /etc/yumekasaito.com/local.1.py:/srv/webapp/yumekasaito.com/yumekasaito/settings/local.py:ro
