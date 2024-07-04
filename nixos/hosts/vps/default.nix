@@ -9,6 +9,7 @@
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     ./hardware.nix
     ./periodic.nix
+    ./rathole
     ./wagtail-ahayzen
     ./wagtail-yumekasaito
   ];
@@ -43,29 +44,11 @@
     hostName = "vps";
   };
 
-  # Config files for caddy and wagtail
-  age.secrets = lib.mkIf (!config.ahayzen.testing) {
-    rathole_toml = {
-      file = ../../../secrets/rathole_toml.age;
-      # Set correct owner otherwise docker cannot read the file
-      #
-      # Note rathole uses ID 1000 inside the container
-      mode = "0666";
-      owner = "unpriv";
-      group = "unpriv";
-    };
-  };
-
   environment.etc = {
     "caddy/Caddyfile.1".source =
       if config.ahayzen.testing
       then ./Caddyfile.vm
       else ./Caddyfile;
-    "rathole/config.1.toml".
-    source =
-      if config.ahayzen.testing
-      then ./rathole.vm.toml
-      else config.age.secrets.rathole_toml.path;
   };
 
   # Reload if static files change

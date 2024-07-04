@@ -2,8 +2,6 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-import "/etc/caddy/sites/*.Caddyfile"
-
 # Actual proxy
 http://actual.ahayzen.com {
     reverse_proxy rathole:8506
@@ -13,8 +11,3 @@ http://actual.ahayzen.com {
 http://bitwarden.ahayzen.com {
     reverse_proxy rathole:8080
 }
-
-# # Video proxy
-# video.ahayzen.com {
-#     reverse_proxy localhost:9888
-# }
