@@ -9,6 +9,10 @@
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     ./hardware.nix
     ./periodic.nix
+    # Include services
+    #
+    # Note that caddy should be first as other depend on it
+    ./caddy
     ./rathole
     ./wagtail-ahayzen
     ./wagtail-yumekasaito
@@ -37,27 +41,7 @@
     systemd-boot.enable = lib.mkForce false;
   };
 
-  ahayzen = {
-    # Specify the docker file we are using
-    docker-compose-files = [ ./compose.yml ];
-
-    hostName = "vps";
-  };
-
-  environment.etc = {
-    "caddy/Caddyfile.1".source =
-      if config.ahayzen.testing
-      then ./Caddyfile.vm
-      else ./Caddyfile;
-  };
-
-  # Reload if static files change
-  #
-  # Note agenix files are not possible and will need the version bumping
-  # which causes the hash of the docker-compose file to change.
-  systemd.services."docker-compose-runner".reloadTriggers = [
-    (builtins.hashFile "sha256" config.environment.etc."caddy/Caddyfile.1".source)
-  ];
+  ahayzen.hostName = "vps";
 
   # We do not need avahi on a VPS
   services.avahi.enable = lib.mkForce false;
