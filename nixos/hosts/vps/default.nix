@@ -9,6 +9,7 @@
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     ./hardware.nix
     ./periodic.nix
+    ./wagtail-ahayzen
     ./wagtail-yumekasaito
   ];
 
@@ -44,13 +45,6 @@
 
   # Config files for caddy and wagtail
   age.secrets = lib.mkIf (!config.ahayzen.testing) {
-    local-py_ahayzen-com = {
-      file = ../../../secrets/local-py_ahayzen-com.age;
-      # Set correct owner otherwise docker cannot read the file
-      mode = "0600";
-      owner = "unpriv";
-      group = "unpriv";
-    };
     rathole_toml = {
       file = ../../../secrets/rathole_toml.age;
       # Set correct owner otherwise docker cannot read the file
@@ -63,11 +57,6 @@
   };
 
   environment.etc = {
-    "ahayzen.com/local.1.py".
-    source =
-      if config.ahayzen.testing
-      then ./local.vm.py
-      else config.age.secrets.local-py_ahayzen-com.path;
     "caddy/Caddyfile.1".source =
       if config.ahayzen.testing
       then ./Caddyfile.vm

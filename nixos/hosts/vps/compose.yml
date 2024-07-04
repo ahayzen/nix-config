@@ -12,7 +12,6 @@ services:
       - NET_ADMIN
     links:
       - rathole
-      - wagtail-ahayzen
     ports:
       - "80:80"
       - "443:443"
@@ -29,11 +28,6 @@ services:
       - /var/lib/docker-compose-runner/caddy/persistent:/data
       # Persistent configuration
       - /var/lib/docker-compose-runner/caddy/config:/config
-
-      # Wagtail media data
-      - /var/lib/docker-compose-runner/wagtail-ahayzen/media:/srv/wagtail-ahayzen/media:ro
-      # Wagtail static data
-      - /var/lib/docker-compose-runner/wagtail-ahayzen/static:/srv/wagtail-ahayzen/static:ro
 
   # TODO: flathub_stats service
   # - /var/lib/docker-compose-runner/flathub-stats/cache:/var/cache/flathub_stats
@@ -58,21 +52,3 @@ services:
       - "9194:9194"
     volumes:
       - /etc/rathole/config.1.toml:/etc/rathole/config.toml:ro
-
-  # Wagtail
-  wagtail-ahayzen:
-    image: registry.gitlab.com/ahayzen/ahayzen.com/wagtail-image:latest@sha256:3ac663424fdc3cf0fda1c41244c35198322579d52ed5f675ac8ea778160ada0e
-    restart: unless-stopped
-    expose:
-      - "8080"
-    volumes:
-      # Wagtail sqlite database
-      - /var/lib/docker-compose-runner/wagtail-ahayzen/db:/srv/webapp/db
-      # Wagtail media data
-      - /var/lib/docker-compose-runner/wagtail-ahayzen/media:/srv/webapp/media
-      # Wagtail static data
-      - /var/lib/docker-compose-runner/wagtail-ahayzen/static:/srv/webapp/static
-      # Wagtail local settings file
-      - /etc/ahayzen.com/local.1.py:/srv/webapp/ahayzen.com/ahayzen/settings/local.py:ro
-      # Wagtail docs folder
-      - /var/lib/docker-compose-runner/wagtail-ahayzen/docs:/srv/webapp/docs

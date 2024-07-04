@@ -1,0 +1,33 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  caddy:
+    links:
+      - wagtail-ahayzen
+    volumes:
+      # Caddy configuration file
+      - /etc/caddy/sites/ahayzen.Caddyfile:/etc/caddy/sites/ahayzen.Caddyfile:ro
+
+      # Wagtail media data
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/media:/srv/wagtail-ahayzen/media:ro
+      # Wagtail static data
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/static:/srv/wagtail-ahayzen/static:ro
+
+  wagtail-ahayzen:
+    image: registry.gitlab.com/ahayzen/ahayzen.com/wagtail-image:latest@sha256:3ac663424fdc3cf0fda1c41244c35198322579d52ed5f675ac8ea778160ada0e
+    restart: unless-stopped
+    expose:
+      - "8080"
+    volumes:
+      # Wagtail sqlite database
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/db:/srv/webapp/db
+      # Wagtail media data
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/media:/srv/webapp/media
+      # Wagtail static data
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/static:/srv/webapp/static
+      # Wagtail local settings file
+      - /etc/ahayzen.com/local.1.py:/srv/webapp/ahayzen.com/ahayzen/settings/local.py:ro
+      # Wagtail docs folder
+      - /var/lib/docker-compose-runner/wagtail-ahayzen/docs:/srv/webapp/docs
