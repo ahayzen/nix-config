@@ -12,6 +12,7 @@
     ./periodic.nix
     ./sshfs.nix
     # Include services
+    ./actual
     ./bitwarden
   ];
 

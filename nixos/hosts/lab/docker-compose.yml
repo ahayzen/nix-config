@@ -3,14 +3,6 @@
 # SPDX-License-Identifier: MPL-2.0
 
 services:
-  actual:
-    image: docker.io/actualbudget/actual-server:24.7.0@sha256:12cb8d9b8e653b66e185360e980c08e90f8c1f40bf4fb34dcb90eb270329d996
-    expose:
-      - "5006"
-    restart: unless-stopped
-    volumes:
-      - /var/lib/docker-compose-runner/actual/data:/data
-
   rathole:
     image: docker.io/rapiz1/rathole:v0.5.0@sha256:a31b9178e985d4a84f46d4c3af6aa200ee0c5e7f821c7075a1f6669fb77392b1
     command: --client /etc/rathole/config.toml
