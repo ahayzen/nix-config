@@ -4,6 +4,7 @@
 
 { config, lib, pkgs, ... }: {
   options.ahayzen.docker-compose-files = lib.mkOption {
+    default = [ ];
     type = lib.types.listOf lib.types.path;
   };
 
@@ -18,6 +19,8 @@
           docker-compose-file-args = builtins.foldl' (args: path: "${args} --file ${path}") "" config.ahayzen.docker-compose-files;
         in
         {
+          # Only enable if there are docker compose files
+          enable = config.ahayzen.docker-compose-files != [ ];
           path = [ pkgs.docker-compose ];
           after = [ "docker.service" "docker.socket" "network-online.target" ];
           wantedBy = [ "multi-user.target" ];
