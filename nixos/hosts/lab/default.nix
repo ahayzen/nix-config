@@ -14,6 +14,7 @@
     # Include services
     ./actual
     ./bitwarden
+    ./rathole
   ];
 
   # System76 Pangolin Performance uses BIOS so we need to disable systemd-boot and use grub
@@ -39,33 +40,7 @@
     systemd-boot.enable = lib.mkForce false;
   };
 
-  ahayzen = {
-    # Specify the docker file we are using
-    docker-compose-files = [ ./docker-compose.yml ];
-
-    hostName = "lab";
-  };
-
-  # Config files for caddy and wagtail
-  age.secrets = lib.mkIf (!config.ahayzen.testing) {
-    rathole_toml = {
-      file = ../../../secrets/rathole_toml.age;
-      # Set correct owner otherwise docker cannot read the file
-      #
-      # Note rathole uses ID 1000 inside the container
-      mode = "0666";
-      owner = "unpriv";
-      group = "unpriv";
-    };
-  };
-
-  environment.etc = {
-    "rathole/config.1.toml".
-    source =
-      if config.ahayzen.testing
-      then ./rathole.vm.toml
-      else config.age.secrets.rathole_toml.path;
-  };
+  ahayzen.hostName = "lab";
 
   # Seed host keys for places we SSH to
   services.openssh.knownHosts = {

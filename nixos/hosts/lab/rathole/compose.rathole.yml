@@ -6,8 +6,5 @@ services:
   rathole:
     image: docker.io/rapiz1/rathole:v0.5.0@sha256:a31b9178e985d4a84f46d4c3af6aa200ee0c5e7f821c7075a1f6669fb77392b1
     command: --client /etc/rathole/config.toml
-    links:
-      - actual
-      - bitwarden
     volumes:
       - /etc/rathole/config.1.toml:/etc/rathole/config.toml:ro
