@@ -106,7 +106,9 @@
             };
           in
           {
-            headless-test = import ./tests/headless.nix checkArgs;
+            lab-actual-test = import ./tests/lab-actual.nix checkArgs;
+            lab-bitwarden-test = import ./tests/lab-bitwarden.nix checkArgs;
+            vps-wagtail-test = import ./tests/vps-wagtail.nix checkArgs;
           };
       };
     };

@@ -2,8 +2,23 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+#
+# Test the following
+#
+# VPS
+# - caddy
+# - wagtail-ahayzen
+# - wagtail-yumeaksaito
+#
+# Lab
+# - backup machines of VPS
+#
+# Backup
+# - backup script
+# - restore script
+
 (import ./lib.nix) {
-  name = "vps test";
+  name = "vps-wagtail-test";
   nodes = {
     vps = { self, pkgs, ... }: {
       imports =
@@ -13,7 +28,15 @@
           ../nixos/users/headless
         ];
 
-      ahayzen.testing = true;
+      ahayzen = {
+        testing = true;
+
+        vps = {
+          rathole = false;
+          wagtail-ahayzen = true;
+          wagtail-yumekasaito = true;
+        };
+      };
 
       # Extra packages for the test
       environment.systemPackages = [ pkgs.curl ];
@@ -56,7 +79,15 @@
           ../nixos/users/headless
         ];
 
-      ahayzen.testing = true;
+      ahayzen = {
+        testing = true;
+
+        lab = {
+          actual = false;
+          bitwarden = false;
+          rathole = false;
+        };
+      };
 
       # Extra packages for the test
       environment.systemPackages = [ pkgs.curl ];
@@ -257,73 +288,11 @@
       assert "Restore Unit Test" in output, f"'{output}' does not contain 'Restore Unit Test'"
 
     #
-    # Test that Lab works
-    #
-
-    with subtest("Ensure docker starts"):
-      lab.wait_for_unit("docker-compose-runner", timeout=120)
-
-    with subtest("Rathole connection"):
-      # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=actual"' , timeout=10)
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=bitwarden"' , timeout=10)
-
-      # Check we have a client control channel
-      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
-
-    with subtest("Test actual"):
-      # Wait for actual to start
-      wait_for_actual_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening on :::5006..."'
-      lab.wait_until_succeeds(wait_for_actual_cmd, timeout=60)
-
-      # Test login page
-      output = vps.succeed("curl --silent actual.ahayzen.com:80/login")
-      assert "Actual" in output, f"'{output}' does not contain 'Actual'"
-
-    with subtest("Test bitwarden"):
-      # Wait for bitwarden to start
-      wait_for_bitwarden_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "INFO success: nginx entered RUNNING state"'
-      lab.wait_until_succeeds(wait_for_bitwarden_cmd, timeout=60)
-
-      # Test login page
-      output = vps.succeed("curl --silent bitwarden.ahayzen.com:80/#/login")
-      assert "Bitwarden" in output, f"'{output}' does not contain 'Bitwarden'"
-
-    #
     # Test that we can backup lab
     #
 
     with subtest("Ensure SSH is ready"):
       lab.wait_for_open_port(8022, timeout=30)
-
-    with subtest("Attempt to run lab backup"):
-      backup.succeed("mkdir -p /tmp/backup-root-lab")
-
-      # Check that the permissions are correct
-      lab.succeed("ls -nd /var/lib/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("ls -nd /var/lib/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
-      # Trigger a snapshot
-      labdayofweek = datetime.datetime.today().strftime('%w')
-      lab.succeed("systemctl start periodic-daily.service")
-
-      # Run the backup
-      backup.succeed("/etc/ahayzen.com/backup.sh lab /etc/ssh/test_ssh_id_ed25519 headless@lab /tmp/backup-root-lab")
-
-      # Check volumes are appearing
-      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/actual/data")
-      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/bitwarden/config")
-
-      # Check that known files exist and permissions are correct
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account.sqlite")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault.db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     #
     # Test auto backup in lab
@@ -332,25 +301,6 @@
     with subtest("Test Auto Backup Machines"):
       # Run backup command
       lab.succeed("systemctl start backup-machines.service")
-
-      #
-      # Check lab is correct
-      #
-
-      # Check volumes are appearing
-      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/actual/data")
-      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config")
-
-      # Check that known files exist and permissions are correct
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account.sqlite")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config/vault.db")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       #
       # Check vps is correct
@@ -376,7 +326,6 @@
       lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
       lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))

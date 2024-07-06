@@ -9,7 +9,7 @@ SPDX-License-Identifier: MPL-2.0
 We need the sandbox disabled as we need network access
 
 ```console
-$ nix flake --option sandbox false check -L --show-trace
+$ nix flake --option sandbox false check --max-jobs 1 --print-build-logs --show-trace
 ```
 
 # Test in a VM

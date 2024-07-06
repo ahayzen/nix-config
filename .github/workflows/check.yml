@@ -46,7 +46,7 @@ jobs:
       - name: shellcheck
         run: shellcheck scripts/*.sh
 
-  nix-flake-check:
+  nix-flake-check-no-build:
     # Run after pre checks
     needs: [license-check, flake-checker, nix-fmt, shellcheck]
     runs-on: ubuntu-22.04
@@ -55,4 +55,44 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v12
       - uses: DeterminateSystems/magic-nix-cache-action@v7
       - name: nix flake check
-        run: nix flake --option sandbox false check -L
+        # Only run a check of the flake itself without building
+        run: nix flake --option sandbox false check --no-build --print-build-logs
+
+  nix-flake-check-lab-actual:
+    # Run after flake check
+    needs: [nix-flake-check-no-build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: DeterminateSystems/nix-installer-action@v12
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: nix build
+        # nix flake check doesn't have a way to specify a specific test to run
+        # https://github.com/NixOS/nix/issues/8881
+        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-actual-test
+
+  nix-flake-check-lab-bitwarden:
+    # Run after flake check
+    needs: [nix-flake-check-no-build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: DeterminateSystems/nix-installer-action@v12
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: nix build
+        # nix flake check doesn't have a way to specify a specific test to run
+        # https://github.com/NixOS/nix/issues/8881
+        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-bitwarden-test
+
+  nix-flake-check-vps-wagtail:
+    # Run after flake check
+    needs: [nix-flake-check-no-build]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4.1.7
+      - uses: DeterminateSystems/nix-installer-action@v12
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: nix build
+        # nix flake check doesn't have a way to specify a specific test to run
+        # https://github.com/NixOS/nix/issues/8881
+        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.vps-wagtail-test
