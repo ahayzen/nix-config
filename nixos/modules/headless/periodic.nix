@@ -2,22 +2,37 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
-  systemd = {
-    services."periodic-daily" = {
-      serviceConfig = {
-        Type = "oneshot";
-      };
-    };
+  options.ahayzen.periodic-daily-commands = lib.mkOption {
+    default = [ ];
+    type = lib.types.listOf lib.types.str;
+  };
 
-    timers."periodic-daily" = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "daily";
-        Unit = "periodic-daily.service";
-        RandomizedDelaySec = "30m";
-        Persistent = true;
+  config = {
+    systemd = {
+      services."periodic-daily" = {
+        serviceConfig = {
+          Type = "oneshot";
+        };
+        script = builtins.foldl'
+          (commands: command: ''
+            ${commands}
+            ${command}
+          '') ""
+          config.ahayzen.periodic-daily-commands;
+      };
+
+      timers."periodic-daily" = {
+        # Only enable if there are commands
+        enable = config.ahayzen.periodic-daily-commands != [ ];
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "daily";
+          Unit = "periodic-daily.service";
+          RandomizedDelaySec = "30m";
+          Persistent = true;
+        };
       };
     };
   };
