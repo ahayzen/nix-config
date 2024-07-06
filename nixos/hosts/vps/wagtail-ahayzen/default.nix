@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, options, lib, ... }:
+{ config, options, lib, pkgs, ... }:
 {
   options.ahayzen.vps.wagtail-ahayzen = lib.mkOption {
     default = true;
@@ -20,7 +20,14 @@
       };
     };
 
-    ahayzen.docker-compose-files = [ ./compose.wagtail-ahayzen.yml ];
+    ahayzen = {
+      docker-compose-files = [ ./compose.wagtail-ahayzen.yml ];
+
+      # Take a snapshot of the database daily
+      periodic-daily-commands = [
+        ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 ".backup /var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-$(date +%w).sqlite3"''
+      ];
+    };
 
     environment.etc = {
       "caddy/sites/ahayzen.Caddyfile".source =
