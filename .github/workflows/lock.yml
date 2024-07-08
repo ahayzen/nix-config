@@ -26,7 +26,7 @@ jobs:
       #
       # Using a Github app allows us a token limited to this repo
       # https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
-      - uses: actions/create-github-app-token@v1.10.2
+      - uses: actions/create-github-app-token@v1.10.3
         id: generate-token
         with:
           app-id: ${{ secrets.APP_ID }}
