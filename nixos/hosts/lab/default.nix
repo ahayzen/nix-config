@@ -6,7 +6,7 @@
 {
   imports = [
     ./disko-config.nix
-    inputs.nixos-hardware.nixosModules.common-cpu-intel-sandy-bridge
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
     ./hardware.nix
     ./backup.nix
     ./sshfs.nix
