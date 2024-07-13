@@ -58,6 +58,11 @@
     };
   };
 
+  # Ensure that paths are mounted
+  systemd.services."docker-compose-runner".unitConfig = {
+    RequiresMountsFor = "/mnt/backup-restic /mnt/data";
+  };
+
   # Emulate sshfs mount folders for testing
   systemd.tmpfiles.settings = lib.mkIf (config.ahayzen.testing) {
     "99-sshfs-mount" = {
