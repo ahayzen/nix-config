@@ -13,6 +13,7 @@
     # Note that caddy should be first as other depend on it
     ./caddy
     ./hayzen-uk
+    ./homepage
     ./rathole
     ./wagtail-ahayzen
     ./wagtail-yumekasaito

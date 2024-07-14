@@ -7,6 +7,7 @@
 #
 # VPS
 # - caddy
+# - homepage
 # - wagtail-ahayzen
 # - wagtail-yumeaksaito
 #
@@ -33,6 +34,7 @@
 
         vps = {
           rathole = false;
+          homepage = true;
           wagtail-ahayzen = true;
           wagtail-yumekasaito = true;
         };
@@ -42,7 +44,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "hayzen.uk" "yumekasaito.com" ];
+        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -95,7 +97,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "hayzen.uk" "yumekasaito.com" ];
+        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -218,6 +220,16 @@
       output = vps.succeed("curl --silent hayzen.uk:80")
       assert "Andrew" in output, f"'{output}' does not contain 'Andrew'"
       assert "Yumeka" in output, f"'{output}' does not contain 'Yumeka'"
+
+    with subtest("Ensure that homepage has started"):
+      # Wait for homepage to start
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening on port 3000"', timeout=30)
+
+      # Test that we can access the homepage
+      output = vps.succeed("curl --silent home.hayzen.uk:80")
+      # Note we cannot test for "Hayzen Home" our title as using curl
+      # doesn't load the actual settings but just the default page
+      assert "Home" in output, f"'{output}' does not contain 'Home'"
 
     #
     # Test that we can backup and restore the VPS
