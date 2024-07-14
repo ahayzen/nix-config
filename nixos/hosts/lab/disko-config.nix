@@ -11,16 +11,15 @@
         content = {
           type = "gpt";
           partitions = {
-            boot = {
+            biosgrub = {
               size = "1M";
               type = "EF02"; # for grub MBR
             };
-            ESP = {
+            boot = {
               size = "1024M";
-              type = "EF00";
               content = {
                 type = "filesystem";
-                format = "vfat";
+                format = "xfs";
                 mountpoint = "/boot";
               };
             };
