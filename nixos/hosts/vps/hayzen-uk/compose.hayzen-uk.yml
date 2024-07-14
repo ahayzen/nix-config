@@ -1,0 +1,11 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  caddy:
+    volumes:
+      # Caddy configuration file
+      - /etc/caddy/sites/hayzen-uk.Caddyfile:/etc/caddy/sites/hayzen-uk.Caddyfile:ro
+      # hayzen.uk site
+      - /etc/hayzen-uk/index.html:/srv/hayzen-uk/index.html:ro
