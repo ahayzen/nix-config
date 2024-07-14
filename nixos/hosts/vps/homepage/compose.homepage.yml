@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  caddy:
+    links:
+      - homepage
+    volumes:
+      # Caddy configuration file
+      - /etc/caddy/sites/homepage.Caddyfile:/etc/caddy/sites/homepage.Caddyfile:ro
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:v0.9.3@sha256:4971c7271b6847c2d1190f73406d94a2ac95ac9f03f4e8f6342d322e443fbb41
+    expose:
+      - "3000"
+    environment:
+      LOG_TARGETS: stdout
+    restart: unless-stopped
+    volumes:
+      # homepage likes to write missing files, so allow it to write them
+      # and mount in our static files
+      - /var/lib/docker-compose-runner/homepage/config:/app/config
+      - /etc/homepage/bookmarks.yaml:/app/config/bookmarks.yaml:ro
+      - /etc/homepage/services.yaml:/app/config/services.yaml:ro
+      - /etc/homepage/settings.yaml:/app/config/settings.yaml:ro
+      - /etc/homepage/widgets.yaml:/app/config/widgets.yaml:ro

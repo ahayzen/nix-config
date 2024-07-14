@@ -20,5 +20,4 @@ local_addr = "actual:5006"
 local_addr = "bitwarden:8080"
 
 [client.services.immich]
-# TODO: check that the name in docker-compose is used not the container_name
 local_addr = "immich-server:3001"

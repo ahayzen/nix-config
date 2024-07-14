@@ -1,0 +1,21 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+---
+
+color: slate
+disableCollapse: true
+headerStyle: clean
+hideVersion: true
+statusStyle: dot
+title: "Hayzen Home"
+target: _self
+
+layout:
+  Media:
+    columns: 4
+    style: row
+
+  Utilities:
+    columns: 4
+    style: row
