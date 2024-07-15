@@ -16,6 +16,8 @@ services:
     expose:
       # Bitwarden
       - "8080"
+      # Immich
+      - "8301"
       # Actual
       - "8506"
       # DSAudio
