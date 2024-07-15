@@ -9,7 +9,7 @@ services:
       - /etc/bitwarden/settings.1.env
     # https://bitwarden.com/help/environment-variables/
     environment:
-      BW_DOMAIN: "bitwarden.ahayzen.com"
+      BW_DOMAIN: "home.hayzen.uk/bitwarden"
       # Use sqlite
       BW_DB_PROVIDER: "sqlite"
       BW_DB_FILE: "/etc/bitwarden/vault.db"

@@ -43,7 +43,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "ahayzen.com" "hayzen.uk" "home.hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -96,7 +96,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
+        "192.168.1.3" = [ "ahayzen.com" "hayzen.uk" "home.hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -220,7 +220,7 @@
       lab.wait_until_succeeds(wait_for_immich_microservice_cmd, timeout=60)
 
       # Test login page
-      output = vps.succeed("curl --silent immich.ahayzen.com:80")
+      output = vps.succeed("curl --silent home.hayzen.uk:80/immich")
       assert "immich" in output, f"'{output}' does not contain 'immich'"
 
     #

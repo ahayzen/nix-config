@@ -8,14 +8,21 @@
 # eg actual IN CNAME ahayzen.com.
 #
 
-# Actual proxy
-actual.ahayzen.com {
-    reverse_proxy rathole:8506
-}
+home.hayzen.uk {
+    # Actual proxy
+    handle_path /actual/* {
+        reverse_proxy rathole:8506
+    }
 
-# Bitwarden proxy
-bitwarden.ahayzen.com {
-    reverse_proxy rathole:8080
+    # Bitwarden proxy
+    handle_path /bitwarden/* {
+        reverse_proxy rathole:8080
+    }
+
+    # Immich proxy
+    handle_path /immich/* {
+        reverse_proxy rathole:8301
+    }
 }
 
 # DSAudio proxy
@@ -34,9 +41,4 @@ dsvideo.ahayzen.com {
             tls_insecure_skip_verify
         }
     }
-}
-
-# Immich proxy
-immich.ahayzen.com {
-    reverse_proxy rathole:8301
 }

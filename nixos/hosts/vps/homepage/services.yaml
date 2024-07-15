@@ -5,20 +5,20 @@
 
 - Media:
     - Immich:
-        href: https://immich.ahayzen.com/
+        href: https://home.hayzen.uk/immich/
         icon: immich.png
         description: "Self-hosted photo and video management solution"
         siteMonitor: https://immich.ahayzen.com/
 
 - Utilities:
     - Actual:
-        href: https://actual.ahayzen.com/
+        href: https://home.hayzen.uk/actual/
         icon: actual.png
         description: "Your Finances - made simple"
         siteMonitor: https://actual.ahayzen.com/
 
     - Bitwarden:
-        href: https://bitwarden.ahayzen.com/
+        href: https://home.hayzen.uk/bitwarden/
         icon: bitwarden.png
         description: "The #1 most trusted password manager"
         siteMonitor: https://bitwarden.ahayzen.com/
