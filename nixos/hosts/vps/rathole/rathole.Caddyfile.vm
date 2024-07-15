@@ -2,17 +2,19 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-# Actual proxy
-http://actual.ahayzen.com {
-    reverse_proxy rathole:8506
-}
+http://home.hayzen.uk {
+    # Actual proxy
+    handle_path /actual/* {
+        reverse_proxy rathole:8506
+    }
 
-# Bitwarden proxy
-http://bitwarden.ahayzen.com {
-    reverse_proxy rathole:8080
-}
+    # Bitwarden proxy
+    handle_path /bitwarden/* {
+        reverse_proxy rathole:8080
+    }
 
-# Immich proxy
-http://immich.ahayzen.com {
-    reverse_proxy rathole:8301
+    # Immich proxy
+    handle_path /immich/* {
+        reverse_proxy rathole:8301
+    }
 }

@@ -44,7 +44,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
+        "127.0.0.1" = [ "ahayzen.com" "hayzen.uk" "home.hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -97,7 +97,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
+        "192.168.1.3" = [ "ahayzen.com" "hayzen.uk" "home.hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
