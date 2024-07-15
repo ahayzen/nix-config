@@ -8,17 +8,17 @@
         href: https://immich.ahayzen.com/
         icon: immich.png
         description: "Self-hosted photo and video management solution"
-        siteMonitor: https://immich.ahayzen.com/
+        siteMonitor: "http://rathole:8301"
 
 - Utilities:
     - Actual:
         href: https://actual.ahayzen.com/
         icon: actual.png
         description: "Your Finances - made simple"
-        siteMonitor: https://actual.ahayzen.com/
+        siteMonitor: "http://rathole:8506"
 
     - Bitwarden:
         href: https://bitwarden.ahayzen.com/
         icon: bitwarden.png
         description: "The #1 most trusted password manager"
-        siteMonitor: https://bitwarden.ahayzen.com/
+        siteMonitor: "http://rathole:8080"

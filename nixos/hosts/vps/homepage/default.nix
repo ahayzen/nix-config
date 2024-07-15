@@ -11,7 +11,8 @@
 
   config = lib.mkIf (config.ahayzen.vps.homepage) {
     ahayzen = {
-      docker-compose-files = [ ./compose.homepage.yml ];
+      docker-compose-files = [ ./compose.homepage.yml ]
+        ++ lib.optional config.ahayzen.vps.rathole ./compose.homepage.rathole.yml;
     };
 
     environment.etc = {

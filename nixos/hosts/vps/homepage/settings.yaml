@@ -9,7 +9,7 @@ headerStyle: clean
 hideVersion: true
 statusStyle: dot
 title: "Hayzen Home"
-target: _self
+target: "_self"
 
 layout:
   Media:
