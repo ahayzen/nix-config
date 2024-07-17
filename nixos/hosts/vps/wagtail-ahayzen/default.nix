@@ -30,10 +30,7 @@
     };
 
     environment.etc = {
-      "caddy/sites/ahayzen.Caddyfile".source =
-        if config.ahayzen.testing
-        then ./ahayzen.Caddyfile.vm
-        else ./ahayzen.Caddyfile;
+      "caddy/sites/ahayzen.Caddyfile".source = ./ahayzen.Caddyfile;
       "ahayzen.com/local.1.py".
       source =
         if config.ahayzen.testing

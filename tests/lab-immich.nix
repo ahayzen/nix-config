@@ -220,7 +220,7 @@
       lab.wait_until_succeeds(wait_for_immich_microservice_cmd, timeout=60)
 
       # Test login page
-      output = vps.succeed("curl --silent immich.ahayzen.com:80")
+      output = vps.succeed("curl --insecure --location --silent immich.ahayzen.com")
       assert "immich" in output, f"'{output}' does not contain 'immich'"
 
     #

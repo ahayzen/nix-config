@@ -16,10 +16,7 @@
     };
 
     environment.etc = {
-      "caddy/sites/homepage.Caddyfile".source =
-        if config.ahayzen.testing
-        then ./homepage.Caddyfile.vm
-        else ./homepage.Caddyfile;
+      "caddy/sites/homepage.Caddyfile".source = ./homepage.Caddyfile;
       "homepage/bookmarks.yaml".source = ./bookmarks.yaml;
       "homepage/services.yaml".source = ./services.yaml;
       "homepage/settings.yaml".source = ./settings.yaml;
