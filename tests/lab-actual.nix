@@ -217,7 +217,7 @@
       lab.wait_until_succeeds(wait_for_actual_cmd, timeout=60)
 
       # Test login page
-      output = vps.succeed("curl --silent actual.ahayzen.com/login")
+      output = vps.succeed("curl --silent actual.ahayzen.com:80/login")
       assert "Actual" in output, f"'{output}' does not contain 'Actual'"
 
     #

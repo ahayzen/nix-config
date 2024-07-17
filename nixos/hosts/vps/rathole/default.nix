@@ -25,7 +25,10 @@
     ahayzen.docker-compose-files = [ ./compose.rathole.yml ];
 
     environment.etc = {
-      "caddy/sites/rathole.Caddyfile".source = ./rathole.Caddyfile;
+      "caddy/sites/rathole.Caddyfile".source =
+        if config.ahayzen.testing
+        then ./rathole.Caddyfile.vm
+        else ./rathole.Caddyfile;
       "rathole/config.1.toml".
       source =
         if config.ahayzen.testing
