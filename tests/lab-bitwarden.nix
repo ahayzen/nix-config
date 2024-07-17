@@ -217,7 +217,7 @@
       lab.wait_until_succeeds(wait_for_bitwarden_cmd, timeout=60)
 
       # Test login page
-      output = vps.succeed("curl --silent bitwarden.ahayzen.com:80/#/login")
+      output = vps.succeed("curl --silent bitwarden.ahayzen.com/#/login")
       assert "Bitwarden" in output, f"'{output}' does not contain 'Bitwarden'"
 
     #

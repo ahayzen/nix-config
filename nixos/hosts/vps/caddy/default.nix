@@ -10,6 +10,11 @@
     "caddy/Caddyfile".source = ./Caddyfile;
   };
 
+  # When using a VM disable https certs
+  environment.etc = lib.mkIf config.ahayzen.testing {
+    "caddy/sites/vm.Caddyfile".source = ./vm.Caddyfile;
+  };
+
   # Reload if static files change
   #
   # Note agenix files are not possible and will need the version bumping

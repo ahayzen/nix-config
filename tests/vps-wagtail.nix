@@ -203,21 +203,21 @@
       vps.wait_until_succeeds(wait_for_wagtail_cmd + " | wc -l | awk '{if ($1 > 1) {exit 0} else {exit 1}}'", timeout=60)
 
       # Test that ahayzen admin page exists
-      output = vps.succeed("curl --silent ahayzen.com:80/admin/login/?next=/admin/")
+      output = vps.succeed("curl --silent ahayzen.com/admin/login/?next=/admin/")
       assert "Sign in" in output, f"'{output}' does not contain 'Sign in'"
 
       # Test that wagtail port is not open externally
       vps.fail("curl --silent ahayzen.com:8080")
 
       # Test that yumekasaito admin page exists
-      output = vps.succeed("curl --silent yumekasaito.com:80/admin/login/?next=/admin/")
+      output = vps.succeed("curl --silent yumekasaito.com/admin/login/?next=/admin/")
       assert "Sign in" in output, f"'{output}' does not contain 'Sign in'"
 
       # Test that wagtail port is not open externally
       vps.fail("curl --silent yumekasaito.com:8080")
 
       # Test that static hayzen.uk site works
-      output = vps.succeed("curl --silent hayzen.uk:80")
+      output = vps.succeed("curl --silent hayzen.uk")
       assert "Andrew" in output, f"'{output}' does not contain 'Andrew'"
       assert "Yumeka" in output, f"'{output}' does not contain 'Yumeka'"
 
@@ -226,7 +226,7 @@
       vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening on port 3000"', timeout=30)
 
       # Test that we can access the homepage
-      output = vps.succeed("curl --silent home.hayzen.uk:80")
+      output = vps.succeed("curl --silent home.hayzen.uk")
       # Note we cannot test for "Hayzen Home" our title as using curl
       # doesn't load the actual settings but just the default page
       assert "Home" in output, f"'{output}' does not contain 'Home'"
@@ -276,7 +276,7 @@
     # TODO: note this does not restore wagtail-yumekasaito
     with subtest("Attempt to run a restore (only wagtail-ahayzen)"):
       # Check the home does not contain restore key
-      output = vps.succeed("curl --silent ahayzen.com:80/")
+      output = vps.succeed("curl --silent ahayzen.com")
       assert "Restore Unit Test" not in output, f"'{output}' does contain 'Restore Unit Test'"
 
       # Copy fixtures to a /tmp folder so that we can fix permissions
@@ -302,7 +302,7 @@
       vps.wait_until_succeeds(wait_for_wagtail_cmd + " | wc -l | awk '{if ($1 > 3) {exit 0} else {exit 1}}'", timeout=60)
 
       # Check the home does contain restore key
-      output = vps.succeed("curl --silent ahayzen.com:80/")
+      output = vps.succeed("curl --silent ahayzen.com")
       assert "Restore Unit Test" in output, f"'{output}' does not contain 'Restore Unit Test'"
 
     #
