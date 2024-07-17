@@ -11,7 +11,7 @@ services:
       - /etc/caddy/sites/homepage.Caddyfile:/etc/caddy/sites/homepage.Caddyfile:ro
 
   homepage:
-    image: ghcr.io/gethomepage/homepage:v0.9.3@sha256:4971c7271b6847c2d1190f73406d94a2ac95ac9f03f4e8f6342d322e443fbb41
+    image: ghcr.io/gethomepage/homepage:v0.9.4@sha256:85cd217721b376bf5d84e867b16db10348068bfeb95e033039189b272f904caa
     expose:
       - "3000"
     environment:
