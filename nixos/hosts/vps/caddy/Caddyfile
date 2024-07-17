@@ -2,4 +2,8 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+{
+    import "/etc/caddy/global/*.Caddyfile"
+}
+
 import "/etc/caddy/sites/*.Caddyfile"

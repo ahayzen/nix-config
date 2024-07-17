@@ -7,10 +7,7 @@
   ahayzen.docker-compose-files = [ ./compose.hayzen-uk.yml ];
 
   environment.etc = {
-    "caddy/sites/hayzen-uk.Caddyfile".source =
-      if config.ahayzen.testing
-      then ./hayzen-uk.Caddyfile.vm
-      else ./hayzen-uk.Caddyfile;
+    "caddy/sites/hayzen-uk.Caddyfile".source = ./hayzen-uk.Caddyfile;
     "hayzen-uk/index.html".source = ./index.html;
   };
 

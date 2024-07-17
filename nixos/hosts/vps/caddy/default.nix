@@ -4,10 +4,16 @@
 
 { config, lib, ... }:
 {
-  ahayzen.docker-compose-files = [ ./compose.caddy.yml ];
+  ahayzen.docker-compose-files = [ ./compose.caddy.yml ]
+    ++ lib.optional config.ahayzen.testing ./compose.caddy.vm.yml;
 
   environment.etc = {
     "caddy/Caddyfile".source = ./Caddyfile;
+
+    # When using a VM disable https certs
+    "caddy/global/vm.Caddyfile" = lib.mkIf config.ahayzen.testing {
+      source = ./global.vm.Caddyfile;
+    };
   };
 
   # Reload if static files change
