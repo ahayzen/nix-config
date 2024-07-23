@@ -88,6 +88,7 @@
           bitwarden = false;
           immich = true;
           rathole = true;
+          restic = false;
         };
       };
 
