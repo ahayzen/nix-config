@@ -38,7 +38,18 @@
                 "docker"
             ],
             "matchFileNames": ["nixos/hosts/lab/immich/**"],
+            "matchUpdateTypes": ["major"],
             "groupName": "docker-immich",
+        },
+        // Disable major updates as renovate tries to bump from v1.n to NNN
+        {
+            "matchDatasources": [
+                "docker"
+            ],
+            "matchFileNames": ["nixos/hosts/lab/immich/**"],
+            "matchUpdateTypes": ["major"],
+            "enabled": false,
+            "groupName": "docker-immich-major",
         },
     ],
 }
