@@ -5,14 +5,16 @@
 name: renovate docker-compose
 
 on:
-  schedule:
-    # Note this is in UTC
-    #
-    # 2200 is 0700 in Japan and 2200 or 2300 in UK so has minimal impact
-    #
-    # Run a few times in the hour so that we attempt to resolve any rebases
-    # or land multiple commits
-    - cron: '29,44,59 22 * * *'
+  # Note: Use renovate bot for now but allow for manual runs
+  #
+  # schedule:
+  #   # Note this is in UTC
+  #   #
+  #   # 2200 is 0700 in Japan and 2200 or 2300 in UK so has minimal impact
+  #   #
+  #   # Run a few times in the hour so that we attempt to resolve any rebases
+  #   # or land multiple commits
+  #   - cron: '29,44,59 22 * * *'
   workflow_dispatch:
 
 jobs:
