@@ -32,18 +32,13 @@
             ],
             "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\-(?<compatibility>.*)$",
         },
-        // Do not update immich containers automatically as they need to be pinned for now
+        // Update immich together as these likely need manually pinning
         {
             "matchDatasources": [
                 "docker"
             ],
-            "matchPackageNames": [
-                "ghcr.io/immich-app/immich-server",
-                "ghcr.io/immich-app/immich-machine-learning",
-                "docker.io/redis",
-                "docker.io/tensorchord/pgvecto-rs",
-            ],
-            "enabled": false,
+            "matchFileNames": ["nixos/hosts/lab/immich/**"],
+            "groupName": "docker-immich",
         },
     ],
 }
