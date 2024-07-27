@@ -35,7 +35,7 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:v1.108.0@sha256:bcbfad794b8a9a8a6154b08d3dd42bf399bf3096767b93e08a3a0c15bf612b0a
+    image: ghcr.io/immich-app/immich-machine-learning:v1.110.0@sha256:fe71fb781bc9db5ce98d5e3c42b24aff2584f797f3e9765eca2216d714cffc8f
     volumes:
       - /var/cache/docker-compose-runner/immich/machine-learning-cache:/cache
     env_file:
