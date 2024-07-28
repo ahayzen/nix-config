@@ -9,6 +9,7 @@
     inputs.nixos-hardware.nixosModules.common-cpu-intel
     ./hardware.nix
     ./backup.nix
+    ./bindfs.nix
     ./sshfs.nix
     # Include services
     ./actual
