@@ -7,36 +7,53 @@
   #
   # Set this to a high id so that we remain stable
   users = {
-    groups.unpriv = {
-      gid = 2000;
-    };
-    users.unpriv = {
-      isNormalUser = true;
-      group = "unpriv";
-      uid = 2000;
+    groups = {
+      unpriv = {
+        gid = 2000;
+      };
 
-      # Map the root sub id to the same as the user (as it is unpriviledged)
-      # then map the remaining uids high
-      subGidRanges = [
-        {
-          count = 1;
-          startGid = 2000;
-        }
-        {
-          count = 65535;
-          startGid = 200001;
-        }
-      ];
-      subUidRanges = [
-        {
-          count = 1;
-          startUid = 2000;
-        }
-        {
-          count = 65535;
-          startUid = 200001;
-        }
-      ];
+      # Create a group on the host that maps to gid 1000 in the unpriv subgid range
+      unpriv-user1000 = {
+        gid = 201000;
+      };
+    };
+
+    users = {
+      unpriv = {
+        isNormalUser = true;
+        group = "unpriv";
+        uid = 2000;
+
+        # Map the root sub id to the same as the user (as it is unpriviledged)
+        # then map the remaining uids high
+        subGidRanges = [
+          {
+            count = 1;
+            startGid = 2000;
+          }
+          {
+            count = 65535;
+            startGid = 200001;
+          }
+        ];
+        subUidRanges = [
+          {
+            count = 1;
+            startUid = 2000;
+          }
+          {
+            count = 65535;
+            startUid = 200001;
+          }
+        ];
+      };
+
+      # Create a user on the host that maps to uid 1000 in the unpriv subuid range
+      unpriv-user1000 = {
+        isNormalUser = true;
+        group = "unpriv-user1000";
+        uid = 201000;
+      };
     };
   };
 
