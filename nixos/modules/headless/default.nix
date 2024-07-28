@@ -4,6 +4,7 @@
 
 { pkgs, ... }: {
   imports = [
+    ./bindfs.nix
     ./docker.nix
     ./docker-compose.nix
     ./periodic.nix
