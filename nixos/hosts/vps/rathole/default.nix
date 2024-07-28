@@ -16,9 +16,9 @@
         # Set correct owner otherwise docker cannot read the file
         #
         # Note rathole uses ID 1000 inside the container
-        mode = "0666";
-        owner = "unpriv";
-        group = "unpriv";
+        mode = "0600";
+        owner = "unpriv-user1000";
+        group = "unpriv-user1000";
       };
     };
 
