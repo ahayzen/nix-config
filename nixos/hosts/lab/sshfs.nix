@@ -59,24 +59,15 @@
   };
 
   # Emulate sshfs mount folders for testing
-  systemd.tmpfiles.settings = lib.mkIf (config.ahayzen.testing) {
-    "99-sshfs-mount" = {
-      "/mnt/backup-restic" = {
-        d = {
-          age = "-";
-          group = "unpriv";
-          mode = "0750";
-          user = "unpriv";
-        };
-      };
-      "/mnt/data" = {
-        d = {
-          age = "-";
-          group = "unpriv";
-          mode = "0750";
-          user = "unpriv";
-        };
-      };
-    };
+  system.activationScripts = lib.mkIf (config.ahayzen.testing) {
+    mkdirMntFolders = ''
+      mkdir -p /mnt/backup-restic
+      chown unpriv:unpriv /mnt/backup-restic
+      chmod 0755 /mnt/backup-restic
+
+      mkdir -p /mnt/data
+      chown unpriv:unpriv /mnt/data
+      chmod 0755 /mnt/data
+    '';
   };
 }
