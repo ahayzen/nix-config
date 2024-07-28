@@ -236,6 +236,7 @@
       lab.wait_until_succeeds(wait_for_bitwarden_db, timeout=60)
 
       # Check that the permissions are correct
+      lab.succeed("ls -nd /var/lib/docker-compose-runner-user1000/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 201000) {exit 0} else {exit 1}}'")
       lab.succeed("ls -nd /var/lib/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
