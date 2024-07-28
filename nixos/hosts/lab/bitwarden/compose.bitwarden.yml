@@ -13,9 +13,6 @@ services:
       # Use sqlite
       BW_DB_PROVIDER: "sqlite"
       BW_DB_FILE: "/etc/bitwarden/vault.db"
-      # We are using userns so run as root in the container but unpriv outside
-      PUID: 0
-      PGID: 0
       # Disable account registration
       #
       # Allow for now to setup accounts
@@ -26,4 +23,5 @@ services:
     mem_limit: 1024m
     restart: unless-stopped
     volumes:
-      - /var/lib/docker-compose-runner/bitwarden/config:/etc/bitwarden
+      # Bitwarden uses uid 1000, so use our mapped folder
+      - /var/lib/docker-compose-runner-user1000/bitwarden/config:/etc/bitwarden
