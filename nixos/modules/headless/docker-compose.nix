@@ -49,32 +49,17 @@
           # This avoids the need for a specific docker-compose-upgrade timer.
           reloadTriggers = map (path: builtins.hashFile "sha256" path) config.ahayzen.docker-compose-files;
         };
-      # Do not use StateDirectory as it changes ownership to the service user on startup
-      # eg this causes ownership to change to root rather than unpriv
-      # Instead use a tmpfile rule with no age to cleanup
-      tmpfiles.settings = {
-        "99-var-cache-docker-compose-runner" = {
-          "/var/cache/docker-compose-runner" = {
-            d = {
-              age = "-";
-              group = "unpriv";
-              mode = "0750";
-              user = "unpriv";
-            };
-          };
-        };
-
-        "99-var-lib-docker-compose-runner" = {
-          "/var/lib/docker-compose-runner" = {
-            d = {
-              age = "-";
-              group = "unpriv";
-              mode = "0750";
-              user = "unpriv";
-            };
-          };
-        };
-      };
     };
+
+    # Create folders that should already exist for docker to use
+    system.activationScripts.mkdirDockerComposeRunnerDir = lib.stringAfter [ "var" ] ''
+      mkdir -p /var/cache/docker-compose-runner
+      chown unpriv:unpriv /var/cache/docker-compose-runner
+      chmod 0755 /var/cache/docker-compose-runner
+
+      mkdir -p /var/lib/docker-compose-runner
+      chown unpriv:unpriv /var/lib/docker-compose-runner
+      chmod 0755 /var/lib/docker-compose-runner
+    '';
   };
 }
