@@ -132,7 +132,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v13
       - uses: DeterminateSystems/magic-nix-cache-action@v7
       - name: nixos-anywhere vm-test lab
-        run: nix run github:nix-community/nixos-anywhere -- --flake .#lab --vm-test
+        run: nix run github:nix-community/nixos-anywhere -- --flake .#lab-vm-test --vm-test
 
   nixos-anywhere-vm-test-vps:
     # Run after pre checks
@@ -143,4 +143,4 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v13
       - uses: DeterminateSystems/magic-nix-cache-action@v7
       - name: nixos-anywhere vm-test vps
-        run: nix run github:nix-community/nixos-anywhere -- --flake .#vps --vm-test
+        run: nix run github:nix-community/nixos-anywhere -- --flake .#vps-vm-test --vm-test
