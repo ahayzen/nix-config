@@ -12,7 +12,7 @@
     mounts = [{
       type = "fuse.bindfs";
       mountConfig = {
-        Options = "map=unpriv/unpriv-user1000:map=@unpriv/@unpriv-user1000";
+        Options = "map=unpriv/unpriv-user1000:@unpriv/@unpriv-user1000";
       };
       # As sshfs provides a mount this causes us to depend on it
       what = "/mnt/data";
