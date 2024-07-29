@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4.1.7
-      - uses: DeterminateSystems/nix-installer-action@v12
+      - uses: DeterminateSystems/nix-installer-action@v13
 
       # Github action workflows can't trigger another workflow
       # so we need to have a different token to do this
