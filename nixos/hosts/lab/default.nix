@@ -17,6 +17,7 @@
     ./immich
     ./rathole
     ./restic
+    ./sftpgo
   ];
 
   # System76 Pangolin Performance uses BIOS so we need to disable systemd-boot and use grub

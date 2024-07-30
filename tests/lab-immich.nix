@@ -89,6 +89,7 @@
           immich = true;
           rathole = true;
           restic = false;
+          sftpgo = false;
         };
       };
 

@@ -28,6 +28,7 @@
           immich = false;
           rathole = false;
           restic = true;
+          sftpgo = false;
         };
       };
 

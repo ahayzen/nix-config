@@ -14,3 +14,6 @@ bind_addr = "0.0.0.0:8080"
 
 [server.services.immich]
 bind_addr = "0.0.0.0:8301"
+
+[server.services.sftpgo]
+bind_addr = "0.0.0.0:8880"
