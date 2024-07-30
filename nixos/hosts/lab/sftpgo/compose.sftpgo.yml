@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  sftpgo:
+    image: docker.io/drakkan/sftpgo:v2.6.2@sha256:05b8e197e796366f955a3816b42a8ed29a9ef400c0da23ecc62bbc22748d4ab8
+    environment:
+      # Allow for connections to continue for 5s before killing
+      SFTPGO_GRACE_TIME: 5
+      # Disable SFTP
+      SFTPGO_SFTPD__BINDINGS__0__PORT: 0
+    expose:
+      - 8080
+    restart: unless-stopped
+    volumes:
+      # SFTP backups
+      - /mnt/mapping-data-user1000/app/sftpgo/backups:/srv/sftpgo/backups
+      # SFTPGo home
+      - /mnt/mapping-data-user1000/user:/srv/sftpgo/data
+      # SFTP settings
+      - /var/lib/docker-compose-runner-user1000/sftpgo:/var/lib/sftpgo
+      # Other data
+      - /mnt/mapping-data-user1000/camera:/mnt/data/camera:ro

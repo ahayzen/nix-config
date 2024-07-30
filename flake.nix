@@ -134,6 +134,7 @@
             lab-bitwarden-test = import ./tests/lab-bitwarden.nix checkArgs;
             lab-immich-test = import ./tests/lab-immich.nix checkArgs;
             lab-restic-test = import ./tests/lab-restic.nix checkArgs;
+            lab-sftpgo-test = import ./tests/lab-sftpgo.nix checkArgs;
             vps-wagtail-test = import ./tests/vps-wagtail.nix checkArgs;
           };
       };

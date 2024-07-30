@@ -21,3 +21,6 @@ local_addr = "bitwarden:8080"
 
 [client.services.immich]
 local_addr = "immich-server:3001"
+
+[client.services.sftpgo]
+local_addr = "sftpgo:8080"

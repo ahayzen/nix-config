@@ -22,3 +22,9 @@
         icon: bitwarden.png
         description: "The #1 most trusted password manager"
         siteMonitor: "http://rathole:8080"
+
+    - SFTPGo:
+        href: https://home.hayzen.com/sftpgo/
+        icon: sftpgo.png
+        description: "Bring your file transfers anywhere"
+        siteMonitor: "http://rathole:8880"
