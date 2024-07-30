@@ -8,13 +8,6 @@
 # eg actual IN CNAME ahayzen.com.
 #
 
-home.hayzen.uk {
-    # SFTPGo proxy
-    handle_path /sftpgo/* {
-        reverse_proxy rathole:8880
-    }
-}
-
 # Actual proxy
 actual.ahayzen.com {
     reverse_proxy rathole:8506

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-# Home page
-handle {
-    reverse_proxy homepage:3000
+# SFTPGo proxy
+handle_path /sftpgo/* {
+    reverse_proxy rathole:8880
 }

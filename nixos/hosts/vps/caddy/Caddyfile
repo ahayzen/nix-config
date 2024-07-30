@@ -2,8 +2,27 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+#
+# Global configuration
+#
+
 {
     import "/etc/caddy/global/*.Caddyfile"
 }
+
+#
+# Top level domains
+#
+# Note that sub domains require a A or CNAME record in the DNS
+# eg actual IN CNAME ahayzen.com.
+#
+
+home.hayzen.uk {
+    import "/etc/caddy/sites/home-hayzen-uk/*.Caddyfile"
+}
+
+#
+# Other imports
+#
 
 import "/etc/caddy/sites/*.Caddyfile"
