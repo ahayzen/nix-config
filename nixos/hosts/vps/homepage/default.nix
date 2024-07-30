@@ -16,7 +16,7 @@
     };
 
     environment.etc = {
-      "caddy/sites/homepage.Caddyfile".source = ./homepage.Caddyfile;
+      "caddy/sites/home-hayzen-uk/homepage.Caddyfile".source = ./homepage.Caddyfile;
       "homepage/bookmarks.yaml".source = ./bookmarks.yaml;
       "homepage/services.yaml".source = ./services.yaml;
       "homepage/settings.yaml".source = ./settings.yaml;
@@ -28,7 +28,7 @@
     # Note agenix files are not possible and will need the version bumping
     # which causes the hash of the docker-compose file to change.
     systemd.services."docker-compose-runner".reloadTriggers = [
-      (builtins.hashFile "sha256" config.environment.etc."caddy/sites/homepage.Caddyfile".source)
+      (builtins.hashFile "sha256" config.environment.etc."caddy/sites/home-hayzen-uk/homepage.Caddyfile".source)
       (builtins.hashFile "sha256" config.environment.etc."homepage/bookmarks.yaml".source)
       (builtins.hashFile "sha256" config.environment.etc."homepage/services.yaml".source)
       (builtins.hashFile "sha256" config.environment.etc."homepage/settings.yaml".source)

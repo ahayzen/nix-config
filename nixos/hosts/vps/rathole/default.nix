@@ -26,6 +26,7 @@
 
     environment.etc = {
       "caddy/sites/rathole.Caddyfile".source = ./rathole.Caddyfile;
+      "caddy/sites/home-hayzen-uk/rathole.sftpgo.Caddyfile".source = ./rathole.sftpgo.Caddyfile;
       "rathole/config.1.toml".
       source =
         if config.ahayzen.testing
@@ -39,6 +40,7 @@
     # which causes the hash of the docker-compose file to change.
     systemd.services."docker-compose-runner".reloadTriggers = [
       (builtins.hashFile "sha256" config.environment.etc."caddy/sites/rathole.Caddyfile".source)
+      (builtins.hashFile "sha256" config.environment.etc."caddy/sites/home-hayzen-uk/rathole.sftpgo.Caddyfile".source)
     ];
   };
 }
