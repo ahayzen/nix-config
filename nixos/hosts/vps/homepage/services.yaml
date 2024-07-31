@@ -3,6 +3,19 @@
 # SPDX-License-Identifier: MPL-2.0
 ---
 
+- Files:
+    - SFTPGo:
+        href: https://home.hayzen.uk/sftpgo/
+        icon: sftpgo.png
+        description: "Bring your file transfers anywhere"
+        siteMonitor: "http://rathole:8880/sftpgo"
+
+    - WebDav:
+        href: https://home.hayzen.uk/webdav/
+        icon: webdav.png
+        description: "Web-based Distributed Authoring and Versioning"
+        siteMonitor: "http://rathole:8890/webdav"
+
 - Media:
     - Immich:
         href: https://immich.ahayzen.com/
@@ -22,9 +35,3 @@
         icon: bitwarden.png
         description: "The #1 most trusted password manager"
         siteMonitor: "http://rathole:8080"
-
-    - SFTPGo:
-        href: https://home.hayzen.uk/sftpgo/
-        icon: sftpgo.png
-        description: "Bring your file transfers anywhere"
-        siteMonitor: "http://rathole:8880/sftpgo"

@@ -224,6 +224,11 @@
       output = vps.succeed("curl --insecure --location --silent home.hayzen.uk/sftpgo/web/admin/setup")
       assert "WebAdmin" in output, f"'{output}' does not contain 'WebAdmin'"
 
+    #with subtest("Test WebDav"):
+    #  output = vps.succeed("curl --insecure --location --head --silent home.hayzen.uk/webdav")
+    #
+    # TODO: cannot test anything here the response is just an empty 200 instead of http auth?
+
     #
     # Test that we can backup lab
     #
