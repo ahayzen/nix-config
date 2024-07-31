@@ -25,6 +25,10 @@ services:
       - "8801"
       # DSVideo
       - "8808"
+      # SFTPGo
+      - "8880"
+      # WebDav
+      - "8890"
     ports:
       # Expose the server
       - "8333:8333"
