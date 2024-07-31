@@ -27,4 +27,4 @@
         href: https://home.hayzen.uk/sftpgo/
         icon: sftpgo.png
         description: "Bring your file transfers anywhere"
-        siteMonitor: "http://rathole:8880"
+        siteMonitor: "http://rathole:8880/sftpgo"
