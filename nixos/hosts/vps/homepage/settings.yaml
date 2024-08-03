@@ -12,10 +12,6 @@ title: "Hayzen Home"
 target: "_self"
 
 layout:
-  Files:
-    columns: 4
-    style: row
-
   Media:
     columns: 4
     style: row

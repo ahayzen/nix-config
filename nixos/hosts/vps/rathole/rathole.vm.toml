@@ -17,6 +17,3 @@ bind_addr = "0.0.0.0:8301"
 
 [server.services.sftpgo]
 bind_addr = "0.0.0.0:8880"
-
-[server.services.webdav]
-bind_addr = "0.0.0.0:8890"
