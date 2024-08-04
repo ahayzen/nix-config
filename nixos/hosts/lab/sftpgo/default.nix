@@ -18,5 +18,27 @@
         ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/sftpgo/sftpgo.db ".backup /var/lib/docker-compose-runner/sftpgo/sftpgo-snapshot-$(date +%w).db"''
       ];
     };
+
+    services.avahi = {
+      # Expose WebDav
+      extraServiceFiles = {
+        webdav = ''
+          <?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+          <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+          <service-group>
+            <name replace-wildcards="yes">%h</name>
+            <service>
+              <type>_webdav._tcp</type>
+              <port>8090</port>
+            </service>
+          </service-group>
+        '';
+      };
+    };
+
+    # Ensure WebDav port is open
+    networking.firewall.allowedTCPPorts = [
+      8090
+    ];
   };
 }
