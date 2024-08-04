@@ -30,4 +30,6 @@ services:
       - /mnt/mapping-data-user1000/camera:/mnt/data/camera
       - /mnt/mapping-data-user1000/documents:/mnt/data/documents
       - /mnt/mapping-data-user1000/music:/mnt/data/music
-      - /mnt/mapping-data-user1000/vidoes:/mnt/data/vidoes
+      - /mnt/mapping-data-user1000/movies:/mnt/data/movies
+      - /mnt/mapping-data-user1000/recordings:/mnt/data/recordings
+      - /mnt/mapping-data-user1000/shows:/mnt/data/shows
