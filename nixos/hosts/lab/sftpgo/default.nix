@@ -30,6 +30,7 @@
             <service>
               <type>_webdav._tcp</type>
               <port>8090</port>
+              <txt-record>path=/webdav</txt-record>
             </service>
           </service-group>
         '';
