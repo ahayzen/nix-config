@@ -8,6 +8,6 @@ handle /sftpgo/* {
 }
 
 # WebDav proxy
-handle /webdav/* {
+handle /webdav* {
     reverse_proxy rathole:8890
 }
