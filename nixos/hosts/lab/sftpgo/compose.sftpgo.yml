@@ -27,4 +27,7 @@ services:
       # SFTP settings
       - /var/lib/docker-compose-runner-user1000/sftpgo:/var/lib/sftpgo
       # Other data
-      - /mnt/mapping-data-user1000/camera:/mnt/data/camera:ro
+      - /mnt/mapping-data-user1000/camera:/mnt/data/camera
+      - /mnt/mapping-data-user1000/documents:/mnt/data/documents
+      - /mnt/mapping-data-user1000/music:/mnt/data/music
+      - /mnt/mapping-data-user1000/vidoes:/mnt/data/vidoes
