@@ -26,6 +26,7 @@
           actual = false;
           bitwarden = false;
           immich = false;
+          jellyfin = false;
           rathole = false;
           restic = true;
           sftpgo = false;

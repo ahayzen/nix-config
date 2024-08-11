@@ -40,3 +40,8 @@ dsvideo.ahayzen.com {
 immich.ahayzen.com {
     reverse_proxy rathole:8301
 }
+
+# Jellyfin proxy
+jellyfin.hayzen.uk {
+    reverse_proxy rathole:8896
+}

@@ -29,6 +29,8 @@ services:
       - "8880"
       # WebDav
       - "8890"
+      # Jellyfin
+      - "8896"
     ports:
       # Expose the server
       - "8333:8333"

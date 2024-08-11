@@ -1,0 +1,28 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  jellyfin:
+    image: docker.io/jellyfin/jellyfin:10.9.9@sha256:d6f3d4aa59438ce951d85669f3c22426d20edb7a6b97604c509b5f4825bc8294
+    restart: unless-stopped
+    # For hardware acceleration
+    devices:
+      - /dev/dri/:/dev/dri/
+    ports:
+      # HTTP port
+      - 8096:8096
+      # Auto discovery
+      - "7359:7359/udp"
+    environment:
+      # Set the path for discovery
+      JELLYFIN_PublishedServerUrl: "http://lab.local:8096"
+    volumes:
+      # Jellyfin cache
+      - /var/cache/docker-compose-runner/jellyfin/cache:/cache
+      # Jellyfin config
+      - /var/lib/docker-compose-runner/jellyfin/config:/config
+      # Access media directories
+      - /mnt/data/movies:/mnt/data/movies:ro
+      - /mnt/data/shows:/mnt/data/shows:ro
+      - /mnt/data/recordings:/mnt/data/recordings:ro

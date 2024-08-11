@@ -23,6 +23,12 @@
         description: "Self-hosted photo and video management solution"
         siteMonitor: "http://rathole:8301"
 
+    - Jellyfin:
+        href: https://jellyfin.hayzen.uk/
+        icon: jellyfin.png
+        description: "The Free Software Media System"
+        siteMonitor: "http://rathole:8896"
+
 - Utilities:
     - Actual:
         href: https://actual.ahayzen.com/
