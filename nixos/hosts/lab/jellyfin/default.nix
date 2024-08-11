@@ -14,10 +14,11 @@
       docker-compose-files = [ ./compose.jellyfin.yml ];
     };
 
-    # Ensure Jellyfin port and autodiscovery port is open
-    networking.firewall.allowedTCPPorts = [
-      7359
-      8096
-    ];
+    networking.firewall = {
+      # Ensure Jellyfin port is open
+      allowedTCPPorts = [ 8096 ];
+      # Ensure Jellyfin autodiscovery port is open
+      allowedUDPPorts = [ 7359 ];
+    };
   };
 }
