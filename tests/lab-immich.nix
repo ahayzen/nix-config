@@ -87,6 +87,7 @@
           actual = false;
           bitwarden = false;
           immich = true;
+          jellyfin = false;
           rathole = true;
           restic = false;
           sftpgo = false;

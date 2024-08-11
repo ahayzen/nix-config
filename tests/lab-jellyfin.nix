@@ -6,7 +6,7 @@
 # Test the following
 #
 # Lab
-# - sftpgo
+# - jellyfin
 # - rathole
 # - backup machines of lab
 #
@@ -18,7 +18,7 @@
 # - backup script
 
 (import ./lib.nix) {
-  name = "lab-sftpgo-test";
+  name = "lab-jellyfin-test";
   nodes = {
     vps = { self, pkgs, ... }: {
       imports =
@@ -43,7 +43,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "home.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "home.hayzen.uk" "jellyfin.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -87,10 +87,10 @@
           actual = false;
           bitwarden = false;
           immich = false;
-          jellyfin = false;
+          jellyfin = true;
           rathole = true;
           restic = false;
-          sftpgo = true;
+          sftpgo = false;
         };
       };
 
@@ -99,7 +99,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "home.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "home.hayzen.uk" "jellyfin.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -180,14 +180,7 @@
   };
 
   testScript = ''
-    import datetime
-
     start_all()
-
-    labdayofweek = ""
-    vpsdayofweek = ""
-
-    wait_for_wagtail_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "\[INFO\] Listening at: http:\/\/0\.0\.0\.0:8080"'
 
     #
     # Test that the VPS boots and shows wagtail admin
@@ -209,76 +202,21 @@
 
     with subtest("Rathole connection"):
       # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=sftpgo"' , timeout=10)
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=jellyfin"' , timeout=10)
 
       # Check we have a client control channel
       lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
 
-    with subtest("Test sftpgo"):
-      # Wait for sftpgo to start
-      wait_for_sftpgo_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "starting SFTPGo"'
-      lab.wait_until_succeeds(wait_for_sftpgo_cmd, timeout=60)
-      wait_for_sftpgo_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "server listener registered, address"'
-      lab.wait_until_succeeds(wait_for_sftpgo_cmd, timeout=60)
+    with subtest("Test jellyfin"):
+      # Wait for jellyfin to start
+      wait_for_jellyfin_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Emby.Server.Implementations.ApplicationHost.*Core startup complete"'
+      lab.wait_until_succeeds(wait_for_jellyfin_cmd, timeout=60)
 
       # Test login page
-      output = vps.succeed("curl --insecure --location --silent home.hayzen.uk/sftpgo/web/admin/setup")
-      assert "WebAdmin" in output, f"'{output}' does not contain 'WebAdmin'"
+      output = vps.succeed("curl --insecure --location --silent jellyfin.hayzen.uk")
+      assert "Jellyfin" in output, f"'{output}' does not contain 'Jellyfin'"
 
-    with subtest("Test WebDav"):
-      output = vps.succeed("curl --insecure --location --verbose home.hayzen.uk/webdav")
-      assert "Authentication error: no credential provided" in output, f"'{output}' does not contain 'Authentication error: no credential provided'"
-
-    #
-    # Test that we can backup lab
-    #
-
-    with subtest("Ensure SSH is ready"):
-      lab.wait_for_open_port(8022, timeout=30)
-
-    with subtest("Attempt to run lab backup"):
-      backup.succeed("mkdir -p /tmp/backup-root-lab")
-
-      # Check that the permissions are correct
-      lab.succeed("ls -nd /var/lib/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
-      # Trigger a snapshot
-      labdayofweek = datetime.datetime.today().strftime('%w')
-      lab.succeed("systemctl start periodic-daily.service")
-
-      # Run the backup
-      backup.succeed("/etc/ahayzen.com/backup.sh lab /etc/ssh/test_ssh_id_ed25519 headless@lab /tmp/backup-root-lab")
-
-      # Check volumes are appearing
-      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/sftpgo")
-
-      # Check that known files exist and permissions are correct
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/sftpgo/sftpgo.db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
-
-    #
-    # Test auto backup in lab
-    #
-    # Do this after other backups so that we have snapshots
-    with subtest("Test Auto Backup Machines"):
-      # Run backup command
-      lab.succeed("systemctl start backup-machines.service")
-
-      #
-      # Check lab is correct
-      #
-
-      # Check volumes are appearing
-      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/")
-
-      # Check that known files exist and permissions are correct
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo.db")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+    # TODO: could test backup and database, but we don't worry about this for now
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))

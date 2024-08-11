@@ -15,6 +15,7 @@
     ./actual
     ./bitwarden
     ./immich
+    ./jellyfin
     ./rathole
     ./restic
     ./sftpgo
