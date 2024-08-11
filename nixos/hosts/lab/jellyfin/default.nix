@@ -13,5 +13,11 @@
     ahayzen = {
       docker-compose-files = [ ./compose.jellyfin.yml ];
     };
+
+    # Ensure Jellyfin port and autodiscovery port is open
+    networking.firewall.allowedTCPPorts = [
+      7359
+      8096
+    ];
   };
 }
