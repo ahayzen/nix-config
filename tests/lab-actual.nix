@@ -187,8 +187,6 @@
     labdayofweek = ""
     vpsdayofweek = ""
 
-    wait_for_wagtail_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "\[INFO\] Listening at: http:\/\/0\.0\.0\.0:8080"'
-
     #
     # Test that the VPS boots and shows wagtail admin
     #
