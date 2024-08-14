@@ -5,7 +5,7 @@
 services:
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:v1.111.0@sha256:267e65c8c639495497ec8ba9b35c02a6b6947c23e89fcbc199ee09a136b558a3
+    image: ghcr.io/immich-app/immich-server:v1.112.0@sha256:0acf3e38399a4beef750755d42b892e7f693b60c131bff89b3d30223cc06baa1
     # From hwaccel.transcoding.yml should allow for VAAPI to work
     devices:
       - /dev/dri:/dev/dri
@@ -35,7 +35,7 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:v1.111.0@sha256:e9a7b0867331a44b3bfa9be1b198c58fc7c29bee9de1fce51e5692061acef135
+    image: ghcr.io/immich-app/immich-machine-learning:v1.112.0@sha256:8e323ac7c75ae4230966ca6bcf84809e2c73683f97c7299f949885f4addd45e3
     volumes:
       - /var/cache/docker-compose-runner/immich/machine-learning-cache:/cache
     env_file:
@@ -45,7 +45,7 @@ services:
 
   immich-redis:
     container_name: immich_redis
-    image: docker.io/redis:6.2.14@sha256:bd84e1c73f6d7120282d455b8506220f668cad4544e11e63c2376605dc2d4141
+    image: docker.io/redis:6.2.14@sha256:ed02db470a28fc6f78e90f60b2e08d2854742da6bec12afde7dd3b3c4f5610f8
     healthcheck:
       test: redis-cli ping || exit 1
     restart: always
