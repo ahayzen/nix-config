@@ -4,7 +4,7 @@
 
 services:
   jellyfin:
-    image: docker.io/jellyfin/jellyfin:10.9.9@sha256:d6f3d4aa59438ce951d85669f3c22426d20edb7a6b97604c509b5f4825bc8294
+    image: docker.io/jellyfin/jellyfin:2024081205@sha256:d3b710749fe9b16e01e78db2c2c4353a5dc75109cc90c379aa66f4b4b3d0f117
     restart: unless-stopped
     # For hardware acceleration
     devices:
