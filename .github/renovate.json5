@@ -57,7 +57,7 @@
             "matchFileNames": ["nixos/hosts/lab/immich/**"],
             "matchPackageNames": ["ghcr.io/immich-app/**"],
             "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
-        }
+        },
         // Disable major updates of redis as immich needs 6.x
         {
             "matchDatasources": [
