@@ -4,7 +4,7 @@
 
 services:
   bitwarden:
-    image: docker.io/bitwarden/self-host:2024.7.2-beta@sha256:73ceeee265e9e9f897e52ee9771d9a47ca8d0234082093c6d2601a3639629f83
+    image: docker.io/bitwarden/self-host:2024.8.0-beta@sha256:fe478df6646b0ef847eba584cf02a99a210719e77fb05cd4de51884bd7d54202
     env_file:
       - /etc/bitwarden/settings.1.env
     # https://bitwarden.com/help/environment-variables/
