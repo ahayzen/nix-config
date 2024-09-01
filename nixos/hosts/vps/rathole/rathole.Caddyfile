@@ -18,24 +18,6 @@ bitwarden.ahayzen.com {
     reverse_proxy rathole:8080
 }
 
-# DSAudio proxy
-dsaudio.ahayzen.com {
-    reverse_proxy https://rathole:8801 {
-        transport http {
-            tls_insecure_skip_verify
-        }
-    }
-}
-
-# DSVideo proxy
-dsvideo.ahayzen.com {
-    reverse_proxy https://rathole:8808 {
-        transport http {
-            tls_insecure_skip_verify
-        }
-    }
-}
-
 # Immich proxy
 immich.ahayzen.com {
     reverse_proxy rathole:8301
