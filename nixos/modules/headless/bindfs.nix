@@ -19,8 +19,9 @@
       wantedBy = [ "multi-user.target" ];
     }];
 
-    # Ensure that docker starts after us
-    services."docker-compose-runner".after = [ "var-lib-docker-compose-runner-user1000.mount" ];
+    # Ensure that docker starts after bindfs is ready
+    services."docker-compose-runner".after = [ "var-lib-docker\\x2dcompose\\x2drunner\\x2duser1000.mount" ];
+    services."docker-compose-runner".requires = [ "var-lib-docker\\x2dcompose\\x2drunner\\x2duser1000.mount" ];
   };
 
   # Ensure target folder exists

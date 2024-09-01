@@ -58,6 +58,12 @@
     };
   };
 
+  # Ensure that docker starts after sshfs is ready
+  systemd = lib.mkIf (!config.ahayzen.testing) {
+    services."docker-compose-runner".after = [ "mnt-backup\\x2drestic.mount" "mnt-data.mount" ];
+    services."docker-compose-runner".requires = [ "mnt-backup\\x2drestic.mount" "mnt-data.mount" ];
+  };
+
   # Emulate sshfs mount folders for testing
   system.activationScripts = lib.mkIf (config.ahayzen.testing) {
     mkdirMntFolders = ''
