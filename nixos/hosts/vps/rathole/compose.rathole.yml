@@ -21,10 +21,6 @@ services:
       - "8301"
       # Actual
       - "8506"
-      # DSAudio
-      - "8801"
-      # DSVideo
-      - "8808"
       # SFTPGo
       - "8880"
       # WebDav
