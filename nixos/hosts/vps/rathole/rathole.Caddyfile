@@ -27,3 +27,16 @@ immich.ahayzen.com {
 jellyfin.hayzen.uk {
     reverse_proxy rathole:8896
 }
+
+# SFTPGo proxy
+sftpgo.hayzen.uk {
+    reverse_proxy rathole:8880
+}
+
+# WebDav proxy
+#
+# Note we need the webdav folder to be handled too not just sub paths
+# otherwise Nautilus is confused by the root folder and we can't test with curl
+webdav.hayzen.uk {
+    reverse_proxy rathole:8890
+}
