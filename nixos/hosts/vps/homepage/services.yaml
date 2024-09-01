@@ -5,16 +5,16 @@
 
 - Files:
     - SFTPGo:
-        href: https://home.hayzen.uk/sftpgo/
+        href: https://sftpgo.hayzen.uk/
         icon: sftpgo.png
         description: "Bring your file transfers anywhere"
-        siteMonitor: "http://rathole:8880/sftpgo"
+        siteMonitor: "http://rathole:8880"
 
     - WebDav:
-        href: https://home.hayzen.uk/webdav/
+        href: https://webdav.hayzen.uk/
         icon: webdav.png
         description: "Web-based Distributed Authoring and Versioning"
-        siteMonitor: "http://rathole:8890/webdav"
+        siteMonitor: "http://rathole:8890"
 
 - Media:
     - Immich:

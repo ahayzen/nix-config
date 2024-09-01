@@ -11,10 +11,10 @@ services:
       # Disable SFTP
       SFTPGO_SFTPD__BINDINGS__0__PORT: 0
       # Set root for web gui
-      SFTPGO_HTTPD__WEB_ROOT: "/sftpgo"
+      SFTPGO_HTTPD__WEB_ROOT: "/"
       # Enable WebDAV
       SFTPGO_WEBDAVD__BINDINGS__0__PORT: 8090
-      SFTPGO_WEBDAVD__BINDINGS__0__PREFIX: "/webdav"
+      SFTPGO_WEBDAVD__BINDINGS__0__PREFIX: "/"
     expose:
       - 8080
       - 8090

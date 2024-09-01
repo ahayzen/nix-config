@@ -43,7 +43,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "home.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "home.hayzen.uk" "sftpgo.hayzen.uk" "webdav.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -99,7 +99,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "home.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.ahayzen.com" "immich.ahayzen.com" "home.hayzen.uk" "sftpgo.hayzen.uk" "webdav.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -220,11 +220,11 @@
       lab.wait_until_succeeds(wait_for_sftpgo_cmd, timeout=60)
 
       # Test login page
-      output = vps.succeed("curl --insecure --location --silent home.hayzen.uk/sftpgo/web/admin/setup")
+      output = vps.succeed("curl --insecure --location --silent sftpgo.hayzen.uk/web/admin/setup")
       assert "WebAdmin" in output, f"'{output}' does not contain 'WebAdmin'"
 
     with subtest("Test WebDav"):
-      output = vps.succeed("curl --insecure --location --verbose home.hayzen.uk/webdav")
+      output = vps.succeed("curl --insecure --location --verbose webdav.hayzen.uk")
       assert "Authentication error: no credential provided" in output, f"'{output}' does not contain 'Authentication error: no credential provided'"
 
     #
