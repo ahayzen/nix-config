@@ -5,7 +5,7 @@
 #
 # Note that sub domains require a A or CNAME record in the DNS
 #
-# eg actual IN CNAME ahayzen.com.
+# eg sub IN CNAME domain.com.
 #
 
 # Actual proxy
