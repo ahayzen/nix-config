@@ -18,10 +18,15 @@
       what = "/mnt/data";
       where = "/mnt/mapping-data-user1000";
       wantedBy = [ "multi-user.target" ];
+
+      # Ensure that sshfs is ready
+      after = lib.mkIf (!config.ahayzen.testing) [ "mnt-data.mount" ];
+      requires = lib.mkIf (!config.ahayzen.testing) [ "mnt-data.mount" ];
     }];
 
-    # Ensure that docker starts after use
-    services."docker-compose-runner".after = [ "mnt-mapping-data-user1000.mount" ];
+    # Ensure that docker starts after bindfs is ready
+    services."docker-compose-runner".after = [ "mnt-mapping\\x2ddata\\x2duser1000.mount" ];
+    services."docker-compose-runner".requires = [ "mnt-mapping\\x2ddata\\x2duser1000.mount" ];
   };
 
   # Ensure target folder exists
