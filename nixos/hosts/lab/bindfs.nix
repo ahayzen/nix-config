@@ -14,6 +14,10 @@
       mountConfig = {
         # Use _netdev so that systemd thinks this is a network filesystem
         # not a local filesystem (as we need sshfs first) to improve ordering
+        #
+        # Note .mount units are reloaded if only their Options changed.
+        # which then fails for fuse bindfs filesystems as -o remount is unsupported
+        # https://nixos.org/manual/nixos/stable/#sec-unit-handling
         Options = "map=unpriv/unpriv-user1000:@unpriv/@unpriv-user1000,_netdev";
       };
       # As sshfs provides a mount this causes us to depend on it
