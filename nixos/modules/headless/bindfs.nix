@@ -12,6 +12,9 @@
     mounts = [{
       type = "fuse.bindfs";
       mountConfig = {
+        # Note .mount units are reloaded if only their Options changed.
+        # which then fails for fuse bindfs filesystems as -o remount is unsupported
+        # https://nixos.org/manual/nixos/stable/#sec-unit-handling
         Options = "map=unpriv/unpriv-user1000:@unpriv/@unpriv-user1000";
       };
       what = "/var/lib/docker-compose-runner";
