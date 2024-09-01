@@ -2,7 +2,11 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-# Home page
-handle {
+#
+# Note that sub domains require a A or CNAME record in the DNS
+# eg home IN CNAME hayzen.uk.
+#
+
+home.hayzen.uk {
     reverse_proxy homepage:3000
 }
