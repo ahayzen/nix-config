@@ -14,7 +14,7 @@ actual.ahayzen.com {
 }
 
 # Bitwarden proxy
-bitwarden.ahayzen.com {
+bitwarden.hayzen.uk {
     reverse_proxy rathole:8080
 }
 

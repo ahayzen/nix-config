@@ -37,7 +37,7 @@
         siteMonitor: "http://rathole:8506"
 
     - Bitwarden:
-        href: https://bitwarden.ahayzen.com/
+        href: https://bitwarden.hayzen.uk/
         icon: bitwarden.png
         description: "The #1 most trusted password manager"
         siteMonitor: "http://rathole:8080"
