@@ -9,7 +9,7 @@
 #
 
 # Actual proxy
-actual.ahayzen.com {
+actual.hayzen.uk {
     reverse_proxy rathole:8506
 }
 

@@ -43,7 +43,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.ahayzen.com" "bitwarden.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -99,7 +99,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "192.168.1.3" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -218,7 +218,7 @@
       lab.wait_until_succeeds(wait_for_actual_cmd, timeout=60)
 
       # Test login page
-      output = vps.succeed("curl --insecure --location --silent actual.ahayzen.com/login")
+      output = vps.succeed("curl --insecure --location --silent actual.hayzen.uk/login")
       assert "Actual" in output, f"'{output}' does not contain 'Actual'"
 
     #
