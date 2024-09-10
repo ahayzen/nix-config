@@ -11,6 +11,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Cancel any previous runs for the same pull request
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   license-check:
     runs-on: ubuntu-22.04
