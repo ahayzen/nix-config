@@ -14,6 +14,7 @@
     "enabledManagers": [
         "docker-compose",
         "github-actions",
+        "nix",
     ],
     // Enable lock file management for flake.lock
     "lockFileMaintenance": {
