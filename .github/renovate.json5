@@ -18,7 +18,7 @@
     // Enable lock file management for flake.lock
     "lockFileMaintenance": {
         "enabled": true,
-        "schedule": ["every 12 hours"],
+        "schedule": ["after 8am"],
     },
     // Enable nix management
     "nix": {
