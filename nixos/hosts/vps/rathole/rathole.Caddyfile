@@ -19,7 +19,7 @@ bitwarden.hayzen.uk {
 }
 
 # Immich proxy
-immich.ahayzen.com {
+immich.hayzen.uk {
     reverse_proxy rathole:8301
 }
 

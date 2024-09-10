@@ -18,7 +18,7 @@
 
 - Media:
     - Immich:
-        href: https://immich.ahayzen.com/
+        href: https://immich.hayzen.uk/
         icon: immich.png
         description: "Self-hosted photo and video management solution"
         siteMonitor: "http://rathole:8301"

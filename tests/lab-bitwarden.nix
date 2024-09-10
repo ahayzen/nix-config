@@ -99,7 +99,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.hayzen.uk" "immich.ahayzen.com" "ahayzen.com" "yumekasaito.com" ];
+        "192.168.1.3" = [ "actual.ahayzen.com" "bitwarden.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
