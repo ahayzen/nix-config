@@ -16,11 +16,11 @@
     };
   };
 
-  # Reload if static files change
+  # Restart if static files change
   #
   # Note agenix files are not possible and will need the version bumping
   # which causes the hash of the docker-compose file to change.
-  systemd.services."docker-compose-runner".reloadTriggers = [
+  systemd.services."docker-compose-runner".restartTriggers = [
     (builtins.hashFile "sha256" config.environment.etc."caddy/Caddyfile".source)
   ];
 }

@@ -28,4 +28,4 @@ services:
       # Wagtail static data
       - /var/lib/docker-compose-runner/wagtail-yumekasaito/static:/srv/webapp/static
       # Wagtail local settings file
-      - /etc/yumekasaito.com/local.1.py:/srv/webapp/yumekasaito.com/yumekasaito/settings/local.py:ro
+      - /etc/yumekasaito.com/local.py:/srv/webapp/yumekasaito.com/yumekasaito/settings/local.py:ro

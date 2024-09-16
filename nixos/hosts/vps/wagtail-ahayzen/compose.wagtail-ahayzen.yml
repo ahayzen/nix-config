@@ -28,6 +28,6 @@ services:
       # Wagtail static data
       - /var/lib/docker-compose-runner/wagtail-ahayzen/static:/srv/webapp/static
       # Wagtail local settings file
-      - /etc/ahayzen.com/local.1.py:/srv/webapp/ahayzen.com/ahayzen/settings/local.py:ro
+      - /etc/ahayzen.com/local.py:/srv/webapp/ahayzen.com/ahayzen/settings/local.py:ro
       # Wagtail docs folder
       - /var/lib/docker-compose-runner/wagtail-ahayzen/docs:/srv/webapp/docs

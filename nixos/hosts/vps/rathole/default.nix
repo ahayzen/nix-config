@@ -26,19 +26,21 @@
 
     environment.etc = {
       "caddy/sites/rathole.Caddyfile".source = ./rathole.Caddyfile;
-      "rathole/config.1.toml".
+      "rathole/config.toml".
       source =
         if config.ahayzen.testing
         then ./rathole.vm.toml
         else config.age.secrets.rathole_toml.path;
     };
 
-    # Reload if static files change
+    # Restart if static files change
     #
     # Note agenix files are not possible and will need the version bumping
     # which causes the hash of the docker-compose file to change.
-    systemd.services."docker-compose-runner".reloadTriggers = [
+    systemd.services."docker-compose-runner".restartTriggers = [
       (builtins.hashFile "sha256" config.environment.etc."caddy/sites/rathole.Caddyfile".source)
+      # Agenix path with a version that can be bumped
+      "/etc/rathole/config.toml-1"
     ];
   };
 }

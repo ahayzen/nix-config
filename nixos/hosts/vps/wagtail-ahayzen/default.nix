@@ -31,19 +31,21 @@
 
     environment.etc = {
       "caddy/sites/ahayzen.Caddyfile".source = ./ahayzen.Caddyfile;
-      "ahayzen.com/local.1.py".
+      "ahayzen.com/local.py".
       source =
         if config.ahayzen.testing
         then ./local.vm.py
         else config.age.secrets.local-py_ahayzen-com.path;
     };
 
-    # Reload if static files change
+    # Restart if static files change
     #
     # Note agenix files are not possible and will need the version bumping
     # which causes the hash of the docker-compose file to change.
-    systemd.services."docker-compose-runner".reloadTriggers = [
+    systemd.services."docker-compose-runner".restartTriggers = [
       (builtins.hashFile "sha256" config.environment.etc."caddy/sites/ahayzen.Caddyfile".source)
+      # Agenix path with a version that can be bumped
+      "/etc/ahayzen/local.py-1"
     ];
   };
 }
