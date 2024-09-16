@@ -17,6 +17,10 @@ services:
     environment:
       # Set the path for discovery
       JELLYFIN_PublishedServerUrl: "http://lab.local:8096"
+    network:
+      - internal-proxy
+      # Needed for auto dicovery and local lan quick path
+      - local-lan
     volumes:
       # Jellyfin cache
       - /var/cache/docker-compose-runner/jellyfin/cache:/cache

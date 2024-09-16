@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-services:
-  rathole:
-    links:
-      - actual
+networks:
+  internet:
+  internal-proxy:
+    internal: true

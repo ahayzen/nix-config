@@ -7,6 +7,8 @@ services:
     image: docker.io/actualbudget/actual-server:24.9.0@sha256:90a670b73ce539ca4bf70e3740756f106ec815d3933cabf2414ae2e26e031d65
     expose:
       - "5006"
+    network:
+      - internal-proxy
     restart: unless-stopped
     volumes:
       - /var/lib/docker-compose-runner/actual/data:/data

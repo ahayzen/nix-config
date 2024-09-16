@@ -18,6 +18,8 @@ services:
     expose:
       - 8080
       - 8090
+    network:
+      - internal-proxy
     ports:
       - "8090:8090"
     restart: unless-stopped
