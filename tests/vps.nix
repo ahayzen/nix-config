@@ -19,7 +19,7 @@
 # - restore script
 
 (import ./lib.nix) {
-  name = "vps-wagtail-test";
+  name = "vps-test";
   nodes = {
     vps = { self, pkgs, ... }: {
       imports =

@@ -141,7 +141,7 @@ jobs:
         # https://github.com/NixOS/nix/issues/8881
         run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-sftpgo-test
 
-  nix-flake-check-vps-wagtail:
+  nix-flake-check-vps:
     # Run after flake check
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-22.04
@@ -152,7 +152,7 @@ jobs:
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
         # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.vps-wagtail-test
+        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.vps-test
 
   nixos-anywhere-vm-test-lab:
     # Run after pre checks
