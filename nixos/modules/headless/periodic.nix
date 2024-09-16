@@ -46,8 +46,8 @@
 
       timers = {
         "periodic-daily" = {
-          # Only enable if there are commands
-          enable = config.ahayzen.periodic-daily-commands != [ ];
+          # Only enable if there are commands and not in testing mode
+          enable = !config.ahayzen.testing && config.ahayzen.periodic-daily-commands != [ ];
           wantedBy = [ "timers.target" ];
           timerConfig = {
             OnCalendar = "daily";
@@ -58,8 +58,8 @@
         };
 
         "periodic-weekly" = {
-          # Only enable if there are commands
-          enable = config.ahayzen.periodic-weekly-commands != [ ];
+          # Only enable if there are commands and not in testing mode
+          enable = !config.ahayzen.testing && config.ahayzen.periodic-weekly-commands != [ ];
           wantedBy = [ "timers.target" ];
           timerConfig = {
             OnCalendar = "weekly";

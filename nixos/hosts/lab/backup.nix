@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   systemd = {
     services."backup-machines" = {
@@ -20,6 +20,8 @@
     };
 
     timers."backup-machines" = {
+      # Enable when not in testing mode
+      enable = !config.ahayzen.testing;
       wantedBy = [ "timers.target" ];
       timerConfig = {
         OnCalendar = "daily";

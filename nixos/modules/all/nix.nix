@@ -12,7 +12,8 @@
   nix = {
     # Enable garbage collection
     gc = {
-      automatic = true;
+      # Enable when not in testing mode
+      automatic = !config.ahayzen.testing;
       randomizedDelaySec = "30m";
       dates = "daily";
 
@@ -24,7 +25,8 @@
     #
     # Note we don't use auto-optimise-store as this increases load during rebuilds
     optimise = {
-      automatic = true;
+      # Enable when not in testing mode
+      automatic = !config.ahayzen.testing;
       dates = [ "daily" ];
 
       # Has randomizedDelaySec of 30m by default
@@ -47,7 +49,8 @@
   system = {
     # Enble automatic upgrades
     autoUpgrade = {
-      enable = true;
+      # Enable when not in testing mode
+      enable = !config.ahayzen.testing;
       flake = "github:ahayzen/nix-config";
       randomizedDelaySec = "30m";
       dates = "hourly";

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{
+{ config, ... }: {
   # Define the unpriv user for docker
   #
   # Set this to a high id so that we remain stable
@@ -61,7 +61,8 @@
     enable = true;
 
     autoPrune = {
-      enable = true;
+      # Enable when not in testing mode
+      enable = !config.ahayzen.testing;
       dates = "daily";
     };
 
