@@ -9,7 +9,6 @@ services:
     volumes:
       # Caddy configuration file
       - /etc/caddy/sites/rathole.Caddyfile:/etc/caddy/sites/rathole.Caddyfile:ro
-      - /etc/caddy/sites/home-hayzen-uk/rathole.sftpgo.Caddyfile:/etc/caddy/sites/home-hayzen-uk/rathole.sftpgo.Caddyfile:ro
 
   rathole:
     image: docker.io/rapiz1/rathole:v0.5.0@sha256:a31b9178e985d4a84f46d4c3af6aa200ee0c5e7f821c7075a1f6669fb77392b1
@@ -33,4 +32,4 @@ services:
       # Expose OpenVPN
       - "9194:9194"
     volumes:
-      - /etc/rathole/config.1.toml:/etc/rathole/config.toml:ro
+      - /etc/rathole/config.toml:/etc/rathole/config.toml:ro

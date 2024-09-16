@@ -34,19 +34,21 @@
 
     environment.etc = {
       "immich/settings.env".source = ./immich.env;
-      "immich/settings_secrets.1.env".
+      "immich/settings_secrets.env".
       source =
         if config.ahayzen.testing
         then ./immich-secrets.vm.env
         else config.age.secrets.immich_env.path;
     };
 
-    # Reload if static files change
+    # Restart if static files change
     #
     # Note agenix files are not possible and will need the version bumping
     # which causes the hash of the docker-compose file to change.
-    systemd.services."docker-compose-runner".reloadTriggers = [
+    systemd.services."docker-compose-runner".restartTriggers = [
       (builtins.hashFile "sha256" config.environment.etc."immich/settings.env".source)
+      # Agenix path with a version that can be bumped
+      "/etc/immich/settings_secrets.env-1"
     ];
   };
 }
