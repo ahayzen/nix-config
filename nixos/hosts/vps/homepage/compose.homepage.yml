@@ -4,8 +4,6 @@
 
 services:
   caddy:
-    links:
-      - homepage
     volumes:
       # Caddy configuration file
       - /etc/caddy/sites/home-hayzen-uk.Caddyfile:/etc/caddy/sites/home-hayzen-uk.Caddyfile:ro
@@ -16,6 +14,8 @@ services:
       - "3000"
     environment:
       LOG_TARGETS: stdout
+    networks:
+      - group-proxy
     restart: unless-stopped
     volumes:
       # homepage likes to write missing files, so allow it to write them

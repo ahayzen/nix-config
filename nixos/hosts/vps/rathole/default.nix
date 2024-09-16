@@ -33,6 +33,15 @@
         else config.age.secrets.rathole_toml.path;
     };
 
+    networking.firewall = {
+      allowedTCPPorts = [
+        # Ensure rathole host port is open
+        8333
+        # Ensure that OpenVPN port is open
+        9194
+      ];
+    };
+
     # Restart if static files change
     #
     # Note agenix files are not possible and will need the version bumping

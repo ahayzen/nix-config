@@ -4,8 +4,6 @@
 
 services:
   caddy:
-    links:
-      - wagtail-yumekasaito
     volumes:
       # Caddy configuration file
       - /etc/caddy/sites/yumekasaito.Caddyfile:/etc/caddy/sites/yumekasaito.Caddyfile:ro
@@ -20,6 +18,8 @@ services:
     restart: unless-stopped
     expose:
       - "8080"
+    networks:
+      - group-web
     volumes:
       # Wagtail sqlite database
       - /var/lib/docker-compose-runner/wagtail-yumekasaito/db:/srv/webapp/db

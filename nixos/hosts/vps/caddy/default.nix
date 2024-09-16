@@ -20,6 +20,13 @@
     };
   };
 
+  # Ensure that http and https is open
+  networking.firewall =
+    {
+      allowedTCPPorts = [ 80 443 ];
+      allowedUDPPorts = [ 443 ];
+    };
+
   # Restart if static files change
   #
   # Note agenix files are not possible and will need the version bumping

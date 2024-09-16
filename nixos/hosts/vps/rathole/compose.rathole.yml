@@ -4,8 +4,6 @@
 
 services:
   caddy:
-    links:
-      - rathole
     volumes:
       # Caddy configuration file
       - /etc/caddy/sites/rathole.Caddyfile:/etc/caddy/sites/rathole.Caddyfile:ro
@@ -30,6 +28,10 @@ services:
       - "8223"
       # Audiobookshelf
       - "13378"
+    networks:
+      - group-proxy
+      # Needed to open port on server
+      - internet
     ports:
       # Expose the server
       - "8333:8333"

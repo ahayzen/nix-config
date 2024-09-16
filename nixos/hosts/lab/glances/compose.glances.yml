@@ -9,6 +9,8 @@ services:
       - "GLANCES_OPT=-w -C /etc/glances/glances.conf"
     expose:
       - "61208"
+    networks:
+      - group-proxy
     restart: unless-stopped
     volumes:
       - /etc/glances/glances.conf:/etc/glances/glances.conf:ro
