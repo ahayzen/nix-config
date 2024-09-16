@@ -136,7 +136,7 @@
             lab-jellyfin-test = import ./tests/lab-jellyfin.nix checkArgs;
             lab-restic-test = import ./tests/lab-restic.nix checkArgs;
             lab-sftpgo-test = import ./tests/lab-sftpgo.nix checkArgs;
-            vps-wagtail-test = import ./tests/vps-wagtail.nix checkArgs;
+            vps-test = import ./tests/vps.nix checkArgs;
           };
       };
     };
