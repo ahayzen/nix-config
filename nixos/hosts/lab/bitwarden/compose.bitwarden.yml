@@ -21,6 +21,8 @@ services:
     expose:
       - "8080"
     mem_limit: 1024m
+    networks:
+      - group-proxy
     restart: unless-stopped
     volumes:
       # Bitwarden uses uid 1000, so use our mapped folder

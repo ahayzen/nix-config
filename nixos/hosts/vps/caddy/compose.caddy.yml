@@ -10,6 +10,10 @@ services:
     cap_add:
       # Allow for increasing buffer size for HTTP/3
       - NET_ADMIN
+    networks:
+      - internet
+      - group-proxy
+      - group-web
     ports:
       - "80:80"
       - "443:443"

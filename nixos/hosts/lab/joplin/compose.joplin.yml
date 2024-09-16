@@ -11,6 +11,8 @@ services:
       SQLITE_DATABASE: /data/db.sqlite
     expose:
       - 22300
+    networks:
+      - group-proxy
     restart: unless-stopped
     volumes:
       - /var/lib/docker-compose-runner-user1001/joplin/data:/data

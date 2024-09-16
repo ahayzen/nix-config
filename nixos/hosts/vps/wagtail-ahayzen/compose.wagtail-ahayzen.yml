@@ -4,8 +4,6 @@
 
 services:
   caddy:
-    links:
-      - wagtail-ahayzen
     volumes:
       # Caddy configuration file
       - /etc/caddy/sites/ahayzen.Caddyfile:/etc/caddy/sites/ahayzen.Caddyfile:ro
@@ -20,6 +18,8 @@ services:
     restart: unless-stopped
     expose:
       - "8080"
+    networks:
+      - group-web
     volumes:
       # Wagtail sqlite database
       - /var/lib/docker-compose-runner/wagtail-ahayzen/db:/srv/webapp/db

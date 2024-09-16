@@ -43,7 +43,10 @@
     systemd-boot.enable = lib.mkForce false;
   };
 
-  ahayzen.hostName = "vps";
+  ahayzen = {
+    docker-compose-files = [ ./compose.vps.yml ];
+    hostName = "vps";
+  };
 
   # We do not need avahi on a VPS
   services.avahi.enable = lib.mkForce false;

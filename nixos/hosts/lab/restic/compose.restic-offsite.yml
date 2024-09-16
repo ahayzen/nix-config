@@ -20,6 +20,9 @@ services:
     # Set a host to ensure that caches and settings are correct in restic
     # as docker containers have a new host name every time
     hostname: restic-offsite
+    networks:
+      # Needed to access offsite
+      - internet
     # Allocate a tty then restic prints more info used for testing
     tty: true
     volumes:

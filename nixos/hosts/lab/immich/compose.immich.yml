@@ -31,6 +31,9 @@ services:
     depends_on:
       - immich-database
       - immich-redis
+    networks:
+      - app-immich
+      - group-proxy
     restart: always
 
   immich-machine-learning:
@@ -41,6 +44,8 @@ services:
     env_file:
       - /etc/immich/settings.env
       - /etc/immich/settings_secrets.env
+    networks:
+      - app-immich
     restart: always
 
   immich-redis:
@@ -48,6 +53,8 @@ services:
     image: docker.io/redis:6.2.16@sha256:c17f5de7b6a411e20a8ac27fa9f5526b47da757aadd7b1f269702b49743dd52f
     healthcheck:
       test: redis-cli ping || exit 1
+    networks:
+      - app-immich
     restart: always
 
   immich-database:
@@ -58,6 +65,8 @@ services:
     env_file:
       - /etc/immich/settings.env
       - /etc/immich/settings_secrets.env
+    networks:
+      - app-immich
     volumes:
       - /var/cache/docker-compose-runner/immich/postgres:/var/lib/postgresql/data
       - /var/lib/docker-compose-runner/immich/postgres:/var/lib/docker-compose-runner/immich/postgres

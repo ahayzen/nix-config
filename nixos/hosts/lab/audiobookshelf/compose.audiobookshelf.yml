@@ -7,6 +7,8 @@ services:
     image: ghcr.io/advplyr/audiobookshelf:2.16.2@sha256:acfda2baa0dce0c7a31e1703b8cd694e59cd3f3de9cfabe5b7e9dd2029896169
     expose:
       - 80
+    networks:
+      - group-proxy
     volumes:
       # Backup the database
       - /var/lib/docker-compose-runner/audiobookshelf/config:/config

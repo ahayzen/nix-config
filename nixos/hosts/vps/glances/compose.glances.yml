@@ -9,6 +9,8 @@ services:
       - "GLANCES_OPT=-w"
     expose:
       - "61208"
+    networks:
+      - group-proxy
     restart: unless-stopped
     volumes:
       - /etc/os-release:/etc/os-release:ro

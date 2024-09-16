@@ -38,7 +38,10 @@
     systemd-boot.enable = lib.mkForce false;
   };
 
-  ahayzen.hostName = "lab";
+  ahayzen = {
+    docker-compose-files = [ ./compose.lab.yml ];
+    hostName = "lab";
+  };
 
   # Seed host keys for places we SSH to
   services.openssh.knownHosts = {
