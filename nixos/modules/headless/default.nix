@@ -7,6 +7,7 @@
     ./bindfs.nix
     ./docker.nix
     ./docker-compose.nix
+    ./fail2ban.nix
     ./periodic.nix
     ./ssh.nix
   ];
