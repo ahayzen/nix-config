@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MPL-2.0
 
 ahayzen.com www.ahayzen.com {
+    log
+
     # Flathub stats data
     handle_path /direct/* {
         root * /srv/flathub_stats/

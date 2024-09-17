@@ -8,6 +8,16 @@
 
 {
     import "/etc/caddy/global/*.Caddyfile"
+
+    # Create a log so that fail2ban can read it
+    log access-log {
+        output file /var/log/caddy/access.log {
+            roll_size 10MiB
+            # Do not compress so fail2ban can still read
+            roll_uncompressed
+        }
+        format json
+    }
 }
 
 #

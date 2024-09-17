@@ -19,6 +19,9 @@ services:
       # Caddy configuration file
       - /etc/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
 
+      # Caddy log file
+      - /var/log/caddy:/var/log/caddy
+
       # Flathub stats data
       - /var/lib/docker-compose-runner/flathub-stats/data:/srv/flathub_stats:ro
 

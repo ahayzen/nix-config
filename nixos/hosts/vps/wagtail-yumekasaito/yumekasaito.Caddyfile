@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MPL-2.0
 
 yumekasaito.com www.yumekasaito.com {
+    log
+
     # Wagtail media files
     handle_path /media/* {
         root * /srv/wagtail-yumekasaito/media/

@@ -3,6 +3,8 @@
 # SPDX-License-Identifier: MPL-2.0
 
 hayzen.uk www.hayzen.uk {
+    log
+
     handle {
         root * /srv/hayzen-uk/
         file_server

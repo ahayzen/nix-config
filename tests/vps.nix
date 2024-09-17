@@ -199,6 +199,10 @@
       # Wait for caddy to start
       vps.wait_for_open_port(80, timeout=60)
 
+      # Wait for fail2ban jails to appear
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --grep "INFO Jail \'sshd\' started"', timeout=60)
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --grep "INFO Jail \'caddy\' started"', timeout=60)
+
     with subtest("Ensure wagtail has started"):
       # Wait for at least two wagtails to start
       vps.wait_until_succeeds(wait_for_wagtail_cmd + " | wc -l | awk '{if ($1 > 1) {exit 0} else {exit 1}}'", timeout=60)
