@@ -10,26 +10,36 @@
 
 # Actual proxy
 actual.hayzen.uk {
+    log
+
     reverse_proxy rathole:8506
 }
 
 # Bitwarden proxy
 bitwarden.hayzen.uk {
+    log
+
     reverse_proxy rathole:8080
 }
 
 # Immich proxy
 immich.hayzen.uk {
+    log
+
     reverse_proxy rathole:8301
 }
 
 # Jellyfin proxy
 jellyfin.hayzen.uk {
+    log
+
     reverse_proxy rathole:8896
 }
 
 # SFTPGo proxy
 sftpgo.hayzen.uk {
+    log
+
     reverse_proxy rathole:8880
 }
 
@@ -38,5 +48,7 @@ sftpgo.hayzen.uk {
 # Note we need the webdav folder to be handled too not just sub paths
 # otherwise Nautilus is confused by the root folder and we can't test with curl
 webdav.hayzen.uk {
+    log
+
     reverse_proxy rathole:8890
 }

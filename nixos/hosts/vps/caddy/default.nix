@@ -4,6 +4,10 @@
 
 { config, lib, ... }:
 {
+  imports = [
+    ./fail2ban.nix
+  ];
+
   ahayzen.docker-compose-files = [ ./compose.caddy.yml ]
     ++ lib.optional config.ahayzen.testing ./compose.caddy.vm.yml;
 
@@ -23,4 +27,15 @@
   systemd.services."docker-compose-runner".restartTriggers = [
     (builtins.hashFile "sha256" config.environment.etc."caddy/Caddyfile".source)
   ];
+
+  # Create folders for caddy logs and create a file so fail2ban doesn't crash
+  system.activationScripts.mkdirCaddyLogDir = lib.stringAfter [ "var" ] ''
+    mkdir -p /var/log/caddy
+    chown unpriv:unpriv /var/log/caddy
+    chmod 0755 /var/log/caddy
+
+    touch /var/log/caddy/access.log
+    chown unpriv:unpriv /var/log/caddy/access.log
+    chmod 0755 /var/log/caddy/access.log
+  '';
 }

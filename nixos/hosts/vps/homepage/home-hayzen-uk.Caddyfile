@@ -8,5 +8,7 @@
 #
 
 home.hayzen.uk {
+    log
+
     reverse_proxy homepage:3000
 }
