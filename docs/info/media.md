@@ -57,3 +57,23 @@ kodi-nfo-gen --episodes --fanart download --overwrite --verbose --recursive --di
 ```
 
 > For nfo's with multiple episodes they can have multiple blocks of `<episodedetails>...</episodedetails>`.
+
+# `get-iplayer`
+
+> You are legally responsible for any videos produced from these commands and should not redistribute material without correct licenses from the original creators.
+
+Use a nix shell to get the latest package `nix-shell -p get_iplayer`.
+
+To retrieve a low quality 25fps copy with a resolution around 704x396.
+
+`get_iplayer --tv-lower-bitrate --subtitles --tv-quality=396p --url=<url>`
+
+To retrieve a standard definition 25fps copy with a resolution around 960x540.
+
+`get_iplayer --tv-lower-bitrate --subtitles --tv-quality=540p --url=<url>`
+
+To retrieve a high definition 50fps copy with a resolution around 1280x720.
+
+`get_iplayer --subtitles --tv-quality=720p --url=<url>`
+
+See https://github.com/get-iplayer/get_iplayer/wiki/quality for mode information.
