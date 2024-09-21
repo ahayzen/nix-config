@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  glances:
+    image: docker.io/nicolargo/glances:4.1.2.1@sha256:6c3bd43bde426f439b4a969909d753e76c6907e742ed9dc6e98df03868b4ca6b
+    environment:
+      - "GLANCES_OPT=-w"
+    expose:
+      - "61208"
+    restart: unless-stopped
+    volumes:
+      - /etc/os-release:/etc/os-release:ro

@@ -14,6 +14,7 @@
     # Include services
     ./actual
     ./bitwarden
+    ./glances
     ./immich
     ./jellyfin
     ./rathole

@@ -17,3 +17,14 @@
     # TODO: disk usage
     units: metric
     label: VPS
+
+- glances:
+    url: http://glances:61209
+    version: 4
+    cpu: true
+    cputemp: true
+    mem: true
+    uptime: true
+    # TODO: disk usage
+    units: metric
+    label: Lab
