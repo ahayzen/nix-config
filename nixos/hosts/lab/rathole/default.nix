@@ -44,7 +44,7 @@
     # which causes the hash of the docker-compose file to change.
     systemd.services."docker-compose-runner".restartTriggers = [
       # Agenix path with a version that can be bumped
-      "/etc/rathole/config.toml-2"
+      "/etc/rathole/config.toml-3"
     ];
   };
 }

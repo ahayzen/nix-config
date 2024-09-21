@@ -13,7 +13,7 @@ bind_addr = "0.0.0.0:8506"
 bind_addr = "0.0.0.0:8080"
 
 [server.services.glances]
-bind_addr = "0.0.0.0:61209"
+bind_addr = "0.0.0.0:61208"
 
 [server.services.immich]
 bind_addr = "0.0.0.0:8301"

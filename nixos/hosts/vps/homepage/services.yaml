@@ -67,35 +67,35 @@
 - Lab:
     - CPU:
         widget:
-            url: http://rathole:61209
+            url: http://rathole:61208
             type: glances
             metric: cpu
             version: 4
 
     - RAM:
         widget:
-            url: http://rathole:61209
+            url: http://rathole:61208
             type: glances
             metric: memory
             version: 4
 
     - Temperature:
         widget:
-            url: http://rathole:61209
+            url: http://rathole:61208
             type: glances
             metric: "sensor:Package id 0"
             version: 4
 
     - Host Disk:
         widget:
-            url: http://rathole:61209
+            url: http://rathole:61208
             type: glances
             metric: "fs:/etc/os-release"
             version: 4
 
     - Data Disk:
         widget:
-            url: http://rathole:61209
+            url: http://rathole:61208
             type: glances
             metric: "fs:/mnt/data"
             version: 4
