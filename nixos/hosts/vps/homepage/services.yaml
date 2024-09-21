@@ -50,9 +50,11 @@
             url: http://glances:61208
             type: glances
             metric: info
+            version: 4
 
     - Lab:
         widget:
             url: http://rathole:61209
             type: glances
             metric: info
+            version: 4
