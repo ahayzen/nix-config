@@ -34,6 +34,7 @@
 
         vps = {
           rathole = false;
+          glances = true;
           homepage = true;
           wagtail-ahayzen = true;
           wagtail-yumekasaito = true;
