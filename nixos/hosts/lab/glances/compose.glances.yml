@@ -12,3 +12,4 @@ services:
     restart: unless-stopped
     volumes:
       - /etc/os-release:/etc/os-release:ro
+      - /mnt/data:/mnt/data:ro

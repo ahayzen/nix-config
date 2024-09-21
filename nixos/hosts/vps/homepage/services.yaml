@@ -78,3 +78,10 @@
             type: glances
             metric: "sensor:Package id 0"
             version: 4
+
+    - Disk:
+        widget:
+            url: http://rathole:61209
+            type: glances
+            metric: "fs:/mnt/data"
+            version: 4
