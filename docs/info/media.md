@@ -77,3 +77,17 @@ To retrieve a high definition 50fps copy with a resolution around 1280x720.
 `get_iplayer --subtitles --tv-quality=720p --url=<url>`
 
 See https://github.com/get-iplayer/get_iplayer/wiki/quality for mode information.
+
+# FLAC
+
+Test if a flac file is corrupt.
+
+```sh
+flac -t *.flac
+```
+
+Fix a corrupt flac file
+
+```sh
+flac --verify --compression-level-0 --decode-through-errors --preserve-modtime -o out.flac in.flac
+```
