@@ -86,6 +86,7 @@
         lab = {
           actual = false;
           bitwarden = false;
+          glances = false;
           immich = false;
           jellyfin = true;
           rathole = true;
