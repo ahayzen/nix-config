@@ -88,6 +88,7 @@
         lab = {
           actual = false;
           bitwarden = false;
+          glances = true;
           immich = false;
           rathole = false;
           restic = false;
@@ -236,6 +237,10 @@
       # Note we cannot test for "Hayzen Home" our title as using curl
       # doesn't load the actual settings but just the default page
       assert "Home" in output, f"'{output}' does not contain 'Home'"
+
+    with subtest("Ensure that glances has started"):
+      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "Uvicorn running on http://0.0.0.0:61208"', timeout=30)
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "Uvicorn running on http://0.0.0.0:61208"', timeout=30)
 
     #
     # Test that we can backup and restore the VPS
