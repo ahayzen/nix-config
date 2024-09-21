@@ -30,11 +30,20 @@
     };
 
     environment.etc = {
-      "bitwarden/settings.1.env".
+      "bitwarden/settings.env".
       source =
         if config.ahayzen.testing
         then ./bitwarden.vm.env
         else config.age.secrets.bitwarden_env.path;
     };
+
+    # Restart if static files change
+    #
+    # Note agenix files are not possible and will need the version bumping
+    # which causes the hash of the docker-compose file to change.
+    systemd.services."docker-compose-runner".restartTriggers = [
+      # Agenix path with a version that can be bumped
+      "/etc/bitwarden/settings.env-1"
+    ];
   };
 }

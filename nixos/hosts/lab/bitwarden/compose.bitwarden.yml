@@ -6,7 +6,7 @@ services:
   bitwarden:
     image: docker.io/bitwarden/self-host:2024.9.1-beta@sha256:17430d1f97eb78fc4482e62075ca365f16b1b3667064a70ca73a41c62a62cd08
     env_file:
-      - /etc/bitwarden/settings.1.env
+      - /etc/bitwarden/settings.env
     # https://bitwarden.com/help/environment-variables/
     environment:
       BW_DOMAIN: "bitwarden.hayzen.uk"
