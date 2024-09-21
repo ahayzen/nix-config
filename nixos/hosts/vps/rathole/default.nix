@@ -40,7 +40,7 @@
     systemd.services."docker-compose-runner".restartTriggers = [
       (builtins.hashFile "sha256" config.environment.etc."caddy/sites/rathole.Caddyfile".source)
       # Agenix path with a version that can be bumped
-      "/etc/rathole/config.toml-1"
+      "/etc/rathole/config.toml-2"
     ];
   };
 }
