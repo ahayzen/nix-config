@@ -11,5 +11,17 @@
 
   config = lib.mkIf (config.ahayzen.lab.glances) {
     ahayzen.docker-compose-files = [ ./compose.glances.yml ];
+
+    environment.etc = {
+      "glances/glances.conf".source = ./glances.conf;
+    };
+
+    # Restart if static files change
+    #
+    # Note agenix files are not possible and will need the version bumping
+    # which causes the hash of the docker-compose file to change.
+    systemd.services."docker-compose-runner".restartTriggers = [
+      (builtins.hashFile "sha256" config.environment.etc."glances/glances.conf".source)
+    ];
   };
 }

@@ -6,10 +6,11 @@ services:
   glances:
     image: docker.io/nicolargo/glances:4.1.2.1@sha256:6c3bd43bde426f439b4a969909d753e76c6907e742ed9dc6e98df03868b4ca6b
     environment:
-      - "GLANCES_OPT=-w"
+      - "GLANCES_OPT=-w -C /etc/glances/glances.conf"
     expose:
       - "61208"
     restart: unless-stopped
     volumes:
+      - /etc/glances/glances.conf:/etc/glances/glances.conf:ro
       - /etc/os-release:/etc/os-release:ro
       - /mnt/data:/mnt/data:ro
