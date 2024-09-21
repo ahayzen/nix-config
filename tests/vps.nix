@@ -69,7 +69,7 @@
       virtualisation = {
         cores = 2;
         # Increase so we can fit docker images
-        diskSize = 2 * 1024;
+        diskSize = 4 * 1024;
         memorySize = 2 * 1024;
       };
     };
