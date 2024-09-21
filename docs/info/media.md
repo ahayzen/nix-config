@@ -77,3 +77,35 @@ To retrieve a high definition 50fps copy with a resolution around 1280x720.
 `get_iplayer --subtitles --tv-quality=720p --url=<url>`
 
 See https://github.com/get-iplayer/get_iplayer/wiki/quality for mode information.
+
+# FLAC
+
+Test if a flac file is corrupt.
+
+```sh
+flac -t *.flac
+```
+
+Fix a corrupt flac file
+
+```sh
+flac --verify --compression-level-0 --decode-through-errors --preserve-modtime -o out.flac in.flac
+```
+
+# DVD
+
+## MakeMKV
+
+  * Install MakeMKV
+
+> If you need a license key navigate to (https://forum.makemkv.com/forum/viewtopic.php?t=1053)
+
+Find which titles are the main title and extras you want (https://www.dvdcompare.net) can be useful for finding lengths of extras.
+
+Then extract all of them to a folder.
+
+## Handbrake
+
+Ensure that passthrough occurs for audio / subtitles / cropping.
+
+Then pick mkv as the container with h264 as the codec format.
