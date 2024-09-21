@@ -42,19 +42,53 @@
         description: "The #1 most trusted password manager"
         siteMonitor: "http://rathole:8080"
 
-- Monitoring:
-    # TODO: disk usage and could have individual charts
-
-    - VPS:
+- VPS:
+    - CPU:
         widget:
             url: http://glances:61208
             type: glances
-            metric: info
+            metric: cpu
             version: 4
 
-    - Lab:
+    - RAM:
+        widget:
+            url: http://glances:61208
+            type: glances
+            metric: memory
+            version: 4
+
+    - Network:
+        widget:
+            url: http://glances:61208
+            type: glances
+            metric: "network:eth0"
+            version: 4
+
+- Lab:
+    - CPU:
         widget:
             url: http://rathole:61209
             type: glances
-            metric: info
+            metric: cpu
+            version: 4
+
+    - RAM:
+        widget:
+            url: http://rathole:61209
+            type: glances
+            metric: memory
+            version: 4
+
+    - Network:
+        widget:
+            url: http://rathole:61209
+            type: glances
+            metric: "network:eth0"
+            version: 4
+
+    - Temperature:
+        widget:
+            url: http://rathole:61209
+            type: glances
+            metric: "sensor:Package id 0"
             version: 4

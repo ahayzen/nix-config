@@ -24,6 +24,10 @@ layout:
     columns: 4
     style: row
 
-  Monitoring:
-    columns: 2
+  VPS:
+    columns: 4
+    style: row
+
+  Lab:
+    columns: 4
     style: row
