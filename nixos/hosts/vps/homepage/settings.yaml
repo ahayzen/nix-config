@@ -23,3 +23,7 @@ layout:
   Utilities:
     columns: 4
     style: row
+
+  Monitoring:
+    columns: 2
+    style: row
