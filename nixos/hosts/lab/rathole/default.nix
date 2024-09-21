@@ -31,12 +31,20 @@
     };
 
     environment.etc = {
-      "rathole/config.1.toml".
+      "rathole/config.toml".
       source =
         if config.ahayzen.testing
         then ./rathole.vm.toml
         else config.age.secrets.rathole_toml.path;
     };
-  };
 
+    # Restart if static files change
+    #
+    # Note agenix files are not possible and will need the version bumping
+    # which causes the hash of the docker-compose file to change.
+    systemd.services."docker-compose-runner".restartTriggers = [
+      # Agenix path with a version that can be bumped
+      "/etc/rathole/config.toml-2"
+    ];
+  };
 }
