@@ -29,5 +29,5 @@ layout:
     style: row
 
   Lab:
-    columns: 4
+    columns: 5
     style: row
