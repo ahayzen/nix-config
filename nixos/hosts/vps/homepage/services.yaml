@@ -41,3 +41,16 @@
         icon: bitwarden.png
         description: "The #1 most trusted password manager"
         siteMonitor: "http://rathole:8080"
+
+- Monitoring:
+    # TODO: disk usage and could have individual charts
+
+    - VPS:
+        url: http://glances:61208
+        type: glances
+        metric: info
+
+    - Lab:
+        url: http://glances:61209
+        type: glances
+        metric: info
