@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  restic-offsite:
+    container_name: restic_offsite
+    image: docker.io/restic/restic:0.17.1@sha256:424a4e1fcc6fe2557b5614239dc71a2c793acb33a83ea217171bd7edc1862dcb
+    entrypoint:
+      - /bin/sh
+    # Check if a repo exists
+    # If it doesn't create one
+    # Then wait forever to keep the container running so we can exec on it
+    command: ["-c", "(/usr/bin/restic cat config || /usr/bin/restic init) && tail -F /dev/null"]
+    env_file:
+      - /etc/restic/offsite.env
+    environment:
+      RESTIC_PASSWORD_FILE: /etc/restic/password
+      XDG_CACHE_HOME: /var/cache
+    # Set a host to ensure that caches and settings are correct in restic
+    # as docker containers have a new host name every time
+    hostname: restic-offsite
+    # Allocate a tty then restic prints more info used for testing
+    tty: true
+    volumes:
+      - /etc/restic/offsite_env:/etc/restic/offsite_env:ro
+      - /etc/restic/password:/etc/restic/password:ro
+      # The source data
+      - /mnt/data:/mnt/data:ro
+      # Cache uses XDG_CACHE_HOME/restic
+      # https://restic.readthedocs.io/en/stable/manual_rest.html#caching
+      - /var/cache/docker-compose-runner/restic:/var/cache/restic:rw
