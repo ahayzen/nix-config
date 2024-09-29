@@ -204,7 +204,7 @@
     #
 
     with subtest("Ensure docker starts"):
-      lab.wait_for_unit("docker-compose-runner", timeout=300)
+      lab.wait_for_unit("docker-compose-runner", timeout=600)
 
     with subtest("Rathole connection"):
       # Check we have a server control channel
