@@ -18,6 +18,6 @@ SPDX-License-Identifier: MPL-2.0
 | Timer | Frequency | Purpose |
 |-------|-----------|---------|
 | `backup-machines` | `daily` | Pull snapshot of machines |
-| `periodic-daily` | `daily` | Snapshots of database and management commands |
-| `periodic-weekly` | `weekly` | Low frequecy tasks such as restic check |
 | `virtualisation.docker.autoPrune.enable` | `daily` | Clean old containers |
+
+> TODO: add various machine specific timers for db snapshots of containers and other tasks

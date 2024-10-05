@@ -238,7 +238,7 @@
 
       # Trigger a snapshot
       labdayofweek = datetime.datetime.today().strftime('%w')
-      lab.succeed("systemctl start periodic-daily.service")
+      lab.succeed("systemctl start audiobookshelf-db-snapshot.service")
 
       # Run the backup
       backup.succeed("/etc/ahayzen.com/backup.sh lab /etc/ssh/test_ssh_id_ed25519 headless@lab /tmp/backup-root-lab")

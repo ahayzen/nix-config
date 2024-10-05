@@ -10,14 +10,7 @@
   };
 
   config = lib.mkIf (config.ahayzen.lab.bitwarden) {
-    ahayzen = {
-      docker-compose-files = [ ./compose.bitwarden.yml ];
-
-      # Take a snapshot of the database daily
-      periodic-daily-commands = [
-        ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/bitwarden/config/vault.db ".backup /var/lib/docker-compose-runner/bitwarden/config/vault-snapshot-$(date +%w).db"''
-      ];
-    };
+    ahayzen.docker-compose-files = [ ./compose.bitwarden.yml ];
 
     age.secrets = lib.mkIf (!config.ahayzen.testing) {
       bitwarden_env = {
@@ -58,6 +51,29 @@
         Group = "unpriv";
         RemainAfterExit = true;
         Type = "oneshot";
+      };
+    };
+
+    # Take snapshot of the database daily
+    systemd.services."bitwarden-db-snapshot" = {
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/bitwarden/config/vault.db ".backup /var/lib/docker-compose-runner/bitwarden/config/vault-snapshot-$(date +%w).db"'';
+    };
+
+    systemd.timers."bitwarden-db-snapshot" = {
+      enable = !config.ahayzen.testing;
+      after = [ "nixos-upgrade.service" ];
+      before = [ ]
+        ++ lib.optional config.ahayzen.lab.restic "restic-offsite-backup.service"
+        ++ lib.optional config.ahayzen.lab.restic "restic-local-backup.service";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        Unit = "bitwarden-db-snapshot.service";
+        Persistent = true;
       };
     };
   };
