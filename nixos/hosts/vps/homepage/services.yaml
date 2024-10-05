@@ -48,6 +48,12 @@
         description: "The #1 most trusted password manager"
         siteMonitor: "http://rathole:8080"
 
+    - Joplin:
+        href: https://joplin.hayzen.uk/
+        icon: joplin.png
+        description: "Free your notes"
+        siteMonitor: "http://rathole:8223"
+
 - VPS:
     - CPU:
         widget:

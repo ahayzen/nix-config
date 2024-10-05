@@ -29,6 +29,7 @@
           glances = false;
           immich = false;
           jellyfin = false;
+          joplin = false;
           rathole = false;
           restic = true;
           sftpgo = false;

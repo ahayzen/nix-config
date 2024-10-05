@@ -90,6 +90,7 @@
           glances = false;
           immich = false;
           jellyfin = false;
+          joplin = false;
           rathole = true;
           restic = false;
           sftpgo = true;
