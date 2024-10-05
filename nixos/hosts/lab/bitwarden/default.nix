@@ -45,5 +45,20 @@
       # Agenix path with a version that can be bumped
       "/etc/bitwarden/settings.env-1"
     ];
+
+    # As the folders are mapped we need to create with the right permissions
+    #
+    # Note that this needs to be added as requires and after to sshfs
+    systemd.services."docker-compose-runner-pre-init-bitwarden" = {
+      wantedBy = [ "docker-compose-runner.service" ];
+      before = [ "docker-compose-runner.service" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/bitwarden/config";
+        User = "unpriv";
+        Group = "unpriv";
+        RemainAfterExit = true;
+        Type = "oneshot";
+      };
+    };
   };
 }

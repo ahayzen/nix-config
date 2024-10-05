@@ -37,6 +37,33 @@
       };
     };
 
+    # As the folders are mapped we need to create with the right permissions
+    #
+    # Note that this needs to be added as requires and after to sshfs
+    systemd.services."docker-compose-runner-pre-init-sftpgo" = {
+      wantedBy = [ "docker-compose-runner.service" ];
+      before = [ "docker-compose-runner.service" ];
+      serviceConfig = {
+        ExecStart = ''
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/app/sftpgo/backups
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/user
+
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/camera
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/documents
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/music
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/movies
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/recordings
+          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/shows
+
+          ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/sftpgo
+        '';
+        User = "unpriv";
+        Group = "unpriv";
+        RemainAfterExit = true;
+        Type = "oneshot";
+      };
+    };
+
     # Ensure WebDav port is open
     networking.firewall.allowedTCPPorts = [
       8090
