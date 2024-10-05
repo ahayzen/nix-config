@@ -16,6 +16,9 @@ default_token = "CHANGEME"
 [client.services.actual]
 local_addr = "actual:5006"
 
+[client.services.audiobookshelf]
+local_addr = "audiobookshelf:80"
+
 [client.services.bitwarden]
 local_addr = "bitwarden:8080"
 

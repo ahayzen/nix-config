@@ -13,6 +13,7 @@
     ./sshfs.nix
     # Include services
     ./actual
+    ./audiobookshelf
     ./bitwarden
     ./glances
     ./immich

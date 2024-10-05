@@ -76,6 +76,19 @@ jobs:
         # https://github.com/NixOS/nix/issues/8881
         run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-actual-test
 
+  nix-flake-check-lab-audiobookshelf:
+    # Run after flake check
+    needs: [nix-flake-check-no-build]
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4.2.0
+      - uses: DeterminateSystems/nix-installer-action@v14
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - name: nix build
+        # nix flake check doesn't have a way to specify a specific test to run
+        # https://github.com/NixOS/nix/issues/8881
+        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-audiobookshelf-test
+
   nix-flake-check-lab-bitwarden:
     # Run after flake check
     needs: [nix-flake-check-no-build]
