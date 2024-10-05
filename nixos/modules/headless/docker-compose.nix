@@ -23,6 +23,7 @@
           enable = config.ahayzen.docker-compose-files != [ ];
           path = [ pkgs.docker-compose ];
           after = [ "docker.service" "docker.socket" "network-online.target" ];
+          requires = [ "docker.service" "docker.socket" ];
           wantedBy = [ "multi-user.target" ];
           wants = [ "network-online.target" ];
 
