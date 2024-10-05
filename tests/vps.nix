@@ -91,8 +91,11 @@
           bitwarden = false;
           glances = true;
           immich = false;
+          jellyfin = false;
+          joplin = false;
           rathole = false;
           restic = false;
+          sftpgo = false;
         };
       };
 

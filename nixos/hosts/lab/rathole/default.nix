@@ -17,6 +17,7 @@
       ++ lib.optional config.ahayzen.lab.glances ./compose.rathole.glances.yml
       ++ lib.optional config.ahayzen.lab.immich ./compose.rathole.immich.yml
       ++ lib.optional config.ahayzen.lab.jellyfin ./compose.rathole.jellyfin.yml
+      ++ lib.optional config.ahayzen.lab.joplin ./compose.rathole.joplin.yml
       ++ lib.optional config.ahayzen.lab.sftpgo ./compose.rathole.sftpgo.yml;
 
     age.secrets = lib.mkIf (!config.ahayzen.testing) {

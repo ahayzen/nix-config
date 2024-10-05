@@ -43,6 +43,13 @@ jellyfin.hayzen.uk {
     reverse_proxy rathole:8896
 }
 
+# Joplin proxy
+joplin.hayzen.uk {
+    log
+
+    reverse_proxy rathole:8223
+}
+
 # SFTPGo proxy
 sftpgo.hayzen.uk {
     log

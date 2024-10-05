@@ -90,6 +90,7 @@
           bitwarden = true;
           immich = false;
           jellyfin = false;
+          joplin = false;
           rathole = true;
           restic = false;
           sftpgo = false;
