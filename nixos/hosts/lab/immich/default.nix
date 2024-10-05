@@ -10,17 +10,7 @@
   };
 
   config = lib.mkIf (config.ahayzen.lab.immich) {
-    ahayzen = {
-      docker-compose-files = [ ./compose.immich.yml ];
-
-      # Take a snapshot of the database daily
-      periodic-daily-commands = [
-        ''
-          /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t immich_postgres sh -c "pg_dumpall --clean --if-exists --username=postgres > /var/lib/docker-compose-runner/immich/postgres/immich-database.sql"
-          /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t immich_postgres sh -c "pg_dumpall --clean --if-exists --username=postgres > /var/lib/docker-compose-runner/immich/postgres/immich-database-snapshot-$(date +%w).sql"
-        ''
-      ];
-    };
+    ahayzen.docker-compose-files = [ ./compose.immich.yml ];
 
     age.secrets = lib.mkIf (!config.ahayzen.testing) {
       immich_env = {
@@ -50,5 +40,31 @@
       # Agenix path with a version that can be bumped
       "/etc/immich/settings_secrets.env-1"
     ];
+
+    # Take a snapshot of the database daily
+    systemd.services."immich-db-snapshot" = {
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t immich_postgres sh -c "pg_dumpall --clean --if-exists --username=postgres > /var/lib/docker-compose-runner/immich/postgres/immich-database.sql"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t immich_postgres sh -c "pg_dumpall --clean --if-exists --username=postgres > /var/lib/docker-compose-runner/immich/postgres/immich-database-snapshot-$(date +%w).sql"
+      '';
+    };
+
+    systemd.timers."immich-db-snapshot" = {
+      enable = !config.ahayzen.testing;
+      after = [ "nixos-upgrade.service" ];
+      before = [ ]
+        ++ lib.optional config.ahayzen.lab.restic "restic-offsite-backup.service"
+        ++ lib.optional config.ahayzen.lab.restic "restic-local-backup.service";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        Unit = "immich-db-snapshot.service";
+        Persistent = true;
+      };
+    };
   };
 }

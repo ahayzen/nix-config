@@ -20,14 +20,7 @@
       };
     };
 
-    ahayzen = {
-      docker-compose-files = [ ./compose.wagtail-ahayzen.yml ];
-
-      # Take a snapshot of the database daily
-      periodic-daily-commands = [
-        ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 ".backup /var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-$(date +%w).sqlite3"''
-      ];
-    };
+    ahayzen.docker-compose-files = [ ./compose.wagtail-ahayzen.yml ];
 
     environment.etc = {
       "caddy/sites/ahayzen.Caddyfile".source = ./ahayzen.Caddyfile;
@@ -47,5 +40,25 @@
       # Agenix path with a version that can be bumped
       "/etc/ahayzen/local.py-1"
     ];
+
+    # Take a snapshot of the database daily
+    systemd.services."wagtail-ahayzen-db-snapshot" = {
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 ".backup /var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-$(date +%w).sqlite3"'';
+    };
+
+    systemd.timers."wagtail-ahayzen-db-snapshot" = {
+      enable = !config.ahayzen.testing;
+      after = [ "nixos-upgrade.service" ];
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        Unit = "wagtail-ahayzen-db-snapshot.service";
+        Persistent = true;
+      };
+    };
   };
 }

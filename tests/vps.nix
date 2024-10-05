@@ -259,7 +259,8 @@
 
       # Trigger a snapshot
       vpsdayofweek = datetime.datetime.today().strftime('%w')
-      vps.succeed("systemctl start periodic-daily.service")
+      vps.succeed("systemctl start wagtail-ahayzen-db-snapshot.service")
+      vps.succeed("systemctl start wagtail-yumekasaito-db-snapshot.service")
 
       # Run the backup
       backup.succeed("/etc/ahayzen.com/backup.sh vps /etc/ssh/test_ssh_id_ed25519 headless@vps /tmp/backup-root-vps")
