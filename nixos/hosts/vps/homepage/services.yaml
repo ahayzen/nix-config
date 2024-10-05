@@ -17,6 +17,12 @@
         siteMonitor: "http://rathole:8890"
 
 - Media:
+    - Audiobookshelf:
+        href: https://audiobookshelf.hayzen.uk/
+        icon: audiobookshelf.png
+        description: "Self-hosted audiobook and podcast server"
+        siteMonitor: "http://rathole:13378"
+
     - Immich:
         href: https://immich.hayzen.uk/
         icon: immich.png

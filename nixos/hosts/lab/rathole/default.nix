@@ -12,6 +12,7 @@
   config = lib.mkIf (config.ahayzen.lab.rathole) {
     ahayzen.docker-compose-files = [ ./compose.rathole.yml ]
       ++ lib.optional config.ahayzen.lab.actual ./compose.rathole.actual.yml
+      ++ lib.optional config.ahayzen.lab.audiobookshelf ./compose.rathole.audiobookshelf.yml
       ++ lib.optional config.ahayzen.lab.bitwarden ./compose.rathole.bitwarden.yml
       ++ lib.optional config.ahayzen.lab.glances ./compose.rathole.glances.yml
       ++ lib.optional config.ahayzen.lab.immich ./compose.rathole.immich.yml

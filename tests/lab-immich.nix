@@ -85,6 +85,7 @@
 
         lab = {
           actual = false;
+          audiobookshelf = false;
           bitwarden = false;
           glances = false;
           immich = true;

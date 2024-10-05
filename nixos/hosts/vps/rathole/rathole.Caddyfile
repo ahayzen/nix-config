@@ -15,6 +15,13 @@ actual.hayzen.uk {
     reverse_proxy rathole:8506
 }
 
+# Audiobookshelf proxy
+audiobookshelf.hayzen.uk {
+    log
+
+    reverse_proxy rathole:13378
+}
+
 # Bitwarden proxy
 bitwarden.hayzen.uk {
     log
