@@ -205,6 +205,7 @@
 
     with subtest("Ensure docker starts"):
       lab.wait_for_unit("docker-compose-runner", timeout=120)
+      lab.wait_for_unit("docker-compose-runner-pre-init-sftpgo", timeout=10)
 
     with subtest("Rathole connection"):
       # Check we have a server control channel
