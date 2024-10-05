@@ -66,6 +66,9 @@
     services."docker-compose-runner-pre-init-bitwarden".after = [ "mnt-backup\\x2drestic.mount" "mnt-data.mount" ];
     services."docker-compose-runner-pre-init-bitwarden".requires = [ "mnt-backup\\x2drestic.mount" "mnt-data.mount" ];
 
+    services."docker-compose-runner-pre-init-joplin".after = [ "mnt-backup\\x2drestic.mount" "mnt-data.mount" ];
+    services."docker-compose-runner-pre-init-joplin".requires = [ "mnt-backup\\x2drestic.mount" "mnt-data.mount" ];
+
     services."docker-compose-runner-pre-init-sftpgo".after = [ "mnt-backup\\x2drestic.mount" "mnt-data.mount" ];
     services."docker-compose-runner-pre-init-sftpgo".requires = [ "mnt-backup\\x2drestic.mount" "mnt-data.mount" ];
   };

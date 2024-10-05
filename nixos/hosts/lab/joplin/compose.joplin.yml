@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  joplin:
+    image: docker.io/joplin/server:3.0.1-beta@sha256:52af57880c0e04a179107807e13ffb8868b31ea2cc86a2b04da42220facb7589
+    environment:
+      APP_BASE_URL: https://joplin.hayzen.uk
+      APP_PORT: 22300
+      SQLITE_DATABASE: /data/db.sqlite
+    expose:
+      - 22300
+    restart: unless-stopped
+    volumes:
+      - /var/lib/docker-compose-runner-user1001/joplin/data:/data

@@ -26,6 +26,8 @@ services:
       - "8890"
       # Jellyfin
       - "8896"
+      # Joplin
+      - "8223"
       # Audiobookshelf
       - "13378"
     ports:

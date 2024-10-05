@@ -6,7 +6,7 @@
 # Test the following
 #
 # Lab
-# - jellyfin
+# - joplin
 # - rathole
 # - backup machines of lab
 #
@@ -18,7 +18,7 @@
 # - backup script
 
 (import ./lib.nix) {
-  name = "lab-jellyfin-test";
+  name = "lab-joplin-test";
   nodes = {
     vps = { self, pkgs, ... }: {
       imports =
@@ -43,7 +43,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "home.hayzen.uk" "jellyfin.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "joplin.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -89,8 +89,8 @@
           bitwarden = false;
           glances = false;
           immich = false;
-          jellyfin = true;
-          joplin = false;
+          jellyfin = false;
+          joplin = true;
           rathole = true;
           restic = false;
           sftpgo = false;
@@ -102,7 +102,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "immich.hayzen.uk" "home.hayzen.uk" "jellyfin.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "192.168.1.3" = [ "joplin.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -183,7 +183,12 @@
   };
 
   testScript = ''
+    import datetime
+
     start_all()
+
+    labdayofweek = ""
+    vpsdayofweek = ""
 
     #
     # Test that the VPS boots and shows wagtail admin
@@ -201,25 +206,82 @@
     #
 
     with subtest("Ensure docker starts"):
-      lab.wait_for_unit("docker-compose-runner", timeout=120)
+      lab.wait_for_unit("docker-compose-runner", timeout=240)
 
     with subtest("Rathole connection"):
       # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=jellyfin"' , timeout=10)
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=joplin"' , timeout=10)
 
       # Check we have a client control channel
       lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
 
-    with subtest("Test jellyfin"):
-      # Wait for jellyfin to start
-      wait_for_jellyfin_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Emby.Server.Implementations.ApplicationHost.*Core startup complete"'
-      lab.wait_until_succeeds(wait_for_jellyfin_cmd, timeout=60)
+    with subtest("Test joplin"):
+      # Wait for joplin to start
+      wait_for_joplin_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "App: Public base URL: https://joplin.hayzen.uk"'
+      lab.wait_until_succeeds(wait_for_joplin_cmd, timeout=60)
+
+      # Wait for API to be ready
+      wait_for_joplin_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "App: Call this for testing"'
+      lab.wait_until_succeeds(wait_for_joplin_cmd, timeout=60)
+
+      # Query API
+      output = vps.succeed("curl --insecure --location --silent joplin.hayzen.uk/api/ping")
+      assert "Joplin" in output, f"'{output}' does not contain 'Joplin'"
 
       # Test login page
-      output = vps.succeed("curl --insecure --location --silent jellyfin.hayzen.uk")
-      assert "Jellyfin" in output, f"'{output}' does not contain 'Jellyfin'"
+      output = vps.succeed("curl --insecure --location --silent joplin.hayzen.uk/login")
+      assert "Joplin" in output, f"'{output}' does not contain 'Joplin'"
 
-    # TODO: could test backup and database, but we don't worry about this for now
+    #
+    # Test that we can backup lab
+    #
+
+    with subtest("Ensure SSH is ready"):
+      lab.wait_for_open_port(8022, timeout=30)
+
+    with subtest("Attempt to run lab backup"):
+      backup.succeed("mkdir -p /tmp/backup-root-lab")
+
+      # Check that the permissions are correct
+      lab.succeed("ls -nd /var/lib/docker-compose-runner/joplin/data/db.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+      # Trigger a snapshot
+      labdayofweek = datetime.datetime.today().strftime('%w')
+      lab.succeed("systemctl start joplin-db-snapshot.service")
+
+      # Run the backup
+      backup.succeed("/etc/ahayzen.com/backup.sh lab /etc/ssh/test_ssh_id_ed25519 headless@lab /tmp/backup-root-lab")
+
+      # Check volumes are appearing
+      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/joplin/data")
+
+      # Check that known files exist and permissions are correct
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/joplin/data/db-snapshot-" + labdayofweek + ".sqlite")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/joplin/data/db-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/joplin/data/db.sqlite")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/joplin/data/db.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+
+    #
+    # Test auto backup in lab
+    #
+    # Do this after other backups so that we have snapshots
+    with subtest("Test Auto Backup Machines"):
+      # Run backup command
+      lab.succeed("systemctl start backup-machines.service")
+
+      #
+      # Check lab is correct
+      #
+
+      # Check volumes are appearing
+      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/joplin/data")
+
+      # Check that known files exist and permissions are correct
+      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/joplin/data/db-snapshot-" + labdayofweek + ".sqlite")
+      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/joplin/data/db-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/joplin/data/db.sqlite")
+      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/joplin/data/db.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))

@@ -17,6 +17,7 @@
       ++ lib.optional config.ahayzen.lab.glances ./compose.rathole.glances.yml
       ++ lib.optional config.ahayzen.lab.immich ./compose.rathole.immich.yml
       ++ lib.optional config.ahayzen.lab.jellyfin ./compose.rathole.jellyfin.yml
+      ++ lib.optional config.ahayzen.lab.joplin ./compose.rathole.joplin.yml
       ++ lib.optional config.ahayzen.lab.sftpgo ./compose.rathole.sftpgo.yml;
 
     age.secrets = lib.mkIf (!config.ahayzen.testing) {
@@ -45,7 +46,7 @@
     # which causes the hash of the docker-compose file to change.
     systemd.services."docker-compose-runner".restartTriggers = [
       # Agenix path with a version that can be bumped
-      "/etc/rathole/config.toml-3"
+      "/etc/rathole/config.toml-4"
     ];
   };
 }
