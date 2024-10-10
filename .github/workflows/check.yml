@@ -20,20 +20,20 @@ jobs:
   license-check:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@v4
 
   flake-checker:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/flake-checker-action@v9
 
   nix-fmt:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix fmt
@@ -44,7 +44,7 @@ jobs:
   shellcheck:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       # Shellcheck should already be installed on github runners
       - name: install shellcheck
         run: sudo apt install --yes shellcheck
@@ -56,7 +56,7 @@ jobs:
     needs: [license-check, flake-checker, nix-fmt, shellcheck]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix flake check
@@ -68,7 +68,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
@@ -81,7 +81,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
@@ -94,7 +94,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
@@ -107,7 +107,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
@@ -120,7 +120,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
@@ -133,7 +133,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
@@ -146,7 +146,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
@@ -159,7 +159,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
@@ -172,7 +172,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nixos-anywhere vm-test lab
@@ -188,7 +188,7 @@ jobs:
     needs: [nix-flake-check-no-build]
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4.2.0
+      - uses: actions/checkout@v4.2.1
       - uses: DeterminateSystems/nix-installer-action@v14
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nixos-anywhere vm-test vps
