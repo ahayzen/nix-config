@@ -71,7 +71,7 @@
       lab.succeed("ls -nd /mnt/data/b2 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Create a snapshot
-      lab.succeed("systemctl start periodic-daily.service")
+      lab.succeed("systemctl start restic-local-backup.service")
 
       # Delete one of the files
       lab.succeed("rm /mnt/data/b2")
