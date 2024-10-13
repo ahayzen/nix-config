@@ -136,7 +136,7 @@
       wantedBy = [ "timers.target" ];
       timerConfig = {
         OnCalendar = "daily";
-        Unit = "restic-local-backup.service";
+        Unit = "restic-offsite-backup.service";
         Persistent = true;
       };
     };
