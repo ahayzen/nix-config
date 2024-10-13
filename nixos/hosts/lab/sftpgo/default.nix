@@ -37,19 +37,20 @@
       wantedBy = [ "docker-compose-runner.service" ];
       before = [ "docker-compose-runner.service" ];
       serviceConfig = {
-        ExecStart = ''
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/app/sftpgo/backups
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/user
-
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/camera
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/documents
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/music
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/movies
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/recordings
-          ${pkgs.coreutils}/bin/mkdir -p /mnt/data/shows
-
-          ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/sftpgo
-        '';
+        ExecStart = [
+          # Sftpgo itself
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/data/app/sftpgo/backups"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/data/user"
+          # External folders
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/data/camera"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/data/documents"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/data/music"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/data/movies"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/data/recordings"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/data/shows"
+          # Database folder
+          "${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/sftpgo"
+        ];
         User = "unpriv";
         Group = "unpriv";
         RemainAfterExit = true;
