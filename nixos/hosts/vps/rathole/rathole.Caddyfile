@@ -33,7 +33,7 @@ bitwarden.hayzen.uk {
 immich.hayzen.uk {
     log
 
-    reverse_proxy rathole:8301
+    reverse_proxy rathole:8283
 }
 
 # Jellyfin proxy

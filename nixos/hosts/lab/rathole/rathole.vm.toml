@@ -26,7 +26,7 @@ local_addr = "bitwarden:8080"
 local_addr = "glances:61208"
 
 [client.services.immich]
-local_addr = "immich-server:3001"
+local_addr = "immich-server:2283"
 
 [client.services.jellyfin]
 local_addr = "jellyfin:8096"
