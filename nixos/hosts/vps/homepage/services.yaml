@@ -27,7 +27,7 @@
         href: https://immich.hayzen.uk/
         icon: immich.png
         description: "Self-hosted photo and video management solution"
-        siteMonitor: "http://rathole:8301"
+        siteMonitor: "http://rathole:8283"
 
     - Jellyfin:
         href: https://jellyfin.hayzen.uk/

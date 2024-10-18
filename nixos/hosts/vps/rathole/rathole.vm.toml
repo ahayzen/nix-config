@@ -19,7 +19,7 @@ bind_addr = "0.0.0.0:8080"
 bind_addr = "0.0.0.0:61208"
 
 [server.services.immich]
-bind_addr = "0.0.0.0:8301"
+bind_addr = "0.0.0.0:8283"
 
 [server.services.jellyfin]
 bind_addr = "0.0.0.0:8896"

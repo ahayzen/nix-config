@@ -17,7 +17,7 @@ services:
       # Bitwarden
       - "8080"
       # Immich
-      - "8301"
+      - "8283"
       # Actual
       - "8506"
       # SFTPGo
