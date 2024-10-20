@@ -16,6 +16,9 @@
       unpriv-user1000 = {
         gid = 201000;
       };
+      unpriv-user1001 = {
+        gid = 201001;
+      };
     };
 
     users = {
@@ -53,6 +56,11 @@
         isNormalUser = true;
         group = "unpriv-user1000";
         uid = 201000;
+      };
+      unpriv-user1001 = {
+        isNormalUser = true;
+        group = "unpriv-user1001";
+        uid = 201001;
       };
     };
   };
