@@ -64,4 +64,25 @@
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "23.11";
   };
+
+  # Do not run gc, optimise, or upgrade if another is running
+  # as we have seen odd behaviour with things hangings
+  systemd.services."nix-gc".serviceConfig = {
+    ExecCondition = [
+      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nix-optimise.service"''
+      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nixos-upgrade.service"''
+    ];
+  };
+  systemd.services."nix-optimise".serviceConfig = {
+    ExecCondition = [
+      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nix-gc.service"''
+      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nixos-upgrade.service"''
+    ];
+  };
+  systemd.services."nixos-upgrade".serviceConfig = {
+    ExecCondition = [
+      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nix-gc.service"''
+      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nix-optimise.service"''
+    ];
+  };
 }
