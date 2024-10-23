@@ -62,7 +62,7 @@
     # As we do not want docker / docker-compose-runner to stop
     systemd.services."restic-local-backup" = {
       serviceConfig = {
-        ExecCondition = ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nixos-upgrade.service"'';
+        ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         Type = "oneshot";
       };
       script = ''
@@ -75,7 +75,7 @@
     };
     systemd.services."restic-local-check" = {
       serviceConfig = {
-        ExecCondition = ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nixos-upgrade.service"'';
+        ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         Type = "oneshot";
       };
       script = ''
@@ -85,7 +85,7 @@
 
     systemd.services."restic-offsite-backup" = {
       serviceConfig = {
-        ExecCondition = ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nixos-upgrade.service"'';
+        ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         Type = "oneshot";
       };
       script = ''
@@ -98,7 +98,7 @@
     };
     systemd.services."restic-offsite-check" = {
       serviceConfig = {
-        ExecCondition = ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nixos-upgrade.service"'';
+        ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         Type = "oneshot";
       };
       script = ''
@@ -159,10 +159,10 @@
     systemd.services."nixos-upgrade" = {
       serviceConfig = {
         ExecCondition = [
-          "/bin/sh -c '! ${pkgs.systemd}/bin/systemctl is-active --quiet restic-local-backup.service'"
-          "/bin/sh -c '! ${pkgs.systemd}/bin/systemctl is-active --quiet restic-local-check.service'"
-          "/bin/sh -c '! ${pkgs.systemd}/bin/systemctl is-active --quiet restic-offsite-backup.service'"
-          "/bin/sh -c '! ${pkgs.systemd}/bin/systemctl is-active --quiet restic-offsite-check.service'"
+          "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active restic-local-backup.service ) != activ* ]]'"
+          "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active restic-local-check.service ) != activ* ]]'"
+          "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active restic-offsite-backup.service ) != activ* ]]'"
+          "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active restic-offsite-check.service ) != activ* ]]'"
         ];
       };
     };
