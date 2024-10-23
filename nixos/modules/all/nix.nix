@@ -69,20 +69,20 @@
   # as we have seen odd behaviour with things hangings
   systemd.services."nix-gc".serviceConfig = {
     ExecCondition = [
-      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nix-optimise.service"''
-      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nixos-upgrade.service"''
+      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-optimise.service ) != activ* ]]"''
+      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"''
     ];
   };
   systemd.services."nix-optimise".serviceConfig = {
     ExecCondition = [
-      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nix-gc.service"''
-      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nixos-upgrade.service"''
+      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-gc.service ) != activ* ]]"''
+      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"''
     ];
   };
   systemd.services."nixos-upgrade".serviceConfig = {
     ExecCondition = [
-      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nix-gc.service"''
-      ''/bin/sh -c "! ${pkgs.systemd}/bin/systemctl is-active --quiet nix-optimise.service"''
+      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-gc.service ) != activ* ]]"''
+      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-optimise.service ) != activ* ]]"''
     ];
   };
 }
