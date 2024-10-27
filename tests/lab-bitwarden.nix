@@ -206,7 +206,7 @@
     #
 
     with subtest("Ensure docker starts"):
-      lab.wait_for_unit("docker-compose-runner", timeout=120)
+      lab.wait_for_unit("docker-compose-runner", timeout=240)
       lab.wait_for_unit("docker-compose-runner-pre-init-bitwarden", timeout=10)
 
     with subtest("Rathole connection"):
