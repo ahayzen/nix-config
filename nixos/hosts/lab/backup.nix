@@ -24,9 +24,8 @@
       enable = !config.ahayzen.testing;
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "daily";
+        OnCalendar = "22:45";
         Unit = "backup-machines.service";
-        RandomizedDelaySec = "30m";
         Persistent = true;
       };
     };

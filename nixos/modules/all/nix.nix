@@ -14,8 +14,7 @@
     gc = {
       # Enable when not in testing mode
       automatic = !config.ahayzen.testing;
-      randomizedDelaySec = "30m";
-      dates = "daily";
+      dates = "07:30";
 
       # TODO: instead change to +3 from nix-env --delete-generations
       options = "--delete-older-than 30d";
@@ -27,7 +26,7 @@
     optimise = {
       # Enable when not in testing mode
       automatic = !config.ahayzen.testing;
-      dates = [ "daily" ];
+      dates = [ "11:30" ];
 
       # Has randomizedDelaySec of 30m by default
     };
@@ -52,7 +51,6 @@
       # Enable when not in testing mode
       enable = !config.ahayzen.testing;
       flake = "github:ahayzen/nix-config";
-      randomizedDelaySec = "30m";
       dates = "hourly";
 
       # don't auto reboot unless in headless mode

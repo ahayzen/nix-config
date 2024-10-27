@@ -24,13 +24,9 @@
 
       timers."actual-db-snapshot" = {
         enable = !config.ahayzen.testing;
-        after = [ "nixos-upgrade.service" ];
-        before = [ ]
-          ++ lib.optional config.ahayzen.lab.restic "restic-offsite-backup.service"
-          ++ lib.optional config.ahayzen.lab.restic "restic-local-backup.service";
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          OnCalendar = "daily";
+          OnCalendar = "22:15";
           Unit = "actual-db-snapshot.service";
           Persistent = true;
         };
