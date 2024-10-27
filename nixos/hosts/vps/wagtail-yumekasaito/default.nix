@@ -52,10 +52,9 @@
 
     systemd.timers."wagtail-yumekasaito-db-snapshot" = {
       enable = !config.ahayzen.testing;
-      after = [ "nixos-upgrade.service" ];
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "daily";
+        OnCalendar = "22:15";
         Unit = "wagtail-yumekasaito-db-snapshot.service";
         Persistent = true;
       };

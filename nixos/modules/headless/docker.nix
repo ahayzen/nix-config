@@ -71,7 +71,7 @@
     autoPrune = {
       # Enable when not in testing mode
       enable = !config.ahayzen.testing;
-      dates = "daily";
+      dates = "13:30";
     };
 
     daemon.settings = {

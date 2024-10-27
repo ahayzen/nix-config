@@ -61,6 +61,7 @@
     # Skip if nixos-upgrade is running
     # As we do not want docker / docker-compose-runner to stop
     systemd.services."restic-local-backup" = {
+      requires = [ "docker-compose-runner.service" ];
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         Type = "oneshot";
@@ -74,6 +75,7 @@
       '';
     };
     systemd.services."restic-local-check" = {
+      requires = [ "docker-compose-runner.service" ];
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         Type = "oneshot";
@@ -84,6 +86,7 @@
     };
 
     systemd.services."restic-offsite-backup" = {
+      requires = [ "docker-compose-runner.service" ];
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         Type = "oneshot";
@@ -97,6 +100,7 @@
       '';
     };
     systemd.services."restic-offsite-check" = {
+      requires = [ "docker-compose-runner.service" ];
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         Type = "oneshot";
@@ -108,22 +112,18 @@
 
     systemd.timers."restic-local-backup" = {
       enable = !config.ahayzen.testing;
-      after = [ "nixos-upgrade.service" ];
-      requires = [ "docker-compose-runner.service" ];
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "daily";
+        OnCalendar = "01:30";
         Unit = "restic-local-backup.service";
         Persistent = true;
       };
     };
     systemd.timers."restic-local-check" = {
       enable = !config.ahayzen.testing;
-      after = [ "nixos-upgrade.service" "restic-local-backup.service" ];
-      requires = [ "docker-compose-runner.service" ];
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "weekly";
+        OnCalendar = "04:30";
         Unit = "restic-local-check.service";
         Persistent = true;
       };
@@ -131,22 +131,18 @@
 
     systemd.timers."restic-offsite-backup" = {
       enable = !config.ahayzen.testing;
-      after = [ "nixos-upgrade.service" ];
-      requires = [ "docker-compose-runner.service" ];
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "daily";
+        OnCalendar = "01:30";
         Unit = "restic-offsite-backup.service";
         Persistent = true;
       };
     };
     systemd.timers."restic-offsite-check" = {
       enable = !config.ahayzen.testing;
-      after = [ "nixos-upgrade.service" "restic-offsite-backup.service" ];
-      requires = [ "docker-compose-runner.service" ];
       wantedBy = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "weekly";
+        OnCalendar = "04:30";
         Unit = "restic-offsite-check.service";
         Persistent = true;
       };
