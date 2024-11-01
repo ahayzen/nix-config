@@ -4,7 +4,7 @@
 
 services:
   glances:
-    image: docker.io/nicolargo/glances:4.2.0@sha256:a7c7487cb74ebfe2e34d940432e09718a4d952dce7d76b971585f60f6b7319cb
+    image: docker.io/nicolargo/glances:4.2.1@sha256:4e780865ca84dd9d4bc134387820958e64e1cb4219ef9dfd0b26047d9441cf06
     environment:
       - "GLANCES_OPT=-w"
     expose:
