@@ -33,7 +33,14 @@
     # Take a snapshot of the database daily
     systemd.services."joplin-db-snapshot" = {
       serviceConfig = {
+        # Sometimes a db snapshot fails, when this happens try again
+        Restart = "on-failure";
         Type = "oneshot";
+      };
+      unitConfig = {
+        # Limit to 5 attempts
+        StartLimitBurst = 5;
+        StartLimitIntervalSec = 10;
       };
 
       script = ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/joplin/data/db.sqlite ".backup /var/lib/docker-compose-runner/joplin/data/db-snapshot-$(date +%w).sqlite"'';
