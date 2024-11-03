@@ -26,6 +26,7 @@
     ./network.nix
     ./nix.nix
     ./shell.nix
+    ./smart.nix
     ./swap.nix
   ];
 }
