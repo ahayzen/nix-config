@@ -14,7 +14,7 @@
 
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:nix-community/disko";
+      url = "github:nix-community/disko/latest";
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
