@@ -42,6 +42,16 @@
             ],
             "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\-(?<compatibility>.*)$",
         },
+        // Caddy sometimes has pre-releases with only minor version, we want full version with patch for stable releases
+        {
+            "matchDatasources": [
+                "docker",
+            ],
+            "matchPackageNames": [
+                "docker.io/library/caddy",
+            ],
+            "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+        },
         // Jellyfin also have date tags which confuse renovate
         // eg we want 10.9.9 not v2024081205
         {
