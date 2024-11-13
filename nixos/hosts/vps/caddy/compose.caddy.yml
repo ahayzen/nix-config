@@ -5,7 +5,7 @@
 services:
   # Reverse proxy to other services
   caddy:
-    image: docker.io/library/caddy:2.8.4@sha256:6f3eea53e585bd8036028ca703de1c805353b79b43c8b3dd7168ac65827e7ef1
+    image: docker.io/library/caddy:2.8.4@sha256:cb50cf1d7c80d0dd310ce9ab0f2726706d82d3390bbd617bc213ef00377a8a70
     restart: unless-stopped
     cap_add:
       # Allow for increasing buffer size for HTTP/3
