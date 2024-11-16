@@ -4,7 +4,7 @@
 
 services:
   sftpgo:
-    image: docker.io/drakkan/sftpgo:v2.6.2@sha256:05b8e197e796366f955a3816b42a8ed29a9ef400c0da23ecc62bbc22748d4ab8
+    image: docker.io/drakkan/sftpgo:v2.6.3@sha256:d05ff4d5d729144bb1aacdc3a664ffcfe91e082a5b90511074eab1a25efa7281
     environment:
       # Allow for connections to continue for 5s before killing
       SFTPGO_GRACE_TIME: 5
