@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix fmt
         run: nix fmt
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix flake check
         # Only run a check of the flake itself without building
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -82,7 +82,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -95,7 +95,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -121,7 +121,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -134,7 +134,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -147,7 +147,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -160,7 +160,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -173,7 +173,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
@@ -186,7 +186,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nixos-anywhere vm-test lab
         # Use stable version from nixpkgs due to
@@ -202,7 +202,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v15
+      - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
       - name: nixos-anywhere vm-test vps
         # Use stable version from nixpkgs due to
