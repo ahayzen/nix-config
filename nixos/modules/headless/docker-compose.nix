@@ -3,20 +3,29 @@
 # SPDX-License-Identifier: MPL-2.0
 
 { config, lib, pkgs, ... }: {
+  # Note that there cannot be duplicate base names of the paths
+  # TODO: assert this somewhere
   options.ahayzen.docker-compose-files = lib.mkOption {
     default = [ ];
     type = lib.types.listOf lib.types.path;
   };
 
   config = {
-    environment.systemPackages = with pkgs; [
-      docker-compose
-    ];
+    # Convert our Nix paths to stable /etc paths
+    #
+    # Otherwise when a compose file contents changes Nix sees that the whole
+    # service changes and restarts it instead of reloading
+    environment.etc = lib.attrsets.mergeAttrsList (map (path: { "docker-compose-runner/${builtins.baseNameOf path}".source = path; }) config.ahayzen.docker-compose-files);
+
+    environment.systemPackages = with pkgs;
+      [
+        docker-compose
+      ];
 
     systemd = {
       services."docker-compose-runner" =
         let
-          docker-compose-file-args = builtins.foldl' (args: path: "${args} --file ${path}") "" config.ahayzen.docker-compose-files;
+          docker-compose-file-args = builtins.foldl' (args: path: "${args} --file /etc/docker-compose-runner/${builtins.baseNameOf path}") "" config.ahayzen.docker-compose-files;
         in
         {
           # Only enable if there are docker compose files
