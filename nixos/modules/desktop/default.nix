@@ -6,12 +6,12 @@
   imports = [
     ./bluetooth.nix
     ./boot.nix
-    ./developer.nix
+    ./developer
     ./firewall.nix
     ./flatpak.nix
     ./fonts.nix
     ./fwupd.nix
-    ./games.nix
+    ./games
     ./gnome.nix
     ./locale.nix
     ./network.nix
