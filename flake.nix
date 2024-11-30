@@ -13,6 +13,8 @@
       url = "github:ryantm/agenix";
     };
 
+    catppuccin.url = "github:catppuccin/nix";
+
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/disko/latest";
@@ -67,6 +69,8 @@
             inputs.agenix.nixosModules.default
             # Load the disko module
             inputs.disko.nixosModules.disko
+            # Load the catppuccin module
+            inputs.catppuccin.nixosModules.catppuccin
             # Load our home manager configuration
             inputs.home-manager.nixosModules.home-manager
             {
@@ -151,6 +155,8 @@
         andrew = {
           imports = [
             ./home-manager/andrew
+            # Load the catppuccin module
+            inputs.catppuccin.homeManagerModules.catppuccin
           ];
         };
       };
