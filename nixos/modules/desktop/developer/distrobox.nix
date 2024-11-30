@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   # TODO: set default container to ubuntu
   #
   # TODO: investigate distrobox assemble

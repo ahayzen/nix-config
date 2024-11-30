@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   environment.systemPackages =
     if config.ahayzen.developer
     then with pkgs; [ podman-compose ]
