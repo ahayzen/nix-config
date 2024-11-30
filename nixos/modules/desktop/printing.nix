@@ -4,15 +4,6 @@
 
 { pkgs, ... }: {
   services = {
-    # Enable avahi for discovery
-    avahi = {
-      # TODO: gnome enables this
-      enable = true;
-      nssmdns = true;
-      openFirewall = true;
-      # TODO: publish?
-    };
-
     # Enable CUPS to print documents.
     printing = {
       enable = true;
