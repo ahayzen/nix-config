@@ -4,7 +4,7 @@
 
 { lib, ... }: {
   # TODO: install games and add a config option
-  config.ahayzen.games = lib.mkOption {
+  options.ahayzen.games = lib.mkOption {
     default = false;
     type = lib.types.bool;
   };
