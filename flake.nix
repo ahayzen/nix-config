@@ -7,6 +7,7 @@
 
   inputs = {
     agenix = {
+      inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.darwin.follows = "";
       url = "github:ryantm/agenix";
@@ -15,6 +16,11 @@
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/disko/latest";
+    };
+
+    home-manager = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/home-manager/release-24.11";
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
@@ -61,6 +67,12 @@
             inputs.agenix.nixosModules.default
             # Load the disko module
             inputs.disko.nixosModules.disko
+            # Load our home manager configuration
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
             # Load our common configuration
             ./nixos/modules/all
             # Load our desktop configuration
@@ -70,7 +82,9 @@
       };
 
       nixosConfigurations = {
-        # Servers
+        #
+        # Headless systems
+        #
         vps = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
@@ -93,7 +107,6 @@
           ];
         };
 
-        # Home Lab
         lab = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
@@ -114,6 +127,38 @@
               ahayzen.testing = true;
             }
           ];
+        };
+
+        #
+        # Desktop systems
+        #
+        laptop-thinkpad-t480-kdab = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+
+          modules = [
+            self.nixosModules.desktopSystem
+            ./nixos/hosts/laptop-thinkpad-t480-kdab
+            # TODO: include all users and have a config option?
+            ./nixos/users/andrew
+            {
+              home-manager.users.andrew = self.homeManagerModules.andrew;
+            }
+          ];
+        };
+      };
+
+      homeManagerModules = {
+        andrew = {
+          imports = [
+            ./home-manager/andrew
+          ];
+        };
+      };
+
+      homeConfigurations = {
+        andrew = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = self.homeManagerModules.andrew.imports;
         };
       };
 

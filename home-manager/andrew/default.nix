@@ -8,7 +8,13 @@
     flavor = "mocha";
   };
 
-  home.stateVersion = "24.05";
+  home = {
+    homeDirectory = "/home/andrew";
+    stateVersion = "24.05";
+    username = "andrew";
+  };
+
+  news.display = "silent";
 
   programs = {
     # Use alacritty for our terminal as we want OSC 52 support
@@ -61,7 +67,7 @@
           color-modes = true;
           cursorline = true;
           true-color = true;
-          rules = [ 80 100 120 ];
+          rulers = [ 80 100 120 ];
 
           lsp = {
             display-messages = true;
@@ -71,19 +77,28 @@
       };
     };
 
+    home-manager.enable = true;
+
     # Use zellij as our terminal multiplexer
     zellij = {
       enable = true;
 
-      catppuccin.enable = true;
-      enableBashIntegration = true;
-      settings = {
-        default_mode = "locked";
-        # We do not want frames around each pane
-        pane_frames = false;
-        ui.pane_frames.hide_session_name = true;
-        # TODO: rebinding of keys
-      };
+      # zellij uses kdl which is hard to configure in until extraConfig exists
+      # https://github.com/nix-community/home-manager/issues/4659
+      #
+      # catppuccin.enable = true;
+      # settings = {
+      #   default_mode = "locked";
+      #   # We do not want frames around each pane
+      #   pane_frames = false;
+      #   ui.pane_frames.hide_session_name = true;
+      # };
     };
+  };
+
+  # See zellij comment
+  xdg.configFile."zellij/config.kdl" = {
+    source = ./zellij-config.kdl;
+    recursive = true;
   };
 }
