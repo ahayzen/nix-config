@@ -145,7 +145,7 @@
             # TODO: include all users and have a config option?
             ./nixos/users/andrew
             {
-              home-manager.users.andrew = self.homeManagerModules.andrew;
+              home-manager.users.andrew = self.homeManagerModules.andrew-kdab;
             }
           ];
         };
@@ -159,12 +159,24 @@
             inputs.catppuccin.homeManagerModules.catppuccin
           ];
         };
+
+        andrew-kdab = {
+          imports = self.homeManagerModules.andrew.imports ++ [
+            {
+              ahayzen.kdab = true;
+            }
+          ];
+        };
       };
 
       homeConfigurations = {
         andrew = inputs.home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = self.homeManagerModules.andrew.imports;
+        };
+        andrew-kdab = inputs.home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = self.homeManagerModules.andrew-kdab.imports;
         };
       };
 
