@@ -33,6 +33,14 @@ nix profile install --override-input nixpkgs nixpkgs/nixos-24.11 github:nix-comm
 
 Then run `nixGL <command>` to wrap the command and setup GPU drivers.
 
+Copying the desktop file and injecting in nixGL for convenience.
+
+```bash
+cp ~/.nix-profile/share/applications/Alacritty.desktop ~/.local/share/applications/Alacritty.desktop
+chmod 755 ~/.local/share/applications/Alacritty.desktop
+sed -E -i "s/^Exec=alacritty/Exec=nixGL alacritty/g" ~/.local/share/applications/Alacritty.desktop
+```
+
 ## XDG
 
 Integration with the host can be improved by using `targets.genericLinux.enable = true;`
