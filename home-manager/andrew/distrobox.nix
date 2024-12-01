@@ -3,6 +3,9 @@
 # SPDX-License-Identifier: MPL-2.0
 
 { pkgs, ... }: {
+  # TODO: set default container to debian/ubuntu
+  #
+  # TODO: investigate distrobox assemble
   home.packages = [
     pkgs.distrobox
   ];
