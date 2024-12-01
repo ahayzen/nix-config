@@ -9,7 +9,7 @@
   };
 
   imports = [
-    ./distrobox.nix
+    ./alacritty.nix
     ./podman.nix
   ];
 }
