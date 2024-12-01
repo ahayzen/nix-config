@@ -148,6 +148,7 @@
             self.nixosModules.desktopSystem
             ./nixos/hosts/laptop-thinkpad-t480-kdab
             # TODO: include all users and have a config option?
+            # Then move into the desktopSystem module
             ./nixos/users/andrew
             {
               home-manager.extraSpecialArgs = { inherit inputs outputs; };
@@ -197,12 +198,13 @@
               lib = nixpkgs.lib;
               # reference to nixpkgs for the current system
               pkgs = nixpkgs.legacyPackages.x86_64-linux;
-              inherit inputs;
+              inherit inputs outputs;
               # this gives us a reference to our flake but also all flake inputs
               inherit self;
             };
           in
           {
+            desktop-test = import ./tests/desktop.nix checkArgs;
             lab-actual-test = import ./tests/lab-actual.nix checkArgs;
             lab-audiobookshelf-test = import ./tests/lab-audiobookshelf.nix checkArgs;
             lab-bitwarden-test = import ./tests/lab-bitwarden.nix checkArgs;
