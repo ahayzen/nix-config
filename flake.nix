@@ -20,6 +20,11 @@
       url = "github:nix-community/disko/latest";
     };
 
+    folderbox = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:ahayzen/folderbox";
+    };
+
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:nix-community/home-manager/release-24.11";
@@ -145,6 +150,7 @@
             # TODO: include all users and have a config option?
             ./nixos/users/andrew
             {
+              home-manager.extraSpecialArgs = { inherit inputs outputs; };
               home-manager.users.andrew = self.homeManagerModules.andrew-kdab;
             }
           ];
@@ -171,10 +177,14 @@
 
       homeConfigurations = {
         andrew = inputs.home-manager.lib.homeManagerConfiguration {
+          extraSpecialArgs = { inherit inputs outputs; };
+
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = self.homeManagerModules.andrew.imports;
         };
         andrew-kdab = inputs.home-manager.lib.homeManagerConfiguration {
+          extraSpecialArgs = { inherit inputs outputs; };
+
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = self.homeManagerModules.andrew-kdab.imports;
         };

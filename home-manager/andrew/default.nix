@@ -2,9 +2,10 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ inputs, lib, ... }: {
+{ lib, ... }: {
   imports = [
     ./alacritty.nix
+    ./folderbox.nix
     ./git.nix
     ./helix.nix
     ./zellij.nix
