@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ inputs, ... }: {
+{ inputs, lib, ... }: {
   imports = [
     ./alacritty.nix
     ./git.nix
@@ -10,20 +10,27 @@
     ./zellij.nix
   ];
 
-  # Set our catppuccin theme
-  catppuccin = {
-    flavor = "mocha";
+  options.ahayzen.kdab = lib.mkOption {
+    default = false;
+    type = lib.types.bool;
   };
 
-  home = {
-    homeDirectory = "/home/andrew";
-    stateVersion = "24.05";
-    username = "andrew";
-  };
+  config = {
+    # Set our catppuccin theme
+    catppuccin = {
+      flavor = "mocha";
+    };
 
-  news.display = "silent";
+    home = {
+      homeDirectory = "/home/andrew";
+      stateVersion = "24.05";
+      username = "andrew";
+    };
 
-  programs = {
-    home-manager.enable = true;
+    news.display = "silent";
+
+    programs = {
+      home-manager.enable = true;
+    };
   };
 }
