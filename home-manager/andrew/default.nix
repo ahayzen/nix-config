@@ -5,6 +5,7 @@
 { lib, ... }: {
   imports = [
     ./alacritty.nix
+    ./distrobox.nix
     ./folderbox.nix
     ./git.nix
     ./helix.nix
