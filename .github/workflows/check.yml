@@ -60,6 +60,7 @@ jobs:
       fail-fast: false
       matrix:
         test:
+          - desktop-test
           - lab-actual-test
           - lab-audiobookshelf-test
           - lab-bitwarden-test

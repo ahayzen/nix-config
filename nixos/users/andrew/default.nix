@@ -2,8 +2,10 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, ... }: {
-  age.secrets.password_andrew.file = ../../../secrets/password_andrew.age;
+{ config, lib, ... }: {
+  age.secrets = lib.mkIf (!config.ahayzen.testing) {
+    password_andrew.file = ../../../secrets/password_andrew.age;
+  };
 
   users.users.andrew = {
     description = "Andrew Hayzen";
@@ -13,7 +15,7 @@
       # Add us to the sudo group
       "wheel"
     ];
-    hashedPasswordFile = config.age.secrets.password_andrew.path;
+    hashedPasswordFile = lib.mkIf (!config.ahayzen.testing) config.age.secrets.password_andrew.path;
     isNormalUser = true;
   };
 }
