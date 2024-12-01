@@ -61,6 +61,26 @@
         "type": "github"
       }
     },
+    "folderbox": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733051676,
+        "narHash": "sha256-2xwfO8ZdJoBW/7jVjqg8zuX4+j0HYZkDqW2QOtj5B1A=",
+        "owner": "ahayzen",
+        "repo": "folderbox",
+        "rev": "4b03bb95a761e30de698edc0951e1e076b5476fa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ahayzen",
+        "repo": "folderbox",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -119,6 +139,7 @@
         "agenix": "agenix",
         "catppuccin": "catppuccin",
         "disko": "disko",
+        "folderbox": "folderbox",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs"
