@@ -51,35 +51,24 @@ jobs:
       - name: shellcheck
         run: shellcheck scripts/*.sh
 
-  nix-flake-check-no-build:
+  nix-build-check:
     # Run after pre checks
     needs: [license-check, flake-checker, nix-fmt, shellcheck]
     runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix flake check
-        # Only run a check of the flake itself without building
-        run: nix flake --option sandbox false check --no-build --print-build-logs
-
-  nix-flake-check-lab-actual:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix build
-        # nix flake check doesn't have a way to specify a specific test to run
-        # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-actual-test
-
-  nix-flake-check-lab-audiobookshelf:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
+    name: "nix-build-check-${{ matrix.test }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        test:
+          - lab-actual-test
+          - lab-audiobookshelf-test
+          - lab-bitwarden-test
+          - lab-immich-test
+          - lab-jellyfin-test
+          - lab-joplin-test
+          - lab-restic-test
+          - lab-sftpgo-test
+          - vps-test
     steps:
       - uses: actions/checkout@v4.2.2
       - uses: DeterminateSystems/nix-installer-action@v16
@@ -87,127 +76,27 @@ jobs:
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
         # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-audiobookshelf-test
+        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.${{ matrix.test }}
 
-  nix-flake-check-lab-bitwarden:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix build
-        # nix flake check doesn't have a way to specify a specific test to run
-        # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-bitwarden-test
-
-  nix-flake-check-lab-immich:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix build
-        # nix flake check doesn't have a way to specify a specific test to run
-        # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-immich-test
-
-  nix-flake-check-lab-jellyfin:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix build
-        # nix flake check doesn't have a way to specify a specific test to run
-        # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-jellyfin-test
-
-  nix-flake-check-lab-joplin:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix build
-        # nix flake check doesn't have a way to specify a specific test to run
-        # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-joplin-test
-
-  nix-flake-check-lab-restic:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix build
-        # nix flake check doesn't have a way to specify a specific test to run
-        # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-restic-test
-
-  nix-flake-check-lab-sftpgo:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix build
-        # nix flake check doesn't have a way to specify a specific test to run
-        # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.lab-sftpgo-test
-
-  nix-flake-check-vps:
-    # Run after flake check
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nix build
-        # nix flake check doesn't have a way to specify a specific test to run
-        # https://github.com/NixOS/nix/issues/8881
-        run: nix build --option sandbox false --print-build-logs .#checks.x86_64-linux.vps-test
-
-  nixos-anywhere-vm-test-lab:
+  nixos-anywhere-vm-test:
     # Run after pre checks
-    needs: [nix-flake-check-no-build]
+    needs: [license-check, flake-checker, nix-fmt, shellcheck]
     runs-on: ubuntu-24.04
+    name: "nixos-anywhere-${{ matrix.test }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        test:
+          - lab-vm-test
+          - vps-vm-test
     steps:
       - uses: actions/checkout@v4.2.2
       - uses: DeterminateSystems/nix-installer-action@v16
       - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nixos-anywhere vm-test lab
+      - name: nixos-anywhere --vm-test
         # Use stable version from nixpkgs due to
         # https://github.com/nix-community/nixos-anywhere/issues/375
         # instead of github:nix-community/nixos-anywhere
         #
         # TODO: can we pin this version to a release?
-        run: nix run nixpkgs#nixos-anywhere -- --flake .#lab-vm-test --vm-test
-
-  nixos-anywhere-vm-test-vps:
-    # Run after pre checks
-    needs: [nix-flake-check-no-build]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/nix-installer-action@v16
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: nixos-anywhere vm-test vps
-        # Use stable version from nixpkgs due to
-        # https://github.com/nix-community/nixos-anywhere/issues/375
-        # instead of github:nix-community/nixos-anywhere
-        #
-        # TODO: can we pin this version to a release?
-        run: nix run nixpkgs#nixos-anywhere -- --flake .#vps-vm-test --vm-test
+        run: nix run nixpkgs#nixos-anywhere -- --flake .#${{ matrix.test }} --vm-test
