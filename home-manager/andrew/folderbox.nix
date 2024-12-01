@@ -2,8 +2,8 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
   home.packages = [
-    inputs.folderbox
+    inputs.folderbox.packages.${pkgs.system}.default
   ];
 }
