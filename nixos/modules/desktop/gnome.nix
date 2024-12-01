@@ -55,7 +55,7 @@
           # org.gnome.desktop
           pkgs.gsettings-desktop-schemas
           # org.gnome.shell
-          pkgs.gnome.gnome-shell
+          pkgs.gnome-shell
         ];
       };
       displayManager.gdm.enable = true;

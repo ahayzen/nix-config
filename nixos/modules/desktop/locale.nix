@@ -6,7 +6,8 @@
   i18n = {
     # Select ibus as the input method and enable anthy and uniemoji
     inputMethod = {
-      enabled = "ibus";
+      enable = true;
+      type = "ibus";
       ibus.engines = with pkgs.ibus-engines; [ anthy uniemoji ];
     };
 
