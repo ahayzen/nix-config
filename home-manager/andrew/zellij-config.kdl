@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+//
+// SPDX-License-Identifier: CC0-1.0
+
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
 keybinds {
     normal {
@@ -412,7 +416,6 @@ load_plugins {
 //
 // Custom config
 //
-default_mode "locked"
 pane_frames false
 theme "catppuccin-mocha"
 ui {
