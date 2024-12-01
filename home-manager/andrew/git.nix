@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+{ config, ... }:
 {
   programs = {
     git = {
@@ -14,7 +15,7 @@
         rerere.enable = true;
       };
       lfs.enable = true;
-      userEmail = "ahayzen@gmail.com";
+      userEmail = if !config.ahayzen.kdab then "ahayzen@gmail.com" else "andrew.hayzen@kdab.com";
       userName = "Andrew Hayzen";
     };
   };
