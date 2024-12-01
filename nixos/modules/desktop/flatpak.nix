@@ -13,4 +13,18 @@
   };
 
   # TODO: install common apps
+  # com.bitwarden.desktop
+  # com.discordapp.Discord
+  # com.spotify.Client
+  # com.unicornsonlsd.finamp
+  # net.cozic.joplin_desktop
+  # org.gimp.GIMP
+  # org.inkscape.Inkscape
+  # org.libreoffice.LibreOffice
+  # org.localsend.localsend_app
+  # org.mozilla.firefox
+  # org.mozilla.Thunderbird
+  # org.telegram.desktop
+  # org.videolan.VLC
+  # us.zoom.Zoom
 }
