@@ -15,9 +15,16 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 
 ## Home-manager
 
+Initial install
+
 ```bash
 nix run home-manager/release-24.11 -- init
+nix run home-manager/release-24.11 -- switch -b backup --flake .#home-name
+```
 
+To update
+
+```
 home-manager switch -b backup --flake .#home-name
 ```
 
@@ -44,3 +51,9 @@ sed -E -i "s/^Exec=alacritty/Exec=nixGL alacritty/g" ~/.local/share/applications
 ## XDG
 
 Integration with the host can be improved by using `targets.genericLinux.enable = true;`
+
+If this is not enabled then add the following to `~/.profile`.
+
+```bash
+. "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
+```
