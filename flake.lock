@@ -68,11 +68,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733258714,
-        "narHash": "sha256-1G6HFXI5dpDNzVcpo/tLHEu+g1nWtZu2P8aelQUpUm4=",
+        "lastModified": 1733259889,
+        "narHash": "sha256-137QLRWtXYRSz8sYESGMZD2jWS59z88Ox/k0h5rjQfk=",
         "owner": "ahayzen",
         "repo": "folderbox",
-        "rev": "b76ddf5f1b71b731af1c599049d2c73e1761ed5c",
+        "rev": "0e90eb12fb6b29a5e35888b8e30185f495c7274d",
         "type": "github"
       },
       "original": {
