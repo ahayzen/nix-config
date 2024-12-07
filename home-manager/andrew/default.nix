@@ -8,6 +8,7 @@
     ./distrobox.nix
     ./folderbox.nix
     ./git.nix
+    ./gnome.nix
     ./helix.nix
     ./zellij.nix
   ];
