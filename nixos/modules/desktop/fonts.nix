@@ -8,6 +8,13 @@
     # https://nixos.wiki/wiki/Fonts#Flatpak_applications_can.27t_find_system_fonts
     fontDir.enable = true;
 
+    # Use Noto by default as Nix defaults to DejaVu
+    fontconfig.defaultFonts = {
+      monospace = [ "Noto Sans Mono" ];
+      sansSerif = [ "Noto Sans" ];
+      serif = [ "Noto Serif" ];
+    };
+
     packages = with pkgs; [
       # TODO: gnome installs this
       dejavu_fonts
