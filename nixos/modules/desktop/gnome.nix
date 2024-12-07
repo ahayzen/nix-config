@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ pkgs, ... }: {
+{ config, lib, pkgs, ... }: {
   services = {
     # Do not install the apps for GNOME
     # https://nixos.org/manual/nixos/stable/#sec-gnome-without-the-apps
@@ -94,34 +94,31 @@
     pkgs.yelp
   ];
 
-  # TODO: install the gnome apps
-  #
   # Install all GNOME Core apps except where we have common replacements
-  #
-  # org.gnome.baobab
-  # org.gnome.Boxes
-  # org.gnome.clocks
-  # org.gnome.Calculator
-  # # org.gnome.Calendar -> Thunderbird
-  # org.gnome.Characters
-  # org.gnome.Connections
-  # # org.gnome.Contacts -> Thunderbird
-  # # org.gnome.Epiphany -> Firefox
-  # org.gnome.Evince
-  # org.gnome.font-viewer
-  # org.gnome.Loupe
-  # org.gnome.Logs
-  # org.gnome.Maps
-  # # org.gnnome.Music -> Finamp
-  # org.gnome.SimpleScan
-  # org.gnome.Snapshot
-  # org.gnome.TextEditor
-  # # org.gnome.Totem -> VLC
-  # org.gnome.Weather
-  #
-  # Extra GNOME apps
-  #
-  # org.gnome.FileRoller
-  # org.gnome.NautilusPreviewer
-  #
+  services.flatpak.packages = lib.mkIf (!config.ahayzen.testing)
+    [
+      { appId = "org.gnome.baobab"; origin = "flathub-nix"; }
+      { appId = "org.gnome.Boxes"; origin = "flathub-nix"; }
+      { appId = "org.gnome.clocks"; origin = "flathub-nix"; }
+      { appId = "org.gnome.Calculator"; origin = "flathub-nix"; }
+      # org.gnome.Calendar -> Thunderbird
+      { appId = "org.gnome.Characters"; origin = "flathub-nix"; }
+      { appId = "org.gnome.Connections"; origin = "flathub-nix"; }
+      # org.gnome.Contacts -> Thunderbird
+      # org.gnome.Epiphany -> Firefox
+      { appId = "org.gnome.Evince"; origin = "flathub-nix"; }
+      { appId = "org.gnome.font-viewer"; origin = "flathub-nix"; }
+      { appId = "org.gnome.Loupe"; origin = "flathub-nix"; }
+      { appId = "org.gnome.Logs"; origin = "flathub-nix"; }
+      { appId = "org.gnome.Maps"; origin = "flathub-nix"; }
+      # org.gnnome.Music -> Finamp
+      { appId = "org.gnome.SimpleScan"; origin = "flathub-nix"; }
+      { appId = "org.gnome.Snapshot"; origin = "flathub-nix"; }
+      { appId = "org.gnome.TextEditor"; origin = "flathub-nix"; }
+      # org.gnome.Totem -> VLC
+      { appId = "org.gnome.Weather"; origin = "flathub-nix"; }
+      # Extra GNOME apps
+      { appId = "org.gnome.FileRoller"; origin = "flathub-nix"; }
+      { appId = "org.gnome.NautilusPreviewer"; origin = "flathub-nix"; }
+    ];
 }
