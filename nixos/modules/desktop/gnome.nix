@@ -50,6 +50,7 @@
           [org.gnome.shell]
           app-picker-layout = []
           enabled-extensions = []
+          favorite-apps = ['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop']
 
 
           # Enable location services for night light and other apps
