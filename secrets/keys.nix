@@ -6,6 +6,7 @@ let
   # Hosts
   host = {
     diskstation = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKRhsCMv/zMaGCNfsfUod7B02LgdaJdOWLiehgCQLl/1";
+    desktop-scan-2017-kdab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDoQC469TZahbh90wUMeyPW/72PtZqD4KRz+QfekehIx";
     thinkpad-t480 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFyQGokh7SHDi+mSwd3MgMAH0I0IF/BxG/tRiCYxKgPF";
     vps = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLzml0N0siR1R9l5Cfy9b8xURbCsYuheShVKyVAFu/d root@vps-904e01b6";
     lab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPHWTIj0kjcH8z4LCUri8J/gugVldIpO+OfcGbSc4o8T root@andrew-Pangolin-Performance";
@@ -25,6 +26,7 @@ in
   group = {
     hosts = {
       desktop = [
+        host.desktop-scan-2017-kdab
         host.thinkpad-t480
         host.xps-13-9360
       ];
