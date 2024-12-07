@@ -12,7 +12,7 @@
   ];
 
   ahayzen = {
-    hostName = "scan-2017-kdab";
+    hostName = "desktop-scan-2017-kdab";
   };
 
   # Increase disk size for build VM

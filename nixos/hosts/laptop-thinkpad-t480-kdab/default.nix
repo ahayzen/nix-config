@@ -10,7 +10,7 @@
   ];
 
   ahayzen = {
-    hostName = "thinkpad-t480-kdab";
+    hostName = "laptop-thinkpad-t480-kdab";
   };
 
   # Increase disk size for build VM
