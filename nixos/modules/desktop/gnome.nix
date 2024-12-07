@@ -31,6 +31,12 @@
           tap-to-click = true
 
 
+          # Enable dynamic workspaces
+          [org.gnome.mutter]
+          dynamic-workspaces = true
+          edge-tiling = true
+
+
           # Enable night light
           [org.gnome.settings-daemon.plugins.color]
           night-light-enabled = true
@@ -56,6 +62,8 @@
           pkgs.gsettings-desktop-schemas
           # org.gnome.shell
           pkgs.gnome-shell
+          # org.gnome.mutter
+          pkgs.mutter
         ];
       };
       displayManager.gdm.enable = true;
