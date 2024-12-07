@@ -30,6 +30,8 @@
       url = "github:nix-community/home-manager/release-24.11";
     };
 
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
+
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
@@ -76,7 +78,9 @@
             inputs.disko.nixosModules.disko
             # Load the catppuccin module
             inputs.catppuccin.nixosModules.catppuccin
-            # Load our home manager configuration
+            # Load the flatpak module
+            inputs.nix-flatpak.nixosModules.nix-flatpak
+            # Load home manager module
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
