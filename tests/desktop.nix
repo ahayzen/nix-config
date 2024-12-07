@@ -30,6 +30,20 @@
       # Force X11 as Wayland fails in Github CI
       services.displayManager.defaultSession = "gnome-xorg";
 
+      # Force no date or seconds in the clock for consistent screenshots
+      services.xserver.desktopManager.gnome = {
+        extraGSettingsOverrides = ''
+          [org.gnome.desktop.interface]
+          clock-show-date = false
+          clock-show-seconds = false
+        '';
+
+        extraGSettingsOverridePackages = [
+          # org.gnome.desktop
+          pkgs.gsettings-desktop-schemas
+        ];
+      };
+
       # Set password for user to login
       users.users.andrew = {
         password = "test";
@@ -123,7 +137,7 @@
         # Wait long enough for GNOME Shell to login
         desktop.wait_for_unit("graphical-session.target", "andrew", timeout=120)
         # Wait for any initial setup
-        desktop.sleep(5)
+        desktop.sleep(15)
 
         # Compare the screenshot
         desktop.screenshot("desktop")
@@ -142,8 +156,16 @@
 
       with subtest("Open alacritty (checks home-manager themes)"):
         # Type alacritty and launch it
-        desktop.send_chars("alacritty\n", delay=0.2)
-        desktop.sleep(5)
+        desktop.send_chars("alacritty", delay=0.2)
+        desktop.sleep(3)
+        desktop.send_chars("\n")
+        desktop.sleep(3)
+
+        # Ensure that our keybinding works
+        #
+        # Also ensures that window size is consistent
+        desktop.send_key("f11")
+        desktop.sleep(3)
 
         # Compare the screenshot
         desktop.screenshot("alacritty")
