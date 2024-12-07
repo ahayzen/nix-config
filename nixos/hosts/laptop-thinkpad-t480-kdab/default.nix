@@ -10,6 +10,10 @@
   ];
 
   ahayzen = {
-    hostName = "kdab-thinkpad";
+    hostName = "thinkpad-t480-kdab";
   };
+
+  # Increase disk size for build VM
+  virtualisation.vmVariant.virtualisation.diskSize = 10 * 1024;
+  virtualisation.vmVariant.virtualisation.memorySize = 2 * 1024;
 }
