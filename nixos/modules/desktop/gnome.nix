@@ -25,6 +25,10 @@
           [org.gnome.desktop.datetime]
           automatic-timezone = true
 
+          # Mouse tweaks
+          [org.gnome.desktop.peripherals.mouse]
+          accel-profile = "flat"
+
           # Touchpad tweaks
           [org.gnome.desktop.peripherals.touchpad]
           disable-while-typing = false
