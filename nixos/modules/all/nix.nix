@@ -65,22 +65,40 @@
 
   # Do not run gc, optimise, or upgrade if another is running
   # as we have seen odd behaviour with things hangings
-  systemd.services."nix-gc".serviceConfig = {
-    ExecCondition = [
-      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-optimise.service ) != activ* ]]"''
-      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"''
-    ];
+  systemd.services."nix-gc" = {
+    serviceConfig = {
+      ExecCondition = [
+        ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-optimise.service ) != activ* ]]"''
+        ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"''
+      ];
+    };
+    unitConfig = {
+      ConditionACPower = true;
+      # TODO: consider ConditionMemoryPressure=, ConditionCPUPressure=, ConditionIOPressure=
+    };
   };
-  systemd.services."nix-optimise".serviceConfig = {
-    ExecCondition = [
-      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-gc.service ) != activ* ]]"''
-      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"''
-    ];
+  systemd.services."nix-optimise" = {
+    serviceConfig = {
+      ExecCondition = [
+        ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-gc.service ) != activ* ]]"''
+        ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"''
+      ];
+    };
+    unitConfig = {
+      ConditionACPower = true;
+      # TODO: consider ConditionMemoryPressure=, ConditionCPUPressure=, ConditionIOPressure=
+    };
   };
-  systemd.services."nixos-upgrade".serviceConfig = {
-    ExecCondition = [
-      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-gc.service ) != activ* ]]"''
-      ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-optimise.service ) != activ* ]]"''
-    ];
+  systemd.services."nixos-upgrade" = {
+    serviceConfig = {
+      ExecCondition = [
+        ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-gc.service ) != activ* ]]"''
+        ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nix-optimise.service ) != activ* ]]"''
+      ];
+    };
+    unitConfig = {
+      ConditionACPower = true;
+      # TODO: consider ConditionMemoryPressure=, ConditionCPUPressure=, ConditionIOPressure=
+    };
   };
 }
