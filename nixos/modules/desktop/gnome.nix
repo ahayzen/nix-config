@@ -74,6 +74,26 @@
     };
   };
 
+  # Exclude packages from the base install
+  environment.gnome.excludePackages = [
+    # FIXME: Extensions app is still installed
+    pkgs.gnome-shell-extensions
+  ];
+
+  # Install GNOME Core apps which do not have a flatpak
+  environment.systemPackages = [
+    # TODO: could be in usage later?
+    pkgs.gnome-disk-utility
+    # gnome-console -> alacritty
+    pkgs.nautilus
+    # TODO: is there an independent store, warehouse?
+    pkgs.gnome-software
+    # TODO: could be missioncenter or usage
+    pkgs.gnome-system-monitor
+    pkgs.gnome-tour
+    pkgs.yelp
+  ];
+
   # TODO: install the gnome apps
   #
   # Install all GNOME Core apps except where we have common replacements
@@ -104,12 +124,4 @@
   # org.gnome.FileRoller
   # org.gnome.NautilusPreviewer
   #
-  # gnome-disk-utility # could be in usage later?
-  # # gnome-console -> alacritty
-  # nautilus
-  # gnome-software # TODO: is there independent? warehouse?
-  # gnome-system-monitor # TODO: could be mission / usage?
-  # gnome-tour
-  # yelp
-
 }
