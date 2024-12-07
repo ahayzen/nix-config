@@ -4,7 +4,7 @@
 
 services:
   actual:
-    image: docker.io/actualbudget/actual-server:24.11.0@sha256:96880c0296b1e6873c570e8f779569acc727e5a7b1ead70dcc6cb58bfde36e7e
+    image: docker.io/actualbudget/actual-server:24.12.0@sha256:0cf0300ed4905045ed87e8892c26fbd83cd08e8499bb81dc28deef6afeb162fb
     expose:
       - "5006"
     networks:
