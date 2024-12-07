@@ -65,6 +65,8 @@
         extraGSettingsOverridePackages = [
           # org.gnome.desktop
           pkgs.gsettings-desktop-schemas
+          # org.gnome.settings-daemon
+          pkgs.gnome-settings-daemon
           # org.gnome.shell
           pkgs.gnome-shell
           # org.gnome.mutter
