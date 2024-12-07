@@ -68,6 +68,8 @@ $ export QEMU_NET_OPTS="hostfwd=tcp::2221-:8022,hostfwd=tcp::2280-:80"
 $ result/bin/run-<machine>-vm
 ```
 
+Use `-m SIZE` to increase the memory size.
+
 ## Enter VM
 
 ```console
