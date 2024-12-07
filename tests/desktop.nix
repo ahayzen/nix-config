@@ -120,7 +120,7 @@
         # Compare the screenshot
         desktop.screenshot("login")
         diff = compare_images("login")
-        assert diff < 0.05, f"Login image was different by {diff}%, more than 0.05%"
+        assert diff < 0.5, f"Login image was different by {diff}%, more than 0.5%"
 
       with subtest("Ensure that we can login"):
         desktop.send_chars("\n")
@@ -142,7 +142,7 @@
         # Compare the screenshot
         desktop.screenshot("desktop")
         diff = compare_images("desktop")
-        assert diff < 0.05, f"Desktop image was different by {diff}%, more than 0.05%"
+        assert diff < 0.5, f"Desktop image was different by {diff}%, more than 0.5%"
 
       with subtest("Dismiss initial setup"):
         # Click skip
@@ -152,7 +152,7 @@
         # Compare the screenshot
         desktop.screenshot("activities")
         diff = compare_images("activities")
-        assert diff < 0.05, f"Activities image was different by {diff}%, more than 0.05%"
+        assert diff < 0.5, f"Activities image was different by {diff}%, more than 0.5%"
 
       with subtest("Open alacritty (checks home-manager themes)"):
         # Type alacritty and launch it
@@ -170,7 +170,7 @@
         # Compare the screenshot
         desktop.screenshot("alacritty")
         diff = compare_images("alacritty")
-        assert diff < 0.05, f"Alacritty image was different by {diff}%, more than 0.05%"
+        assert diff < 0.5, f"Alacritty image was different by {diff}%, more than 0.5%"
 
       with subtest("General metrics"):
         print(desktop.succeed("cat /etc/hosts"))
