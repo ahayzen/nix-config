@@ -145,6 +145,21 @@
         #
         # Desktop systems
         #
+        desktop-scan-2017-kdab = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+
+          modules = [
+            self.nixosModules.desktopSystem
+            ./nixos/hosts/desktop-scan-2017-kdab
+            # TODO: include all users and have a config option?
+            # Then move into the desktopSystem module
+            ./nixos/users/andrew
+            {
+              home-manager.extraSpecialArgs = { inherit inputs outputs; };
+              home-manager.users.andrew = self.homeManagerModules.andrew-kdab;
+            }
+          ];
+        };
         laptop-thinkpad-t480-kdab = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 

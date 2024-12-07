@@ -28,6 +28,7 @@
     # and we don't have an EFI mountpoint so install in the root
     efi = {
       canTouchEfiVariables = lib.mkForce false;
+      efiSysMountPoint = lib.mkForce "/boot";
     };
 
     grub = {
