@@ -3,6 +3,11 @@
 # SPDX-License-Identifier: MPL-2.0
 
 {
-  # Recognise appimage files and use appimage-run to launch them
-  programs.appimage.binfmt = true;
+  programs.appimage = {
+    # Enable appimage-run
+    enable = true;
+
+    # Recognise appimage files and use appimage-run to launch them
+    binfmt = true;
+  };
 }
