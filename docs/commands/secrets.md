@@ -19,3 +19,15 @@ $ nix run github:ryantm/agenix -- -e password_andrew.age
 $ cd secrets/
 $ nix run github:ryantm/agenix -- --rekey
 ```
+
+# Generating a SSH key for a user
+
+```console
+ssh-keygen -f ~/.ssh/id_ed25519 -t ed25519
+```
+
+Update a password using
+
+```console
+ssh-keygen -f ~/.ssh/id_ed25519 -p
+```

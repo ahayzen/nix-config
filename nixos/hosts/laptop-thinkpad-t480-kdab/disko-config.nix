@@ -3,18 +3,27 @@
 # SPDX-License-Identifier: MPL-2.0
 
 {
-  # TODO: LUKS encryption
   disko.devices = {
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/disk/by-id/nvme-WDC_PC_SN720_SDAQNTW-512G-1001_184791802127";
         content = {
           type = "gpt";
           partitions = {
             biosgrub = {
               size = "1M";
               type = "EF02"; # for grub MBR
+            };
+            ESP = {
+              type = "EF00";
+              size = "512M";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot/efi";
+                mountOptions = [ "umask=0077" ];
+              };
             };
             boot = {
               size = "1024M";
@@ -27,8 +36,16 @@
             root = {
               size = "100%";
               content = {
-                type = "lvm_pv";
-                vg = "pool";
+                type = "luks";
+                name = "crypted";
+                extraOpenArgs = [ ];
+                settings = {
+                  allowDiscards = true;
+                };
+                content = {
+                  type = "lvm_pv";
+                  vg = "pool";
+                };
               };
             };
           };
