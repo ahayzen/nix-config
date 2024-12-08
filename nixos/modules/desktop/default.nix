@@ -18,6 +18,7 @@
     ./network.nix
     ./pipewire.nix
     ./printing.nix
+    ./systemd.nix
     ./developer
   ];
 
