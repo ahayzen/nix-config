@@ -2,14 +2,19 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ pkgs, ... }:
+{ lib, ... }:
 {
   # TODO: allow common port ranges for mDNS etc?
 
   # GNOME can enable openssh to install and allow the port
-  environment.systemPackages = [
-    pkgs.openssh
-  ];
+  services.openssh = {
+    enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 22 ];
+    openFirewall = true;
+    settings = {
+      PermitRootLogin = lib.mkDefault "no";
+    };
+  };
+  # Do not enable it by default
+  systemd.services.sshd.wantedBy = lib.mkForce [ ];
 }
