@@ -10,12 +10,7 @@
   # There is a pull request upstream to make this change
   # https://github.com/systemd/systemd/pull/18386
   systemd = {
-    extraConfig = [
-      "DefaultTimeoutStopSec=15s"
-    ];
-
-    user.extraConfig = [
-      "DefaultTimeoutStopSec=15s"
-    ];
+    extraConfig = "DefaultTimeoutStopSec=15s";
+    user.extraConfig = "DefaultTimeoutStopSec=15s";
   };
 }
