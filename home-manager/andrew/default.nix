@@ -33,6 +33,10 @@
     news.display = "silent";
 
     programs = {
+      # Session variables are only set if home-manager is managing your shell
+      # or if you manually source the hm-session-vars.sh file
+      # https://nix-community.github.io/home-manager/index.xhtml#_why_are_the_session_variables_not_set
+      bash.enable = true;
       home-manager.enable = true;
     };
   };
