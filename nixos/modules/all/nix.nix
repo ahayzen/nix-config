@@ -9,6 +9,9 @@
     gitMinimal
   ];
 
+  # Allow for any firmware with a license allowing for redistribution
+  hardware.enableRedistributableFirmware = true;
+
   nix = {
     # Enable garbage collection
     gc = {
