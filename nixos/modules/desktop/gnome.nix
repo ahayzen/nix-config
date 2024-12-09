@@ -125,10 +125,51 @@
       { appId = "org.gnome.SimpleScan"; origin = "flathub-nix"; }
       { appId = "org.gnome.Snapshot"; origin = "flathub-nix"; }
       { appId = "org.gnome.TextEditor"; origin = "flathub-nix"; }
-      # org.gnome.Totem -> VLC
+      # org.gnome.Showtime -> VLC
       { appId = "org.gnome.Weather"; origin = "flathub-nix"; }
       # Extra GNOME apps
       { appId = "org.gnome.FileRoller"; origin = "flathub-nix"; }
       { appId = "org.gnome.NautilusPreviewer"; origin = "flathub-nix"; }
     ];
+
+  # Setup default mime apps
+  xdg.mime = {
+    enable = true;
+    defaultApplications = {
+      # Web
+      "application/xhtml+xml" = [ "org.mozilla.firefox.desktop" ];
+      "text/html" = [ "org.mozilla.firefox.desktop" ];
+      "x-scheme-handler/http" = [ "org.mozilla.firefox.desktop" ];
+      "x-scheme-handler/https" = [ "org.mozilla.firefox.desktop" ];
+      # Mail
+      "x-scheme-handler/mailto" = [ "org.mozilla.Thunderbird.desktop" ];
+      # Calendar
+      "text/calendar" = [ "org.mozilla.Thunderbird.desktop" ];
+      # Music
+      "audio/x-vorbis+ogg" = [ "org.videolan.VLC.desktop" ];
+      # FIXME: these don't work would need to do all possibles
+      # "audio/*" = [ "org.videolan.VLC.desktop" ];
+      "audio/flac" = [ "org.videolan.VLC.desktop" ];
+      # Video
+      "video/x-ogm+ogg" = [ "org.videolan.VLC.desktop" ];
+      # "video/*" = [ "org.videolan.VLC.desktop" ];
+      "video/mp4" = [ "org.videolan.VLC.desktop" ];
+      # Photos
+      "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
+      # "image/*" = [ "org.gnome.Loupe.desktop" ];
+      "image/png" = [ "org.gnome.Loupe.desktop" ];
+      "image/gif" = [ "org.gnome.Loupe.desktop" ];
+      "image/webp" = [ "org.gnome.Loupe.desktop" ];
+      "image/tiff" = [ "org.gnome.Loupe.desktop" ];
+      "image/svg+xml" = ["org.gnome.Loupe.desktop" ];
+      # Extra specifics
+      #
+      # Directories
+      "inode/directory" = ["org.gnome.Nautilus.desktop"];
+      # PDF
+      "document/pdf" = [ "org.gnome.Evince.desktop" ];
+      "text/markdown" = [ "org.gnome.TextEditor" ];
+      "text/plain" = [ "org.gnome.TextEditor" ];
+    };
+  };
 }
