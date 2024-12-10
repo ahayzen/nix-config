@@ -81,11 +81,14 @@
     };
   };
 
-  # Exclude packages from the base install
-  environment.gnome.excludePackages = [
-    # FIXME: Extensions app is still installed
-    pkgs.gnome-shell-extensions
-  ];
+  # GNOME extensions app cannot be removed
+  # https://github.com/NixOS/nixpkgs/issues/297847
+  # So leave the app and the recommended extensions installed (not enabled)
+  #
+  # # Exclude packages from the base install
+  # environment.gnome.excludePackages = [
+  #   pkgs.gnome-shell-extensions
+  # ];
 
   # Install GNOME Core apps which do not have a flatpak
   environment.systemPackages = [
