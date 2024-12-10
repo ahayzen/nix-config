@@ -58,6 +58,9 @@
   # Allow lab to login so that backups can occur
   users.users.headless.openssh.authorizedKeys.keys = [ config.ahayzen.publicKeys.host.lab ];
 
+  # Allow synology to login to unpriv for ssh tunnel to VPN as fallback
+  users.users.unpriv.openssh.authorizedKeys.keys = [ config.ahayzen.publicKeys.user.diskstation-forwarder ];
+
   # Increase disk size for build VM
   virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
 }
