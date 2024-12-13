@@ -11,7 +11,7 @@
     ];
     settings = {
       # Allow for SSH tunnels for secondary OpenVPN port
-      GatewayPorts = true;
+      GatewayPorts = "yes";
       PasswordAuthentication = false;
       PermitRootLogin = lib.mkDefault "no";
     };
