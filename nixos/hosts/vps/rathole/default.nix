@@ -40,6 +40,7 @@
         # Ensure that OpenVPN port is open
         9194
         # Ensure that secondary OpenVPN port is open
+        # Note also remove GatewayPorts in SSH
         9195
       ];
     };
