@@ -175,6 +175,23 @@
             }
           ];
         };
+        laptop-thinkpad-t480-kdab-vm-test = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+
+          modules = [
+            self.nixosModules.desktopSystem
+            ./nixos/hosts/laptop-thinkpad-t480-kdab
+            # TODO: include all users and have a config option?
+            # Then move into the desktopSystem module
+            ./nixos/users/andrew
+            {
+              ahayzen.testing = true;
+              home-manager.extraSpecialArgs = { inherit inputs outputs; };
+              home-manager.users.andrew = self.homeManagerModules.andrew-kdab;
+              users.users.andrew.password = "test";
+            }
+          ];
+        };
       };
 
       homeManagerModules = {
