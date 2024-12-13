@@ -30,7 +30,7 @@
       url = "github:nix-community/home-manager/release-24.11";
     };
 
-    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=v0.5.1";
+    nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
