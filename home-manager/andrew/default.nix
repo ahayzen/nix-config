@@ -42,7 +42,10 @@
         # - [red]exit status[/red] (if not zero)
         # - [yellow](branch)[/yellow] (if git branch)
         # - prompt
-        PS1 = ''\[\e[92;1m\]\u@\h\[\e[0m\]:\[\e[96;1m\]\w\n\[\e[91m\]\$([[ \$PS1_CMD1 == 0 ]] || echo "\$PS1_CMD1 ")\[\e[0m\]\[\e[93;1m\]\$([[ \$PS1_CMD2 == "" ]] || echo "("\$PS1_CMD2") ")\[\e[0m\]\[\e[92;1m\]\\$\[\e[0m\] '';
+        #
+        # TODO: could use "..." instead of '' here with correct escaping?
+        # as this ends up as "..." in the generated variables
+        PS1 = ''\[\e[92;1m\]\u@\h\[\e[0m\]:\[\e[96;1m\]\w\n\[\e[91m\]\$([[ \$PS1_CMD1 == 0 ]] || echo \"\$PS1_CMD1 \")\[\e[0m\]\[\e[93;1m\]\$([[ \$PS1_CMD2 == \"\" ]] || echo \"(\"\$PS1_CMD2\") \")\[\e[0m\]\[\e[92;1m\]\\$\[\e[0m\] '';
       };
       stateVersion = "24.05";
       username = "andrew";
