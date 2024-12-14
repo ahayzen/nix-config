@@ -3,6 +3,16 @@
 # SPDX-License-Identifier: MPL-2.0
 
 { config, lib, pkgs, ... }: {
+  # Allow for LocalSend to open ports
+  networking.firewall = {
+    allowedTCPPorts = [
+      53317
+    ];
+    allowedUDPPorts = [
+      53317
+    ];
+  };
+
   services.flatpak = {
     enable = true;
     remotes = [
