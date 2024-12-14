@@ -36,13 +36,13 @@
         # Use prompt command as helper
         # - Store the exit code so it's not lost
         # - Store the git branch name if there is one
-        PROMPT_COMMAND = ''PS1_CMD1=$?; PS1_CMD2=$(git branch --show-current 2>/dev/null)'';
+        PROMPT_COMMAND = ''PS1_CMD1=\$?; PS1_CMD2=\$(git branch --show-current 2>/dev/null)'';
         # First line is [lime]user@hostname[/lime]:[aqua]/path[/aqua]
         # Second line has optional components
         # - [red]exit status[/red] (if not zero)
         # - [yellow](branch)[/yellow] (if git branch)
         # - prompt
-        PS1 = ''\[\e[92;1m\]\u@\h\[\e[0m\]:\[\e[96;1m\]\w\n\[\e[91m\]$([[ $PS1_CMD1 == 0 ]] || echo "$PS1_CMD1 ")\[\e[0m\]\[\e[93;1m\]$([[ $PS1_CMD2 == "" ]] || echo "("$PS1_CMD2") ")\[\e[0m\]\[\e[92;1m\]\$\[\e[0m\] '';
+        PS1 = ''\[\e[92;1m\]\u@\h\[\e[0m\]:\[\e[96;1m\]\w\n\[\e[91m\]\$([[ \$PS1_CMD1 == 0 ]] || echo "\$PS1_CMD1 ")\[\e[0m\]\[\e[93;1m\]\$([[ \$PS1_CMD2 == "" ]] || echo "("\$PS1_CMD2") ")\[\e[0m\]\[\e[92;1m\]\\$\[\e[0m\] '';
       };
       stateVersion = "24.05";
       username = "andrew";
