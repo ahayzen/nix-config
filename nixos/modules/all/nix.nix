@@ -13,6 +13,11 @@
   hardware.enableRedistributableFirmware = true;
 
   nix = {
+    # Disable channels as we are using flakes
+    #
+    # https://github.com/NixOS/nix/issues/2982#issuecomment-2477618346
+    channel.enable = false;
+
     # Enable garbage collection
     gc = {
       # Enable when not in testing mode
