@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+{ lib, ... }:
 {
   imports = [
     ./appimage.nix
@@ -23,4 +24,7 @@
   ];
 
   config.ahayzen.headless = false;
+
+  # Force null on desktop otherwise timezone cannot be chosen
+  config.time.timeZone = lib.mkForce null;
 }
