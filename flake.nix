@@ -13,7 +13,7 @@
       url = "github:ryantm/agenix";
     };
 
-    catppuccin.url = "github:catppuccin/nix";
+    catppuccin.url = "github:catppuccin/nix/release-1.x";
 
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
