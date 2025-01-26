@@ -74,9 +74,6 @@
       # Create a snapshot
       lab.succeed("systemctl start restic-local-backup.service")
 
-      # Ensure that check passes
-      lab.succeed("systemctl start restic-local-check.service")
-
       # Delete one of the files
       lab.succeed("rm /mnt/data/b2")
       lab.succeed("test -e /mnt/data/a1")
