@@ -56,7 +56,7 @@
     # Keep daily snapshots for the last week, weekly for the last month, monthly for the last year, and yearly for the last 5 years
     # Prune unused data
     #
-    # Check 5% of the data weekly, so all data should be checked in around 20 weeks
+    # Check 1% of the data daily, so all data should be checked 3 times a year
     #
     # Skip if nixos-upgrade is running
     # As we do not want docker / docker-compose-runner to stop
@@ -72,16 +72,7 @@
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_local /bin/sh -c "/usr/bin/restic prune"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_local /bin/sh -c "/usr/bin/restic snapshots"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_local /bin/sh -c "/usr/bin/restic stats --mode files-by-contents"
-      '';
-    };
-    systemd.services."restic-local-check" = {
-      requires = [ "docker-compose-runner.service" ];
-      serviceConfig = {
-        ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
-        Type = "oneshot";
-      };
-      script = ''
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_local /bin/sh -c "/usr/bin/restic check --read-data-subset=5% --retry-lock=6h"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_local /bin/sh -c "/usr/bin/restic check --read-data-subset=1% --retry-lock=6h"
       '';
     };
 
@@ -97,16 +88,7 @@
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_offsite /bin/sh -c "/usr/bin/restic prune"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_offsite /bin/sh -c "/usr/bin/restic snapshots"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_offsite /bin/sh -c "/usr/bin/restic stats --mode files-by-contents"
-      '';
-    };
-    systemd.services."restic-offsite-check" = {
-      requires = [ "docker-compose-runner.service" ];
-      serviceConfig = {
-        ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
-        Type = "oneshot";
-      };
-      script = ''
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_offsite /bin/sh -c "/usr/bin/restic check --read-data-subset=5% --retry-lock=6h"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_offsite /bin/sh -c "/usr/bin/restic check --read-data-subset=1% --retry-lock=6h"
       '';
     };
 
@@ -116,15 +98,6 @@
       timerConfig = {
         OnCalendar = "01:30";
         Unit = "restic-local-backup.service";
-        Persistent = true;
-      };
-    };
-    systemd.timers."restic-local-check" = {
-      enable = !config.ahayzen.testing;
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "04:30";
-        Unit = "restic-local-check.service";
         Persistent = true;
       };
     };
@@ -138,15 +111,6 @@
         Persistent = true;
       };
     };
-    systemd.timers."restic-offsite-check" = {
-      enable = !config.ahayzen.testing;
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "04:30";
-        Unit = "restic-offsite-check.service";
-        Persistent = true;
-      };
-    };
 
     # Add a condition to nixos-upgrade
     # This then skips nixos-upgrade if restic is running
@@ -156,9 +120,7 @@
       serviceConfig = {
         ExecCondition = [
           "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active restic-local-backup.service ) != activ* ]]'"
-          "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active restic-local-check.service ) != activ* ]]'"
           "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active restic-offsite-backup.service ) != activ* ]]'"
-          "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active restic-offsite-check.service ) != activ* ]]'"
         ];
       };
     };
