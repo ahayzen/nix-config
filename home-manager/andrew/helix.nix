@@ -3,11 +3,12 @@
 # SPDX-License-Identifier: MPL-2.0
 
 {
+  catppuccin.helix.enable = true;
+
   programs = {
     helix = {
       enable = true;
 
-      catppuccin.enable = true;
       defaultEditor = true;
       languages = {
         language = [{

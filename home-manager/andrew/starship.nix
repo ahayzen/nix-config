@@ -3,11 +3,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 {
-  programs = {
-    starship = {
-      enable = true;
+  catppuccin.starship.enable = true;
 
-      catppuccin.enable = true;
-    };
-  };
+  programs.starship.enable = true;
 }
