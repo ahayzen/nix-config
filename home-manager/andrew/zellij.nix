@@ -3,6 +3,10 @@
 # SPDX-License-Identifier: MPL-2.0
 
 {
+  # zellij uses kdl which is hard to configure in until extraConfig exists
+  # https://github.com/nix-community/home-manager/issues/4659
+  # catppuccin.zellij.enable = true;
+
   programs = {
     zellij = {
       enable = true;
@@ -10,7 +14,6 @@
       # zellij uses kdl which is hard to configure in until extraConfig exists
       # https://github.com/nix-community/home-manager/issues/4659
       #
-      # catppuccin.enable = true;
       # settings = {
       #   # We do not want frames around each pane
       #   pane_frames = false;

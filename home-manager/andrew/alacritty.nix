@@ -3,12 +3,13 @@
 # SPDX-License-Identifier: MPL-2.0
 
 {
+  catppuccin.alacritty.enable = true;
+
   programs = {
     # Use alacritty for our terminal as we want OSC 52 support
     alacritty = {
       enable = true;
 
-      catppuccin.enable = true;
       settings = {
         env.TERM = "xterm-256color";
         keyboard.bindings = [
