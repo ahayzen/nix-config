@@ -15,6 +15,8 @@
 
   services.flatpak = {
     enable = true;
+    uninstallUnused = true;
+
     remotes = [
       {
         name = "flathub";
