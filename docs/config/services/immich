@@ -1,0 +1,3 @@
+Allow HEVC otherwise lots of videos are transcoded.
+
+Settings -> Video Transcoding Settings -> Transcode Policy -> Accepted video codecs -> HEVC
