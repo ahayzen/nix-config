@@ -50,7 +50,7 @@ services:
 
   immich-redis:
     container_name: immich_redis
-    image: docker.io/redis:6.2.17@sha256:5e58de7cf5eec1feffed3ac5984c7a5b8e0a5b407be2103cca4830ed15de16f2
+    image: docker.io/redis:6.2.17@sha256:5f80c223676fd0d9236f3dc8555d74d57a8b528bdcbc96c19c98443fb105d6e0
     healthcheck:
       test: redis-cli ping || exit 1
     networks:
@@ -59,7 +59,7 @@ services:
 
   immich-database:
     container_name: immich_postgres
-    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
     environment:
       POSTGRES_INITDB_ARGS: '--data-checksums'
     env_file:
