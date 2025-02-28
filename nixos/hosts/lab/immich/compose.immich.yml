@@ -5,7 +5,7 @@
 services:
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:v1.126.1@sha256:5ee24916149dff3e52fbc6edb69528d74e8a131d08b687a9d422ecf8bed1e7f0
+    image: ghcr.io/immich-app/immich-server:v1.128.0@sha256:e0babbef630539dfd23c93b09ec36c9c1a072e891197e8d3e968f87544118296
     # From hwaccel.transcoding.yml should allow for VAAPI to work
     devices:
       - /dev/dri:/dev/dri
@@ -38,7 +38,7 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:v1.126.1@sha256:eaff41f58cedc4b35f6d1bc9cb840647e1afdac9ef341957adce8717133dd9af
+    image: ghcr.io/immich-app/immich-machine-learning:v1.128.0@sha256:dcfad0eb646406fa944b4d6622e1f262e0f057e88b50fe21f2fe6dff30ce18e2
     volumes:
       - /var/cache/docker-compose-runner/immich/machine-learning-cache:/cache
     env_file:
@@ -50,7 +50,7 @@ services:
 
   immich-redis:
     container_name: immich_redis
-    image: docker.io/redis:6.2.17@sha256:5e58de7cf5eec1feffed3ac5984c7a5b8e0a5b407be2103cca4830ed15de16f2
+    image: docker.io/redis:6.2.17@sha256:5884377fe315cd533c9221a2b2cafd620fc1f5a06f2d9503496f255409603901
     healthcheck:
       test: redis-cli ping || exit 1
     networks:
@@ -59,7 +59,7 @@ services:
 
   immich-database:
     container_name: immich_postgres
-    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:90724186f0a3517cf6914295b5ab410db9ce23190a2d9d0b9dd6463e3fa298f0
+    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
     environment:
       POSTGRES_INITDB_ARGS: '--data-checksums'
     env_file:
