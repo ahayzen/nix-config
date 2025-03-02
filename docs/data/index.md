@@ -14,6 +14,7 @@ Manually stored items
   - Documents
   - [Music](./music.md)
   - Movies
+  - Recordings (edited videos)
   - TV shows
   - User
 
@@ -52,7 +53,8 @@ The main pool of data is then structured as follows
   /documents/
   /music/<artist>/<album>/
   /movies/<movie>/
-  /photostream/<device>/
+  /photostream/<device>/<year>/
+  /recordings/<device>/<year>/
   /shows/<show>/<series>/
   /user/<user>/
 ```
