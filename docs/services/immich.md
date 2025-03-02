@@ -31,3 +31,7 @@ TODO
   - Add Camera as an external library for the admin account
 
 > Once we have new hardware allow for HEVC encoding
+
+## Alternatives
+
+  - Photoprism + Photosync
