@@ -13,8 +13,9 @@ Manually stored items
   - Camera
   - Documents
   - [Music](./music.md)
-  - Movies
-  - TV shows
+  - [Movies](./movies.md)
+  - Recordings (edited videos)
+  - [TV shows](./shows.md)
   - User
 
 Automatically stored items
@@ -52,12 +53,19 @@ The main pool of data is then structured as follows
   /documents/
   /music/<artist>/<album>/
   /movies/<movie>/
-  /photostream/<device>/
+  /photostream/<device>/<year>/
+  /recordings/<device>/<year>/
   /shows/<show>/<series>/
   /user/<user>/
 ```
 
 ## 3-2-1-1-0
+
+ - 3 copies of data
+ - 2 different media
+ - 1 offsite
+ - 1 offline
+ - 0 errors
 
 Restic push backups to lab and backblaze.
 
