@@ -28,9 +28,20 @@ TODO
     - Music
     - Movies
     - TV shows
+
+### Intel Hardware Acceleration
+
+On Intel use the following command to check for which codecs are supported,
+then enable VA-API or QSV and ensure the relevant codecs are enabled
+
+```sh
+docker exec -it jellyfin /usr/lib/jellyfin-ffmpeg/vainfo
+```
+
+> This made 4K go from around 30fps to over 100fps on 12 year old hardware
+
+https://jellyfin.org/docs/general/administration/hardware-acceleration/intel/#configure-with-linux-virtualization
+
   - Playback -> Transcoding
     - For Intel pick QuickSync or VAAPI
       - Check the support codecs and enable them
-        - Eg a command such as `sudo /usr/lib/jellyfin-ffmpeg/vainfo --display drm --device /dev/dri/renderD128`
-        - [https://jellyfin.org/docs/general/administration/hardware-acceleration/intel/#configure-on-linux-host]
-    - See docs for more info [https://jellyfin.org/docs/general/administration/hardware-acceleration]
