@@ -24,8 +24,6 @@ Automatically stored items
   - Backups (snapshots of databases /var/lib)
   - Photostream
 
-> TODO: sub pages for each of these
-
 ## Folder structure
 
 Each location has two kinds of data "cache" or "data",
