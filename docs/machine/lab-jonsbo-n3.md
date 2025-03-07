@@ -58,7 +58,7 @@ TODO
 ## Setup
 
   - [x] Memtest
-  - [ ] badblocks
+  - [x] badblocks
   - [x] Thermals
   - [x] Power usage
 
