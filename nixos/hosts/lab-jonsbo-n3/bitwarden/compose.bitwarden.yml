@@ -4,7 +4,7 @@
 
 services:
   bitwarden:
-    image: docker.io/bitwarden/self-host:2025.2.0-beta@sha256:75651a95f13b9c389cb87c1e3d9a325d4344778adef88795a8cc51a7cbe85c15
+    image: ghcr.io/bitwarden/self-host:2025.3.1-beta@sha256:16ba36386c8376fe0b6d7f58a515b92a5d2a556cc757e98bb38a40bb3a7b3084
     env_file:
       - /etc/bitwarden/settings.env
     # https://bitwarden.com/help/environment-variables/
@@ -17,10 +17,11 @@ services:
       #
       # Allow for now to setup accounts
       globalSettings__disableUserRegistration: true
-      # TODO: https?
     expose:
       - "8080"
-    mem_limit: 1024m
+    # Bitwarden requires at least 200M
+    # https://bitwarden.com/help/install-and-deploy-unified-beta/#memory-usage
+    mem_limit: 512m
     networks:
       - group-proxy
     restart: unless-stopped
