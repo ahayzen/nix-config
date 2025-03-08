@@ -28,6 +28,7 @@ TODO
     - Music
     - Movies
     - TV shows
+  - Libraries -> Movies enable Automatically add to collection
 
 ### Intel Hardware Acceleration
 

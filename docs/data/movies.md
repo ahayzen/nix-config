@@ -43,3 +43,21 @@ kodi-nfo-gen --fanart download --overwrite --verbose --recursive --dir movies/
 ```
 
 > Ensure that any `.nfo` files are changed to `movie.nfo`
+
+### Collections
+
+If there are multiple movies that are part of a collection this information can be added to the NFO file.
+
+```xml
+<set>
+  <name>My Movie Collection</name>
+  <overview>My Movie Overview.</overview>
+</set>
+<collectionnumber>NNNN</collectionnumber>
+```
+
+> The collection number can be found on TheMovieDB
+
+> For this to work in Jellyfin ensure the following
+> Libraries -> Movies -> Automatically add to collection is enabled
+> Metadata manager -> Collections -> Collection is not lock (rescan all libraries after unlocking)
