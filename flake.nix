@@ -142,7 +142,7 @@
           ];
         };
 
-        lab-jonsbo-n3 = nixpkgs.lib.nioxSystem {
+        lab-jonsbo-n3 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
           modules = [
@@ -151,7 +151,7 @@
             ./nixos/users/headless
           ];
         };
-        lab-jonsbo-n3-vm-test = nixpkgs.lib.nioxSystem {
+        lab-jonsbo-n3-vm-test = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
           modules = [
