@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
     mergerfs
@@ -11,5 +11,5 @@
 
   # Disable filesystem check for mergerfs otherwise a warning occurs
   # https://github.com/nix-community/disko/issues/840
-  fileSystems.mergerfs.noCheck = lib.mkForce true;
+  fileSystems."/mnt/pool".noCheck = lib.mkForce true;
 }
