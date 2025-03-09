@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+{ lib, pkgs, ... }:
 {
   services.snapraid = {
     enable = true;
@@ -27,4 +28,10 @@
     };
     sync.interval = "07:30";
   };
+
+  # Use --pre-hash option as we do not have ECC memory
+  systemd.services.snapraid-sync.serviceConfig.ExecStart = lib.mkForce "${pkgs.snapraid}/bin/snapraid --pre-hash sync";
+
+  # TODO: call `getfacl --recursive /mnt/disk1 > /mnt/disk1/disk1.permissions`
+  # note restore with `setfacl --restore=/mnt/disk1/disk1.permissions`
 }
