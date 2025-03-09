@@ -34,4 +34,15 @@
 
   # TODO: call `getfacl --recursive /mnt/disk1 > /mnt/disk1/disk1.permissions`
   # note restore with `setfacl --restore=/mnt/disk1/disk1.permissions`
+
+  # Add a condition to nixos-upgrade
+  # This then skips nixos-upgrade if snapraid is running
+  systemd.services."nixos-upgrade" = {
+    serviceConfig = {
+      ExecCondition = [
+        "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active snapraid-scrub.service ) != activ* ]]'"
+        "/bin/sh -c '[[ $( ${pkgs.systemd}/bin/systemctl is-active snapraid-sync.service ) != activ* ]]'"
+      ];
+    };
+  };
 }
