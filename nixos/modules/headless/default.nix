@@ -14,9 +14,11 @@
   config = {
     ahayzen.headless = true;
 
-    # Install sqlite3 so that backups can take snapshots of databases
     environment.systemPackages = with pkgs; [
+      # Install sqlite3 so that backups can take snapshots of databases
       sqlite
+      # Install zellij for persistent sessions
+      zellij
     ];
 
     # If we are a laptop ignore the lid being shut
