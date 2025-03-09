@@ -89,26 +89,6 @@
           };
         };
       };
-
-      #
-      # Mergerfs pool
-      #
-      pool = {
-        type = "filesystem";
-        # Colon separate the disks here
-        device = "/mnt/disk1";
-        content = {
-          type = "filesystem";
-          format = "fuse.mergerfs";
-          mountpoint = "/mnt/pool";
-          mountOptions = [
-            "cache.files=off"
-            "category.create=mfs"
-            "dropcacheonclose=false"
-            "fsname=mergerfspool"
-          ];
-        };
-      };
     };
   };
 }
