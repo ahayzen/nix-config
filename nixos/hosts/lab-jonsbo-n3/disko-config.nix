@@ -72,7 +72,7 @@
       #
       # Data disks
       #
-      data1 = {
+      disk1 = {
         type = "disk";
         device = "/dev/disk/by-id/ata-TOSHIBA_HDWG480_64T0A10MFA3H";
         content = {
@@ -83,7 +83,7 @@
               content = {
                 type = "filesystem";
                 format = "xfs";
-                mountpoint = "/mnt/data1";
+                mountpoint = "/mnt/disk1";
               };
             };
           };
@@ -96,7 +96,7 @@
       pool = {
         type = "filesystem";
         # Colon separate the disks here
-        device = "/mnt/data1";
+        device = "/mnt/disk1";
         content = {
           type = "filesystem";
           format = "fuse.mergerfs";
