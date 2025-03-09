@@ -9,7 +9,17 @@
     mergerfs-tools
   ];
 
-  # Disable filesystem check for mergerfs otherwise a warning occurs
-  # https://github.com/nix-community/disko/issues/840
-  fileSystems."/mnt/pool".noCheck = lib.mkForce true;
+  fileSystems."/mnt/pool" = {
+    depends = [
+      "/mnt/data1"
+    ];
+    device = "/mnt/disk*";
+    fsType = "fuse.mergerfs";
+    options = [
+      "cache.files=off"
+      "category.create=mfs"
+      "dropcacheonclose=false"
+      "fsname=mergerfspool"
+    ];
+  };
 }
