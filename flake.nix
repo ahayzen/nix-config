@@ -151,6 +151,18 @@
             ./nixos/users/headless
           ];
         };
+        lab-jonsbo-n3-vm-test = nixpkgs.lib.nioxSystem {
+          specialArgs = { inherit inputs outputs; };
+
+          modules = [
+            self.nixosModules.headlessSystem
+            ./nixos/hosts/lab-jonsbo-n3/default.nix
+            ./nixos/users/headless
+            {
+              ahayzen.testing = true;
+            }
+          ];
+        };
 
         #
         # Desktop systems
