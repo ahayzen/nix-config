@@ -53,7 +53,7 @@
       #
       parity1 = {
         type = "disk";
-        device = "/dev/disk/by-id/ata-TOSHIBA_HDWG480_54H0A00QFA3H";
+        device = "/dev/disk/by-id/ata-TOSHIBA_HDWG480_64T0A10MFA3H";
         content = {
           type = "gpt";
           partitions = {
@@ -74,7 +74,7 @@
       #
       disk1 = {
         type = "disk";
-        device = "/dev/disk/by-id/ata-TOSHIBA_HDWG480_64T0A10MFA3H";
+        device = "/dev/disk/by-id/ata-TOSHIBA_HDWG480_54H0A00QFA3H";
         content = {
           type = "gpt";
           partitions = {
