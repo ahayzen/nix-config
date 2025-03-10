@@ -9,17 +9,22 @@
     mergerfs-tools
   ];
 
-  fileSystems."/mnt/pool" = {
-    depends = [
-      "/mnt/data1"
-    ];
-    device = "/mnt/disk*";
-    fsType = "fuse.mergerfs";
-    options = [
-      "cache.files=off"
-      "category.create=mfs"
-      "dropcacheonclose=false"
-      "fsname=mergerfspool"
+  # Create pool from data disks
+  systemd = {
+    mounts = [
+      {
+        type = "fuse.mergerfs";
+        what = "/mnt/disk*";
+        where = "/mnt/pool";
+        requires = [ "local-fs.target" ];
+        wantedBy = [ "multi-user.target" ];
+        options = "cache.files=off,category.create=mfs,dropcacheonclose=false,fsname=mergerfspool";
+      }
     ];
   };
+
+  # Ensure target folder exists
+  system.activationScripts.mkdirMntPool = ''
+    mkdir -p /mnt/pool
+  '';
 }
