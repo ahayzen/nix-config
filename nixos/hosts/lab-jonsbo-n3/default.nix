@@ -15,6 +15,7 @@
   ];
 
   ahayzen = {
+    docker-compose-files = [ ./compose.lab-jonsbo-n3.yml ];
     hostName = "lab-jonsbo-n3";
   };
 
