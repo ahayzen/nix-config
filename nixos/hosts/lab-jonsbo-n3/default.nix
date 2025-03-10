@@ -8,7 +8,8 @@
     ./disko-config.nix
     inputs.nixos-hardware.nixosModules.common-cpu-intel
     ./hardware.nix
-    # Mergerfs and SnapRAID
+    # Bindfs, Mergerfs, and SnapRAID
+    ./bindfs.nix
     ./mergerfs.nix
     ./snapraid.nix
   ];
