@@ -14,6 +14,7 @@
     ./snapraid.nix
     # Services
     ./jellyfin
+    ./rathole
   ];
 
   ahayzen = {
