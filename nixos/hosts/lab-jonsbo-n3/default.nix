@@ -33,17 +33,17 @@
   # Emulate data folders for testing
   system.activationScripts = lib.mkIf (config.ahayzen.testing) {
     mkdirMntFolders = ''
-      mkdir -p /mnt/pool/backup
-      chown unpriv:unpriv /mnt/pool/backup
-      chmod 0755 /mnt/pool/backup
+      mkdir -p /mnt/data1/backup
+      chown unpriv:unpriv /mnt/data1/backup
+      chmod 0755 /mnt/data1/backup
 
-      mkdir -p /mnt/pool/cache
-      chown unpriv:unpriv /mnt/pool/cache
-      chmod 0755 /mnt/pool/cache
+      mkdir -p /mnt/data1/cache
+      chown unpriv:unpriv /mnt/data1/cache
+      chmod 0755 /mnt/data1/cache
 
-      mkdir -p /mnt/pool/data
-      chown unpriv:unpriv /mnt/pool/data
-      chmod 0755 /mnt/pool/data
+      mkdir -p /mnt/data1/data
+      chown unpriv:unpriv /mnt/data1/data
+      chmod 0755 /mnt/data1/data
     '';
   };
 
