@@ -4,6 +4,7 @@ SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
 SPDX-License-Identifier: MPL-2.0
 -->
 
+
 # `nixos-anywhere`
 
 Use `nixos-anywhere` to install this flake on an existing machine Linux machine.
@@ -14,7 +15,7 @@ On the existing machine extract the existing ssh host key.
 $ cat /etc/ssh/ssh_host_ed25519_key.pub
 ```
 
-Add this to the relevent host in [keys.nix](../secrets/key.nix) and [rekey](./secrets.md#rekey). This allows for access to secrets during deployment and automatic upgrades.
+Add this to the relevent host in `secrets/keys.nix` and [rekey](./secrets.md#rekey). This allows for access to secrets during deployment and automatic upgrades.
 
 > Test that the flake builds using a vm with the following command
 >
