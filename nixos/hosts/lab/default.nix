@@ -17,7 +17,6 @@
     ./bitwarden
     ./glances
     ./immich
-    ./jellyfin
     ./joplin
     ./rathole
     ./restic
