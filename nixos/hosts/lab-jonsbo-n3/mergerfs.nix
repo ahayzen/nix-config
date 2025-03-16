@@ -21,7 +21,7 @@
         options =
           if config.ahayzen.testing
           then "cache.files=off,category.create=mfs,dropcacheonclose=false,minfreespace=1M,fsname=mergerfspool"
-          else "cache.files=off,category.create=mfs,dropcacheonclose=falsefsname=mergerfspool";
+          else "cache.files=off,category.create=mfs,dropcacheonclose=false,fsname=mergerfspool";
       }
     ];
   };
