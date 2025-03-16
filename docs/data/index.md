@@ -42,6 +42,9 @@ This allows for tooling to periodically backup /var/lib without live databases c
 The main pool of data is then structured as follows
 
 ```
+/backup
+  /restic
+    /<repo>
 /cache
   /<service>
 /data
