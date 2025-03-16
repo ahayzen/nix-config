@@ -20,6 +20,7 @@
   ahayzen = {
     docker-compose-files = [ ./compose.lab-jonsbo-n3.yml ];
     hostName = "lab-jonsbo-n3";
+    lab.rathole = false;
   };
 
   # Seed host keys for places we SSH to
