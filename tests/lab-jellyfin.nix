@@ -77,7 +77,7 @@
       imports =
         [
           self.nixosModules.headlessSystem
-          ../nixos/hosts/lab/default.nix
+          ../nixos/hosts/lab-jonsbo-n3/default.nix
           ../nixos/users/headless
         ];
 
@@ -85,16 +85,16 @@
         testing = true;
 
         lab = {
-          actual = false;
-          audiobookshelf = false;
-          bitwarden = false;
-          glances = false;
-          immich = false;
+          # actual = false;
+          # audiobookshelf = false;
+          # bitwarden = false;
+          # glances = false;
+          # immich = false;
           jellyfin = true;
-          joplin = false;
+          # joplin = false;
           rathole = true;
-          restic = false;
-          sftpgo = false;
+          # restic = false;
+          # sftpgo = false;
         };
       };
 
