@@ -30,6 +30,23 @@
   # Enable thermal control as this is an intel laptop
   services.thermald.enable = true;
 
+  # Emulate data folders for testing
+  system.activationScripts = lib.mkIf (config.ahayzen.testing) {
+    mkdirMntFolders = ''
+      mkdir -p /mnt/pool/backup
+      chown unpriv:unpriv /mnt/pool/backup
+      chmod 0755 /mnt/pool/backup
+
+      mkdir -p /mnt/pool/cache
+      chown unpriv:unpriv /mnt/pool/cache
+      chmod 0755 /mnt/pool/cache
+
+      mkdir -p /mnt/pool/data
+      chown unpriv:unpriv /mnt/pool/data
+      chmod 0755 /mnt/pool/data
+    '';
+  };
+
   # Increase disk size for build VM
   virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
 }
