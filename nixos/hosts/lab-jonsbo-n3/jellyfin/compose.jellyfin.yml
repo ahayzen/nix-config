@@ -14,9 +14,12 @@ services:
       - 8096:8096
       # Auto discovery
       - "7359:7359/udp"
+    group_add:
+      # GID of render: `getent group render | cut -d: -f3`
+      - "303"
     environment:
       # Set the path for discovery
-      JELLYFIN_PublishedServerUrl: "http://lab.local:8096"
+      JELLYFIN_PublishedServerUrl: "http://lab-jonsbo-n3.local:8096"
     networks:
       - group-proxy
       # Needed for auto discovery and local lan quick path
