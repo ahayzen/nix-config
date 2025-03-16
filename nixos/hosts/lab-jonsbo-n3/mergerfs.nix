@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
     mergerfs
@@ -18,7 +18,10 @@
         where = "/mnt/pool";
         requires = [ "local-fs.target" ];
         wantedBy = [ "multi-user.target" ];
-        options = "cache.files=off,category.create=mfs,dropcacheonclose=false,fsname=mergerfspool";
+        options =
+          if config.ahayzen.testing
+          then "cache.files=off,category.create=mfs,dropcacheonclose=false,minfreespace=1M,fsname=mergerfspool"
+          else "cache.files=off,category.create=mfs,dropcacheonclose=falsefsname=mergerfspool";
       }
     ];
   };
