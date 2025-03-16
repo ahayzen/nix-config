@@ -9,11 +9,11 @@ in
   "local-py_ahayzen-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
   "local-py_yumekasaito-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
 
-  "bitwarden_env.age".publicKeys = [ publicKeys.host.lab ] ++ publicKeys.group.users.developer;
-  "immich_env.age".publicKeys = [ publicKeys.host.lab ] ++ publicKeys.group.users.developer;
-  "rathole_toml.age".publicKeys = [ publicKeys.host.lab publicKeys.host.vps ] ++ publicKeys.group.users.developer;
-  "restic_offsite_env.age".publicKeys = [ publicKeys.host.lab ] ++ publicKeys.group.users.developer;
-  "restic_password.age".publicKeys = [ publicKeys.host.lab ] ++ publicKeys.group.users.developer;
+  "bitwarden_env.age".publicKeys = [ publicKeys.host.lab publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
+  "immich_env.age".publicKeys = [ publicKeys.host.lab publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
+  "rathole_toml.age".publicKeys = [ publicKeys.host.lab publicKeys.host.lab-jonsbo-n3 publicKeys.host.vps ] ++ publicKeys.group.users.developer;
+  "restic_offsite_env.age".publicKeys = [ publicKeys.host.lab publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
+  "restic_password.age".publicKeys = [ publicKeys.host.lab publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
 
   # For avoiding new lines use
   # EDITOR="nano --nonewlines"
