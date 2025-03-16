@@ -8,7 +8,7 @@
     enable = true;
 
     contentFiles = [
-      "/var/lib/snapraid/snapraid.content"
+      "/var/lib/snapraid.content"
       "/mnt/data1/snapraid.data1.content"
       "/mnt/parity1/snapraid.content"
     ];
