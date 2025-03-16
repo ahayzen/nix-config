@@ -72,7 +72,7 @@
       #
       # Data disks
       #
-      disk1 = {
+      data1 = {
         type = "disk";
         device = "/dev/disk/by-id/ata-TOSHIBA_HDWG480_54H0A00QFA3H";
         content = {
@@ -83,7 +83,7 @@
               content = {
                 type = "filesystem";
                 format = "xfs";
-                mountpoint = "/mnt/disk1";
+                mountpoint = "/mnt/data1";
               };
             };
           };

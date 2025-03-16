@@ -9,13 +9,13 @@
 
     contentFiles = [
       "/var/lib/snapraid.content"
-      "/mnt/disk1/snapraid.disk1.content"
+      "/mnt/data1/snapraid.data1.content"
       "/mnt/parity1/snapraid.content"
     ];
 
     dataDisks = {
       # Note order is important for parity
-      disk1 = "/mnt/disk1";
+      data1 = "/mnt/data1";
     };
 
     parityFiles = [
@@ -32,12 +32,12 @@
   systemd.services.snapraid-sync.serviceConfig.ExecStart = lib.mkForce [
     # Snapraid does not store file permissions so store in file
     #
-    # Note restore with `setfacl --restore=/mnt/disk1/snapraid.disk1.facl`
-    "${pkgs.acl}/bin/getfacl --absolute-names --resursive /mnt/disk1 > /mnt/disk1/snapraid.disk1.facl"
+    # Note restore with `setfacl --restore=/mnt/data1/snapraid.data1.facl`
+    "${pkgs.acl}/bin/getfacl --absolute-names --resursive /mnt/data1 > /mnt/data1/snapraid.data1.facl"
     # Snapraid does not store file extended attribute so store in file
     #
-    # Note restore with `setfattr --restore=/mnt/disk1/snapraid.disk1.fattr`
-    "${pkgs.attr}/bin/getfattr --absolute-names --resursive /mnt/disk1 > /mnt/disk1/snapraid.disk1.fattr"
+    # Note restore with `setfattr --restore=/mnt/data1/snapraid.data1.fattr`
+    "${pkgs.attr}/bin/getfattr --absolute-names --resursive /mnt/data1 > /mnt/data1/snapraid.data1.fattr"
     # Use --pre-hash option to ensure integrity as we do not have ECC memory
     "${pkgs.snapraid}/bin/snapraid --pre-hash sync"
   ];
