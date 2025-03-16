@@ -9,7 +9,7 @@
 
     contentFiles = [
       "/var/lib/snapraid/snapraid.content"
-      "/mnt/data1/snapraid.content"
+      "/mnt/data1/snapraid.data1.content"
       "/mnt/parity1/snapraid.content"
     ];
 
@@ -29,11 +29,18 @@
     sync.interval = "07:30";
   };
 
-  # Use --pre-hash option as we do not have ECC memory
-  systemd.services.snapraid-sync.serviceConfig.ExecStart = lib.mkForce "${pkgs.snapraid}/bin/snapraid --pre-hash sync";
-
-  # TODO: call `getfacl --recursive /mnt/disk1 > /mnt/disk1/disk1.permissions`
-  # note restore with `setfacl --restore=/mnt/disk1/disk1.permissions`
+  systemd.services.snapraid-sync.serviceConfig.ExecStart = lib.mkForce [
+    # Snapraid does not store file permissions so store in file
+    #
+    # Note restore with `setfacl --restore=/mnt/data1/snapraid.data1.facl`
+    "${pkgs.acl}/bin/getfacl --absolute-names --resursive /mnt/data1 > /mnt/data1/snapraid.data1.facl"
+    # Snapraid does not store file extended attribute so store in file
+    #
+    # Note restore with `setfattr --restore=/mnt/data1/snapraid.data1.fattr`
+    "${pkgs.attr}/bin/getfattr --absolute-names --resursive /mnt/data1 > /mnt/data1/snapraid.data1.fattr"
+    # Use --pre-hash option to ensure integrity as we do not have ECC memory
+    "${pkgs.snapraid}/bin/snapraid --pre-hash sync"
+  ];
 
   # Add a condition to nixos-upgrade
   # This then skips nixos-upgrade if snapraid is running
