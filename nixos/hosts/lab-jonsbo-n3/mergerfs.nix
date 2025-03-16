@@ -14,7 +14,7 @@
     mounts = [
       {
         type = "fuse.mergerfs";
-        what = "/mnt/disk*";
+        what = "/mnt/data*";
         where = "/mnt/pool";
         requires = [ "local-fs.target" ];
         wantedBy = [ "multi-user.target" ];
