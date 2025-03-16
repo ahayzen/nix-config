@@ -12,6 +12,8 @@
     ./bindfs.nix
     ./mergerfs.nix
     ./snapraid.nix
+    # Services
+    ./jellyfin
   ];
 
   ahayzen = {
