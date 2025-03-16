@@ -23,34 +23,42 @@
     ./sftpgo
   ];
 
-  # System76 Pangolin Performance uses BIOS so we need to disable systemd-boot and use grub
-  boot.loader = {
-    grub = {
-      enable = true;
-      configurationLimit = 10;
-      # disko automatically adds devices that have a EF02 partition
-      # devices = [ "/dev/sda" ];
-      efiSupport = lib.mkForce false;
-      # We need to enable this as we are currently booted in BIOS
-      splashImage = null;
+  # Jellyfin has migrated to jonsbo, leave here so tests still work for now
+  options.ahayzen.lab.jellyfin = lib.mkOption {
+    default = true;
+    type = lib.types.bool;
+  };
+
+  config = {
+    # System76 Pangolin Performance uses BIOS so we need to disable systemd-boot and use grub
+    boot.loader = {
+      grub = {
+        enable = true;
+        configurationLimit = 10;
+        # disko automatically adds devices that have a EF02 partition
+        # devices = [ "/dev/sda" ];
+        efiSupport = lib.mkForce false;
+        # We need to enable this as we are currently booted in BIOS
+        splashImage = null;
+      };
+      systemd-boot.enable = lib.mkForce false;
     };
-    systemd-boot.enable = lib.mkForce false;
+
+    ahayzen = {
+      docker-compose-files = [ ./compose.lab.yml ];
+      hostName = "lab";
+    };
+
+    # Seed host keys for places we SSH to
+    services.openssh.knownHosts = {
+      "diskstation.local".publicKey = config.ahayzen.publicKeys.host.diskstation;
+      "ahayzen.com".publicKey = config.ahayzen.publicKeys.host.vps;
+    };
+
+    # Enable thermal control as this is an intel laptop
+    services.thermald.enable = true;
+
+    # Increase disk size for build VM
+    virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
   };
-
-  ahayzen = {
-    docker-compose-files = [ ./compose.lab.yml ];
-    hostName = "lab";
-  };
-
-  # Seed host keys for places we SSH to
-  services.openssh.knownHosts = {
-    "diskstation.local".publicKey = config.ahayzen.publicKeys.host.diskstation;
-    "ahayzen.com".publicKey = config.ahayzen.publicKeys.host.vps;
-  };
-
-  # Enable thermal control as this is an intel laptop
-  services.thermald.enable = true;
-
-  # Increase disk size for build VM
-  virtualisation.vmVariant.virtualisation.diskSize = 2 * 1024;
 }
