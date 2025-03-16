@@ -23,7 +23,7 @@ services:
       - lan
     volumes:
       # Jellyfin cache
-      - /mnt/pool/cache/docker-compose-runner/jellyfin/cache:/cache
+      - /mnt/pool/cache/jellyfin/cache:/cache
       # Jellyfin config
       #
       # TODO: can we snapshot databases and data with a cache/lib split?
