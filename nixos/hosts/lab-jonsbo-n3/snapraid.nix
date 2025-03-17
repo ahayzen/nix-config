@@ -24,6 +24,7 @@
 
     # Check 1% of the data daily
     scrub = {
+      interval = "08:30";
       plan = 1;
     };
     sync.interval = "07:30";
