@@ -12,6 +12,8 @@
     ./bindfs.nix
     ./mergerfs.nix
     ./snapraid.nix
+    # Backup schedule
+    ./backup.nix
     # Services
     ./actual
     ./audiobookshelf
