@@ -5,7 +5,8 @@
 { config, options, lib, ... }:
 {
   options.ahayzen.lab.rathole = lib.mkOption {
-    default = true;
+    # Only enable in testing while migrating
+    default = config.ahayzen.testing;
     type = lib.types.bool;
   };
 
