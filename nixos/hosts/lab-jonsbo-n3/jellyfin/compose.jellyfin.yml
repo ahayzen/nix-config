@@ -4,7 +4,7 @@
 
 services:
   jellyfin:
-    image: ghcr.io/jellyfin/jellyfin:10.10.6@sha256:2aa67ae3eff5384ade5a5675a61ca487e9e1a510312289ac80076837ebeda8c8
+    image: ghcr.io/jellyfin/jellyfin:2025031705@sha256:66258b3df2e5255590fd03c94458c032a8653d2ea7e4134267a5b9e1a9d67c5f
     restart: unless-stopped
     # For hardware acceleration
     devices:
