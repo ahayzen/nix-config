@@ -16,7 +16,6 @@
         type = "fuse.mergerfs";
         what = "/mnt/data*";
         where = "/mnt/pool";
-        requires = [ "local-fs.target" ];
         wantedBy = [ "multi-user.target" ];
         options =
           if config.ahayzen.testing
@@ -24,6 +23,10 @@
           else "cache.files=off,category.create=mfs,dropcacheonclose=false,fsname=mergerfspool";
       }
     ];
+
+    # Ensure that docker starts after mergerfs is ready
+    services."docker-compose-runner".after = [ "mnt-pool.mount" ];
+    services."docker-compose-runner".requires = [ "mnt-pool.mount" ];
   };
 
   # Ensure target folder exists
