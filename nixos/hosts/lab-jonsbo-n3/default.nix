@@ -14,6 +14,7 @@
     ./snapraid.nix
     # Services
     ./actual
+    ./audiobookshelf
     ./bitwarden
     ./glances
     ./jellyfin

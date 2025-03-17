@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:2.19.5@sha256:4d383bfd61135492ab3c52fe98550b9640e7d0791ed2a5e81c98e4087f5086d0
+    expose:
+      - 80
+    networks:
+      - group-proxy
+    volumes:
+      # Backup the database
+      - /var/lib/docker-compose-runner/audiobookshelf/config:/config
+      # We do not need to backup the podcasts content or metadata
+      - /var/cache/docker-compose-runner/audiobookshelf/podcasts:/podcasts
+      - /var/cache/docker-compose-runner/audiobookshelf/metadata:/metadata
+      # TODO: could add audiobook storage and support
+    environment:
+      - TZ=Europe/London
