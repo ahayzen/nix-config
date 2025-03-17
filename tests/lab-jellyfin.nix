@@ -85,16 +85,16 @@
         testing = true;
 
         lab = {
-          # actual = false;
-          # audiobookshelf = false;
-          # bitwarden = false;
-          # glances = false;
-          # immich = false;
+          actual = false;
+          audiobookshelf = false;
+          bitwarden = false;
+          glances = false;
+          immich = false;
           jellyfin = true;
-          # joplin = false;
+          joplin = false;
           rathole = true;
-          # restic = false;
-          # sftpgo = false;
+          restic = false;
+          sftpgo = false;
         };
       };
 
