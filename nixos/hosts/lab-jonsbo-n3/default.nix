@@ -13,6 +13,7 @@
     ./mergerfs.nix
     ./snapraid.nix
     # Services
+    ./actual
     ./bitwarden
     ./jellyfin
     ./rathole
