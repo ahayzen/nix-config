@@ -93,7 +93,7 @@
           jellyfin = true;
           joplin = false;
           rathole = true;
-          restic = false;
+          # restic = false;
           sftpgo = false;
         };
       };
