@@ -15,6 +15,7 @@
     # Services
     ./actual
     ./bitwarden
+    ./glances
     ./jellyfin
     ./rathole
   ];

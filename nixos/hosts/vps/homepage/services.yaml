@@ -109,5 +109,5 @@
         widget:
             url: http://rathole:61208
             type: glances
-            metric: "fs:/mnt/data"
+            metric: "fs:/mnt/pool/cache"
             version: 4
