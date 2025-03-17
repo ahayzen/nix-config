@@ -17,6 +17,7 @@
     ./audiobookshelf
     ./bitwarden
     ./glances
+    ./immich
     ./jellyfin
     ./joplin
     ./rathole
