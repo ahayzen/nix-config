@@ -1,0 +1,41 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  sftpgo:
+    image: ghcr.io/drakkan/sftpgo:v2.6.6@sha256:ca17d735651ce1b5c54a8fa2d4fb9c85036d4137e32b700de260324619ff3f88
+    environment:
+      # Allow for connections to continue for 5s before killing
+      SFTPGO_GRACE_TIME: 5
+      # Disable SFTP
+      SFTPGO_SFTPD__BINDINGS__0__PORT: 0
+      # Set root for web gui
+      SFTPGO_HTTPD__WEB_ROOT: "/"
+      # Enable WebDAV
+      SFTPGO_WEBDAVD__BINDINGS__0__PORT: 8090
+      SFTPGO_WEBDAVD__BINDINGS__0__PREFIX: "/"
+    expose:
+      - 8080
+      - 8090
+    networks:
+      - group-proxy
+      # Needed for exposing webdav locally
+      - lan
+    ports:
+      - "8090:8090"
+    restart: unless-stopped
+    volumes:
+      # SFTP backups
+      - /mnt/mapping-pool-user1000/data/app/sftpgo/backups:/srv/sftpgo/backups
+      # SFTPGo home
+      - /mnt/mapping-pool-user1000/data/user:/srv/sftpgo/data
+      # SFTP settings
+      - /var/lib/docker-compose-runner-user1000/sftpgo:/var/lib/sftpgo
+      # Other data
+      - /mnt/mapping-pool-user1000/data/camera:/mnt/data/camera
+      - /mnt/mapping-pool-user1000/data/documents:/mnt/data/documents
+      - /mnt/mapping-pool-user1000/data/music:/mnt/data/music
+      - /mnt/mapping-pool-user1000/data/movies:/mnt/data/movies
+      - /mnt/mapping-pool-user1000/data/recordings:/mnt/data/recordings
+      - /mnt/mapping-pool-user1000/data/shows:/mnt/data/shows

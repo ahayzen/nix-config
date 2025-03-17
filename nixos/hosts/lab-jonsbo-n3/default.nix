@@ -18,6 +18,7 @@
     ./glances
     ./jellyfin
     ./rathole
+    ./sftpgo
   ];
 
   ahayzen = {
