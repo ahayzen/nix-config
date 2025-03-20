@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  vikunja:
+    image: docker.io/vikunja/vikunja:0.24.6@sha256:ed1f3ed467fecec0b57e9de7bc6607f8bbcbb23ffced6a81f5dfefc794cdbe3b
+    environment:
+      VIKUNJA_SERVICE_PUBLICURL: https://vikunja.hayzen.uk/
+      VIKUNJA_SERVICE_TIMEZONE: "Europe/London"
+      # Use sqlite database
+      VIKUNJA_DATABASE_PATH: /db/vikunja.db
+      VIKUNJA_DATABASE_TYPE: sqlite
+      # Disable account registration
+      #
+      # Note use the CLI to manage accounts
+      # https://vikunja.io/docs/cli/#user
+      VIKUNJA_SERVICE_ENABLEREGISTRATION: false
+    env_file:
+      - /etc/vikunja/settings_secrets.env
+    expose:
+      - 3456
+    networks:
+      - group-proxy
+    restart: unless-stopped
+    volumes:
+      # Uploaded files
+      - /mnt/mapping-pool-user1000/data/app/vikunja/files:/app/vikunja/files
+      # Database
+      - /var/lib/docker-compose-runner-user1000/vikunja/db:/db

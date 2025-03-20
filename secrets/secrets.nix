@@ -6,6 +6,9 @@ let
   publicKeys = import ./keys.nix;
 in
 {
+  # Note use the following command for generating random tokens
+  # `$(< /dev/urandom tr -dc 'a-zA-Z0-9' | fold -w 256 | head -n 1)`
+
   "local-py_ahayzen-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
   "local-py_yumekasaito-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
 
@@ -14,6 +17,7 @@ in
   "rathole_toml.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 publicKeys.host.vps ] ++ publicKeys.group.users.developer;
   "restic_offsite_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
   "restic_password.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
+  "vikunja_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
 
   # For avoiding new lines use
   # EDITOR="nano --nonewlines"

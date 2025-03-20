@@ -54,6 +54,12 @@
         description: "Free your notes"
         siteMonitor: "http://rathole:8223"
 
+    - Vikunja:
+        href: https://vikunja.hayzen.uk/
+        icon: vikunja.png
+        description: "The open-source, self-hostable to-do app"
+        siteMonitor: "http://rathole:3456"
+
 - VPS:
     - CPU:
         widget:
