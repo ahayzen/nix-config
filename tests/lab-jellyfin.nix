@@ -84,6 +84,7 @@
       ahayzen = {
         testing = true;
 
+        # TODO: Default to off when in testing and then opt-in?
         lab = {
           actual = false;
           audiobookshelf = false;
@@ -93,7 +94,7 @@
           jellyfin = true;
           joplin = false;
           rathole = true;
-          # restic = false;
+          restic = false;
           sftpgo = false;
         };
       };
