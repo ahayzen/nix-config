@@ -70,3 +70,10 @@ webdav.hayzen.uk {
 
     reverse_proxy rathole:8890
 }
+
+# Vikunja proxy
+vikunja.hayzen.uk {
+    log
+
+    reverse_proxy rathole:3456
+}

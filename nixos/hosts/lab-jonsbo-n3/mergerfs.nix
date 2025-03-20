@@ -27,6 +27,9 @@
     # Ensure that docker starts after mergerfs is ready
     services."docker-compose-runner".after = [ "mnt-pool.mount" ];
     services."docker-compose-runner".requires = [ "mnt-pool.mount" ];
+
+    services."docker-compose-runner-pre-init-vikunja".after = [ "mnt-pool.mount" ];
+    services."docker-compose-runner-pre-init-vikunja".requires = [ "mnt-pool.mount" ];
   };
 
   # Ensure target folder exists

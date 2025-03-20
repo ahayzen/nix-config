@@ -232,6 +232,7 @@
             lab-joplin-test = import ./tests/lab-joplin.nix checkArgs;
             lab-restic-test = import ./tests/lab-restic.nix checkArgs;
             lab-sftpgo-test = import ./tests/lab-sftpgo.nix checkArgs;
+            lab-vikunja-test = import ./tests/lab-vikunja.nix checkArgs;
             vps-test = import ./tests/vps.nix checkArgs;
           };
       };

@@ -68,6 +68,7 @@ jobs:
           - lab-joplin-test
           - lab-restic-test
           - lab-sftpgo-test
+          - lab-vikunja-test
           - vps-test
     steps:
       - uses: actions/checkout@v4.2.2

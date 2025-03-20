@@ -39,3 +39,6 @@ local_addr = "sftpgo:8080"
 
 [client.services.webdav]
 local_addr = "sftpgo:8090"
+
+[client.services.vikunja]
+local_addr = "vikunja:3456"

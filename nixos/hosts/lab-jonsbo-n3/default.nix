@@ -25,6 +25,7 @@
     ./rathole
     ./restic
     ./sftpgo
+    ./vikunja
   ];
 
   ahayzen = {
