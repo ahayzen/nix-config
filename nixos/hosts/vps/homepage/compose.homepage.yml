@@ -13,6 +13,7 @@ services:
     expose:
       - "3000"
     environment:
+      HOMEPAGE_ALLOWED_HOSTS: home.hayzen.uk
       LOG_TARGETS: stdout
     networks:
       - group-proxy
