@@ -234,7 +234,7 @@
 
     with subtest("Ensure that homepage has started"):
       # Wait for homepage to start
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening on port 3000"', timeout=30)
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "✓ Ready in"', timeout=30)
 
       # Test that we can access the homepage
       output = vps.succeed("curl --insecure --location --silent home.hayzen.uk")
