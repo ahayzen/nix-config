@@ -23,6 +23,7 @@
     ./jellyfin
     ./joplin
     ./rathole
+    ./restic
     ./sftpgo
   ];
 
