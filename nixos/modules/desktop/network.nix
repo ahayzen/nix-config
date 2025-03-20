@@ -11,6 +11,8 @@
 
     # Use Quad9 for DNS
     # https://quad9.net/
-    insertNameservers = [ "9.9.9.9" "149.112.112.112" "2620:fe::fe" "2620:fe::9" ];
+    #
+    # Only append otherwise VPN connections do not use their DNS nameserver
+    appendNameservers = [ "9.9.9.9" "149.112.112.112" "2620:fe::fe" "2620:fe::9" ];
   };
 }
