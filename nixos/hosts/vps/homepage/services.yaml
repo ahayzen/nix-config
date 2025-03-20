@@ -38,7 +38,7 @@
 - Utilities:
     - Actual:
         href: https://actual.hayzen.uk/
-        icon: actual.png
+        icon: actual-budget.png
         description: "Your Finances - made simple"
         siteMonitor: "http://rathole:8506"
 
