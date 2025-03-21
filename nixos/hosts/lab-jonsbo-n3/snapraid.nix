@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   services.snapraid = {
     enable = true;
@@ -30,16 +30,33 @@
     sync.interval = "07:30";
   };
 
+  # Before running snapraid sync take a snapshot of ACL and xattrs that snapraid does not store
+  systemd.services.snapraid-presync = {
+    serviceConfig = {
+      ExecStart = [
+        # Snapraid does not store file permissions so store in file
+        #
+        # Note restore with `setfacl --restore=/mnt/data1/snapraid.data1.facl`
+        "${pkgs.acl}/bin/getfacl --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.facl"
+        # Snapraid does not store file extended attribute so store in file
+        #
+        # Note restore with `setfattr --restore=/mnt/data1/snapraid.data1.fattr`
+        "${pkgs.attr}/bin/getfattr --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.fattr"
+      ];
+      Type = "oneshot";
+    };
+  };
+  systemd.timers.snapraid-presync = {
+    enable = !config.ahayzen.testing;
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "07:15";
+      Unit = "snapraid-presync.service";
+      Persistent = true;
+    };
+  };
+
   systemd.services.snapraid-sync.serviceConfig.ExecStart = lib.mkForce [
-    # TODO: split the facl and fattr into separate service/timer
-    # Snapraid does not store file permissions so store in file
-    #
-    # Note restore with `setfacl --restore=/mnt/data1/snapraid.data1.facl`
-    # "${pkgs.acl}/bin/getfacl --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.facl"
-    # Snapraid does not store file extended attribute so store in file
-    #
-    # Note restore with `setfattr --restore=/mnt/data1/snapraid.data1.fattr`
-    # "${pkgs.attr}/bin/getfattr --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.fattr"
     # Use --pre-hash option to ensure integrity as we do not have ECC memory
     "${pkgs.snapraid}/bin/snapraid --pre-hash sync"
   ];
