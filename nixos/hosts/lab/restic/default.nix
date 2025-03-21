@@ -5,7 +5,8 @@
 { config, options, lib, pkgs, ... }:
 {
   options.ahayzen.lab.restic = lib.mkOption {
-    default = true;
+    # Only enable in testing while migrating
+    default = config.ahayzen.testing;
     type = lib.types.bool;
   };
 
