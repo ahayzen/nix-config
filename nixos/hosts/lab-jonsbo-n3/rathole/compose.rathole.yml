@@ -8,5 +8,6 @@ services:
     command: --client /etc/rathole/config.toml
     networks:
       - group-proxy
+    restart: unless-stopped
     volumes:
       - /etc/rathole/config.toml:/etc/rathole/config.toml:ro
