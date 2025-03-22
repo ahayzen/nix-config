@@ -74,15 +74,16 @@
       };
     };
 
-    lab = { self, pkgs, ... }: {
+    lab = { self, lib, pkgs, ... }: {
       imports =
         [
           self.nixosModules.headlessSystem
-          ../nixos/hosts/lab/default.nix
+          ../nixos/hosts/lab-jonsbo-n3/default.nix
           ../nixos/users/headless
         ];
 
       ahayzen = {
+        hostName = lib.mkForce "lab";
         testing = true;
 
         lab = {

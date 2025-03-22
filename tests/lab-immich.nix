@@ -73,15 +73,16 @@
       };
     };
 
-    lab = { self, pkgs, ... }: {
+    lab = { self, lib, pkgs, ... }: {
       imports =
         [
           self.nixosModules.headlessSystem
-          ../nixos/hosts/lab/default.nix
+          ../nixos/hosts/lab-jonsbo-n3/default.nix
           ../nixos/users/headless
         ];
 
       ahayzen = {
+        hostName = lib.mkForce "lab";
         testing = true;
 
         lab = {
@@ -267,14 +268,14 @@
       #
 
       # Check volumes are appearing
-      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/immich/server/profile")
-      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres")
-      lab.succeed("test -d /mnt/data/app/immich")
+      lab.succeed("test -d /mnt/pool/data/backup/lab/latest/docker-compose-runner/immich/server/profile")
+      lab.succeed("test -d /mnt/pool/data/backup/lab/latest/docker-compose-runner/immich/postgres")
+      lab.succeed("test -d /mnt/pool/data/app/immich")
 
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database-snapshot-" + labdayofweek + ".sql")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database-snapshot-" + labdayofweek + ".sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database.sql")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database.sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database-snapshot-" + labdayofweek + ".sql")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database-snapshot-" + labdayofweek + ".sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database.sql")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/latest/docker-compose-runner/immich/postgres/immich-database.sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
