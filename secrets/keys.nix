@@ -9,7 +9,6 @@ let
     desktop-scan-2017-kdab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDoQC469TZahbh90wUMeyPW/72PtZqD4KRz+QfekehIx";
     laptop-thinkpad-t480-kdab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFyQGokh7SHDi+mSwd3MgMAH0I0IF/BxG/tRiCYxKgPF";
     vps = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLzml0N0siR1R9l5Cfy9b8xURbCsYuheShVKyVAFu/d root@vps-904e01b6";
-    lab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPHWTIj0kjcH8z4LCUri8J/gugVldIpO+OfcGbSc4o8T root@andrew-Pangolin-Performance";
     lab-jonsbo-n3 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP0TmCLxDDbg72cJdGkeTqyuJ7hk2xVcDgg23TP8w3jA root@nixos";
     xps-13-9360 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM1+V0m26Ni1WjixUmmYlSV7oE/zCvz/CHaafk3CmL+L";
   };
@@ -35,7 +34,6 @@ in
       ];
 
       headless = [
-        host.lab
         host.lab-jonsbo-n3
         host.vps
       ];

@@ -56,7 +56,7 @@
   services.smartd.enable = lib.mkForce false;
 
   # Allow lab to login so that backups can occur
-  users.users.headless.openssh.authorizedKeys.keys = [ config.ahayzen.publicKeys.host.lab config.ahayzen.publicKeys.host.lab-jonsbo-n3 ];
+  users.users.headless.openssh.authorizedKeys.keys = [ config.ahayzen.publicKeys.host.lab-jonsbo-n3 ];
 
   # Allow synology to login to unpriv for ssh tunnel to VPN as fallback
   users.users.unpriv.openssh.authorizedKeys.keys = [ config.ahayzen.publicKeys.user.diskstation-forwarder ];
