@@ -41,7 +41,7 @@
 
     # As the folders are mapped we need to create with the right permissions
     #
-    # Note that this needs to be added as requires and after to sshfs
+    # Note that this needs to be added as requires and after to mergerfs
     systemd.services."docker-compose-runner-pre-init-bitwarden" = {
       wantedBy = [ "docker-compose-runner.service" ];
       before = [ "docker-compose-runner.service" ];
