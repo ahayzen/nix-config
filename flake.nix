@@ -120,28 +120,6 @@
           ];
         };
 
-        lab = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-
-          modules = [
-            self.nixosModules.headlessSystem
-            ./nixos/hosts/lab/default.nix
-            ./nixos/users/headless
-          ];
-        };
-        lab-vm-test = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-
-          modules = [
-            self.nixosModules.headlessSystem
-            ./nixos/hosts/lab/default.nix
-            ./nixos/users/headless
-            {
-              ahayzen.testing = true;
-            }
-          ];
-        };
-
         lab-jonsbo-n3 = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
