@@ -81,7 +81,7 @@
       lab.fail("test -e /mnt/pool/data/b2")
 
       # Restore from the a snapshot
-      restic_image_id = lab.succeed("docker images -q restic/restic").strip()
+      restic_image_id = lab.succeed("docker images -q ghcr.io/restic/restic").strip()
       assert restic_image_id != "", "restic image id is empty"
       lab.succeed("mkdir -m 0750 -p /mnt/restore")
       lab.succeed("chown unpriv:unpriv /mnt/restore")
