@@ -28,6 +28,15 @@
     services."docker-compose-runner".after = [ "mnt-pool.mount" ];
     services."docker-compose-runner".requires = [ "mnt-pool.mount" ];
 
+    services."docker-compose-runner-pre-init-bitwarden".after = [ "mnt-pool.mount" ];
+    services."docker-compose-runner-pre-init-bitwarden".requires = [ "mnt-pool.mount" ];
+
+    services."docker-compose-runner-pre-init-joplin".after = [ "mnt-pool.mount" ];
+    services."docker-compose-runner-pre-init-joplin".requires = [ "mnt-pool.mount" ];
+
+    services."docker-compose-runner-pre-init-sftpgo".after = [ "mnt-pool.mount" ];
+    services."docker-compose-runner-pre-init-sftpgo".requires = [ "mnt-pool.mount" ];
+
     services."docker-compose-runner-pre-init-vikunja".after = [ "mnt-pool.mount" ];
     services."docker-compose-runner-pre-init-vikunja".requires = [ "mnt-pool.mount" ];
   };
