@@ -13,7 +13,7 @@
     ahayzen.docker-compose-files = [ ./compose.vikunja.yml ];
 
     age.secrets = lib.mkIf (!config.ahayzen.testing) {
-      immich_env = {
+      vikunja_env = {
         file = ../../../../secrets/vikunja_env.age;
         # Set correct owner otherwise docker cannot read the file
         mode = "0600";
