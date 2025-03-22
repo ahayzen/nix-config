@@ -342,25 +342,25 @@
       #
 
       # Check volumes are appearing
-      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/caddy/persistent")
-      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/caddy/config")
-      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db")
-      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/media")
-      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/static")
-      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db")
-      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/media")
-      lab.succeed("test -d /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/static")
+      lab.succeed("test -d /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/caddy/persistent")
+      lab.succeed("test -d /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/caddy/config")
+      lab.succeed("test -d /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-ahayzen/db")
+      lab.succeed("test -d /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-ahayzen/media")
+      lab.succeed("test -d /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-ahayzen/static")
+      lab.succeed("test -d /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/db")
+      lab.succeed("test -d /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/media")
+      lab.succeed("test -d /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/static")
 
       # Check that known files exist and permissions are correct
-      lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + vpsdayofweek + ".sqlite3")
-      lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
-      lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + vpsdayofweek + ".sqlite3")
+      lab.succeed("ls -nd /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-ahayzen/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3")
+      lab.succeed("ls -nd /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
-      lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3")
-      lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
-      lab.succeed("ls -nd /mnt/data/backup/vps/latest/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3")
+      lab.succeed("ls -nd /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
+      lab.succeed("ls -nd /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))

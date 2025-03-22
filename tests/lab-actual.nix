@@ -269,13 +269,13 @@
       #
 
       # Check volumes are appearing
-      lab.succeed("test -d /mnt/pool/data/backup/lab/latest/docker-compose-runner/actual/data")
+      lab.succeed("test -d /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/actual/data")
 
       # Check that known files exist and permissions are correct
-      lab.succeed("test -e /mnt/pool/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite")
-      lab.succeed("ls -nd /mnt/pool/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/pool/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account.sqlite")
-      lab.succeed("ls -nd /mnt/pool/data/backup/lab/latest/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/actual/data/server-files/account-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/actual/data/server-files/account.sqlite")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/actual/data/server-files/account.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
