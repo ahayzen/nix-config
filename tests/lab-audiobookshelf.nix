@@ -269,13 +269,13 @@
       #
 
       # Check volumes are appearing
-      lab.succeed("test -d /mnt/pool/data/backup/lab/latest/docker-compose-runner/audiobookshelf/config")
+      lab.succeed("test -d /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/audiobookshelf/config")
 
       # Check that known files exist and permissions are correct
-      lab.succeed("test -e /mnt/pool/data/backup/lab/latest/docker-compose-runner/audiobookshelf/config/absdatabase-snapshot-" + labdayofweek + ".sqlite")
-      lab.succeed("ls -nd /mnt/pool/data/backup/lab/latest/docker-compose-runner/audiobookshelf/config/absdatabase-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/pool/data/backup/lab/latest/docker-compose-runner/audiobookshelf/config/absdatabase.sqlite")
-      lab.succeed("ls -nd /mnt/pool/data/backup/lab/latest/docker-compose-runner/audiobookshelf/config/absdatabase.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/audiobookshelf/config/absdatabase-snapshot-" + labdayofweek + ".sqlite")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/audiobookshelf/config/absdatabase-snapshot-" + labdayofweek + ".sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/audiobookshelf/config/absdatabase.sqlite")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/audiobookshelf/config/absdatabase.sqlite | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
