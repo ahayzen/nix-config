@@ -73,7 +73,7 @@
       };
     };
 
-    lab-jonsbo-n3 = { self, pkgs, ... }: {
+    lab = { self, lib, pkgs, ... }: {
       imports =
         [
           self.nixosModules.headlessSystem
@@ -82,6 +82,7 @@
         ];
 
       ahayzen = {
+        hostName = lib.mkForce "lab";
         testing = true;
 
         # TODO: Default to off when in testing and then opt-in?
@@ -203,19 +204,19 @@
     #
 
     with subtest("Ensure docker starts"):
-      lab_jonsbo_n3.wait_for_unit("docker-compose-runner", timeout=120)
+      lab.wait_for_unit("docker-compose-runner", timeout=120)
 
     with subtest("Rathole connection"):
       # Check we have a server control channel
       vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=jellyfin"' , timeout=10)
 
       # Check we have a client control channel
-      lab_jonsbo_n3.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
+      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
 
     with subtest("Test jellyfin"):
       # Wait for jellyfin to start
       wait_for_jellyfin_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Emby.Server.Implementations.ApplicationHost.*Core startup complete"'
-      lab_jonsbo_n3.wait_until_succeeds(wait_for_jellyfin_cmd, timeout=60)
+      lab.wait_until_succeeds(wait_for_jellyfin_cmd, timeout=60)
 
       # Test login page
       output = vps.succeed("curl --insecure --location --silent jellyfin.hayzen.uk")
@@ -224,12 +225,12 @@
     # TODO: could test backup and database, but we don't worry about this for now
 
     with subtest("General metrics (lab)"):
-      print(lab_jonsbo_n3.succeed("cat /etc/hosts"))
-      print(lab_jonsbo_n3.succeed("ps auxf"))
-      print(lab_jonsbo_n3.succeed("free -h"))
-      print(lab_jonsbo_n3.succeed("df -h"))
-      print(lab_jonsbo_n3.succeed("docker images"))
-      print(lab_jonsbo_n3.succeed("docker stats --no-stream"))
+      print(lab.succeed("cat /etc/hosts"))
+      print(lab.succeed("ps auxf"))
+      print(lab.succeed("free -h"))
+      print(lab.succeed("df -h"))
+      print(lab.succeed("docker images"))
+      print(lab.succeed("docker stats --no-stream"))
 
     with subtest("General metrics (vps)"):
       print(vps.succeed("cat /etc/hosts"))

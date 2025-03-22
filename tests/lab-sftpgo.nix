@@ -73,15 +73,16 @@
       };
     };
 
-    lab = { self, pkgs, ... }: {
+    lab = { self, lib, pkgs, ... }: {
       imports =
         [
           self.nixosModules.headlessSystem
-          ../nixos/hosts/lab/default.nix
+          ../nixos/hosts/lab-jonsbo-n3/default.nix
           ../nixos/users/headless
         ];
 
       ahayzen = {
+        hostName = lib.mkForce "lab";
         testing = true;
 
         lab = {
@@ -275,13 +276,13 @@
       #
 
       # Check volumes are appearing
-      lab.succeed("test -d /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/")
+      lab.succeed("test -d /mnt/pool/data/backup/lab/latest/docker-compose-runner/sftpgo/")
 
       # Check that known files exist and permissions are correct
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo.db")
-      lab.succeed("ls -nd /mnt/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo.db")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/latest/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
