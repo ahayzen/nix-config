@@ -160,6 +160,21 @@
             }
           ];
         };
+        laptop-dell-xps-9360 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+
+          modules = [
+            self.nixosModules.desktopSystem
+            ./nixos/hosts/laptop-dell-xps-9360
+            # TODO: include all users and have a config option?
+            # Then move into the desktopSystem module
+            ./nixos/users/andrew
+            {
+              home-manager.extraSpecialArgs = { inherit inputs outputs; };
+              home-manager.users.andrew = self.homeManagerModules.andrew;
+            }
+          ];
+        };
         laptop-thinkpad-t480-kdab = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
 
