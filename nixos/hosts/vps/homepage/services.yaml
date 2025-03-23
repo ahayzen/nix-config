@@ -79,7 +79,7 @@
         widget:
             url: http://glances:61208
             type: glances
-            metric: "fs:/etc/os-release"
+            metric: "fs:/etc/hosts"
             version: 4
 
 - Lab:
@@ -108,7 +108,7 @@
         widget:
             url: http://rathole:61208
             type: glances
-            metric: "fs:/etc/os-release"
+            metric: "fs:/etc/hosts"
             version: 4
 
     - Data Disk:
