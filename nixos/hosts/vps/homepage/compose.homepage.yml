@@ -9,7 +9,7 @@ services:
       - /etc/caddy/sites/home-hayzen-uk.Caddyfile:/etc/caddy/sites/home-hayzen-uk.Caddyfile:ro
 
   homepage:
-    image: ghcr.io/gethomepage/homepage:v1.0.4@sha256:786e5a266ec12cd2587f546c72e38f3a2e31bd385fb7134ce8df339b0d43b24b
+    image: ghcr.io/gethomepage/homepage:v1.1.1@sha256:7a6c4a35f16bd28cb0ef3cd7061bf4e574c5b29414c8169f02e5919b3f212455
     expose:
       - "3000"
     environment:
