@@ -19,7 +19,7 @@ services:
       - "303"
     environment:
       # Set the path for discovery
-      JELLYFIN_PublishedServerUrl: "http://lab-jonsbo-n3.local:8096"
+      JELLYFIN_PublishedServerUrl: "https://jellyfin.hayzen.uk"
     networks:
       - group-proxy
       # Needed for auto discovery and local lan quick path
