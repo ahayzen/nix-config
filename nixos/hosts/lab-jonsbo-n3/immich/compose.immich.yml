@@ -5,7 +5,7 @@
 services:
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:v1.129.0@sha256:70ad5939f6041a2d23c8c84d1e90cb43f55fb0513c45a579b7745dbd982ed2b5
+    image: ghcr.io/immich-app/immich-server:v1.131.1@sha256:4d75187cb4deda02cd7a696d7b2d08572a18316ba0d9b07613a14299ae612fd4
     # From hwaccel.transcoding.yml should allow for VAAPI to work
     devices:
       - /dev/dri:/dev/dri
@@ -40,7 +40,7 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:v1.129.0@sha256:a47f8edcca3b09f703b72b11cf2af2735aa3c3234f63e797fb4f7bcd7aebb400
+    image: ghcr.io/immich-app/immich-machine-learning:v1.131.1@sha256:5fc3c9b2294e31f1df09aa2c13c3ab3a10abe0139b73cf0d53fdb6042b390f99
     volumes:
       - /var/cache/docker-compose-runner/immich/machine-learning-cache:/cache
     env_file:
