@@ -58,6 +58,9 @@ If there are multiple movies that are part of a collection this information can 
 
 > The collection number can be found on TheMovieDB
 
-> For this to work in Jellyfin ensure the following
-> Libraries -> Movies -> Automatically add to collection is enabled
-> Metadata manager -> Collections -> Collection is not lock (rescan all libraries after unlocking)
+For this to work in Jellyfin ensure the following
+
+  * Libraries -> Movies -> Automatically add to collection is enabled
+  * Metadata manager -> Collections -> Collection is not lock (rescan all libraries after unlocking)
+
+> Do not rescan just the collections library, rescan all libraries
