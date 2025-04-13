@@ -10,7 +10,7 @@ Data is combined to one centtral location and then snapshot from there.
 
 Manually stored items
 
-  - Camera
+  - [Camera](./camera.md)
   - Documents
   - [Music](./music.md)
   - [Movies](./movies.md)
