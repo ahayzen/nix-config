@@ -8,6 +8,8 @@ services:
     environment:
       APP_BASE_URL: https://joplin.hayzen.uk
       APP_PORT: 22300
+      # Auto delete events otherwise the database increases in size
+      EVENTS_AUTO_DELETE_ENABLED: true
       SQLITE_DATABASE: /data/db.sqlite
     expose:
       - 22300
