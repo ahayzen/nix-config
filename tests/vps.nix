@@ -97,6 +97,7 @@
           rathole = false;
           restic = false;
           sftpgo = false;
+          vikunja = false;
         };
       };
 

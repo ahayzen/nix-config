@@ -34,6 +34,7 @@
           rathole = false;
           restic = true;
           sftpgo = false;
+          vikunja = false;
         };
       };
 
