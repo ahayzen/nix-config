@@ -38,7 +38,7 @@
                 "docker",
             ],
             "matchPackageNames": [
-                "docker.io/bitwarden/self-host",
+                "ghcr.io/bitwarden/self-host",
             ],
             "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\-(?<compatibility>.*)$",
         },
@@ -58,7 +58,7 @@
             "matchDatasources": [
                 "docker"
             ],
-            "matchFileNames": ["nixos/hosts/lab/jellyfin/**", "nixos/hosts/lab-jonsbo-n3/jellyfin/**"],
+            "matchFileNames": ["nixos/hosts/lab-jonsbo-n3/jellyfin/**"],
             "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
         },
         // Update immich together as these likely need manually pinning
@@ -66,7 +66,7 @@
             "matchDatasources": [
                 "docker"
             ],
-            "matchFileNames": ["nixos/hosts/lab/immich/**", "nixos/hosts/lab-jonsbo-n3/immich/**"],
+            "matchFileNames": ["nixos/hosts/lab-jonsbo-n3/immich/**"],
             "groupName": "docker-immich",
         },
         // Immich also have raw version number tags which confuse renovate
@@ -75,7 +75,7 @@
             "matchDatasources": [
                 "docker"
             ],
-            "matchFileNames": ["nixos/hosts/lab/immich/**", "nixos/hosts/lab-jonsbo-n3/immich/**"],
+            "matchFileNames": ["nixos/hosts/lab-jonsbo-n3/immich/**"],
             "matchPackageNames": ["ghcr.io/immich-app/**"],
             "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
         },
@@ -84,7 +84,7 @@
             "matchDatasources": [
                 "docker"
             ],
-            "matchFileNames": ["nixos/hosts/lab/immich/**", "nixos/hosts/lab-jonsbo-n3/immich/**"],
+            "matchFileNames": ["nixos/hosts/lab-jonsbo-n3/immich/**"],
             "matchPackageNames": ["docker.io/redis"],
             "matchUpdateTypes": ["major"],
             "enabled": false,
