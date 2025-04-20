@@ -34,3 +34,9 @@ Use [digiKam](https://flathub.org/apps/org.kde.digikam) to edit meta data.
 Highlight the media and select Tools -> Adjust Time Date to update the creation date for immich.
 
 > Use Timestamp adjustments interval if time is unknown to create an offset
+
+If the files are from a SD card which had an incorrect timestamp it is possible to use the following argument to mount
+
+```console
+-o time_offset=-360
+```
