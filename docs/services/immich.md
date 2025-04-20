@@ -26,11 +26,13 @@ TODO
 ## Configuration
 
   - Create an admin account and then user accounts
+  - Add Camera as an external library for the admin account
+  - Set transcode video concurrency to two under jobs
+
+For low powered hardware consider
+
   - Allow HEVC otherwise lots of videos are transcoded.
     - Settings -> Video Transcoding Settings -> Transcode Policy -> Accepted video codecs -> HEVC
-  - Add Camera as an external library for the admin account
-
-> Once we have new hardware allow for HEVC encoding
 
 ## Alternatives
 
