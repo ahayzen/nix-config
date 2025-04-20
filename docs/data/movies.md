@@ -64,3 +64,27 @@ For this to work in Jellyfin ensure the following
   * Metadata manager -> Collections -> Collection is not lock (rescan all libraries after unlocking)
 
 > Do not rescan just the collections library, rescan all libraries
+
+## DVD
+
+> You are legally responsible for any videos produced from these commands and should not redistribute material without correct licenses from the original creators.
+
+Attempt to use MakeMKV first and then fallback to other options.
+
+### MakeMKV
+
+Use [MakeMKV](https://flathub.org/apps/com/makemkv/MakeMKV) to extract the DVD into MKV files.
+
+> If you need a license key navigate to (https://forum.makemkv.com/forum/viewtopic.php?t=1053)
+
+Find which titles are the main title and extras you want (https://www.dvdcompare.net) can be useful for finding lengths of extras.
+
+Then extract all of them to a folder.
+
+### Handbrake
+
+Ensure that passthrough occurs for audio / subtitles / cropping.
+
+Then pick mkv as the container with h264 as the codec format.
+
+  * [MKV h264 576p DVD preset](./handbrake_dvd_h264_mkv_passthrough_576p25.json)
