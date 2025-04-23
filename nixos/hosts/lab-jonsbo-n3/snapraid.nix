@@ -41,11 +41,11 @@
         # Snapraid does not store file permissions so store in file
         #
         # Note restore with `setfacl --restore=/mnt/data1/snapraid.data1.facl`
-        "${pkgs.acl}/bin/getfacl --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.facl"
+        "${pkgs.bash}/bin/bash -c '${pkgs.acl}/bin/getfacl --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.facl'"
         # Snapraid does not store file extended attribute so store in file
         #
         # Note restore with `setfattr --restore=/mnt/data1/snapraid.data1.fattr`
-        "${pkgs.attr}/bin/getfattr --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.fattr"
+        "${pkgs.bash}/bin/bash -c '${pkgs.attr}/bin/getfattr --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.fattr'"
       ];
       Type = "oneshot";
     };
