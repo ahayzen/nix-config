@@ -22,9 +22,13 @@
       "/mnt/parity1/snapraid.parity"
     ];
 
-    # Check 1% of the data daily
+    # Every day scrub 1% of the data not scrubbed in the last 10d
+    #
+    # As oldest data is scrubbed first this means that everything is scrubbed
+    # after 100 days
     scrub = {
       interval = "08:30";
+      olderThan = 10;
       plan = 1;
     };
     sync.interval = "07:30";
