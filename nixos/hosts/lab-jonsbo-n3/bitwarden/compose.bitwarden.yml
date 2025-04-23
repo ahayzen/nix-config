@@ -21,7 +21,9 @@ services:
       - "8080"
     # Bitwarden requires at least 200M
     # https://bitwarden.com/help/install-and-deploy-unified-beta/#memory-usage
-    mem_limit: 512m
+    #
+    # However we have seen OOM at 512M, lets try 1024M
+    mem_limit: 1024m
     networks:
       - group-proxy
     restart: unless-stopped
