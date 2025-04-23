@@ -25,8 +25,11 @@
       dates = if config.ahayzen.headless then "07:30" else "00/2:30";
       persistent = false;
 
+      # For desktop machines when there are many kernels this can quickly fill
+      # the EFI partition, so only keep 7 days.
+      #
       # TODO: instead change to +3 from nix-env --delete-generations
-      options = "--delete-older-than 30d";
+      options = if config.ahayzen.headless then "--delete-older-than 30d" else "--delete-older-than 7d";
     };
 
     # Automatically optimise the store
