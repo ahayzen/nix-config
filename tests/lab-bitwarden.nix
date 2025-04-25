@@ -89,6 +89,7 @@
           actual = false;
           audiobookshelf = false;
           bitwarden = true;
+          bookstack = false;
           immich = false;
           jellyfin = false;
           joplin = false;

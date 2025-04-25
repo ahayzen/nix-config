@@ -1,0 +1,56 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  bookstack:
+    image: ghcr.io/linuxserver/bookstack:25.02.2@sha256:7889adcca57d874ac1f8b1de40b227f542765847543a843499e51000ff9cd28c
+    depends_on:
+      - bookstack-database
+    environment:
+      - PUID=1000
+      - PGID=1000
+    env_file:
+      - /etc/bookstack/settings.env
+      - /etc/bookstack/settings_secrets.env
+    networks:
+      - app-bookstack
+      - group-proxy
+    volumes:
+      - /var/cache/docker-compose-runner-user1000/bookstack/config:/config
+      # Items we want to backup
+      #
+      # .env
+      - /var/lib/docker-compose-runner-user1000/bookstack/env:/config/www/.env
+      # storage/backups/
+      - /var/lib/docker-compose-runner-user1000/bookstack/backups:/config/backups
+      # storage/uploads/files
+      - /var/lib/docker-compose-runner-user1000/bookstack/files:/config/www/files
+      # storage/uploads/images
+      - /var/lib/docker-compose-runner-user1000/bookstack/images:/config/www/images
+      # themes
+      - /var/lib/docker-compose-runner-user1000/bookstack/themes:/config/www/themes
+      # public/uploads
+      - /var/lib/docker-compose-runner-user1000/bookstack/uploads:/config/www/uploads
+    expose:
+      - 80
+    restart: unless-stopped
+
+  bookstack-database:
+    container_name: bookstack_database
+    image: ghcr.io/linuxserver/mariadb:11.4.5@sha256:43528387250c2c65e511ef53d42a13c30fa2b03b9d1e757b6ba4aa8fc86b050c
+    environment:
+      - PUID=1000
+      - PGID=1000
+    env_file:
+      - /etc/bookstack/settings.env
+      - /etc/bookstack/settings_secrets.env
+    expose:
+      - 3306
+    networks:
+      - app-bookstack
+    volumes:
+      - /etc/bookstack/backup.sh:/usr/local/bin/bookstack-backup:ro
+      - /var/cache/docker-compose-runner-user1000/bookstack/database:/config
+      - /var/lib/docker-compose-runner-user1000/bookstack/database:/var/lib/docker-compose-runner/bookstack/database
+    restart: unless-stopped

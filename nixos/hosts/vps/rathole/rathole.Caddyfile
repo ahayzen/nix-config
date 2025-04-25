@@ -29,6 +29,13 @@ bitwarden.hayzen.uk {
     reverse_proxy rathole:8080
 }
 
+# Bookstack proxy
+bookstack.hayzen.uk {
+    log
+
+    reverse_proxy rathole:6875
+}
+
 # Immich proxy
 immich.hayzen.uk {
     log

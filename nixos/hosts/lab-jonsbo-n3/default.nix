@@ -18,6 +18,7 @@
     ./actual
     ./audiobookshelf
     ./bitwarden
+    ./bookstack
     ./glances
     ./immich
     ./jellyfin
