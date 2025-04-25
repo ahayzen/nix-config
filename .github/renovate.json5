@@ -90,5 +90,31 @@
             "enabled": false,
             "groupName": "docker-immich-major",
         },
+        // Disable updates for nix packages following a branch
+        {
+            "matchDatasources": [
+                "nix"
+            ],
+            "matchFileNames": ["flake.nix"],
+            "matchPackageNames": [
+                "https://github.com/ryantm/agenix",
+                "https://github.com/catppuccin/nix",
+                "https://github.com/nix-community/disko",
+                "https://github.com/NixOS/nixos-hardware",
+            ],
+            "enabled": false,
+        },
+        // Ensure that home-manger and nixos only use release tags
+        {
+            "matchDatasources": [
+                "nix"
+            ],
+            "matchFileNames": ["flake.nix"],
+            "matchPackageNames": [
+                "https://github.com/nix-community/home-manager",
+                "https://github.com/NixOS/nixpkgs",
+            ],
+            "versioning": "regex:^(?<compatibility>\\w+)-(?<major>\\d+)\\.(?<minor>\\d+)$",
+        },
     ],
 }
