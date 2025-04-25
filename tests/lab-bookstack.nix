@@ -6,7 +6,7 @@
 # Test the following
 #
 # Lab
-# - vikunja
+# - bookstack
 # - rathole
 # - backup machines of lab
 #
@@ -18,7 +18,7 @@
 # - backup script
 
 (import ./lib.nix) {
-  name = "lab-vikunja-test";
+  name = "lab-bookstack-test";
   nodes = {
     vps = { self, pkgs, ... }: {
       imports =
@@ -44,7 +44,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "vikunja.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "bookstack.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -89,7 +89,7 @@
           actual = false;
           audiobookshelf = false;
           bitwarden = false;
-          bookstack = false;
+          bookstack = true;
           glances = false;
           immich = false;
           jellyfin = false;
@@ -97,7 +97,7 @@
           rathole = true;
           restic = false;
           sftpgo = false;
-          vikunja = true;
+          vikunja = false;
         };
       };
 
@@ -106,7 +106,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "vikunja.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "192.168.1.3" = [ "bookstack.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -210,23 +210,26 @@
     #
 
     with subtest("Ensure docker starts"):
-      lab.wait_for_unit("docker-compose-runner", timeout=240)
+      lab.wait_for_unit("docker-compose-runner", timeout=120)
 
     with subtest("Rathole connection"):
       # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=vikunja"' , timeout=10)
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=bookstack"' , timeout=10)
 
       # Check we have a client control channel
       lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
 
-    with subtest("Test vikunja"):
-      # Wait for vikunja to start
-      wait_for_vikunja_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "http server started on \[::\]:3456"'
-      lab.wait_until_succeeds(wait_for_vikunja_cmd, timeout=60)
+    with subtest("Test bookstack"):
+      # Wait for linuxserver containers to start
+      wait_for_bookstack_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "\[ls.io-init\] done."'
+      # Wait for at least two linuxservers to start
+      lab.wait_until_succeeds(wait_for_bookstack_cmd + " | wc -l | awk '{if ($1 > 1) {exit 0} else {exit 1}}'", timeout=120)
 
       # Test login page
-      output = vps.succeed("curl --insecure --location --silent vikunja.hayzen.uk/login")
-      assert "Vikunja" in output, f"'{output}' does not contain 'Vikunja'"
+      output = vps.succeed("curl --insecure --location --silent bookstack.hayzen.uk")
+      assert "BookStack" in output, f"'{output}' does not contain 'BookStack'"
+
+      print(lab.succeed("systemctl cat bookstack-db-snapshot.service"))
 
     #
     # Test that we can backup lab
@@ -238,25 +241,23 @@
     with subtest("Attempt to run lab backup"):
       backup.succeed("mkdir -p /tmp/backup-root-lab")
 
-      # Check that the permissions are correct
-      lab.succeed("ls -nd /var/lib/docker-compose-runner/vikunja/db/vikunja.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
       # Trigger a snapshot
       labdayofweek = datetime.datetime.today().strftime('%w')
-      lab.succeed("systemctl start vikunja-db-snapshot.service")
+      lab.succeed("systemctl start bookstack-db-snapshot.service")
 
       # Run the backup
       backup.succeed("/etc/ahayzen.com/backup.sh lab /etc/ssh/test_ssh_id_ed25519 headless@lab /tmp/backup-root-lab")
 
       # Check volumes are appearing
-      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/vikunja/db")
+      #
+      # TODO: could check for file volumes
+      backup.succeed("test -d /tmp/backup-root-lab/docker-compose-runner/bookstack/database")
 
       # Check that known files exist and permissions are correct
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/vikunja/db/vikunja-snapshot-" + labdayofweek + ".db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/vikunja/db/vikunja-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/vikunja/db/vikunja.db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/vikunja/db/vikunja.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bookstack/database/bookstack-database-snapshot-" + labdayofweek + ".sql")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bookstack/database/bookstack-database-snapshot-" + labdayofweek + ".sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bookstack/database/bookstack-database.sql")
+      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bookstack/database/bookstack-database.sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     #
     # Test auto backup in lab
@@ -271,13 +272,13 @@
       #
 
       # Check volumes are appearing
-      lab.succeed("test -d /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/vikunja/db")
+      lab.succeed("test -d /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bookstack/database")
 
       # Check that known files exist and permissions are correct
-      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/vikunja/db/vikunja-snapshot-" + labdayofweek + ".db")
-      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/vikunja/db/vikunja-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/vikunja/db/vikunja.db")
-      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/vikunja/db/vikunja.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bookstack/database/bookstack-database-snapshot-" + labdayofweek + ".sql")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bookstack/database/bookstack-database-snapshot-" + labdayofweek + ".sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bookstack/database/bookstack-database.sql")
+      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bookstack/database/bookstack-database.sql | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
@@ -296,4 +297,3 @@
       print(vps.succeed("docker stats --no-stream"))
   '';
 }
-

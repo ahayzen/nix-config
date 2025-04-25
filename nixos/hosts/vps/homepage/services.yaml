@@ -48,6 +48,12 @@
         description: "The #1 most trusted password manager"
         siteMonitor: "http://rathole:8080"
 
+    - Bookstack:
+        href: https://bookstack.hayzen.uk/
+        icon: bookstack.png
+        description: "Simple & Free Wiki Software"
+        siteMonitor: "http://rathole:6875"
+
     - Joplin:
         href: https://joplin.hayzen.uk/
         icon: joplin.png

@@ -227,6 +227,7 @@
             lab-actual-test = import ./tests/lab-actual.nix checkArgs;
             lab-audiobookshelf-test = import ./tests/lab-audiobookshelf.nix checkArgs;
             lab-bitwarden-test = import ./tests/lab-bitwarden.nix checkArgs;
+            lab-bookstack-test = import ./tests/lab-bookstack.nix checkArgs;
             lab-immich-test = import ./tests/lab-immich.nix checkArgs;
             lab-jellyfin-test = import ./tests/lab-jellyfin.nix checkArgs;
             lab-joplin-test = import ./tests/lab-joplin.nix checkArgs;

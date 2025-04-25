@@ -63,6 +63,7 @@ jobs:
           - lab-actual-test
           - lab-audiobookshelf-test
           - lab-bitwarden-test
+          - lab-bookstack-test
           - lab-immich-test
           - lab-jellyfin-test
           - lab-joplin-test

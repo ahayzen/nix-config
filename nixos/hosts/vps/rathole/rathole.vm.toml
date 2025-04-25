@@ -15,6 +15,9 @@ bind_addr = "0.0.0.0:13378"
 [server.services.bitwarden]
 bind_addr = "0.0.0.0:8080"
 
+[server.services.bookstack]
+bind_addr = "0.0.0.0:6875"
+
 [server.services.glances]
 bind_addr = "0.0.0.0:61208"
 
