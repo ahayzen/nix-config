@@ -43,6 +43,7 @@
 
     # Take a snapshot of the database daily
     systemd.services."immich-db-snapshot" = {
+      requires = [ "docker-compose-runner.service" ];
       serviceConfig = {
         Type = "oneshot";
       };
