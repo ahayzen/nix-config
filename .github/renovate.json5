@@ -94,7 +94,7 @@
         // otherwise every digest change causes a branch error when lock files updates anyway
         {
             "matchFileNames": ["flake.nix"],
-            "matchVersioning": ["semver-coerced"],
+            "versioning": "semver-coerced",
             "enabled": false,
         },
     ],
