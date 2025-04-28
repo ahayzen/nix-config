@@ -17,6 +17,8 @@ services:
       - /mnt/pool/data/app/immich:/usr/src/app/upload
       # External libraries
       - /mnt/pool/data/camera:/mnt/data/camera:ro
+      - /mnt/pool/data/user/andrew/Camera:/mnt/data/user/andrew/Camera:ro
+      - /mnt/pool/data/user/yumeka/Camera:/mnt/data/user/yumeka/Camera:ro
       # Custom locations of internals
       #
       # Profile picture
