@@ -52,7 +52,8 @@
         href: https://bookstack.hayzen.uk/
         icon: bookstack.png
         description: "Simple & Free Wiki Software"
-        siteMonitor: "http://rathole:6875"
+        # BookStack causes error 500 when using rathole url
+        siteMonitor: "https://bookstack.hayzen.uk"
 
     - Joplin:
         href: https://joplin.hayzen.uk/
