@@ -90,55 +90,12 @@
             "enabled": false,
             "groupName": "docker-immich-major",
         },
-        // Disable updates for nix packages following a branch
+        // Disable updates for nix semver updates, only allow for nixpkgs version
+        // otherwise every digest change causes a branch error when lock files updates anyway
         {
-            "matchDatasources": [
-                "git-refs"
-            ],
             "matchFileNames": ["flake.nix"],
-            "matchPackageNames": ["https://github.com/ryantm/agenix"],
+            "matchVersioning": ["semver-coerced"],
             "enabled": false,
-        },
-        {
-            "matchDatasources": [
-                "git-refs"
-            ],
-            "matchFileNames": ["flake.nix"],
-            "matchPackageNames": ["https://github.com/catppuccin/nix"],
-            "enabled": false,
-        },
-        {
-            "matchDatasources": [
-                "git-refs"
-            ],
-            "matchFileNames": ["flake.nix"],
-            "matchPackageNames": ["https://github.com/nix-community/disko"],
-            "enabled": false,
-        },
-        {
-            "matchDatasources": [
-                "git-refs"
-            ],
-            "matchFileNames": ["flake.nix"],
-            "matchPackageNames": ["https://github.com/NixOS/nixos-hardware"],
-            "enabled": false,
-        },
-        // Ensure that home-manger and nixos only use release tags
-        {
-            "matchDatasources": [
-                "git-refs"
-            ],
-            "matchFileNames": ["flake.nix"],
-            "matchPackageNames": ["https://github.com/nix-community/home-manager"],
-            "versioning": "regex:^(?<compatibility>\\w+)-(?<major>\\d+)\\.(?<minor>\\d+)$",
-        },
-        {
-            "matchDatasources": [
-                "git-refs"
-            ],
-            "matchFileNames": ["flake.nix"],
-            "matchPackageNames": ["https://github.com/NixOS/nixpkgs"],
-            "versioning": "regex:^(?<compatibility>\\w+)-(?<major>\\d+)\\.(?<minor>\\d+)$",
         },
     ],
 }
