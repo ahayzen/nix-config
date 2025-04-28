@@ -90,12 +90,5 @@
             "enabled": false,
             "groupName": "docker-immich-major",
         },
-        // Disable updates for nix semver updates, only allow for nixpkgs version
-        // otherwise every digest change causes a branch error when lock files updates anyway
-        {
-            "matchFileNames": ["flake.nix"],
-            "versioning": "semver-coerced",
-            "enabled": false,
-        },
     ],
 }
