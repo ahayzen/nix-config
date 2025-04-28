@@ -30,7 +30,7 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: Self-hosted Renovate
-        uses: renovatebot/github-action@v41.0.21
+        uses: renovatebot/github-action@v41.0.22
         with:
           configurationFile: .github/workflows/renovate-self-host.js
           token: ${{ steps.generate-token.outputs.token }}
