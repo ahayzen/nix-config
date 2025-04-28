@@ -93,7 +93,7 @@
         // Disable updates for nix packages following a branch
         {
             "matchDatasources": [
-                "nix"
+                "git-refs"
             ],
             "matchFileNames": ["flake.nix"],
             "matchPackageNames": ["https://github.com/ryantm/agenix"],
@@ -101,7 +101,7 @@
         },
         {
             "matchDatasources": [
-                "nix"
+                "git-refs"
             ],
             "matchFileNames": ["flake.nix"],
             "matchPackageNames": ["https://github.com/catppuccin/nix"],
@@ -109,7 +109,7 @@
         },
         {
             "matchDatasources": [
-                "nix"
+                "git-refs"
             ],
             "matchFileNames": ["flake.nix"],
             "matchPackageNames": ["https://github.com/nix-community/disko"],
@@ -117,7 +117,7 @@
         },
         {
             "matchDatasources": [
-                "nix"
+                "git-refs"
             ],
             "matchFileNames": ["flake.nix"],
             "matchPackageNames": ["https://github.com/NixOS/nixos-hardware"],
@@ -126,7 +126,7 @@
         // Ensure that home-manger and nixos only use release tags
         {
             "matchDatasources": [
-                "nix"
+                "git-refs"
             ],
             "matchFileNames": ["flake.nix"],
             "matchPackageNames": ["https://github.com/nix-community/home-manager"],
@@ -134,7 +134,7 @@
         },
         {
             "matchDatasources": [
-                "nix"
+                "git-refs"
             ],
             "matchFileNames": ["flake.nix"],
             "matchPackageNames": ["https://github.com/NixOS/nixpkgs"],
