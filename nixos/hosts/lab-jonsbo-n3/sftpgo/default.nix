@@ -40,7 +40,7 @@
         ExecStart = [
           # Sftpgo itself
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/sftpgo/backups"
-          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/user"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/sftpgo/user"
           # External folders
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/camera"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/documents"
@@ -48,6 +48,7 @@
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/movies"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/recordings"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/shows"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/user"
           # Database folder
           "${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/sftpgo"
         ];
