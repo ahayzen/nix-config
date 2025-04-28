@@ -90,5 +90,55 @@
             "enabled": false,
             "groupName": "docker-immich-major",
         },
+        // Disable updates for nix packages following a branch
+        {
+            "matchDatasources": [
+                "nix"
+            ],
+            "matchFileNames": ["flake.nix"],
+            "matchPackageNames": ["https://github.com/ryantm/agenix"],
+            "enabled": false,
+        },
+        {
+            "matchDatasources": [
+                "nix"
+            ],
+            "matchFileNames": ["flake.nix"],
+            "matchPackageNames": ["https://github.com/catppuccin/nix"],
+            "enabled": false,
+        },
+        {
+            "matchDatasources": [
+                "nix"
+            ],
+            "matchFileNames": ["flake.nix"],
+            "matchPackageNames": ["https://github.com/nix-community/disko"],
+            "enabled": false,
+        },
+        {
+            "matchDatasources": [
+                "nix"
+            ],
+            "matchFileNames": ["flake.nix"],
+            "matchPackageNames": ["https://github.com/NixOS/nixos-hardware"],
+            "enabled": false,
+        },
+        // Ensure that home-manger and nixos only use release tags
+        {
+            "matchDatasources": [
+                "nix"
+            ],
+            "matchFileNames": ["flake.nix"],
+            "matchPackageNames": ["https://github.com/nix-community/home-manager"],
+            "versioning": "regex:^(?<compatibility>\\w+)-(?<major>\\d+)\\.(?<minor>\\d+)$",
+        },
+        {
+            "matchDatasources": [
+                "nix"
+            ],
+            "matchFileNames": ["flake.nix"],
+            "matchPackageNames": ["https://github.com/NixOS/nixpkgs"],
+            "versioning": "regex:^(?<compatibility>\\w+)-(?<major>\\d+)\\.(?<minor>\\d+)$",
+        },
     ],
 }
