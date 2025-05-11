@@ -88,3 +88,9 @@ Ensure that passthrough occurs for audio / subtitles / cropping.
 Then pick mkv as the container with h264 as the codec format.
 
   * [MKV h264 576p DVD preset](./handbrake_dvd_h264_mkv_passthrough_576p25.json)
+
+### MKVToolNix
+
+Use [MKVToolNix](https://flathub.org/apps/org.bunkus.mkvtoolnix-gui) to adjust MKV metadata.
+
+Eg if the audio tracks need reordering and changing of default.
