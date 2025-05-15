@@ -78,3 +78,11 @@ get_iplayer --subtitles --tv-quality=720p --url=<url>
 ```
 
 > See [https://github.com/get-iplayer/get_iplayer/wiki/quality] for mode information.
+
+You can also download a whole series with the following command.
+
+The pid should be made from the series page and use that hash from `seriesId=` that is not the programme.
+
+```console
+get_iplayer --tv-lower-bitrate --subtitles --tv-quality=540p --pid=<pid> --pid-recursive
+```
