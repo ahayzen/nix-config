@@ -5,7 +5,7 @@
 { config, options, lib, pkgs, ... }:
 {
   options.ahayzen.lab.actual = lib.mkOption {
-    default = true;
+    default = !config.ahayzen.testing;
     type = lib.types.bool;
   };
 

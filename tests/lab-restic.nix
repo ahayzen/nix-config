@@ -24,18 +24,7 @@
         testing = true;
 
         lab = {
-          actual = false;
-          audiobookshelf = false;
-          bitwarden = false;
-          bookstack = false;
-          glances = false;
-          immich = false;
-          jellyfin = false;
-          joplin = false;
-          rathole = false;
           restic = true;
-          sftpgo = false;
-          vikunja = false;
         };
       };
 
