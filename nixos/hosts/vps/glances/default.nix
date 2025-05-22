@@ -5,7 +5,7 @@
 { config, options, lib, ... }:
 {
   options.ahayzen.vps.glances = lib.mkOption {
-    default = true;
+    default = !config.ahayzen.testing;
     type = lib.types.bool;
   };
 
