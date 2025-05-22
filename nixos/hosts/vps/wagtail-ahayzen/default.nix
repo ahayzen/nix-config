@@ -5,7 +5,7 @@
 { config, options, lib, pkgs, ... }:
 {
   options.ahayzen.vps.wagtail-ahayzen = lib.mkOption {
-    default = true;
+    default = !config.ahayzen.testing;
     type = lib.types.bool;
   };
 

@@ -33,10 +33,6 @@
 
         vps = {
           rathole = true;
-          glances = false;
-          homepage = false;
-          wagtail-ahayzen = false;
-          wagtail-yumekasaito = false;
         };
       };
 
@@ -85,20 +81,9 @@
         hostName = lib.mkForce "lab";
         testing = true;
 
-        # TODO: Default to off when in testing and then opt-in?
         lab = {
-          actual = false;
-          audiobookshelf = false;
-          bitwarden = false;
-          bookstack = false;
-          glances = false;
-          immich = false;
           jellyfin = true;
-          joplin = false;
           rathole = true;
-          restic = false;
-          sftpgo = false;
-          vikunja = false;
         };
       };
 

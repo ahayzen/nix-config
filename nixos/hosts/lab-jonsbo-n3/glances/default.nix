@@ -5,7 +5,7 @@
 { config, options, lib, ... }:
 {
   options.ahayzen.lab.glances = lib.mkOption {
-    default = true;
+    default = !config.ahayzen.testing;
     type = lib.types.bool;
   };
 
