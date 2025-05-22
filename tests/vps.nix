@@ -33,7 +33,6 @@
         testing = true;
 
         vps = {
-          rathole = false;
           glances = true;
           homepage = true;
           wagtail-ahayzen = true;
@@ -87,18 +86,7 @@
         testing = true;
 
         lab = {
-          actual = false;
-          audiobookshelf = false;
-          bitwarden = false;
-          bookstack = false;
           glances = true;
-          immich = false;
-          jellyfin = false;
-          joplin = false;
-          rathole = false;
-          restic = false;
-          sftpgo = false;
-          vikunja = false;
         };
       };
 
