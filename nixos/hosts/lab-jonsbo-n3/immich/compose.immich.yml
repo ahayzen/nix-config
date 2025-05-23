@@ -5,7 +5,7 @@
 services:
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:v1.132.3@sha256:6680d88486251b0264a78a1934fe82eef875555aa6d84d703a0980328a5d5c31
+    image: ghcr.io/immich-app/immich-server:v1.133.1@sha256:1daaf09ba61066184aad6e4f524b13e20f8884cb2030c314438e34cce9358b2c
     # From hwaccel.transcoding.yml should allow for VAAPI to work
     devices:
       - /dev/dri:/dev/dri
@@ -54,7 +54,7 @@ services:
 
   immich-redis:
     container_name: immich_redis
-    image: docker.io/redis:6.2.18@sha256:e88f17dbd436fa532b0be577b17f8afb3455dea89e04c2a1f50090fb254d3d4b
+    image: docker.io/redis:6.2.18@sha256:7821370701dd3cc40951386c48051666e2211c38a4c404d8d6bd5717ac8b30fd
     healthcheck:
       test: redis-cli ping || exit 1
     networks:
