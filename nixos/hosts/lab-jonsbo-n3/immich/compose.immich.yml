@@ -63,7 +63,7 @@ services:
 
   immich-database:
     container_name: immich_postgres
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0@sha256:c17734ad29f36e49b6207cd28fd6e2a1945c3befc7ff9118b25cd1b5c1c6c8c8
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0@sha256:b8a840254e8e2db8720db3700a104623da372056347e80b598f00dd4da8df568
     environment:
       POSTGRES_INITDB_ARGS: '--data-checksums'
     env_file:
