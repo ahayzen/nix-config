@@ -17,13 +17,12 @@ There are generally two file types to consider
 
 ```
 /camera
-  /Device
-    /YYYY
-      /Topic
+  /YYYY
+    /Device
+      /Event
         /image1.jpg
-  /Unknown
-    /YYYY
-      /Topic
+    /Unknown
+      /Event
         /image1.jpg
 ```
 
@@ -40,3 +39,5 @@ If the files are from a SD card which had an incorrect timestamp it is possible 
 ```console
 -o time_offset=-360
 ```
+
+> This can be changed via Edit Mount Options in GNOME Disks
