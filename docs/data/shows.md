@@ -59,6 +59,16 @@ Use a nix shell to get the latest package
 nix-shell -p get_iplayer
 ```
 
+Use the following for good defaults.
+
+```console
+// For movies
+get_iplayer --file-prefix="<name> (<releaseyear>)" --tv-quality="1080p,720p,540p" --subtitles --whitespace --url=<url>
+
+// For TV shows
+get_iplayer --file-prefix="<nameshort> S<00seriesnum>E<00episodenum>" --subdir --subdir-format="Season <00seriesnum>" --tv-quality="1080p,720p,540p" --subtitles --whitespace --pid=<pid> --pid-recursive
+```
+
 To retrieve a low quality 25fps copy with a resolution around 704x396.
 
 ```console
