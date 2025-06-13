@@ -27,6 +27,8 @@ There are generally two file types to consider
         /image1.jpg
 ```
 
+> Might change to `/camera/YYYY/Device/Event/image1.jpg`
+
 ## Meta data
 
 Use [digiKam](https://flathub.org/apps/org.kde.digikam) to edit meta data.
@@ -40,3 +42,5 @@ If the files are from a SD card which had an incorrect timestamp it is possible 
 ```console
 -o time_offset=-360
 ```
+
+> This can be changed via Edit Mount Options in GNOME Disks
