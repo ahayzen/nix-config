@@ -63,7 +63,7 @@ services:
 
   immich-database:
     container_name: immich_postgres
-    image: docker.io/tensorchord/pgvecto-rs:pg14-v0.2.0@sha256:739cdd626151ff1f796dc95a6591b55a714f341c737e27f045019ceabf8e8c52
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0@sha256:c17734ad29f36e49b6207cd28fd6e2a1945c3befc7ff9118b25cd1b5c1c6c8c8
     environment:
       POSTGRES_INITDB_ARGS: '--data-checksums'
     env_file:
@@ -74,10 +74,4 @@ services:
     volumes:
       - /var/cache/docker-compose-runner/immich/postgres:/var/lib/postgresql/data
       - /var/lib/docker-compose-runner/immich/postgres:/var/lib/docker-compose-runner/immich/postgres
-    #healthcheck:
-    #  test: pg_isready --dbname='immich' || exit 1; Chksum="$$(psql --dbname='immich' --username='postgres' --tuples-only --no-align --command='SELECT COALESCE(SUM(checksum_failures), 0) FROM pg_stat_database')"; echo "checksum failure count is $$Chksum"; [ "$$Chksum" = '0' ] || exit 1
-    #  interval: 5m
-    #  start_interval: 30s
-    #  start_period: 5m
-    command: ["postgres", "-c" ,"shared_preload_libraries=vectors.so", "-c", 'search_path="$$user", public, vectors', "-c", "logging_collector=on", "-c", "max_wal_size=2GB", "-c", "shared_buffers=512MB", "-c", "wal_compression=on"]
     restart: always
