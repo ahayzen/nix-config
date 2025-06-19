@@ -34,5 +34,8 @@
       # When headless have a reduced timeout to decrease boot times
       timeout = if config.ahayzen.headless then 1 else 5;
     };
+
+    # Ensure that SCSI module is loaded, otherwise optical drives cannot be loaded
+    kernelModules = [ "sg" ];
   };
 }
