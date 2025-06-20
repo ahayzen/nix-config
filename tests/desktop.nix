@@ -31,11 +31,15 @@
       services.displayManager.defaultSession = "gnome-xorg";
 
       # Force no date or seconds in the clock for consistent screenshots
+      # and enable Do Not Disturb to avoid notifications
       services.xserver.desktopManager.gnome = {
         extraGSettingsOverrides = ''
           [org.gnome.desktop.interface]
           clock-show-date = false
           clock-show-seconds = false
+
+          [org.gnome.desktop.notifications]
+          show-banners = false
         '';
 
         extraGSettingsOverridePackages = [
