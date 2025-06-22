@@ -22,7 +22,6 @@
     ./glances
     ./immich
     ./jellyfin
-    ./joplin
     ./rathole
     ./restic
     ./sftpgo

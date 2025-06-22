@@ -40,10 +40,10 @@ For equivalent prebuilt systems there are were similar options that were
 
   - ActualBudget
   - Audiobookshelf
+  - Bookstack
   - BitWarden
   - Immich
   - Jellyfin
-  - Joplin
   - Restic
   - SFTPGo
 
