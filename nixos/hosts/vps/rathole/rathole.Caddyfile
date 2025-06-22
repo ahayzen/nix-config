@@ -50,17 +50,6 @@ jellyfin.hayzen.uk {
     reverse_proxy rathole:8896
 }
 
-# Joplin proxy
-joplin.hayzen.uk {
-    log
-
-    reverse_proxy rathole:8223 {
-        # Ensure that upstream host is kept as joplin compares
-        # the origin host to the APP_BASE_URL
-        header_up Host "joplin.hayzen.uk"
-    }
-}
-
 # SFTPGo proxy
 sftpgo.hayzen.uk {
     log

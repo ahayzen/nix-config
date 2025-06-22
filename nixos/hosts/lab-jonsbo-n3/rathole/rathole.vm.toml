@@ -34,9 +34,6 @@ local_addr = "immich-server:2283"
 [client.services.jellyfin]
 local_addr = "jellyfin:8096"
 
-[client.services.joplin]
-local_addr = "joplin:22300"
-
 [client.services.sftpgo]
 local_addr = "sftpgo:8080"
 

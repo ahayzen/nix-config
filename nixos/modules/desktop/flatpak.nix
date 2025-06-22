@@ -34,7 +34,6 @@
       { appId = "com.discordapp.Discord"; origin = "flathub-nix"; }
       { appId = "com.spotify.Client"; origin = "flathub-nix"; }
       { appId = "com.unicornsonlsd.finamp"; origin = "flathub-nix"; }
-      { appId = "net.cozic.joplin_desktop"; origin = "flathub-nix"; }
       { appId = "org.gimp.GIMP"; origin = "flathub-nix"; }
       { appId = "org.inkscape.Inkscape"; origin = "flathub-nix"; }
       { appId = "org.libreoffice.LibreOffice"; origin = "flathub-nix"; }

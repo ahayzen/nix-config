@@ -55,12 +55,6 @@
         # BookStack causes error 500 when using rathole url
         siteMonitor: "https://bookstack.hayzen.uk"
 
-    - Joplin:
-        href: https://joplin.hayzen.uk/
-        icon: joplin.png
-        description: "Free your notes"
-        siteMonitor: "http://rathole:8223"
-
     - Vikunja:
         href: https://vikunja.hayzen.uk/
         icon: vikunja.png

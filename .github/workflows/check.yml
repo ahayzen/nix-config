@@ -66,7 +66,6 @@ jobs:
           - lab-bookstack-test
           - lab-immich-test
           - lab-jellyfin-test
-          - lab-joplin-test
           - lab-restic-test
           - lab-sftpgo-test
           - lab-vikunja-test
