@@ -27,7 +27,7 @@
 
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager/release-25.05";
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
