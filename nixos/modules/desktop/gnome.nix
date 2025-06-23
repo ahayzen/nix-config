@@ -6,7 +6,7 @@
   services = {
     # Do not install the apps for GNOME
     # https://nixos.org/manual/nixos/stable/#sec-gnome-without-the-apps
-    gnome.core-utilities.enable = false;
+    gnome.core-apps.enable = false;
 
     xserver = {
       # Enable the X11 windowing system.
