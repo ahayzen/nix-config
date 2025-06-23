@@ -39,6 +39,7 @@
           [org.gnome.mutter]
           dynamic-workspaces = true
           edge-tiling = true
+          experimental-features = ['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']
 
 
           # Enable night light
