@@ -161,11 +161,11 @@
       "image/gif" = [ "org.gnome.Loupe.desktop" ];
       "image/webp" = [ "org.gnome.Loupe.desktop" ];
       "image/tiff" = [ "org.gnome.Loupe.desktop" ];
-      "image/svg+xml" = ["org.gnome.Loupe.desktop" ];
+      "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
       # Extra specifics
       #
       # Directories
-      "inode/directory" = ["org.gnome.Nautilus.desktop"];
+      "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
       # PDF
       "document/pdf" = [ "org.gnome.Evince.desktop" ];
       "text/markdown" = [ "org.gnome.TextEditor" ];
