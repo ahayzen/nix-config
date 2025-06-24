@@ -169,8 +169,8 @@
       "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
       # PDF
       "document/pdf" = [ "org.gnome.Evince.desktop" ];
-      "text/markdown" = [ "org.gnome.TextEditor" ];
-      "text/plain" = [ "org.gnome.TextEditor" ];
+      "text/markdown" = [ "org.gnome.TextEditor.desktop" ];
+      "text/plain" = [ "org.gnome.TextEditor.desktop" ];
     };
   };
 }
