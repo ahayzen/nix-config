@@ -34,6 +34,7 @@
 
         vps = {
           glances = true;
+          gotify = true;
           homepage = true;
           wagtail-ahayzen = true;
           wagtail-yumekasaito = true;
@@ -44,7 +45,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
+        "127.0.0.1" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "gotify.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -95,7 +96,7 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
+        "192.168.1.3" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "gotify.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -237,6 +238,13 @@
       lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "Uvicorn running on http://0.0.0.0:61208"', timeout=30)
       vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "Uvicorn running on http://0.0.0.0:61208"', timeout=30)
 
+    with subtest("Ensure that gotify has started"):
+      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "Started listening for plain connection on tcp"', timeout=30)
+
+      # Test that we can access the web UI
+      output = vps.succeed("curl --insecure --location --silent gotify.hayzen.uk")
+      assert "Gotify" in output, f"'{output}' does not contain 'Gotify'"
+
     #
     # Test that we can backup and restore the VPS
     #
@@ -250,11 +258,13 @@
       # Check that the permissions are correct
       vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-ahayzen/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       vps.succeed("ls -nd /var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      vps.succeed("ls -nd /var/cache/docker-compose-runner/gotify/db/gotify.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
       vpsdayofweek = datetime.datetime.today().strftime('%w')
       vps.succeed("systemctl start wagtail-ahayzen-db-snapshot.service")
       vps.succeed("systemctl start wagtail-yumekasaito-db-snapshot.service")
+      vps.succeed("systemctl start gotify-db-snapshot.service")
 
       # Run the backup
       backup.succeed("/etc/ahayzen.com/backup.sh vps /etc/ssh/test_ssh_id_ed25519 headless@vps /tmp/backup-root-vps")
@@ -279,6 +289,9 @@
       backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
       backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+      backup.succeed("test -e /tmp/backup-root-vps/docker-compose-runner/gotify/data/gotify-snapshot-" + vpsdayofweek + ".db")
+      backup.succeed("ls -nd /tmp/backup-root-vps/docker-compose-runner/gotify/data/gotify-snapshot-" + vpsdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     # TODO: note this does not restore wagtail-yumekasaito
     with subtest("Attempt to run a restore (only wagtail-ahayzen)"):
@@ -351,6 +364,9 @@
       lab.succeed("ls -nd /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/db/db-snapshot-" + vpsdayofweek + ".sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       lab.succeed("test -e /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3")
       lab.succeed("ls -nd /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/wagtail-yumekasaito/db/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+
+      lab.succeed("test -e /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/gotify/data/gotify-snapshot-" + vpsdayofweek + ".db")
+      lab.succeed("ls -nd /mnt/pool/data/backup/vps/var/lib/docker-compose-runner/gotify/data/gotify-snapshot-" + vpsdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
