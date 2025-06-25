@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  gotify:
+    image: ghcr.io/gotify/server:2.6.3@sha256:dfbee7fc4701b300936a24b01d24620b4d62e405204c71fd749a63abfb9b4ec4 
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    environment:
+      GOTIFY_DATABASE_DIALECT: sqlite3
+      GOTIFY_DATABASE_CONNECTION: /app/db/gotify.db
+      GOTIFY_DEFAULTUSER_PASS: admin
+      GOTIFY_UPLOADEDIMAGESDIR: data/images
+      GOTIFY_PLUGINSDIR: data/plugins
+      GOTIFY_REGISTRATION: false
+    volumes:
+      - /var/cache/docker-compose-runner/gotify/db:/app/db
+      - /var/lib/docker-compose-runner/gotify/data:/app/data

@@ -13,6 +13,7 @@
     # Note that caddy should be first as other depend on it
     ./caddy
     ./glances
+    ./gotify
     ./hayzen-uk
     ./homepage
     ./rathole
