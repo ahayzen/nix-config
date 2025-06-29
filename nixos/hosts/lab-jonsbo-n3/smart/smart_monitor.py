@@ -28,11 +28,11 @@ def self_test_start(device: Device, test_type: str):
         return 0
 
     # Start a self test
-    (exit_code, test_result) = device.run_selftest(test_type)
-    if exit_code != 0:
+    result = device.run_selftest(test_type)
+    if result[0] != 0:
         print(
             "%s self test failed to run and wait: %s"
-            % (device.dev_reference, exit_code)
+            % (device.dev_reference, result)
         )
         return 1
 
