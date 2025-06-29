@@ -48,7 +48,7 @@ def self_test_wait(device: Device):
 
     # Wait for the test to complete
     test_result = device.get_selftest_result()
-    while test_result[0] != GET_SELFTEST_RESULT_IN_PROGRESS:
+    while test_result[0] == GET_SELFTEST_RESULT_IN_PROGRESS:
         test_result = device.get_selftest_result()
         sleep(1)
 
