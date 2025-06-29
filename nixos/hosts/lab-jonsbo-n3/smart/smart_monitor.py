@@ -29,6 +29,10 @@ def self_test_start(device: Device, test_type: str):
 
     # Start a self test
     result = device.run_selftest(test_type)
+    if result[0] == GET_SELFTEST_RESULT_IN_PROGRESS:
+        print("%s self test in progress ignore" % device.dev_reference)
+        return 0
+
     if result[0] != 0:
         print(
             "%s self test failed to run and wait: %s"
@@ -76,7 +80,7 @@ if __name__ == "__main__":
     day_of_year = datetime.now().timetuple().tm_yday
     week_of_year = day_of_year // 7
     monthly_cycle = week_of_year % 4 == 0
-    test_type = TEST_TYPE_LONG if monthly_cycle % 4 == 0 else TEST_TYPE_SHORT
+    test_type = TEST_TYPE_LONG if monthly_cycle else TEST_TYPE_SHORT
 
     # Find the devices
     devices = DeviceList()
