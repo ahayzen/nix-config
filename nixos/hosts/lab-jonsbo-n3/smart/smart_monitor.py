@@ -45,11 +45,14 @@ def self_test_start(device: Device, test_type: str):
 
 def self_test_wait(device: Device):
     print("%s waiting for test result" % device.dev_reference)
+    sleep(5)
 
     # Wait for the test to complete
     test_result = device.get_selftest_result()
+    print(test_result)
     while test_result[0] == GET_SELFTEST_RESULT_IN_PROGRESS:
         test_result = device.get_selftest_result()
+        print(test_result)
         sleep(1)
 
     # Check we have a successful test result
