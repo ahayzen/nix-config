@@ -12,8 +12,9 @@
     ./bindfs.nix
     ./mergerfs.nix
     ./snapraid.nix
-    # Backup schedule
+    # Backup, smart schedule
     ./backup.nix
+    ./smart
     # Services
     ./actual
     ./audiobookshelf
