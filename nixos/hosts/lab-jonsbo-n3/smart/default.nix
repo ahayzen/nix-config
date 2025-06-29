@@ -11,7 +11,7 @@
           let
             python = pkgs.python3.withPackages (ps: with ps; [ pysmart ]);
           in
-          "${python.interpreter} ${./smart_monitor.py}";
+          "${python.interpreter} -u ${./smart_monitor.py}";
         Type = "oneshot";
       };
     };
