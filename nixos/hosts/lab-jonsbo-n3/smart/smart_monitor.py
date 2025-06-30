@@ -45,15 +45,12 @@ def self_test_start(device: Device, test_type: str):
 
 def self_test_wait(device: Device):
     print("%s waiting for test result" % device.dev_reference)
-    sleep(5)
 
     # Wait for the test to complete
     test_result = device.get_selftest_result()
-    print(test_result)
     while test_result[0] == GET_SELFTEST_RESULT_IN_PROGRESS:
         test_result = device.get_selftest_result()
-        print(test_result)
-        sleep(1)
+        sleep(5)
 
     # Check we have a successful test result
     if test_result[0] != 0:
@@ -77,7 +74,7 @@ def self_test_wait(device: Device):
 
 if __name__ == "__main__":
     from datetime import datetime
-    from pySMART import DeviceList
+    from pySMART import Device
 
     # Long test once per month and short test for other weeks
     day_of_year = datetime.now().timetuple().tm_yday
@@ -86,20 +83,25 @@ if __name__ == "__main__":
     test_type = TEST_TYPE_LONG if monthly_cycle else TEST_TYPE_SHORT
 
     # Find the devices
-    devices = DeviceList()
+    nvme0 = Device("/dev/nvme0")
+    sda = Device("/dev/sda")
+    sdb = Device("/dev/sdb")
 
     # Attempt to run SMART on each device
-    for device in devices:
+    for device in (nvme0, sda, sdb):
         if self_test_start(device, test_type) != 0:
             exit(1)
 
     # Wait for completion
-    for device in devices:
+    #
+    # Not the nvme0 doesn't have complete SMART test results
+    # so skip otherwise we fail
+    for device in (sda, sdb):
         if self_test_wait(device) != 0:
             exit(1)
 
     # Check assessment and temperature of each device
-    for device in devices:
+    for device in (nvme0, sda, sdb):
         if device.assessment != ASSESSMENT_PASS:
             print(
                 "%s SMART assessment failed: %s"
