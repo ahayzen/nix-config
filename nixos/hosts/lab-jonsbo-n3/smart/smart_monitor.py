@@ -102,21 +102,21 @@ if __name__ == "__main__":
 
     # Check assessment and temperature of each device
     for device in (nvme0, sda, sdb):
+        print(
+            "%s SMART assessment: %s"
+            % (device.dev_reference, device.assessment)
+        )
         if device.assessment != ASSESSMENT_PASS:
-            print(
-                "%s SMART assessment failed: %s"
-                % (device.dev_reference, device.assessment)
-            )
             exit(1)
 
+        print(
+            "%s SMART temperature: %s"
+            % (device.dev_reference, device.temperature)
+        )
         if (
             device.temperature < TEMPERATURE_MIN
             or device.temperature > TEMPERATURE_MAX
         ):
-            print(
-                "%s temperature failed: %s"
-                % (device.dev_reference, device.temperature)
-            )
             exit(1)
 
     print("SMART monitor passed")
