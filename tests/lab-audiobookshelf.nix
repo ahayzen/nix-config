@@ -18,7 +18,7 @@
 # - backup script
 
 (import ./lib.nix) {
-  name = "lab-audiobookshelf-test";
+  name = "lab-abs-test";
   nodes = {
     vps = { self, pkgs, ... }: {
       imports =
