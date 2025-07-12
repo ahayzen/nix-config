@@ -10,5 +10,7 @@ networks:
   internet:
   # A group for proxied items
   group-proxy:
+  # A group for services
+  group-services:
   # A group for web
   group-web:

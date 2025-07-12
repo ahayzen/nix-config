@@ -13,6 +13,7 @@ services:
     networks:
       - internet
       - group-proxy
+      - group-services
       - group-web
     ports:
       - "80:80"
