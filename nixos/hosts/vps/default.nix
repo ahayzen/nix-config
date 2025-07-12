@@ -15,6 +15,7 @@
     ./glances
     ./hayzen-uk
     ./homepage
+    ./ntfy
     ./rathole
     ./wagtail-ahayzen
     ./wagtail-yumekasaito

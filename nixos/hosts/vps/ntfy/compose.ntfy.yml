@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  caddy:
+    volumes:
+      # Caddy configuration file
+      - /etc/caddy/sites/ntfy.Caddyfile:/etc/caddy/sites/ntfy.Caddyfile:ro
+
+  ntfy:
+    image: docker.io/binwiederhier/ntfy:v2.13@sha256:cd107fa9ecca863b99e5cdd335bf27b0584cc54d170f1d0939253f314e0fdd4d
+    command:
+      - serve
+    environment:
+      TZ: Europe/London
+      NTFY_BASE_URL: https://ntfy.hayzen.uk
+      NTFY_CACHE_FILE: /var/cache/ntfy/cache.db
+      NTFY_CACHE_DURATION: 72h
+      NTFY_AUTH_FILE: /var/cache/ntfy/auth.db
+      NTFY_AUTH_DEFAULT_ACCESS: deny-all
+      NTFY_BEHIND_PROXY: true
+      NTFY_ATTACHMENT_CACHE_DIR: /var/cache/ntfy/attachments
+      NTFY_ENABLE_LOGIN: true
+    networks:
+      - group-services
+    volumes:
+      - /var/cache/docker-compose-runner/ntfy:/var/cache/ntfy
+    expose:
+      - "80"
+    restart: unless-stopped
