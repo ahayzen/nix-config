@@ -9,7 +9,7 @@
       serviceConfig = {
         ExecStart =
           let
-            python = pkgs.python3.withPackages (ps: with ps; [ pysmart ]);
+            python = pkgs.python3.withPackages (ps: with ps; [ pysmart requests ]);
           in
           "${python.interpreter} -u ${./smart_monitor.py}";
         Type = "oneshot";

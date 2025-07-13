@@ -4,6 +4,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+import requests
 from pySMART import Device
 from time import sleep
 
@@ -14,6 +15,22 @@ TEMPERATURE_MAX = 50
 TEST_RESULT_PASS = "Completed without error"
 TEST_TYPE_SHORT = "short"
 TEST_TYPE_LONG = "long"
+
+
+def send_notification(title: str, message: str, priority: str):
+    token = ""
+    with open("/etc/ntfy/token", "r") as f:
+        token = f.read().strip()
+
+    requests.post(
+        "https://ntfy.hayzen.uk/lab-jonsbo-n3",
+        data=message,
+        headers={
+            "Authorization": "Bearer " + token,
+            "Priority": priority,
+            "Title": "SMART " + title,
+        },
+    )
 
 
 def self_test_start(device: Device, test_type: str):
@@ -88,6 +105,9 @@ if __name__ == "__main__":
     # Attempt to run SMART on each device
     for device in devices:
         if self_test_start(device, test_type) != 0:
+            send_notification(
+                device.dev_reference, "Test Failed to Start", "high"
+            )
             exit(1)
 
     # Wait for completion
@@ -98,6 +118,7 @@ if __name__ == "__main__":
             continue
 
         if self_test_wait(device) != 0:
+            send_notification(device.dev_reference, "Test Failed", "high")
             exit(1)
 
     # Check assessment and temperature of each device
@@ -107,6 +128,9 @@ if __name__ == "__main__":
             % (device.dev_reference, device.assessment)
         )
         if device.assessment != ASSESSMENT_PASS:
+            send_notification(
+                device.dev_reference, "Assessment Failed", "high"
+            )
             exit(1)
 
         print(
@@ -117,7 +141,11 @@ if __name__ == "__main__":
             device.temperature < TEMPERATURE_MIN
             or device.temperature > TEMPERATURE_MAX
         ):
+            send_notification(
+                device.dev_reference, "Temperature Failed", "high"
+            )
             exit(1)
 
     print("SMART monitor passed")
+    send_notification("", "Passed", "low")
     exit(0)
