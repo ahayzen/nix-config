@@ -29,8 +29,8 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System\" -H \"Priority: default\" -d \"Booted\" https://ntfy.hayzen.uk/lab-jonsbo-n3";
-      ExecStop = "${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System\" -H \"Priority: default\" -d \"Shutdown\" https://ntfy.hayzen.uk/lab-jonsbo-n3";
+      ExecStart = "/bin/sh -c '${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System\" -H \"Priority: default\" -d \"Booted\" https://ntfy.hayzen.uk/lab-jonsbo-n3'";
+      ExecStop = "/bin/sh -c '${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System\" -H \"Priority: default\" -d \"Shutdown\" https://ntfy.hayzen.uk/lab-jonsbo-n3'";
     };
   };
 
