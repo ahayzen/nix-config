@@ -19,4 +19,28 @@
       then ./ntfy_token.vm
       else config.age.secrets.ntfy_lab_jonsbo_n3_token.path;
   };
+
+  # Notify when the system boots or is shutdown
+  systemd.services."system-running-notify" = {
+    enable = !config.ahayzen.testing;
+    after = [ "network-online.target" ];
+    wantedBy = [ "multi-user.target" ];
+    requires = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System\" -H \"Priority: normal\" -d \"Booted\" https://ntfy.hayzen.uk/lab-jonsbo-n3";
+      ExecStop = "${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System\" -H \"Priority: normal\" -d \"Shutdown\" https://ntfy.hayzen.uk/lab-jonsbo-n3";
+    };
+  };
+
+  # Notify when an upgrade fails
+  systemd.services."nixos-upgrade" = {
+    serviceConfig = {
+      ExecStopPost = [
+        "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System Upgrade\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
+      ];
+    };
+  };
+
 }
