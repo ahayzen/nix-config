@@ -63,6 +63,10 @@
   systemd.services.snapraid-sync.serviceConfig.ExecStart = lib.mkForce [
     # Use --pre-hash option to ensure integrity as we do not have ECC memory
     "${pkgs.snapraid}/bin/snapraid --pre-hash sync"
+    ''${pkgs.curl}/bin/curl -u :''$(cat /etc/ntfy/token) -H "Title: Snapraid Sync" -H "Priority: low" -d "Success!" https://ntfy.hayzen.uk/lab-jonsbo-n3''
+  ];
+  systemd.services.snapraid-sync.serviceConfig.ExecStopPost = [
+    "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Snapraid Sync\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
   ];
 
   # Add a condition to nixos-upgrade
