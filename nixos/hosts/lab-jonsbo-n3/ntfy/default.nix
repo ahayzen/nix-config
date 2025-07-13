@@ -5,7 +5,7 @@
 { config, options, lib, pkgs, ... }:
 {
   age.secrets = lib.mkIf (!config.ahayzen.testing) {
-    ntfy_token = {
+    ntfy_lab_jonsbo_n3_token = {
       file = ../../../../secrets/ntfy_lab_jonsbo_n3_token.age;
       mode = "0644";
       owner = "unpriv";
