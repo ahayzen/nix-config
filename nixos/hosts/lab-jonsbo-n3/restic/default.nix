@@ -64,6 +64,9 @@
       requires = [ "docker-compose-runner.service" ];
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
+        ExecStopPost = [
+          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Local\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
+        ];
         Type = "oneshot";
       };
       script = ''
@@ -73,6 +76,7 @@
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_local /bin/sh -c "/usr/bin/restic snapshots"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_local /bin/sh -c "/usr/bin/restic stats --mode files-by-contents"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_local /bin/sh -c "/usr/bin/restic check --read-data-subset=1% --retry-lock=6h"
+        ${pkgs.curl}/bin/curl -u :''$(cat /etc/ntfy/token) -H "Title: Restic Local" -H "Priority: low" -d "Success!" https://ntfy.hayzen.uk/lab-jonsbo-n3
       '';
     };
 
@@ -80,6 +84,9 @@
       requires = [ "docker-compose-runner.service" ];
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
+        ExecStopPost = [
+          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Offsite\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
+        ];
         Type = "oneshot";
       };
       script = ''
@@ -89,6 +96,7 @@
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_offsite /bin/sh -c "/usr/bin/restic snapshots"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_offsite /bin/sh -c "/usr/bin/restic stats --mode files-by-contents"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t restic_offsite /bin/sh -c "/usr/bin/restic check --read-data-subset=1% --retry-lock=6h"
+        ${pkgs.curl}/bin/curl -u :''$(cat /etc/ntfy/token) -H "Title: Restic Offsite" -H "Priority: low" -d "Success!" https://ntfy.hayzen.uk/lab-jonsbo-n3
       '';
     };
 

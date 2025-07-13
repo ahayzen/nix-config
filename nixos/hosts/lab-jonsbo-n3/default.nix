@@ -15,6 +15,8 @@
     # Backup, smart schedule
     ./backup.nix
     ./smart
+    # Ntfy helpers
+    ./ntfy
     # Services
     ./actual
     ./audiobookshelf
