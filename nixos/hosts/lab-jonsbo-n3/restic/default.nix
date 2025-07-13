@@ -64,7 +64,7 @@
       requires = [ "docker-compose-runner.service" ];
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
-        ExecStopPost = [
+        ExecStopPost = lib.mkIf (!config.ahayzen.testing) [
           "/bin/sh -c 'if [ \"$$EXIT_STATUS\" == 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Local\" -H \"Priority: low\" -d \"Success\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
           "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Local\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
         ];
