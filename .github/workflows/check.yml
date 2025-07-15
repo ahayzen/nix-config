@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4.2.2
-      - uses: DeterminateSystems/flake-checker-action@v11
+      - uses: DeterminateSystems/flake-checker-action@v12
 
   nix-fmt:
     runs-on: ubuntu-24.04
