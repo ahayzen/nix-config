@@ -38,7 +38,7 @@ services:
 
   bookstack-database:
     container_name: bookstack_database
-    image: ghcr.io/linuxserver/mariadb:11.4.5@sha256:3c8da33fdf87c2d1d91c8711741703868382166407769669ffe2f610e7e8fafe
+    image: ghcr.io/linuxserver/mariadb:11.4.5@sha256:462b02915b0a4680203800b3b25667d99bc0538d7b22e336bd16350c6b24331c
     environment:
       - PUID=1000
       - PGID=1000
