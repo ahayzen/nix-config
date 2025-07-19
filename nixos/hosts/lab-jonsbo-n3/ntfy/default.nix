@@ -29,8 +29,8 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "/bin/sh -c '${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System\" -H \"Priority: default\" -d \"Booted\" https://ntfy.hayzen.uk/lab-jonsbo-n3-status'";
-      ExecStop = "/bin/sh -c '${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System\" -H \"Priority: default\" -d \"Shutdown\" https://ntfy.hayzen.uk/lab-jonsbo-n3-status'";
+      ExecStart = "/bin/sh -c '${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Tags: green_circle\" -H \"Title: System\" -H \"Priority: default\" -d \"Booted\" https://ntfy.hayzen.uk/lab-jonsbo-n3-status'";
+      ExecStop = "/bin/sh -c '${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Tags: red_circle\" -H \"Title: System\" -H \"Priority: default\" -d \"Shutdown\" https://ntfy.hayzen.uk/lab-jonsbo-n3-status'";
     };
   };
 
@@ -38,7 +38,7 @@
   systemd.services."nixos-upgrade" = {
     serviceConfig = {
       ExecStopPost = [
-        "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: System Upgrade\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3-status; fi'"
+        "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Tags: warning\" -H \"Title: System Upgrade\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3-status; fi'"
       ];
     };
   };
