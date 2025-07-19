@@ -17,7 +17,7 @@ TEST_TYPE_SHORT = "short"
 TEST_TYPE_LONG = "long"
 
 
-def send_notification(title: str, message: str, priority: str):
+def send_notification(title: str, message: str, priority: str, tags: str):
     token = ""
     with open("/etc/ntfy/token", "r") as f:
         token = f.read().strip()
@@ -29,6 +29,7 @@ def send_notification(title: str, message: str, priority: str):
             "Authorization": "Bearer " + token,
             "Priority": priority,
             "Title": "SMART " + title,
+            "Tags": tags,
         },
     )
 
@@ -106,7 +107,7 @@ if __name__ == "__main__":
     for device in devices:
         if self_test_start(device, test_type) != 0:
             send_notification(
-                device.dev_reference, "Test Failed to Start", "high"
+                device.dev_reference, "Test Failed to Start", "high", "warning"
             )
             exit(1)
 
@@ -118,7 +119,9 @@ if __name__ == "__main__":
             continue
 
         if self_test_wait(device) != 0:
-            send_notification(device.dev_reference, "Test Failed", "high")
+            send_notification(
+                device.dev_reference, "Test Failed", "high", "warning"
+            )
             exit(1)
 
     # Check assessment and temperature of each device
@@ -129,7 +132,10 @@ if __name__ == "__main__":
         )
         if device.assessment != ASSESSMENT_PASS:
             send_notification(
-                device.dev_reference, "Assessment Failed", "high"
+                device.dev_reference,
+                "Assessment Failed",
+                "high",
+                "warning",
             )
             exit(1)
 
@@ -142,10 +148,13 @@ if __name__ == "__main__":
             or device.temperature > TEMPERATURE_MAX
         ):
             send_notification(
-                device.dev_reference, "Temperature Failed", "high"
+                device.dev_reference,
+                "Temperature Failed",
+                "high",
+                "warning",
             )
             exit(1)
 
     print("SMART monitor passed")
-    send_notification("", "Passed", "low")
+    send_notification("", "Passed", "low", "tada")
     exit(0)
