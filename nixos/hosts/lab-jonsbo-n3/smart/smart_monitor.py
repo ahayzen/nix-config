@@ -23,7 +23,7 @@ def send_notification(title: str, message: str, priority: str):
         token = f.read().strip()
 
     requests.post(
-        "https://ntfy.hayzen.uk/lab-jonsbo-n3",
+        "https://ntfy.hayzen.uk/lab-jonsbo-n3-health",
         data=message,
         headers={
             "Authorization": "Bearer " + token,

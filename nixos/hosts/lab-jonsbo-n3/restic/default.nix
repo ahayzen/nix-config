@@ -65,8 +65,8 @@
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         ExecStopPost = lib.mkIf (!config.ahayzen.testing) [
-          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" == 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Local\" -H \"Priority: low\" -d \"Success\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
-          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Local\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
+          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" == 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Local\" -H \"Priority: low\" -d \"Success\" https://ntfy.hayzen.uk/lab-jonsbo-n3-backup; fi'"
+          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Local\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3-backup; fi'"
         ];
         Type = "oneshot";
       };
@@ -85,8 +85,8 @@
       serviceConfig = {
         ExecCondition = ''/bin/sh -c "[[ $( ${pkgs.systemd}/bin/systemctl is-active nixos-upgrade.service ) != activ* ]]"'';
         ExecStopPost = [
-          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" == 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Offsite\" -H \"Priority: low\" -d \"Success\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
-          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Offsite\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
+          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" == 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Offsite\" -H \"Priority: low\" -d \"Success\" https://ntfy.hayzen.uk/lab-jonsbo-n3-backup; fi'"
+          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Restic Offsite\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3-backup; fi'"
         ];
         Type = "oneshot";
       };
