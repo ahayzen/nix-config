@@ -14,8 +14,8 @@
       '';
       serviceConfig = {
         ExecStopPost = lib.mkIf (!config.ahayzen.testing) [
-          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" == 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Backup Machines\" -H \"Priority: low\" -d \"Success\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
-          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Backup Machines\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3; fi'"
+          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" == 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Backup Machines\" -H \"Priority: low\" -d \"Success\" https://ntfy.hayzen.uk/lab-jonsbo-n3-backup; fi'"
+          "/bin/sh -c 'if [ \"$$EXIT_STATUS\" != 0 ]; then ${pkgs.curl}/bin/curl -u :$(cat /etc/ntfy/token) -H \"Title: Backup Machines\" -H \"Priority: high\" -d \"Failure\" https://ntfy.hayzen.uk/lab-jonsbo-n3-backup; fi'"
         ];
         Type = "oneshot";
       };
