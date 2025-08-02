@@ -4,7 +4,7 @@
 
 services:
   bitwarden:
-    image: ghcr.io/bitwarden/self-host:2025.7.1-beta@sha256:8c1c5fae86de909666c733c6890922c20fd409035779d48eee5c997b75da79c1
+    image: ghcr.io/bitwarden/self-host:2025.7.2-beta@sha256:0c062f33949e4f251e357a08ae2684409fa28f87c0cdff1b2ffca2c142286183
     env_file:
       - /etc/bitwarden/settings.env
     # https://bitwarden.com/help/environment-variables/
