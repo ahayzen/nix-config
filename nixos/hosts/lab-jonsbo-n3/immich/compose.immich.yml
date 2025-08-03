@@ -12,9 +12,9 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       # Our data
-      - /mnt/pool/data/photostream:/usr/src/app/upload/library
+      - /mnt/pool/data/photostream:/data/library
       # Other app data that should persist
-      - /mnt/pool/data/app/immich:/usr/src/app/upload
+      - /mnt/pool/data/app/immich:/data
       # External libraries
       - /mnt/pool/data/camera:/mnt/data/camera:ro
       - /mnt/pool/data/user/andrew/Camera:/mnt/data/user/andrew/Camera:ro
@@ -22,11 +22,11 @@ services:
       # Custom locations of internals
       #
       # Profile picture
-      - /var/lib/docker-compose-runner/immich/server/profile:/usr/src/app/upload/profile
+      - /var/lib/docker-compose-runner/immich/server/profile:/data/profile
       # Run generate thumbnail job
-      - /mnt/pool/cache/immich/server/thumbs:/usr/src/app/upload/thumbs
+      - /mnt/pool/cache/immich/server/thumbs:/data/thumbs
       # Run transcode job
-      - /mnt/pool/cache/immich/server/encoded-video:/usr/src/app/upload/encoded-video
+      - /mnt/pool/cache/immich/server/encoded-video:/data/encoded-video
     env_file:
       - /etc/immich/settings.env
       - /etc/immich/settings_secrets.env
