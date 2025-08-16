@@ -71,7 +71,7 @@ Using libisoburn specific commands
 nix-shell -p dvdisaster libisoburn
 
 # Create the ISO
-xorrisofs -V "ARCHIVE_2000" -J -joliet-long -R -o output.iso /input/folder
+xorrisofs -V "ARCHIVE_2000" -J -joliet-long --modification-date=$(date +%Y%m%d%H%M%S%2N) -R -o output.iso /input/folder
 
 # Embed parity info into the ISO
 dvdisaster -i output.iso -mRS03 -x$(nproc) -c
