@@ -34,6 +34,21 @@ For low powered hardware consider
   - Allow HEVC otherwise lots of videos are transcoded.
     - Settings -> Video Transcoding Settings -> Transcode Policy -> Accepted video codecs -> HEVC
 
+## Import
+
+iCloud import via an export using [privacy.apple.com].
+
+```console
+immich-go upload from-icloud \
+  --admin-api-key=<adminapikey> \
+  --api-key=<apikey> \
+  --dry-run \
+  --date-range=YYYY \
+  --exclude-extensions ".png,.PNG" \
+  --server=http://server \
+  /path/to/icloudtakeout
+```
+
 ## Alternatives
 
   - Photoprism + Photosync
