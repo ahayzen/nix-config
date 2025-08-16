@@ -11,9 +11,33 @@ For cold-storage or archiving there are a few options
   * Using an offline HDD
   * Using Blu-ray disks
 
-## Copy files locally
+## Sources
 
-Use the following commands to copy the data locally and verify the checksum.
+Non-recoverable data (eg personal data not music / movies) are found in the following locations.
+
+Year based data
+
+```
+/camera/<year>/
+/photostream/<user>/<year>/
+/recordings/<year>/
+/user/<user>/Camera/<year>/
+```
+
+Other data
+
+```
+/app/
+/backup/
+/documents/
+/user/<user>/
+````
+
+## Copy files
+
+> This can be used to either for using offline HDD or for preparing files for Blu-ray.
+
+Use the following commands to copy the data and verify the checksum.
 
 ```bash
 export IDENTITY_FILE="~/.ssh/id_ed25519"
