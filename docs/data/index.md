@@ -49,13 +49,13 @@ The main pool of data is then structured as follows
   /<service>
 /data
   /app/<service>/
-  /backup/<device>/<latest|outdated>/
-  /camera/<device>/<year>/<album/month>/
+  /backup/<device>/<service>/
+  /camera/<year>/<device>/<album/month>/
   /documents/
   /music/<artist>/<album>/
   /movies/<movie>/
-  /photostream/<device>/<year>/
-  /recordings/<device>/<year>/
+  /photostream/<user>/<year>/
+  /recordings/<year>/<device>/
   /shows/<show>/<series>/
   /user/<user>/
 ```
