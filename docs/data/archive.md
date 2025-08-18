@@ -65,6 +65,8 @@ We need to do the following steps
 
 > Aim for around 20-30% of parity data
 
+> Ensure that your user has permission to write to `/dev/sr0` (eg is in the `cdrom` group)
+
 Using libisoburn specific commands
 
 ```bash
@@ -77,8 +79,15 @@ xorrisofs -V "ARCHIVE_2000" -J -joliet-long --modification-date=$(date +%Y%m%d%H
 dvdisaster -i output.iso -mRS03 -x$(nproc) -c
 
 # Burn the ISO to disk (formatting to enable BD Defect Management)
-xorrecord blank=format_overwrite dev=/dev/sr0 speed=4b output.iso -v
+xorrecord blank=format_overwrite dev=/dev/sr0 speed=4b output.iso -nopad -v
+
+# Alternatively the following command can format with BD Defect Management disabled
+# xorrecord blank=as_needed dev=/dev/sr0 speed=4b output.iso -v
 
 # Verify the disk
 dvdisaster -d /dev/sr0 -s
 ```
+
+> When using BD Defect Management xorrecord padding needs to be disabled for the ISO to fit
+
+> When using BD Defect Management this writes at a slower (half) speed
