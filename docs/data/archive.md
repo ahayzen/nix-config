@@ -46,13 +46,13 @@ export SRC=user@host:/src
 export DEST=/dest
 
 # Create a checksum on the source
-find $SRC -type f | xargs -I {} sh -c "sha256sum '{}' | head -c 64" | sha256sum
+find $SRC -type f | sort | xargs -I {} sh -c "sha256sum '{}' | head -c 64" | sha256sum
 
 # Copy the files from the source
 rsync --archive --checksum --human-readable --ignore-times --mkpath --partial --progress --rsh="ssh -i $IDENTITY_FILE -p $SSH_PORT" --rsync-path="sudo rsync" $SRC $DEST
 
 # Create a checksum on the destination
-find $DEST -type f | xargs -I {} sh -c "sha256sum '{}' | head -c 64" | sha256sum
+find $DEST -type f | sort | xargs -I {} sh -c "sha256sum '{}' | head -c 64" | sha256sum
 ```
 
 ## Blu-ray
@@ -77,8 +77,8 @@ xorrisofs -V "ARCHIVE_2000" -J -joliet-long --modification-date=$(date +%Y%m%d%H
 dvdisaster -i output.iso -mRS03 -x$(nproc) -c
 
 # Burn the ISO to disk (formatting to enable BD Defect Management)
-xorrecord blank=format_overwrite dev=/dev/sr0 speed=4b output.iso
+xorrecord blank=format_overwrite dev=/dev/sr0 speed=4b output.iso -v
 
 # Verify the disk
-dvdiaster -d /dev/sr0 -s
+dvdisaster -d /dev/sr0 -s
 ```
