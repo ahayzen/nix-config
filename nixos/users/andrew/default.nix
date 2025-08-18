@@ -10,6 +10,8 @@
   users.users.andrew = {
     description = "Andrew Hayzen";
     extraGroups = [
+      # Ensure we are in cdrom group to be able to write to drives
+      "cdrom"
       # Ensure we are in dialout group to access embedded boards serial port
       "dialout"
       # Add us to the sudo group
