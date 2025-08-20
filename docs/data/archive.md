@@ -91,3 +91,24 @@ dvdisaster -d /dev/sr0 -s
 > When using BD Defect Management xorrecord padding needs to be disabled for the ISO to fit
 
 > When using BD Defect Management this writes at a slower (half) speed
+
+## QR Code
+
+Information can be output into a QR code.
+
+```console
+nix-shell -p qrencode
+
+echo "Label: ARCHIVE_2000" > info.md
+echo "Date: $(date)"
+echo "Hash: $(sha256sum output.iso)"
+echo "Contents:"
+find ./input/folder/ -type d -printf '%P\n' >> info.md
+# Trim any extra folder information here
+
+qrencode -s 6 -l H -o qr.png < info.md
+```
+
+Now create a PDF file with a 12cm x 12cm area containing the QR code and `ARCHIVE_2000`.
+
+This should then fit inside the jewel case.
