@@ -100,9 +100,10 @@ Information can be output into a QR code.
 nix-shell -p qrencode
 
 echo "Label: ARCHIVE_2000" > info.md
-echo "Date: $(date)"
-echo "Hash: $(sha256sum output.iso)"
-echo "Contents:"
+echo "Date: $(date)" >> info.md
+echo "Hash: $(sha256sum output.iso)" >> info.md
+echo "Parity: dvdisaster=RS03" >> info.md
+echo "Contents:" >> info.md
 find ./input/folder/ -type d -printf '%P\n' >> info.md
 # Trim any extra folder information here
 
@@ -112,3 +113,46 @@ qrencode -s 6 -l H -o qr.png < info.md
 Now create a PDF file with a 12cm x 12cm area containing the QR code and `ARCHIVE_2000`.
 
 This should then fit inside the jewel case.
+
+## PDF CD Cover
+
+Create the following `cover.tex` file and enter the label and QR image.
+
+```tex
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{a4paper, margin=2cm}
+
+\begin{document}
+
+\fbox{%
+  \begin{minipage}[c][12cm][c]{12cm}
+    \centering
+    \Large{Archive YYYY-YYYY}
+
+    \includegraphics[width=0.75\textwidth]{qr.png}
+  \end{minipage}
+}
+
+\vfill
+
+\fbox{%
+  \begin{minipage}[c][12cm][c]{12cm}
+    \centering
+    \Large{Archive YYYY-YYYY}
+
+    \includegraphics[width=0.75\textwidth]{qr.png}
+  \end{minipage}
+}
+
+\end{document}
+```
+
+Now convert this to a pdf.
+
+```console
+nix-shell -p texlive.combined.scheme-small
+
+pdflatex cover.tex
+```
