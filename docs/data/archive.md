@@ -24,6 +24,8 @@ Year based data
 /user/<user>/Camera/<year>/
 ```
 
+> The following command can be used to discover folder sizes `sudo du --human-readable --max-depth=2 /camera /photostream /recordings /user/<user>/Camera | sort -k2`
+
 Other data
 
 ```
