@@ -97,8 +97,6 @@
     pkgs.gnome-disk-utility
     # gnome-console -> alacritty
     pkgs.nautilus
-    # TODO: is there an independent store, warehouse?
-    pkgs.gnome-software
     # TODO: could be missioncenter or usage
     pkgs.gnome-system-monitor
     pkgs.gnome-tour
@@ -117,12 +115,12 @@
       { appId = "org.gnome.Connections"; origin = "flathub-nix"; }
       # org.gnome.Contacts -> Thunderbird
       # org.gnome.Epiphany -> Firefox
-      { appId = "org.gnome.Evince"; origin = "flathub-nix"; }
       { appId = "org.gnome.font-viewer"; origin = "flathub-nix"; }
       { appId = "org.gnome.Loupe"; origin = "flathub-nix"; }
       { appId = "org.gnome.Logs"; origin = "flathub-nix"; }
       { appId = "org.gnome.Maps"; origin = "flathub-nix"; }
       # org.gnnome.Music -> Finamp
+      { appId = "org.gnome.Papers"; origin = "flathub-nix"; }
       { appId = "org.gnome.SimpleScan"; origin = "flathub-nix"; }
       { appId = "org.gnome.Snapshot"; origin = "flathub-nix"; }
       { appId = "org.gnome.TextEditor"; origin = "flathub-nix"; }
@@ -131,6 +129,9 @@
       # Extra GNOME apps
       { appId = "org.gnome.FileRoller"; origin = "flathub-nix"; }
       { appId = "org.gnome.NautilusPreviewer"; origin = "flathub-nix"; }
+      # Instead of gnome-software
+      { appId = "io.github.kolunmi.Bazaar"; origin = "flathub-nix"; }
+      { appId = "org.gnome.Firmware"; origin = "flathub-nix"; }
     ];
 
   # Setup default mime apps
@@ -168,7 +169,7 @@
       # Directories
       "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
       # PDF
-      "document/pdf" = [ "org.gnome.Evince.desktop" ];
+      "document/pdf" = [ "org.gnome.Papers.desktop" ];
       "text/markdown" = [ "org.gnome.TextEditor.desktop" ];
       "text/plain" = [ "org.gnome.TextEditor.desktop" ];
     };
