@@ -29,4 +29,4 @@ services:
       - /mnt/pool/backup/restic:/mnt/pool/backup/restic:rw
       # Cache uses XDG_CACHE_HOME/restic
       # https://restic.readthedocs.io/en/stable/manual_rest.html#caching
-      - /var/cache/docker-compose-runner/restic:/var/cache/restic:rw
+      - /var/cache/docker-compose-runner/restic/local:/var/cache/restic:rw
