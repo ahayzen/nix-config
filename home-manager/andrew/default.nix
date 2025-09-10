@@ -10,6 +10,7 @@
     ./git.nix
     ./gnome.nix
     ./helix.nix
+    ./jujutsu.nix
     ./starship.nix
     ./zellij.nix
   ];
