@@ -23,7 +23,6 @@
           color-modes = true;
           cursorline = true;
           true-color = true;
-          rulers = [ 80 100 120 ];
 
           lsp = {
             display-messages = true;
