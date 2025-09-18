@@ -97,6 +97,8 @@
     pkgs.gnome-disk-utility
     # gnome-console -> alacritty
     pkgs.nautilus
+    # TODO: could be an independent store warehouse / bazaar etc
+    pkgs.gnome-software
     # TODO: could be missioncenter or usage
     pkgs.gnome-system-monitor
     pkgs.gnome-tour
@@ -129,9 +131,6 @@
       # Extra GNOME apps
       { appId = "org.gnome.FileRoller"; origin = "flathub-nix"; }
       { appId = "org.gnome.NautilusPreviewer"; origin = "flathub-nix"; }
-      # Instead of gnome-software
-      { appId = "io.github.kolunmi.Bazaar"; origin = "flathub-nix"; }
-      { appId = "org.gnome.Firmware"; origin = "flathub-nix"; }
     ];
 
   # Setup default mime apps

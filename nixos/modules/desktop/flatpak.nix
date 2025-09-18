@@ -44,11 +44,5 @@
       { appId = "org.videolan.VLC"; origin = "flathub-nix"; }
       { appId = "us.zoom.Zoom"; origin = "flathub-nix"; }
     ];
-
-    # Enable automatic updates
-    update.auto = {
-      enable = !config.ahayzen.testing;
-      onCalendar = "00/1:15";
-    };
   };
 }
