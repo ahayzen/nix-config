@@ -164,7 +164,8 @@ keybinds {
     }
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
-        bind "Ctrl q" { Quit; }
+        // Disable quit from Ctrl+Q
+        // bind "Ctrl q" { Quit; }
         bind "Alt f" { ToggleFloatingPanes; }
         bind "Alt n" { NewPane; }
         bind "Alt i" { MoveTab "Left"; }
@@ -416,6 +417,7 @@ load_plugins {
 //
 // Custom config
 //
+show_startup_tips false
 pane_frames false
 theme "catppuccin-mocha"
 ui {
