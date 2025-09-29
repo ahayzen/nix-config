@@ -12,8 +12,19 @@
   config = lib.mkIf (config.ahayzen.vps.ntfy) {
     ahayzen.docker-compose-files = [ ./compose.ntfy.yml ];
 
+    age.secrets = lib.mkIf (!config.ahayzen.testing) {
+      immich_env = {
+        file = ../../../../secrets/ntfy_auth_secrets.age;
+        # Set correct owner otherwise docker cannot read the file
+        mode = "0600";
+        owner = "unpriv";
+        group = "unpriv";
+      };
+    };
+
     environment.etc = {
       "caddy/sites/ntfy.Caddyfile".source = ./ntfy.Caddyfile;
+      "ntfy/auth_secrets.env".source = if config.ahayzen.testing then ./auth_secrets.vm.env else config.age.secrets.ntfy_auth_secrets.path;
     };
 
     # Take a snapshot of the database daily
@@ -41,6 +52,8 @@
 
       services."docker-compose-runner".restartTriggers = [
         (builtins.hashFile "sha256" config.environment.etc."caddy/sites/ntfy.Caddyfile".source)
+        # Agenix path with a version that can be bumped
+        "/etc/ntfy/auth_secrets.env-1"
       ];
     };
   };
