@@ -13,7 +13,7 @@
     ahayzen.docker-compose-files = [ ./compose.ntfy.yml ];
 
     age.secrets = lib.mkIf (!config.ahayzen.testing) {
-      immich_env = {
+      ntfy_auth_secrets = {
         file = ../../../../secrets/ntfy_auth_secrets.age;
         # Set correct owner otherwise docker cannot read the file
         mode = "0600";
