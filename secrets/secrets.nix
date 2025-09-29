@@ -11,6 +11,7 @@ in
 
   "local-py_ahayzen-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
   "local-py_yumekasaito-com.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
+  "ntfy_auth_secrets.age".publicKeys = [ publicKeys.host.vps ] ++ publicKeys.group.users.developer;
 
   "bookstack_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
   "bitwarden_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
