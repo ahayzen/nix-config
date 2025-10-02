@@ -54,7 +54,7 @@ services:
 
   immich-redis:
     container_name: immich_redis
-    image: docker.io/redis:6.2.19@sha256:15d7379ba6fe26d9680139f341e98d713637cc5b3c443e3a4ee5bc1cb88c00ac
+    image: docker.io/redis:6.2.19@sha256:1a1394b2feea67b9984ff7a12cab6d5e30c54b8dd3524a637f995dbc376dd1db
     healthcheck:
       test: redis-cli ping || exit 1
     networks:
