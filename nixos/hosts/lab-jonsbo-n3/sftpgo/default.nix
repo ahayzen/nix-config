@@ -51,7 +51,7 @@
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/shows"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/user"
           # Database folder
-          "${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/sftpgo"
+          "${pkgs.coreutils}/bin/mkdir -p /var/cache/docker-compose-runner/sftpgo"
         ];
         User = "unpriv";
         Group = "unpriv";
@@ -66,7 +66,10 @@
         Type = "oneshot";
       };
 
-      script = ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/sftpgo/sftpgo.db ".backup /var/lib/docker-compose-runner/sftpgo/sftpgo-snapshot-$(date +%w).db"'';
+      script = ''
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/sftpgo
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/cache/docker-compose-runner/sftpgo/sftpgo.db ".backup /var/lib/docker-compose-runner/sftpgo/sftpgo-snapshot-$(date +%w).db"
+      '';
     };
 
     systemd.timers."sftpgo-db-snapshot" = {
