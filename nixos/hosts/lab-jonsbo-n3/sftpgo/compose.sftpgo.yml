@@ -31,7 +31,7 @@ services:
       # SFTPGo home
       - /mnt/mapping-pool-user1000/data/app/sftpgo/user:/srv/sftpgo/data
       # SFTP settings
-      - /var/lib/docker-compose-runner-user1000/sftpgo:/var/lib/sftpgo
+      - /var/cache/docker-compose-runner-user1000/sftpgo:/var/lib/sftpgo
       # Other data
       - /mnt/mapping-pool-user1000/data/camera:/mnt/data/camera
       - /mnt/mapping-pool-user1000/data/documents:/mnt/data/documents
