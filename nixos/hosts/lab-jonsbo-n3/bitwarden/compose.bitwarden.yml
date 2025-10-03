@@ -14,8 +14,6 @@ services:
       BW_DB_PROVIDER: "sqlite"
       BW_DB_FILE: "/etc/bitwarden/vault.db"
       # Disable account registration
-      #
-      # Allow for now to setup accounts
       globalSettings__disableUserRegistration: true
     expose:
       - "8080"
@@ -29,4 +27,4 @@ services:
     restart: unless-stopped
     volumes:
       # Bitwarden uses uid 1000, so use our mapped folder
-      - /var/lib/docker-compose-runner-user1000/bitwarden/config:/etc/bitwarden
+      - /var/cache/docker-compose-runner-user1000/bitwarden/config:/etc/bitwarden
