@@ -27,4 +27,4 @@ services:
       # Uploaded files
       - /mnt/mapping-pool-user1000/data/app/vikunja/files:/app/vikunja/files
       # Database
-      - /var/lib/docker-compose-runner-user1000/vikunja/db:/db
+      - /var/cache/docker-compose-runner-user1000/vikunja/db:/db
