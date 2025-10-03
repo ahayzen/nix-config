@@ -50,7 +50,7 @@
           # Sftpgo itself
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/vikunja/files"
           # Database folder
-          "${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/vikunja/db"
+          "${pkgs.coreutils}/bin/mkdir -p /var/cache/docker-compose-runner/vikunja/db"
         ];
         User = "unpriv";
         Group = "unpriv";
@@ -65,7 +65,10 @@
         Type = "oneshot";
       };
 
-      script = ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/vikunja/db/vikunja.db ".backup /var/lib/docker-compose-runner/vikunja/db/vikunja-snapshot-$(date +%w).db"'';
+      script = ''
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/vikunja/db
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/cache/docker-compose-runner/vikunja/db/vikunja.db ".backup /var/lib/docker-compose-runner/vikunja/db/vikunja-snapshot-$(date +%w).db"
+      '';
     };
 
     systemd.timers."vikunja-db-snapshot" = {

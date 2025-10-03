@@ -19,7 +19,10 @@
           Type = "oneshot";
         };
 
-        script = ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/audiobookshelf/config/absdatabase.sqlite ".backup /var/lib/docker-compose-runner/audiobookshelf/config/absdatabase-snapshot-$(date +%w).sqlite"'';
+        script = ''
+          /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/audiobookshelf/config
+          /run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/cache/docker-compose-runner/audiobookshelf/config/absdatabase.sqlite ".backup /var/lib/docker-compose-runner/audiobookshelf/config/absdatabase-snapshot-$(date +%w).sqlite"
+        '';
       };
 
       timers."audiobookshelf-db-snapshot" = {

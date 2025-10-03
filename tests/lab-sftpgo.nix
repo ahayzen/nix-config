@@ -232,7 +232,7 @@
       backup.succeed("mkdir -p /tmp/backup-root-lab")
 
       # Check that the permissions are correct
-      lab.succeed("ls -nd /var/lib/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("ls -nd /var/cache/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
       labdayofweek = datetime.datetime.today().strftime('%w')
@@ -247,8 +247,6 @@
       # Check that known files exist and permissions are correct
       backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db")
       backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/sftpgo/sftpgo.db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
 
     #
@@ -269,8 +267,6 @@
       # Check that known files exist and permissions are correct
       lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db")
       lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/sftpgo/sftpgo-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/sftpgo/sftpgo.db")
-      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/sftpgo/sftpgo.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
