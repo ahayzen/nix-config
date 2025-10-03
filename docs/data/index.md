@@ -12,6 +12,7 @@ Manually stored items
 
   - [Camera](./camera.md)
   - Documents
+  - Files
   - [Music](./music.md)
   - [Movies](./movies.md)
   - Recordings (edited videos)
