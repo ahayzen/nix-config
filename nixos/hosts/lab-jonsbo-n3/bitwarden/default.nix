@@ -46,7 +46,7 @@
       wantedBy = [ "docker-compose-runner.service" ];
       before = [ "docker-compose-runner.service" ];
       serviceConfig = {
-        ExecStart = "${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/bitwarden/config";
+        ExecStart = "${pkgs.coreutils}/bin/mkdir -p /var/cache/docker-compose-runner/bitwarden/config";
         User = "unpriv";
         Group = "unpriv";
         RemainAfterExit = true;
@@ -60,7 +60,10 @@
         Type = "oneshot";
       };
 
-      script = ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/bitwarden/config/vault.db ".backup /var/lib/docker-compose-runner/bitwarden/config/vault-snapshot-$(date +%w).db"'';
+      script = ''
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/bitwarden/config
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/cache/docker-compose-runner/bitwarden/config/vault.db ".backup /var/lib/docker-compose-runner/bitwarden/config/vault-snapshot-$(date +%w).db"
+      '';
     };
 
     systemd.timers."bitwarden-db-snapshot" = {

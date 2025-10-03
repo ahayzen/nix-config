@@ -226,12 +226,12 @@
       backup.succeed("mkdir -p /tmp/backup-root-lab")
 
       # Bitwarden database can take a while to appear
-      wait_for_bitwarden_db = 'ls -nd /var/lib/docker-compose-runner/bitwarden/config/vault.db'
+      wait_for_bitwarden_db = 'ls -nd /var/cache/docker-compose-runner/bitwarden/config/vault.db'
       lab.wait_until_succeeds(wait_for_bitwarden_db, timeout=60)
 
       # Check that the permissions are correct
-      lab.succeed("ls -nd /var/lib/docker-compose-runner-user1000/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 201000) {exit 0} else {exit 1}}'")
-      lab.succeed("ls -nd /var/lib/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("ls -nd /var/cache/docker-compose-runner-user1000/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 201000) {exit 0} else {exit 1}}'")
+      lab.succeed("ls -nd /var/cache/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
       labdayofweek = datetime.datetime.today().strftime('%w')
@@ -246,8 +246,6 @@
       # Check that known files exist and permissions are correct
       backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db")
       backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      backup.succeed("test -e /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault.db")
-      backup.succeed("ls -nd /tmp/backup-root-lab/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     #
     # Test auto backup in lab
@@ -267,8 +265,6 @@
       # Check that known files exist and permissions are correct
       lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db")
       lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bitwarden/config/vault-snapshot-" + labdayofweek + ".db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
-      lab.succeed("test -e /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bitwarden/config/vault.db")
-      lab.succeed("ls -nd /mnt/pool/data/backup/lab/var/lib/docker-compose-runner/bitwarden/config/vault.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
     with subtest("General metrics (lab)"):
       print(lab.succeed("cat /etc/hosts"))
