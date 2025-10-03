@@ -32,6 +32,7 @@ Other data
 /app/
 /backup/
 /documents/
+/files/
 /user/<user>/
 ````
 
