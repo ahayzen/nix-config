@@ -11,7 +11,7 @@ services:
       - group-proxy
     volumes:
       # Backup the database
-      - /var/lib/docker-compose-runner/audiobookshelf/config:/config
+      - /var/cache/docker-compose-runner/audiobookshelf/config:/config
       # We do not need to backup the podcasts content or metadata
       - /var/cache/docker-compose-runner/audiobookshelf/podcasts:/podcasts
       - /var/cache/docker-compose-runner/audiobookshelf/metadata:/metadata
