@@ -19,6 +19,7 @@
           Type = "oneshot";
         };
 
+        # TODO: backup user-files database too
         script = ''/run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/lib/docker-compose-runner/actual/data/server-files/account.sqlite ".backup /var/lib/docker-compose-runner/actual/data/server-files/account-snapshot-$(date +%w).sqlite"'';
       };
 
