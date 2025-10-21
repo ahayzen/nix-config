@@ -24,17 +24,13 @@ jobs:
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@v6
 
-  flake-checker:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v5.0.0
-      - uses: DeterminateSystems/flake-checker-action@v12
-
   nix-fmt:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5.0.0
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: nix fmt
         run: nix fmt
       - name: git diff
@@ -52,7 +48,7 @@ jobs:
 
   nix-build-check:
     # Run after pre checks
-    needs: [license-check, flake-checker, nix-fmt, shellcheck]
+    needs: [license-check, nix-fmt, shellcheck]
     runs-on: ubuntu-24.04
     name: "nix-build-check-${{ matrix.test }}"
     strategy:
@@ -72,7 +68,9 @@ jobs:
           - vps-test
     steps:
       - uses: actions/checkout@v5.0.0
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: nix build
         # nix flake check doesn't have a way to specify a specific test to run
         # https://github.com/NixOS/nix/issues/8881
@@ -80,11 +78,13 @@ jobs:
 
   nix-eval-home-configuration:
     # Run after pre checks
-    needs: [license-check, flake-checker, nix-fmt, shellcheck]
+    needs: [license-check, nix-fmt, shellcheck]
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v5.0.0
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: nix eval
         run: |
           nix eval .#homeConfigurations.andrew.activationPackage.drvPath
@@ -92,7 +92,7 @@ jobs:
 
   nixos-anywhere-vm-test:
     # Run after pre checks
-    needs: [license-check, flake-checker, nix-fmt, shellcheck]
+    needs: [license-check, nix-fmt, shellcheck]
     runs-on: ubuntu-24.04
     name: "nixos-anywhere-${{ matrix.test }}"
     strategy:
@@ -103,7 +103,9 @@ jobs:
           - vps-vm-test
     steps:
       - uses: actions/checkout@v5.0.0
-      - uses: DeterminateSystems/nix-installer-action@v20
+      - uses: cachix/install-nix-action@v31
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: nixos-anywhere --vm-test
         # Use stable version from nixpkgs due to
         # https://github.com/nix-community/nixos-anywhere/issues/375
