@@ -1,0 +1,42 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  paperless-broker:
+    image: docker.io/library/redis:8.2.2@sha256:4521b581dbddea6e7d81f8fe95ede93f5648aaa66a9dacd581611bf6fe7527bd
+    volumes:
+      - /var/cache/docker-compose-runner/paperless/broker:/data
+    networks:
+      - app-paperless
+    restart: unless-stopped
+
+  paperless-webserver:
+    container_name: paperless_webserver
+    image: ghcr.io/paperless-ngx/paperless-ngx:2.19.3@sha256:321ca858e4b6ce9dc416dbcb7c0691d545e3e9b0f44cf420f75c22098854ca25
+    environment:
+      # No automatic consumption directory
+      PAPERLESS_CONSUMER_DISABLE: true
+      PAPERLESS_FILENAME_FORMAT: "{{ created_year }}/{{ correspondent }}/{{ created }} - {{ title }}"
+      PAPERLESS_OCR_LANGUAGE: eng
+      # Additional languages to install
+      PAPERLESS_OCR_LANGUAGES: jpn
+      PAPERLESS_REDIS: redis://paperless-broker:6379
+      PAPERLESS_TIME_ZONE: "Europe/London"
+      PAPERLESS_URL: https://paperless.hayzen.uk
+    env_file:
+      - /etc/paperless/settings_secrets.env
+    depends_on:
+      - paperless-broker
+    networks:
+      - app-paperless
+    ports:
+      - "8000:8000"
+    volumes:
+      # Where the database is stored
+      - /var/cache/docker-compose-runner/paperless/data:/usr/src/paperless/data
+      # Where documents are stored
+      - /mnt/pool/data/documents:/usr/src/paperless/media
+      # Where document_exporter can export to
+      - /mnt/pool/app/paperless/export:/usr/src/paperless/export
+    restart: unless-stopped

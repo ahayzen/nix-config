@@ -44,8 +44,10 @@ For equivalent prebuilt systems there are were similar options that were
   - BitWarden
   - Immich
   - Jellyfin
+  - Paperless
   - Restic
   - SFTPGo
+  - Vikunja
 
 ## Backup
 
