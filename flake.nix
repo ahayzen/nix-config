@@ -246,6 +246,7 @@
             lab-bookstack-test = import ./tests/lab-bookstack.nix checkArgs;
             lab-immich-test = import ./tests/lab-immich.nix checkArgs;
             lab-jellyfin-test = import ./tests/lab-jellyfin.nix checkArgs;
+            lab-paperless-test = import ./tests/lab-paperless.nix checkArgs;
             lab-restic-test = import ./tests/lab-restic.nix checkArgs;
             lab-sftpgo-test = import ./tests/lab-sftpgo.nix checkArgs;
             lab-vikunja-test = import ./tests/lab-vikunja.nix checkArgs;
