@@ -4,7 +4,7 @@
 
 services:
   sftpgo:
-    image: ghcr.io/drakkan/sftpgo:v2.6.6@sha256:ca17d735651ce1b5c54a8fa2d4fb9c85036d4137e32b700de260324619ff3f88
+    image: ghcr.io/drakkan/sftpgo:v2.7@sha256:24f68c1e6617f3999debde0478f435d375d496c46644b82d3ca154842d4f6c40
     environment:
       # Allow for connections to continue for 5s before killing
       SFTPGO_GRACE_TIME: 5
