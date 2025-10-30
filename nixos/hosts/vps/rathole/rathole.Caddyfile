@@ -57,6 +57,13 @@ sftpgo.hayzen.uk {
     reverse_proxy rathole:8880
 }
 
+# Paperless proxy
+paperless.hayzen.uk {
+    log
+
+    reverse_proxy rathole:8026
+}
+
 # WebDav proxy
 #
 # Note we need the webdav folder to be handled too not just sub paths

@@ -25,6 +25,7 @@
     ./glances
     ./immich
     ./jellyfin
+    ./paperless
     ./rathole
     ./restic
     ./sftpgo

@@ -28,6 +28,8 @@ services:
       - "13378"
       # Vikunja
       - "3456"
+      # Paperless
+      - "8026"
     networks:
       - group-proxy
       # Needed to open port on server
