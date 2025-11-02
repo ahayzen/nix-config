@@ -48,7 +48,11 @@
         Type = "oneshot";
       };
 
+      # Also touch the .immich file so that it changes as otherwise snapraid sometimes
+      # detects it as a copy when it's contents has changed.
       script = ''
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/immich/server/profile/
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/touch /var/lib/docker-compose-runner/immich/server/profile/.immich
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t immich_postgres sh -c "pg_dumpall --clean --if-exists --username=postgres > /var/lib/docker-compose-runner/immich/postgres/immich-database.sql"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -t immich_postgres sh -c "pg_dumpall --clean --if-exists --username=postgres > /var/lib/docker-compose-runner/immich/postgres/immich-database-snapshot-$(date +%w).sql"
       '';
