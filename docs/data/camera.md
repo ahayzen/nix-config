@@ -30,14 +30,28 @@ There are generally two file types to consider
 
 Use [digiKam](https://flathub.org/apps/org.kde.digikam) to edit meta data.
 
-Highlight the media and select Tools -> Adjust Time Date to update the creation date for immich.
+### Adjusting exif dates
+
+Using digiKam highlight the media and select Tools -> Adjust Time Date to update the creation date for immich.
 
 > Use Timestamp adjustments interval if time is unknown to create an offset
+
+### Creating XMP files
+
+Using digiKam navigate to Settings -> Configure Digikam -> Metadata page and choose `Write to XMP sidecar only`.
+
+Now adjust the dates as before, but a separate .xmp sidecar file will appear.
+
+> Immich sometimes reads exif tags that cannot be changed easily, so using a XMP sidecar file to override can resolve this
+
+### SD Card offset
 
 If the files are from a SD card which had an incorrect timestamp it is possible to use the following argument to mount
 
 ```console
 -o time_offset=-360
 ```
+
+This is also due to Linux considering SD cards / exFAT as UTC, using -360 is effectively UTC-6.
 
 > This can be changed via Edit Mount Options in GNOME Disks
