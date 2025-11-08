@@ -41,7 +41,7 @@
           # Database folder
           "${pkgs.coreutils}/bin/mkdir -p /var/cache/docker-compose-runner/paperless/data"
           # Data folders
-          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/app/paperless/export"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/paperless/export"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/documents"
         ];
         User = "unpriv";
