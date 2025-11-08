@@ -244,9 +244,9 @@
       lab.succeed("systemctl start paperless-db-snapshot.service")
 
       # Test that export works
-      lab.succeed("test -d /mnt/pool/app/paperless/export")
-      lab.succeed("test -e /mnt/pool/app/paperless/export/paperless-export-snapshot-" + labdayofweek + ".zip")
-      lab.succeed("ls -nd /mnt/pool/app/paperless/export/paperless-export-snapshot-" + labdayofweek + ".zip | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
+      lab.succeed("test -d /mnt/pool/data/app/paperless/export")
+      lab.succeed("test -e /mnt/pool/data/app/paperless/export/paperless-export-snapshot-" + labdayofweek + ".zip")
+      lab.succeed("ls -nd /mnt/pool/data/app/paperless/export/paperless-export-snapshot-" + labdayofweek + ".zip | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
       
       # Run the backup
       backup.succeed("/etc/ahayzen.com/backup.sh lab /etc/ssh/test_ssh_id_ed25519 headless@lab /tmp/backup-root-lab")

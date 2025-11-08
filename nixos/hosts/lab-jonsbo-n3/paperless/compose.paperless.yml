@@ -39,5 +39,5 @@ services:
       # Where documents are stored
       - /mnt/mapping-pool-user1000/data/documents:/usr/src/paperless/media
       # Where document_exporter can export to
-      - /mnt/mapping-pool-user1000/app/paperless/export:/usr/src/paperless/export
+      - /mnt/mapping-pool-user1000/data/app/paperless/export:/usr/src/paperless/export
     restart: unless-stopped
