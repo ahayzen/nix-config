@@ -6,8 +6,8 @@
 - Files:
     - Paperless:
         href: https://paperless.hayzen.uk/
-        icon: paperlessngx.png
-        description: "A community-supported supercharged document management system"
+        icon: paperless-ngx.png
+        description: "A supercharged document management system"
         siteMonitor: "http://rathole:8026"
 
     - SFTPGo:
