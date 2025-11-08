@@ -34,7 +34,6 @@ services:
       - /var/cache/docker-compose-runner-user1000/sftpgo:/var/lib/sftpgo
       # Other data
       - /mnt/mapping-pool-user1000/data/camera:/mnt/data/camera
-      - /mnt/mapping-pool-user1000/data/documents:/mnt/data/documents
       - /mnt/mapping-pool-user1000/data/files:/mnt/data/files
       - /mnt/mapping-pool-user1000/data/music:/mnt/data/music
       - /mnt/mapping-pool-user1000/data/movies:/mnt/data/movies

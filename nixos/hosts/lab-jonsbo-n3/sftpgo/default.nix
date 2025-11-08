@@ -43,7 +43,6 @@
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/sftpgo/user"
           # External folders
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/camera"
-          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/documents"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/files"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/music"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/movies"
