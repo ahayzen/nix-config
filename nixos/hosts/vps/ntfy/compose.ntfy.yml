@@ -22,6 +22,7 @@ services:
       NTFY_BEHIND_PROXY: true
       NTFY_ATTACHMENT_CACHE_DIR: /var/cache/ntfy/attachments
       NTFY_ENABLE_LOGIN: true
+      NTFY_REQUIRE_LOGIN: true
     env_file:
       - /etc/ntfy/auth_secrets.env
     networks:
