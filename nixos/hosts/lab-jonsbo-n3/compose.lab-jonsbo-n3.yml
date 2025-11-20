@@ -15,4 +15,5 @@ networks:
   # App specific group
   app-bookstack:
   app-immich:
+  app-nextcloud:
   app-paperless:
