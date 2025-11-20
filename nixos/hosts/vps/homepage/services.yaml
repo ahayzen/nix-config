@@ -10,6 +10,13 @@
         description: "A supercharged document management system"
         siteMonitor: "http://rathole:8026"
 
+    - Nextcloud:
+        href: https://nextcloud.hayzen.uk/
+        icon: nextcloud.png
+        description: "Regain control over your data"
+        # Nextcloud likely requires correct address otherwise insecure proxy
+        siteMonitor: "https://nextcloud.hayzen.uk"
+
     - SFTPGo:
         href: https://sftpgo.hayzen.uk/
         icon: sftpgo.png

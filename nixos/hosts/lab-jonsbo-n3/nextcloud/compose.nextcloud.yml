@@ -1,0 +1,63 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  nextcloud:
+    container_name: nextcloud
+    image: docker.io/library/nextcloud:32.0.1@sha256:d572839eeb693026d72a0c6aa48076df0bb8930797ea321e604936ef7189d06e
+    environment:
+      # Space separated trusted domains
+      # https://github.com/nextcloud/docker?tab=readme-ov-file#trusted-domains-trusted_domains
+      NEXTCLOUD_TRUSTED_DOMAINS: "nextcloud.hayzen.uk"
+      # Increase the PHP upload limit
+      #
+      # https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/big_file_upload_configuration.html
+      #
+      # TODO: ensure caddy also supports this (request_body?)
+      PHP_UPLOAD_LIMIT: 128G
+      APACHE_BODY_LIMIT: 0
+      # Do not rewrite IPs as behind reverse proxy
+      # APACHE_DISABLE_REWRITE_IP: 1
+      TRUSTED_PROXIES: "127.0.0.1 172.16.0.0/12 192.168.0.0/16"
+      OVERWRITEHOST: "nextcloud.hayzen.uk"
+      OVERWRITECLIURL: "https://nextcloud.hayzen.uk"
+      OVERWRITEPROTOCOL: "https"
+    depends_on:
+      - nextcloud-redis
+    expose:
+      - 80
+    networks:
+      - app-nextcloud
+      - group-proxy
+    restart: unless-stopped
+    user: "1000:1000"
+    volumes:
+      # Configuration
+      - /var/cache/docker-compose-runner-user1000/nextcloud/html:/var/www/html
+      # Note we mount into /usr/src/nextcloud as this is rsynced into the config dir
+      # https://github.com/nextcloud/docker/blob/f2ab521657fe2e550cd39307c8dd3912eca7506d/docker-entrypoint.sh#L192
+      - /etc/nextcloud/custom.config.php:/usr/src/nextcloud/config/custom.config.php:ro
+      - /etc/nextcloud/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+      # PHP temp directory
+      - /mnt/mapping-pool-user1000/data/app/nextcloud/tmp:/var/tmp/nextcloud/upload
+      # # User data
+      # - /mnt/mapping-pool-user1000/data/app/nextcloud/data/andrew:/var/www/html/data/andrew
+      # - /mnt/mapping-pool-user1000/data/app/nextcloud/data/yumeka:/var/www/html/data/yumeka
+      # - /mnt/mapping-pool-user1000/data/user/andrew:/var/www/html/data/andrew/files
+      # - /mnt/mapping-pool-user1000/data/user/yumeka:/var/www/html/data/yumeka/files
+      # Shared mounts
+      #
+      # TODO: mark items as writable
+      - /mnt/mapping-pool-user1000/data/camera:/mnt/pool/data/camera:ro
+      - /mnt/mapping-pool-user1000/data/files:/mnt/pool/data/files:ro
+      - /mnt/mapping-pool-user1000/data/movies:/mnt/pool/data/movies:ro
+      - /mnt/mapping-pool-user1000/data/music:/mnt/pool/data/music:ro
+      - /mnt/mapping-pool-user1000/data/recordings:/mnt/pool/data/recordings:ro
+      - /mnt/mapping-pool-user1000/data/shows:/mnt/pool/data/shows:ro
+
+  nextcloud-redis:
+    image: docker.io/library/redis:8.4.0@sha256:43355efd22490e31ca14b9d569367d05121e2be61fd8e47937563ae2a80952ae
+    networks:
+      - app-nextcloud
+    restart: unless-stopped
