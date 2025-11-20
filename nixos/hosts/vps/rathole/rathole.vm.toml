@@ -27,6 +27,9 @@ bind_addr = "0.0.0.0:8283"
 [server.services.jellyfin]
 bind_addr = "0.0.0.0:8896"
 
+[server.services.nextcloud]
+bind_addr = "0.0.0.0:8081"
+
 [server.services.paperless]
 bind_addr = "0.0.0.0:8026"
 

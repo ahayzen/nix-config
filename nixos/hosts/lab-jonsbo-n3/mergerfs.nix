@@ -31,6 +31,9 @@
     services."docker-compose-runner-pre-init-bitwarden".after = [ "mnt-pool.mount" ];
     services."docker-compose-runner-pre-init-bitwarden".requires = [ "mnt-pool.mount" ];
 
+    services."docker-compose-runner-pre-init-nextcloud".after = [ "mnt-pool.mount" ];
+    services."docker-compose-runner-pre-init-nextcloud".requires = [ "mnt-pool.mount" ];
+
     services."docker-compose-runner-pre-init-sftpgo".after = [ "mnt-pool.mount" ];
     services."docker-compose-runner-pre-init-sftpgo".requires = [ "mnt-pool.mount" ];
 
