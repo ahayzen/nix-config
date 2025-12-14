@@ -50,6 +50,13 @@ jellyfin.hayzen.uk {
     reverse_proxy rathole:8896
 }
 
+# Nextcloud proxy
+nextcloud.hayzen.uk {
+    log
+
+    reverse_proxy rathole:8081
+}
+
 # SFTPGo proxy
 sftpgo.hayzen.uk {
     log
