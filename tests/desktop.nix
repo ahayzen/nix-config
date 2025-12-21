@@ -27,9 +27,6 @@
 
       environment.etc."ahayzen.com/expected/gnome".source = ./expected/gnome;
 
-      # Force X11 as Wayland fails in Github CI
-      services.displayManager.defaultSession = "gnome-xorg";
-
       # Force no date or seconds in the clock for consistent screenshots
       # and enable Do Not Disturb to avoid notifications
       services.xserver.desktopManager.gnome = {

@@ -27,14 +27,14 @@
 
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
   };
 
   outputs =
