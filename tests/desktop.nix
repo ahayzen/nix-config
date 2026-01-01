@@ -29,7 +29,7 @@
 
       # Force no date or seconds in the clock for consistent screenshots
       # and enable Do Not Disturb to avoid notifications
-      services.xserver.desktopManager.gnome = {
+      services.desktopManager.gnome = {
         extraGSettingsOverrides = ''
           [org.gnome.desktop.interface]
           clock-show-date = false

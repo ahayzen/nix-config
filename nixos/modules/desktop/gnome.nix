@@ -8,78 +8,69 @@
     # https://nixos.org/manual/nixos/stable/#sec-gnome-without-the-apps
     gnome.core-apps.enable = false;
 
-    xserver = {
-      # Enable the X11 windowing system.
+    # Enable the GNOME Desktop Environment.
+    desktopManager.gnome = {
       enable = true;
 
-      # Enable the GNOME Desktop Environment.
-      desktopManager.gnome = {
-        enable = true;
+      extraGSettingsOverrides = ''
+        # Enable week numbers in top bar calendar
+        [org.gnome.desktop.calendar]
+        show-weekdate = true
 
-        extraGSettingsOverrides = ''
-          # Enable week numbers in top bar calendar
-          [org.gnome.desktop.calendar]
-          show-weekdate = true
+        # Enable automatic timezones from geoip
+        [org.gnome.desktop.datetime]
+        automatic-timezone = true
 
-          # Enable automatic timezones from geoip
-          [org.gnome.desktop.datetime]
-          automatic-timezone = true
+        # Mouse tweaks
+        [org.gnome.desktop.peripherals.mouse]
+        accel-profile = "flat"
 
-          # Mouse tweaks
-          [org.gnome.desktop.peripherals.mouse]
-          accel-profile = "flat"
-
-          # Touchpad tweaks
-          [org.gnome.desktop.peripherals.touchpad]
-          disable-while-typing = false
-          tap-to-click = true
+        # Touchpad tweaks
+        [org.gnome.desktop.peripherals.touchpad]
+        disable-while-typing = false
+        tap-to-click = true
 
 
-          # Enable dynamic workspaces
-          [org.gnome.mutter]
-          dynamic-workspaces = true
-          edge-tiling = true
-          experimental-features = ['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']
+        # Enable dynamic workspaces
+        [org.gnome.mutter]
+        dynamic-workspaces = true
+        edge-tiling = true
+        experimental-features = ['scale-monitor-framebuffer', 'variable-refresh-rate', 'xwayland-native-scaling']
 
 
-          # Enable night light
-          [org.gnome.settings-daemon.plugins.color]
-          night-light-enabled = true
+        # Enable night light
+        [org.gnome.settings-daemon.plugins.color]
+        night-light-enabled = true
 
-          # Do not suspend when on AC after a period of time
-          [org.gnome.settings-daemon.plugins.power]
-          sleep-inactive-ac-type = 'nothing'
-
-
-          # Fix alphabetical ordering of app picker and disable all extensions
-          [org.gnome.shell]
-          app-picker-layout = []
-          enabled-extensions = []
-          favorite-apps = ['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop']
+        # Do not suspend when on AC after a period of time
+        [org.gnome.settings-daemon.plugins.power]
+        sleep-inactive-ac-type = 'nothing'
 
 
-          # Enable location services for night light and other apps
-          [org.gnome.system.location]
-          enabled = true
-        '';
+        # Fix alphabetical ordering of app picker and disable all extensions
+        [org.gnome.shell]
+        app-picker-layout = []
+        enabled-extensions = []
+        favorite-apps = ['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop']
 
-        extraGSettingsOverridePackages = [
-          # org.gnome.desktop
-          pkgs.gsettings-desktop-schemas
-          # org.gnome.settings-daemon
-          pkgs.gnome-settings-daemon
-          # org.gnome.shell
-          pkgs.gnome-shell
-          # org.gnome.mutter
-          pkgs.mutter
-        ];
-      };
-      displayManager.gdm.enable = true;
 
-      # We do not want xterm enabled
-      excludePackages = [ pkgs.xterm ];
-      desktopManager.xterm.enable = false;
+        # Enable location services for night light and other apps
+        [org.gnome.system.location]
+        enabled = true
+      '';
+
+      extraGSettingsOverridePackages = [
+        # org.gnome.desktop
+        pkgs.gsettings-desktop-schemas
+        # org.gnome.settings-daemon
+        pkgs.gnome-settings-daemon
+        # org.gnome.shell
+        pkgs.gnome-shell
+        # org.gnome.mutter
+        pkgs.mutter
+      ];
     };
+    displayManager.gdm.enable = true;
   };
 
   # GNOME extensions app cannot be removed

@@ -7,16 +7,16 @@
   programs = {
     git = {
       enable = true;
-
-      aliases = {
-        uncommit = "reset --soft HEAD^";
-      };
-      extraConfig = {
-        rerere.enable = true;
-      };
       lfs.enable = true;
-      userEmail = if !config.ahayzen.kdab then "ahayzen@gmail.com" else "andrew.hayzen@kdab.com";
-      userName = "Andrew Hayzen";
+
+      settings = {
+        alias = {
+          uncommit = "reset --soft HEAD^";
+        };
+        rerere.enable = true;
+        user.email = if !config.ahayzen.kdab then "ahayzen@gmail.com" else "andrew.hayzen@kdab.com";
+        user.name = "Andrew Hayzen";
+      };
     };
   };
 }
