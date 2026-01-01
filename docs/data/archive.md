@@ -95,6 +95,8 @@ dvdisaster -d /dev/sr0 -s
 
 > When using BD Defect Management this writes at a slower (half) speed
 
+> If a file is larger than 4 GiB then use `-iso-level 3`
+
 ## QR Code
 
 Information can be output into a QR code.
