@@ -73,21 +73,16 @@
     displayManager.gdm.enable = true;
   };
 
-  # GNOME extensions app cannot be removed
-  # https://github.com/NixOS/nixpkgs/issues/297847
-  # So leave the app and the recommended extensions installed (not enabled)
-  #
-  # # Exclude packages from the base install
-  # environment.gnome.excludePackages = [
-  #   pkgs.gnome-shell-extensions
-  # ];
-
   # Install GNOME Core apps which do not have a flatpak
   environment.systemPackages = [
     # TODO: could be in usage later?
     pkgs.gnome-disk-utility
     # gnome-console -> alacritty
     pkgs.nautilus
+    # GNOME extensions app cannot be removed
+    # https://github.com/NixOS/nixpkgs/issues/297847
+    # So leave the app and the recommended extensions installed (not enabled)
+    pkgs.gnome-shell-extensions
     # TODO: could be an independent store warehouse / bazaar etc
     pkgs.gnome-software
     # TODO: could be missioncenter or usage
