@@ -22,6 +22,6 @@
     ];
 
     # If we are a laptop ignore the lid being shut
-    services.logind.lidSwitch = "ignore";
+    services.logind.settings.Login.HandleLidSwitch = "ignore";
   };
 }
