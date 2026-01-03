@@ -19,7 +19,7 @@ services:
       APACHE_BODY_LIMIT: 0
       # Do not rewrite IPs as behind reverse proxy
       # APACHE_DISABLE_REWRITE_IP: 1
-      TRUSTED_PROXIES: "127.0.0.1 172.16.0.0/12 192.168.0.0/16"
+      TRUSTED_PROXIES: "127.0.0.1 172.16.0.0/12"
       OVERWRITEHOST: "nextcloud.hayzen.uk"
       OVERWRITECLIURL: "https://nextcloud.hayzen.uk"
       OVERWRITEPROTOCOL: "https"

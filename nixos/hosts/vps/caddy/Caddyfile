@@ -18,11 +18,6 @@
         }
         format json
     }
-
-    # Needed for nextcloud?
-    # server {
-    #     trusted_proxies static 172.16.0.0/12
-    # }
 }
 
 #
