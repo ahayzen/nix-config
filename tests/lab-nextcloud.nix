@@ -221,7 +221,7 @@
       assert "Nextcloud" in output, f"'{output}' does not contain 'Nextcloud'"
 
       # Run nextcloud install
-      lab.succeed("docker exec -it --user www-data -t nextcloud php occ maintenance:install --no-interaction --admin-pass=test")
+      lab.succeed("docker exec -it --user 1000:1000 -t nextcloud php occ maintenance:install --no-interaction --admin-pass=test")
 
       # Nextcloud database can take a while to appear
       wait_for_nextcloud_db = 'ls -nd /var/cache/docker-compose-runner/nextcloud/html/data/owncloud.db'
