@@ -31,29 +31,30 @@ services:
       - app-nextcloud
       - group-proxy
     restart: unless-stopped
+    user: "1000:1000"
     volumes:
       # Configuration
-      - /var/cache/docker-compose-runner-user33/nextcloud/html:/var/www/html
+      - /var/cache/docker-compose-runner-user1000/nextcloud/html:/var/www/html
       # Note we mount into /usr/src/nextcloud as this is rsynced into the config dir
       # https://github.com/nextcloud/docker/blob/f2ab521657fe2e550cd39307c8dd3912eca7506d/docker-entrypoint.sh#L192
       - /etc/nextcloud/custom.config.php:/usr/src/nextcloud/config/custom.config.php:ro
       - /etc/nextcloud/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       # PHP temp directory
-      - /mnt/mapping-pool-user33/data/app/nextcloud/tmp:/var/tmp/nextcloud/upload
+      - /mnt/mapping-pool-user1000/data/app/nextcloud/tmp:/var/tmp/nextcloud/upload
       # # User data
-      # - /mnt/mapping-pool-user33/data/app/nextcloud/data/andrew:/var/www/html/data/andrew
-      # - /mnt/mapping-pool-user33/data/app/nextcloud/data/yumeka:/var/www/html/data/yumeka
-      # - /mnt/mapping-pool-user33/data/user/andrew:/var/www/html/data/andrew/files
-      # - /mnt/mapping-pool-user33/data/user/yumeka:/var/www/html/data/yumeka/files
+      # - /mnt/mapping-pool-user1000/data/app/nextcloud/data/andrew:/var/www/html/data/andrew
+      # - /mnt/mapping-pool-user1000/data/app/nextcloud/data/yumeka:/var/www/html/data/yumeka
+      # - /mnt/mapping-pool-user1000/data/user/andrew:/var/www/html/data/andrew/files
+      # - /mnt/mapping-pool-user1000/data/user/yumeka:/var/www/html/data/yumeka/files
       # Shared mounts
       #
       # TODO: mark items as writable
-      - /mnt/mapping-pool-user33/data/camera:/mnt/pool/data/camera:ro
-      - /mnt/mapping-pool-user33/data/files:/mnt/pool/data/files:ro
-      - /mnt/mapping-pool-user33/data/movies:/mnt/pool/data/movies:ro
-      - /mnt/mapping-pool-user33/data/music:/mnt/pool/data/music:ro
-      - /mnt/mapping-pool-user33/data/recordings:/mnt/pool/data/recordings:ro
-      - /mnt/mapping-pool-user33/data/shows:/mnt/pool/data/shows:ro
+      - /mnt/mapping-pool-user1000/data/camera:/mnt/pool/data/camera:ro
+      - /mnt/mapping-pool-user1000/data/files:/mnt/pool/data/files:ro
+      - /mnt/mapping-pool-user1000/data/movies:/mnt/pool/data/movies:ro
+      - /mnt/mapping-pool-user1000/data/music:/mnt/pool/data/music:ro
+      - /mnt/mapping-pool-user1000/data/recordings:/mnt/pool/data/recordings:ro
+      - /mnt/mapping-pool-user1000/data/shows:/mnt/pool/data/shows:ro
 
   nextcloud-redis:
     image: docker.io/library/redis:8.4.0@sha256:43355efd22490e31ca14b9d569367d05121e2be61fd8e47937563ae2a80952ae

@@ -16,18 +16,6 @@
           # Note .mount units are reloaded if only their Options changed.
           # which then fails for fuse bindfs filesystems as -o remount is unsupported
           # https://nixos.org/manual/nixos/stable/#sec-unit-handling
-          Options = "map=unpriv/unpriv-user33:@unpriv/@unpriv-user33";
-        };
-        what = "/var/cache/docker-compose-runner";
-        where = "/var/cache/docker-compose-runner-user33";
-        wantedBy = [ "multi-user.target" ];
-      }
-      {
-        type = "fuse.bindfs";
-        mountConfig = {
-          # Note .mount units are reloaded if only their Options changed.
-          # which then fails for fuse bindfs filesystems as -o remount is unsupported
-          # https://nixos.org/manual/nixos/stable/#sec-unit-handling
           Options = "map=unpriv/unpriv-user1000:@unpriv/@unpriv-user1000";
         };
         what = "/var/cache/docker-compose-runner";
@@ -44,18 +32,6 @@
         };
         what = "/var/cache/docker-compose-runner";
         where = "/var/cache/docker-compose-runner-user1001";
-        wantedBy = [ "multi-user.target" ];
-      }
-      {
-        type = "fuse.bindfs";
-        mountConfig = {
-          # Note .mount units are reloaded if only their Options changed.
-          # which then fails for fuse bindfs filesystems as -o remount is unsupported
-          # https://nixos.org/manual/nixos/stable/#sec-unit-handling
-          Options = "map=unpriv/unpriv-user33:@unpriv/@unpriv-user33";
-        };
-        what = "/var/lib/docker-compose-runner";
-        where = "/var/lib/docker-compose-runner-user33";
         wantedBy = [ "multi-user.target" ];
       }
       {
@@ -86,28 +62,20 @@
 
     # Ensure that docker starts after bindfs is ready
     services."docker-compose-runner".after = [
-      "var-cache-docker\\x2dcompose\\x2drunner\\x2duser33.mount"
       "var-cache-docker\\x2dcompose\\x2drunner\\x2duser1000.mount"
       "var-cache-docker\\x2dcompose\\x2drunner\\x2duser1001.mount"
-      "var-lib-docker\\x2dcompose\\x2drunner\\x2duser33.mount"
       "var-lib-docker\\x2dcompose\\x2drunner\\x2duser1000.mount"
       "var-lib-docker\\x2dcompose\\x2drunner\\x2duser1001.mount"
     ];
     services."docker-compose-runner".requires = [
-      "var-cache-docker\\x2dcompose\\x2drunner\\x2duser33.mount"
       "var-cache-docker\\x2dcompose\\x2drunner\\x2duser1000.mount"
       "var-cache-docker\\x2dcompose\\x2drunner\\x2duser1001.mount"
-      "var-lib-docker\\x2dcompose\\x2drunner\\x2duser33.mount"
       "var-lib-docker\\x2dcompose\\x2drunner\\x2duser1000.mount"
       "var-lib-docker\\x2dcompose\\x2drunner\\x2duser1001.mount"
     ];
   };
 
   # Ensure target folder exists
-  system.activationScripts.mkdirDockerComposeRunnerUser33 = lib.stringAfter [ "var" ] ''
-    mkdir -p /var/cache/docker-compose-runner-user33
-    mkdir -p /var/lib/docker-compose-runner-user33
-  '';
   system.activationScripts.mkdirDockerComposeRunnerUser1000 = lib.stringAfter [ "var" ] ''
     mkdir -p /var/cache/docker-compose-runner-user1000
     mkdir -p /var/lib/docker-compose-runner-user1000

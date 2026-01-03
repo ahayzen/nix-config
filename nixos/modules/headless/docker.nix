@@ -13,9 +13,6 @@
       };
 
       # Create a group on the host that maps to gid 1000 in the unpriv subgid range
-      unpriv-user33 = {
-        gid = 200033;
-      };
       unpriv-user1000 = {
         gid = 201000;
       };
@@ -55,11 +52,6 @@
       };
 
       # Create a user on the host that maps to uid 1000 in the unpriv subuid range
-      unpriv-user33 = {
-        isNormalUser = true;
-        group = "unpriv-user33";
-        uid = 200033;
-      };
       unpriv-user1000 = {
         isNormalUser = true;
         group = "unpriv-user1000";
