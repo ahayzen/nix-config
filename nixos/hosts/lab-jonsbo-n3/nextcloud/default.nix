@@ -35,17 +35,17 @@
           # PHP temp directory
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/nextcloud/tmp"
           # User data
-          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/nextcloud/data/andrew"
-          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/nextcloud/data/yumeka"
-          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/user/andrew"
-          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/user/yumeka"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/nextcloud/data"
           # Shared mounts
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/camera"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/documents"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/files"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/movies"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/music"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/photostream"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/recordings"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/shows"
+          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/user"
         ];
         User = "unpriv";
         Group = "unpriv";
