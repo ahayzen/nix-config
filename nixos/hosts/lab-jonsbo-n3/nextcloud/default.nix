@@ -67,8 +67,88 @@
       '';
     };
 
-    # TODO: periodically scan files
-    # docker exec -u www-data nextcloud-app php occ files:scan --all
+    # Service to allow for triggering and nextcloud file scan
+    systemd.services."nextcloud-files-scan" = {
+      requires = [ "docker-compose-runner.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files:scan --all
+      '';
+    };
+
+    # Helper service to setup nextcloud apps
+    systemd.services."nextcloud-setup-apps" = {
+      requires = [ "docker-compose-runner.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:enable bruteforcesettings
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:enable files_external
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:enable files_sharing
+
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable activity
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable app_api
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable comments
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable contactsinteraction
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable dashboard
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable federation
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_downloadlimit
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_pdfviewer
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_reminders
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_versions
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable firstrunwizard
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable logreader
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable nextcloud_announcements
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable notifications
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable password_policy
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable privacy
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable photos
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable recommendations
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable related_resources
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable serverinfo
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable sharebymail
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable support
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable survey_client
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable systemtags
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable text
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable updatenotification
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable user_status
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable weather_status
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable webhook_listeners
+      '';
+    };
+
+    # Helper service to setup external mounts
+    systemd.services."nextcloud-setup-external" = {
+      requires = [ "docker-compose-runner.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''
+        # Shared mounts
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Camera" local "null::null" --config=datadir="/mnt/pool/data/camera"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Files" local "null:null" --config=datadir="/mnt/pool/data/files"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Movies" local "null:null" --config=datadir="/mnt/pool/data/movies"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Music" local "null:null" --config=datadir="/mnt/pool/data/music"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Recordings" local "null:null" --config=datadir="/mnt/pool/data/recordings"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Shows" local "null:null" --config=datadir="/mnt/pool/data/shows"
+        # Read-only mounts
+        #
+        # TODO: mark as read-only via files_external:option <mountid> readonly true
+        # but this needs the mount id
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Documents" local "null:null" --config=datadir="/mnt/pool/data/documents"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Photostream" local "null:null" --config=datadir="/mnt/pool/data/photostream"
+        # User mounts
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Personal" local "null:null" --config=datadir="/mnt/pool/data/user/andrew" --user=andrew
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Personal" local "null:null" --config=datadir="/mnt/pool/data/user/yumeka" --user=yumeka
+      '';
+    };
 
     systemd.timers."nextcloud-db-snapshot" = {
       enable = !config.ahayzen.testing;
