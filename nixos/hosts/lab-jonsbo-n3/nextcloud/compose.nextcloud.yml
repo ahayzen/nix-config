@@ -17,8 +17,8 @@ services:
       # TODO: ensure caddy also supports this (request_body?)
       PHP_UPLOAD_LIMIT: 128G
       APACHE_BODY_LIMIT: 0
-      # Do not rewrite IPs as behind reverse proxy
-      # APACHE_DISABLE_REWRITE_IP: 1
+      # Settings for running behind reverse proxy
+      # https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/reverse_proxy_configuration.html
       TRUSTED_PROXIES: "127.0.0.1 172.16.0.0/12"
       OVERWRITEHOST: "nextcloud.hayzen.uk"
       OVERWRITECLIURL: "https://nextcloud.hayzen.uk"
@@ -43,18 +43,19 @@ services:
       - /mnt/mapping-pool-user1000/data/app/nextcloud/tmp:/var/tmp/nextcloud/upload
       # User data
       - /mnt/mapping-pool-user1000/data/app/nextcloud/data:/var/www/html/data/andrew
-      # External Shared mounts
+      # External writable mounts
       #
       # TODO: mark items as writable
       - /mnt/mapping-pool-user1000/data/camera:/mnt/pool/data/camera:ro
-      - /mnt/mapping-pool-user1000/data/documents:/mnt/pool/data/documents:ro
       - /mnt/mapping-pool-user1000/data/files:/mnt/pool/data/files:ro
       - /mnt/mapping-pool-user1000/data/movies:/mnt/pool/data/movies:ro
       - /mnt/mapping-pool-user1000/data/music:/mnt/pool/data/music:ro
-      - /mnt/mapping-pool-user1000/data/photostream:/mnt/pool/data/photostream:ro
       - /mnt/mapping-pool-user1000/data/recordings:/mnt/pool/data/recordings:ro
       - /mnt/mapping-pool-user1000/data/shows:/mnt/pool/data/shows:ro
       - /mnt/mapping-pool-user1000/data/user:/mnt/pool/data/user:ro
+      # External readonly mounts
+      - /mnt/mapping-pool-user1000/data/documents:/mnt/pool/data/documents:ro
+      - /mnt/mapping-pool-user1000/data/photostream:/mnt/pool/data/photostream:ro
 
   nextcloud-redis:
     image: docker.io/library/redis:8.4.0@sha256:43355efd22490e31ca14b9d569367d05121e2be61fd8e47937563ae2a80952ae
