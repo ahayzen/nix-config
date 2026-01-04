@@ -41,8 +41,6 @@ services:
       - /etc/nextcloud/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       # PHP temp directory
       - /mnt/mapping-pool-user1000/data/app/nextcloud/tmp:/var/tmp/nextcloud/upload
-      # User data
-      - /mnt/mapping-pool-user1000/data/app/nextcloud/data:/var/www/html/data/andrew
       # External writable mounts
       #
       # TODO: mark items as writable

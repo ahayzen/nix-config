@@ -9,6 +9,11 @@ $CONFIG = array(
       'port' => 6379,
     ),
 
+    // Do not include external storage in quotes
+    // As we set quota to zero to only allow external storage
+    // https://docs.nextcloud.com/server/20/admin_manual/configuration_user/user_configuration.html#setting-storage-quotas
+    'quota_include_external_storage' => false,
+
     // Disable default skeleton directory
     // https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/default_files_configuration.html
     'skeletondirectory' => '',
