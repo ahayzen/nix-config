@@ -34,8 +34,6 @@
           "${pkgs.coreutils}/bin/mkdir -p /var/cache/docker-compose-runner/nextcloud/html"
           # PHP temp directory
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/nextcloud/tmp"
-          # User data
-          "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/app/nextcloud/data"
           # Shared mounts
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/camera"
           "${pkgs.coreutils}/bin/mkdir -p /mnt/pool/data/documents"
@@ -52,19 +50,6 @@
         RemainAfterExit = true;
         Type = "oneshot";
       };
-    };
-
-    # Take a snapshot of the database daily
-    systemd.services."nextcloud-db-snapshot" = {
-      requires = [ "docker-compose-runner.service" ];
-      serviceConfig = {
-        Type = "oneshot";
-      };
-
-      script = ''
-        /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/nextcloud/html/data
-        /run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/cache/docker-compose-runner/nextcloud/html/data/owncloud.db ".backup /var/lib/docker-compose-runner/nextcloud/html/data/owncloud-snapshot-$(date +%w).db"
-      '';
     };
 
     # Service to allow for triggering and nextcloud file scan
@@ -89,7 +74,6 @@
       script = ''
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:enable bruteforcesettings
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:enable files_external
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:enable files_sharing
 
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable activity
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable app_api
@@ -100,6 +84,7 @@
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_downloadlimit
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_pdfviewer
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_reminders
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_sharing
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable files_versions
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable firstrunwizard
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ app:disable logreader
@@ -145,11 +130,45 @@
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Documents" local "null:null" --config=datadir="/mnt/pool/data/documents"
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Photostream" local "null:null" --config=datadir="/mnt/pool/data/photostream"
         # User mounts
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Personal" local "null:null" --config=datadir="/mnt/pool/data/user/andrew" --user=andrew
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Personal" local "null:null" --config=datadir="/mnt/pool/data/user/yumeka" --user=yumeka
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Andrew" local "null:null" --config=datadir="/mnt/pool/data/user/andrew" --user=andrew
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ files_external:create "/Yumeka" local "null:null" --config=datadir="/mnt/pool/data/user/yumeka" --user=yumeka
       '';
     };
 
+    # Nextcloud cron job
+    #
+    # https://docs.nextcloud.com/server/31/admin_manual/configuration_server/background_jobs_configuration.html#systemd
+    systemd.services."nextcloud-cron" = {
+      requires = [ "docker-compose-runner.service" ];
+      serviceConfig = {
+        ExecCondition = "/run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php occ status -e";
+        ExecStart = "/run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -it -u 1000:1000 -t nextcloud php cron.php";
+        KillMode = "process";
+      };
+    };
+
+    systemd.timers."nextcloud-cron" = {
+      enable = !config.ahayzen.testing;
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "5min";
+        OnUnitActiveSec = "5min";
+        Unit = "nextcloud-cron.service";
+      };
+    };
+
+    # Take a snapshot of the database daily
+    systemd.services."nextcloud-db-snapshot" = {
+      requires = [ "docker-compose-runner.service" ];
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/nextcloud/html/data
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/cache/docker-compose-runner/nextcloud/html/data/owncloud.db ".backup /var/lib/docker-compose-runner/nextcloud/html/data/owncloud-snapshot-$(date +%w).db"
+      '';
+    };
     systemd.timers."nextcloud-db-snapshot" = {
       enable = !config.ahayzen.testing;
       wantedBy = [ "timers.target" ];
