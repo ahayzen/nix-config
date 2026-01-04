@@ -127,20 +127,20 @@
       script = ''
         # Shared mounts
         /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Camera" local "null::null" --config=datadir="/mnt/pool/data/camera"
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Files" local "null:null" --config=datadir="/mnt/pool/data/files"
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Movies" local "null:null" --config=datadir="/mnt/pool/data/movies"
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Music" local "null:null" --config=datadir="/mnt/pool/data/music"
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Recordings" local "null:null" --config=datadir="/mnt/pool/data/recordings"
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Shows" local "null:null" --config=datadir="/mnt/pool/data/shows"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Files" local "null::null" --config=datadir="/mnt/pool/data/files"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Movies" local "null::null" --config=datadir="/mnt/pool/data/movies"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Music" local "null::null" --config=datadir="/mnt/pool/data/music"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Recordings" local "null::null" --config=datadir="/mnt/pool/data/recordings"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Shows" local "null::null" --config=datadir="/mnt/pool/data/shows"
         # Read-only mounts
         #
         # TODO: mark as read-only via files_external:option <mountid> readonly true
         # but this needs the mount id
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Documents" local "null:null" --config=datadir="/mnt/pool/data/documents"
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Photostream" local "null:null" --config=datadir="/mnt/pool/data/photostream"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Documents" local "null::null" --config=datadir="/mnt/pool/data/documents"
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Shared/Photostream" local "null::null" --config=datadir="/mnt/pool/data/photostream"
         # User mounts
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Andrew" local "null:null" --config=datadir="/mnt/pool/data/user/andrew" --user=andrew
-        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Yumeka" local "null:null" --config=datadir="/mnt/pool/data/user/yumeka" --user=yumeka
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Andrew" local "null::null" --config=datadir="/mnt/pool/data/user/andrew" --user=andrew
+        /run/wrappers/bin/sudo ${pkgs.docker}/bin/docker exec -u 1000:1000 -t nextcloud php occ files_external:create "/Yumeka" local "null::null" --config=datadir="/mnt/pool/data/user/yumeka" --user=yumeka
       '';
     };
 
