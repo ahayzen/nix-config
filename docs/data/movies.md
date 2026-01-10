@@ -81,6 +81,15 @@ Find which titles are the main title and extras you want (https://www.dvdcompare
 
 Then extract all of them to a folder.
 
+#### Manual Mode
+
+For certain media the playlist can confuse MakeMKV, if this happens.
+
+  * Open the DVD in VLC and note the track number of the title
+  * Enable Expert mode in MakeMKV settings
+  * Tick `Open DVD Manually` before scanning the disc
+  * Type the number of the track to rip
+
 ### Handbrake
 
 Ensure that passthrough occurs for audio / subtitles / cropping.
