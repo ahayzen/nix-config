@@ -46,3 +46,6 @@ https://jellyfin.org/docs/general/administration/hardware-acceleration/intel/#co
   - Playback -> Transcoding
     - For Intel pick QuickSync or VAAPI
       - Check the support codecs and enable them
+    - Also Enable Low Power Encoding
+
+> Without Low Power Encoding enabled on modern Intel [visual corruption](https://www.reddit.com/r/jellyfin/comments/xihkz2/visual_artifacts_every_couple_of_seconds_when/) can occur.
