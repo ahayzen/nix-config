@@ -6,36 +6,24 @@ SPDX-License-Identifier: MPL-2.0
 
 # Docs
 
-TODO: general layout
+These docs are split into sub sections
 
-````
-Services
-  - philosophy
-  - data
-  - backup/restore
+## Concepts
 
-Machine
-  - specs / bios / setup
-  - services
-  - backup/restore
+Describing general high level concepts.
 
-Data
-  - camera
-  - dvd
-  - music
-  - movies
-  - tv shows
+## Data
 
-Maintenance
-  - backup
-  - deploy
-  - restore
-  - health
-  - wipe
+How data is stored in the pool.
 
-Recovery
-  - 2FA
-  - LUKS
-  - Lost (what needs wiping/logging out)
-  - Services
-````
+## Guides
+
+Specific guides for performing tasks.
+
+## Hardware
+
+Information about hardware and quirks.
+
+## Software
+
+Information about services and tools.
