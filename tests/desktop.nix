@@ -92,7 +92,7 @@
 
         # Check shape is the same
         if img1.shape != img2.shape:
-          return 0.0
+          return 100.0
 
         # Absolute difference
         res = cv2.absdiff(img1, img2)
@@ -132,13 +132,15 @@
       with subtest("Ensure that desktop is reached"):
         # wait for the wayland server
         # machine.wait_for_file("/run/user/2000/wayland-0")
-        # wait for alice to be logged in
+        # wait for andrew to be logged in
         desktop.wait_for_unit("default.target", "andrew")
         desktop.sleep(5)
         # Wait long enough for GNOME Shell to login
         desktop.wait_for_unit("graphical-session.target", "andrew", timeout=120)
+        # Wait for GNOME Shell ready message
+        desktop.wait_until_succeeds('journalctl --boot --no-pager --quiet --grep "GNOME Shell started"', timeout=30)
         # Wait for any initial setup
-        desktop.sleep(15)
+        desktop.sleep(5)
 
         # Compare the screenshot
         desktop.screenshot("desktop")
@@ -156,7 +158,7 @@
         assert diff < 0.5, f"Activities image was different by {diff}%, more than 0.5%"
 
       with subtest("Open alacritty (checks home-manager themes)"):
-        # Type alacritty and launch it
+        # Type alacritty and launch it, wait for it to start
         desktop.send_chars("alacritty", delay=0.2)
         desktop.sleep(3)
         desktop.send_chars("\n")
@@ -165,6 +167,9 @@
         # Ensure that our keybinding works
         #
         # Also ensures that window size is consistent
+        #
+        # Wait long enough for focus to have moved so that F11 works
+        desktop.sleep(3)
         desktop.send_key("f11")
         desktop.sleep(3)
 
