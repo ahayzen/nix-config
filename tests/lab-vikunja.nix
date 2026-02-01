@@ -207,7 +207,7 @@
 
     with subtest("Test vikunja"):
       # Wait for vikunja to start
-      wait_for_vikunja_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "http server started on \[::\]:3456"'
+      wait_for_vikunja_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "HTTP server listening on :3456"'
       lab.wait_until_succeeds(wait_for_vikunja_cmd, timeout=60)
 
       # Test login page
