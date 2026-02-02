@@ -4,7 +4,7 @@
 
 services:
   actual:
-    image: ghcr.io/actualbudget/actual:26.1.0@sha256:e82b7302b0db7f8fa063159e8bddc07443bb83761798dc9ba84fe1b3df62d74f
+    image: ghcr.io/actualbudget/actual:26.2.0@sha256:9127ac149f96a6c17ab811203f8f6c27acacc5a49f1620badec7797ca4ac5537
     expose:
       - "5006"
     networks:
