@@ -93,6 +93,18 @@
     pkgs.yelp
   ];
 
+  networking.networkmanager.plugins =
+    with pkgs; [
+      networkmanager-fortisslvpn
+      networkmanager-iodine
+      networkmanager-l2tp
+      networkmanager-openconnect
+      networkmanager-openvpn
+      networkmanager-sstp
+      networkmanager-strongswan
+      networkmanager-vpnc
+    ];
+
   # Install all GNOME Core apps except where we have common replacements
   services.flatpak.packages = lib.mkIf (!config.ahayzen.testing)
     [
