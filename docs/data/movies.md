@@ -44,6 +44,14 @@ kodi-nfo-gen --fanart download --overwrite --verbose --recursive --dir movies/
 
 > Ensure that any `.nfo` files are changed to `movie.nfo`
 
+### Age rating
+
+```xml
+<mpaa>GB-12</mpaa>
+```
+
+https://github.com/jellyfin/jellyfin/blob/master/Emby.Server.Implementations/Localization/Ratings/gb.json
+
 ### Collections
 
 If there are multiple movies that are part of a collection this information can be added to the NFO file.
