@@ -28,7 +28,10 @@ TODO
     - Music
     - Movies
     - TV shows
-  - Libraries -> Movies enable Automatically add to collection
+  - Libraries -> Movies enable
+    - Automatically add to collection
+    - Trick play extraction and during scan
+    - Chapter extraction and during scan
 
 ### Intel Hardware Acceleration
 
@@ -47,5 +50,9 @@ https://jellyfin.org/docs/general/administration/hardware-acceleration/intel/#co
     - For Intel pick QuickSync or VAAPI
       - Check the support codecs and enable them
     - Also Enable Low Power Encoding
+  - Playback -> Trickplay enable
+    - Hardware decoding
+    - Hardware accelerated MJPEG
+    - Generate from key frames
 
 > Without Low Power Encoding enabled on modern Intel [visual corruption](https://www.reddit.com/r/jellyfin/comments/xihkz2/visual_artifacts_every_couple_of_seconds_when/) can occur.
