@@ -10,12 +10,14 @@
     contentFiles = [
       "/var/lib/snapraid.content"
       "/mnt/data1/snapraid.data1.content"
+      "/mnt/data2/snapraid.data2.content"
       "/mnt/parity1/snapraid.content"
     ];
 
     dataDisks = {
       # Note order is important for parity
       data1 = "/mnt/data1";
+      data2 = "/mnt/data2";
     };
 
     parityFiles = [
@@ -42,10 +44,12 @@
         #
         # Note restore with `setfacl --restore=/mnt/data1/snapraid.data1.facl`
         "${pkgs.bash}/bin/bash -c '${pkgs.acl}/bin/getfacl --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.facl'"
+        "${pkgs.bash}/bin/bash -c '${pkgs.acl}/bin/getfacl --absolute-names --recursive /mnt/data2 > /mnt/data1/snapraid.data2.facl'"
         # Snapraid does not store file extended attribute so store in file
         #
         # Note restore with `setfattr --restore=/mnt/data1/snapraid.data1.fattr`
         "${pkgs.bash}/bin/bash -c '${pkgs.attr}/bin/getfattr --absolute-names --recursive /mnt/data1 > /mnt/data1/snapraid.data1.fattr'"
+        "${pkgs.bash}/bin/bash -c '${pkgs.attr}/bin/getfattr --absolute-names --recursive /mnt/data2 > /mnt/data1/snapraid.data2.fattr'"
       ];
       Type = "oneshot";
     };

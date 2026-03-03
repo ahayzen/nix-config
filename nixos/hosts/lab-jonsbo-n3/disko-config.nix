@@ -89,6 +89,23 @@
           };
         };
       };
+      data2 = {
+        type = "disk";
+        device = "/dev/disk/by-id/ata-TOSHIBA_MN10ADA800S_16A2A091FNHL";
+        content = {
+          type = "gpt";
+          partitions = {
+            data = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "xfs";
+                mountpoint = "/mnt/data2";
+              };
+            };
+          };
+        };
+      };
     };
   };
 }
