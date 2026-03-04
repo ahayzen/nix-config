@@ -54,7 +54,7 @@ services:
 
   immich-redis:
     container_name: immich_redis
-    image: ghcr.io/valkey-io/valkey:8.1.5@sha256:e51a82741b780e4bf315db10753edf07eea6496d405fa7df2a8677a18f5e7464
+    image: ghcr.io/valkey-io/valkey:8.1.6@sha256:17b48e45a38d626ef0bc24358008faf2aaf85e7ffc913c3f992d263f27a60c13
     healthcheck:
       test: redis-cli ping || exit 1
     networks:
