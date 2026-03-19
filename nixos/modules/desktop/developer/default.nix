@@ -5,6 +5,7 @@
 { lib, ... }: {
   imports = [
     ./alacritty.nix
+    ./ollama.nix
     ./podman.nix
   ];
 }
