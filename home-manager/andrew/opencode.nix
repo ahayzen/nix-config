@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, ... }:
+{ config, osConfig, ... }:
 {
   # TODO: FUTURE: nixos-26.05 enable opencode
   # https://github.com/catppuccin/nix/pull/794
@@ -19,7 +19,7 @@
             name = "Ollama (local)";
             options = {
               # Using the hostName works both inside and outside the container
-              baseURL = "http://${builtins.getEnv "HOSTNAME"}.local:11434/v1";
+              baseURL = "http://${if osConfig != null then osConfig.networking.hostName + ".local" else "localhost"}:11434/v1";
             };
             # Models need to be manually listed for now
             # https://github.com/anomalyco/opencode/issues/6231
