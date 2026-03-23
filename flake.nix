@@ -201,7 +201,7 @@
           imports = [
             ./home-manager/andrew
             # Load the catppuccin module
-            inputs.catppuccin.homeManagerModules.catppuccin
+            inputs.catppuccin.homeModules.catppuccin
           ];
         };
 
