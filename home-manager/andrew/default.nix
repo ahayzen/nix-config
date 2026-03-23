@@ -12,6 +12,7 @@
     ./helix.nix
     ./just.nix
     ./jujutsu.nix
+    ./opencode.nix
     ./starship.nix
     ./zellij.nix
   ];
