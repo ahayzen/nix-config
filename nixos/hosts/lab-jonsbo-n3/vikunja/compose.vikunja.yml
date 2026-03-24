@@ -4,7 +4,7 @@
 
 services:
   vikunja:
-    image: docker.io/vikunja/vikunja:2.2@sha256:fefda8ba71c3b06cc7f53f93ee14ebf1ad155a535e572b8dc702a46d789fc6d1
+    image: docker.io/vikunja/vikunja:2.2.2@sha256:a96c20c0997bae4a445bf717002328524c5449c2b64391032c671ff4e1d8b2fa
     environment:
       VIKUNJA_SERVICE_PUBLICURL: https://vikunja.hayzen.uk/
       VIKUNJA_SERVICE_TIMEZONE: "Europe/London"
