@@ -2,6 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+{ config, inputs, ... }:
 {
   services.ollama = {
     enable = true;
@@ -27,6 +28,11 @@
 
     # Do not open the firewall for ollama externally
     openFirewall = false;
+
+    # Use ollama from unstable
+    #
+    # TODO: FUTURE: potentially remove after 26.05
+    package = inputs.nixpkgs-unstable.legacyPackages.${config.ahayzen.platform}.ollama;
   };
 }
 
