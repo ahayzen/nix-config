@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, osConfig, ... }:
+{ config, inputs, osConfig, ... }:
 {
   # TODO: FUTURE: nixos-26.05 enable opencode
   # https://github.com/catppuccin/nix/pull/794
@@ -25,21 +25,26 @@
             # https://github.com/anomalyco/opencode/issues/6231
             # https://github.com/anomalyco/opencode/pull/17670
             models = {
-              # Granite4 models
-              "granite4:small-h" = {
-                name = "granite4:small-h";
+              # IBM Granite 4 models
+              "ibm/granite4:350m-h" = {
+                name = "ibm/granite4:350m-h";
               };
-              "granite4:tiny-h" = {
-                name = "granite4:tiny-h";
+              "ibm/granite4:1b-h" = {
+                name = "ibm/granite4:1b-h";
               };
-              "granite4:latest" = {
-                name = "granite4:micro-h";
+              "ibm/granite4:3b-h" = {
+                name = "ibm/granite4:3b-h";
               };
-              # Phi4 models
-              "phi4:latest" = {
-                name = "phi4";
+              "ibm/granite4:7b-a1b-h" = {
+                name = "ibm/granite4:7b-a1b-h";
+              };
+              "ibm/granite4:32b-a9b-h" = {
+                name = "ibm/granite4:32b-a9b-h";
               };
             };
+
+            # TODO: FUTURE: potentially remove after 26.05
+            package = inputs.nixpkgs-unstable.legacyPackages.${if osConfig != null then osConfig.ahayzen.platform else "x86_64-linux"}.opencode;
           };
         };
       };
