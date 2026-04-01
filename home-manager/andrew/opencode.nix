@@ -14,11 +14,28 @@
 
       # TODO: FUTURE: potentially remove after 26.05
       package = inputs.nixpkgs-unstable.legacyPackages.${if osConfig != null then osConfig.ahayzen.platform else "x86_64-linux"}.opencode;
+
+      # Custom settings for opencode
+      # https://opencode.ai/docs/config/
       settings = {
-        # Default model for tasks
-        model = "ibm/granite4:32b-a9b-h";
-        # Model for small tasks such as making titles
-        small_model = "ibm/granite4:350m-h";
+        # Default model for normal and small tasks
+        # https://opencode.ai/docs/models/#set-a-default
+        model = "ollama/ibm/granite4:32b-a9b-h";
+        small_model = "ollama/ibm/granite4:350m-h";
+
+        # Override default permissions to be more restrictive
+        # https://opencode.ai/docs/permissions#available-permissions
+        permission = {
+          # Ask when running arbritary bash commands
+          bash = "ask";
+          # Ask when accessing the internet
+          codesearch = "ask";
+          webfetch = "ask";
+          websearch = "ask";
+        };
+
+        # Setup ollama as our provider
+        # https://opencode.ai/docs/providers#ollama
         provider = {
           ollama = {
             npm = "@ai-sdk/openai-compatible";
@@ -32,6 +49,7 @@
             # https://github.com/anomalyco/opencode/pull/17670
             models = {
               # IBM Granite 4 models
+              # https://www.ibm.com/granite
               "ibm/granite4:350m-h" = {
                 name = "ibm/granite4:350m-h";
               };
@@ -50,6 +68,10 @@
             };
           };
         };
+
+        # Disable sharing of conversations
+        # https://opencode.ai/docs/config/#sharing
+        share = "disabled";
       };
     };
   };
