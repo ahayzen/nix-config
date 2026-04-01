@@ -12,7 +12,13 @@
     opencode = {
       enable = true;
 
+      # TODO: FUTURE: potentially remove after 26.05
+      package = inputs.nixpkgs-unstable.legacyPackages.${if osConfig != null then osConfig.ahayzen.platform else "x86_64-linux"}.opencode;
       settings = {
+        # Default model for tasks
+        model = "ibm/granite4:32b-a9b-h";
+        # Model for small tasks such as making titles
+        small_model = "ibm/granite4:350m-h";
         provider = {
           ollama = {
             npm = "@ai-sdk/openai-compatible";
@@ -42,9 +48,6 @@
                 name = "ibm/granite4:32b-a9b-h";
               };
             };
-
-            # TODO: FUTURE: potentially remove after 26.05
-            package = inputs.nixpkgs-unstable.legacyPackages.${if osConfig != null then osConfig.ahayzen.platform else "x86_64-linux"}.opencode;
           };
         };
       };
