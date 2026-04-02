@@ -4,7 +4,7 @@
 
 services:
   bitwarden:
-    image: ghcr.io/bitwarden/lite:2026.3.1@sha256:7a33a1527ffb1124e6b4d521a1facc1a734d8bc1a0a101cf783e9ad760dd17ab
+    image: ghcr.io/bitwarden/lite:2026.3.2@sha256:8f6473d24e57b191b733b1be5fb4f825be324ab4e741fe52ebc1af9027f112db
     env_file:
       - /etc/bitwarden/settings.env
     # https://bitwarden.com/help/environment-variables/
