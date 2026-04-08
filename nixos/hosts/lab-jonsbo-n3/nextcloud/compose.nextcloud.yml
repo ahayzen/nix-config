@@ -5,7 +5,7 @@
 services:
   nextcloud:
     container_name: nextcloud
-    image: docker.io/library/nextcloud:33.0.2@sha256:2176a451aa8fbd9f003a3d745978377e9a5213850e0181f4bcb24be63885175b
+    image: docker.io/library/nextcloud:33.0.2@sha256:61dd3e5816740f9f14aaba919566a6119b373e84eaa8b2b38779855b3ebc9c9f
     environment:
       # Space separated trusted domains
       # https://github.com/nextcloud/docker?tab=readme-ov-file#trusted-domains-trusted_domains
