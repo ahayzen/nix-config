@@ -52,7 +52,7 @@
         app-picker-layout = []
         disable-user-extensions = false
         # NOTE: could potentially use pkgs.gnome.Extensions.places-status-indicator.extensionUuid instead
-        enabled-extensions = ['apps-menu@gnome-shell-extensions.gcampax.github.com', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
+        enabled-extensions = ['apps-menu@gnome-shell-extensions.gcampax.github.com', 'caffeine@patapon.info', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
         favorite-apps = ['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop']
 
 
@@ -83,7 +83,9 @@
     pkgs.nautilus
     # GNOME extensions app cannot be removed
     # https://github.com/NixOS/nixpkgs/issues/297847
-    # So leave the app and the recommended extensions installed (not enabled)
+    #
+    # Install official and custom extensions
+    pkgs.gnomeExtensions.caffeine
     pkgs.gnome-shell-extensions
     # TODO: could be an independent store warehouse / bazaar etc
     pkgs.gnome-software
