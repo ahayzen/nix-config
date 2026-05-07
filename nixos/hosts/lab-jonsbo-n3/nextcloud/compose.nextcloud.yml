@@ -56,7 +56,7 @@ services:
       - /mnt/mapping-pool-user1000/data/photostream:/mnt/pool/data/photostream:ro
 
   nextcloud-redis:
-    image: docker.io/library/redis:8.6.3@sha256:25dbb04fc4d6d190eda327dab551631500b0f9ac8f9808e8e63b7fda1ddff196
+    image: docker.io/library/redis:8.6.3@sha256:718b0178d05af0c7e83eed8dfb829462a7c6b3c5a5e685eee184404f7a29ceb8
     networks:
       - app-nextcloud
     restart: unless-stopped
