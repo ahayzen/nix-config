@@ -18,10 +18,9 @@
       # Custom settings for opencode
       # https://opencode.ai/docs/config/
       settings = {
-        # Default model for normal and small tasks
+        # Default model for tasks
         # https://opencode.ai/docs/models/#set-a-default
-        model = "ollama/ibm/granite4:32b-a9b-h";
-        small_model = "ollama/ibm/granite4:350m-h";
+        model = "llama-cpp/ibm-granite/granite-4.1:8b";
 
         # Override default permissions to be more restrictive
         # https://opencode.ai/docs/permissions#available-permissions
@@ -34,9 +33,45 @@
           websearch = "ask";
         };
 
-        # Setup ollama as our provider
-        # https://opencode.ai/docs/providers#ollama
         provider = {
+          # Setup llama-cpp as our provider
+          # https://opencode.ai/docs/providers#llamacpp
+          llama-cpp = {
+            npm = "@ai-sdk/openai-compatible";
+            name = "llama-cpp";
+            options = {
+              # Using the hostName works both inside and outside the container
+              baseURL = "http://${if osConfig != null then osConfig.networking.hostName + ".local" else "localhost"}:11444/v1";
+            };
+            # Models need to be manually listed for now
+            # https://github.com/anomalyco/opencode/issues/6231
+            # https://github.com/anomalyco/opencode/pull/17670
+            models = {
+              # IBM Granite 4.1 models
+              # https://www.ibm.com/granite
+              "ibm-granite/granite-4.1:3b" = {
+                name = "ibm-granite/granite-4.1:3b";
+                limit = {
+                  context = 128000;
+                };
+              };
+              "ibm-granite/granite-4.1:8b" = {
+                name = "ibm-granite/granite-4.1:8b";
+                limit = {
+                  context = 128000;
+                };
+              };
+              "ibm-granite/granite-4.1:30b" = {
+                name = "ibm-granite/granite-4.1:30b";
+                limit = {
+                  context = 128000;
+                };
+              };
+            };
+          };
+
+          # Setup ollama as our provider
+          # https://opencode.ai/docs/providers#ollama
           ollama = {
             npm = "@ai-sdk/openai-compatible";
             name = "Ollama (local)";
