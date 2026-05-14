@@ -22,11 +22,12 @@
     # Allow for containers to be able to connect to llama-cpp
     #
     # NOTE: use the following address from containers
-    # docker: `http://host.docker.internal:11434/`
-    # podman: `http://host.containers.internal:11434/`
+    # docker: `http://host.docker.internal:11444/`
+    # podman: `http://host.containers.internal:11444/`
     # Or use --add-host=alias:host-gateway or --network=host
     # Or use the hostname of the device eg mydevice.local
     host = "0.0.0.0";
+    # NOTE: we use 11444 to not conflict with any ollama instance for now
     port = 11444;
 
     modelsPreset = {

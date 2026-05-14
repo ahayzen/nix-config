@@ -69,39 +69,6 @@
               };
             };
           };
-
-          # Setup ollama as our provider
-          # https://opencode.ai/docs/providers#ollama
-          ollama = {
-            npm = "@ai-sdk/openai-compatible";
-            name = "Ollama (local)";
-            options = {
-              # Using the hostName works both inside and outside the container
-              baseURL = "http://${if osConfig != null then osConfig.networking.hostName + ".local" else "localhost"}:11434/v1";
-            };
-            # Models need to be manually listed for now
-            # https://github.com/anomalyco/opencode/issues/6231
-            # https://github.com/anomalyco/opencode/pull/17670
-            models = {
-              # IBM Granite 4 models
-              # https://www.ibm.com/granite
-              "ibm/granite4:350m-h" = {
-                name = "ibm/granite4:350m-h";
-              };
-              "ibm/granite4:1b-h" = {
-                name = "ibm/granite4:1b-h";
-              };
-              "ibm/granite4:3b-h" = {
-                name = "ibm/granite4:3b-h";
-              };
-              "ibm/granite4:7b-a1b-h" = {
-                name = "ibm/granite4:7b-a1b-h";
-              };
-              "ibm/granite4:32b-a9b-h" = {
-                name = "ibm/granite4:32b-a9b-h";
-              };
-            };
-          };
         };
 
         # Disable sharing of conversations
