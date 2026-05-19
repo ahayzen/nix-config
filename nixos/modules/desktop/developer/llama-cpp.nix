@@ -16,6 +16,11 @@
     "${inputs.nixpkgs-unstable}/nixos/modules/services/misc/llama-cpp.nix"
   ];
 
+  # Add llama-cpp to system packages so that it can be used from the terminal too
+  #
+  # TODO: FUTURE: potentially remove unstable after 26.05
+  environment.systemPackages = [ inputs.nixpkgs-unstable.legacyPackages.${config.ahayzen.platform}.llama-cpp ];
+
   services.llama-cpp = {
     enable = true;
 
