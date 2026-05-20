@@ -4,5 +4,10 @@
 
 {
   # Install appimage-run
-  programs.appimage.enable = true;
+  programs.appimage = {
+    enable = true;
+
+    # Automatically call appimage-run when running the executables
+    binfmt = true;
+  };
 }
