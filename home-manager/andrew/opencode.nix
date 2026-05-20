@@ -18,6 +18,14 @@
       # Custom settings for opencode
       # https://opencode.ai/docs/config/
       settings = {
+        # Disable auto update checks as we use Nix
+        # https://opencode.ai/docs/config/#autoupdate
+        autoupdate = false;
+
+        # Only enable our llama-cpp provider
+        # https://opencode.ai/docs/config/#enabled-providers
+        enabled_providers = [ "llama-cpp" ];
+
         # Default model for tasks
         # https://opencode.ai/docs/models/#set-a-default
         model = "llama-cpp/ibm-granite/granite-4.1:8b";
@@ -53,18 +61,21 @@
                 name = "ibm-granite/granite-4.1:3b";
                 limit = {
                   context = 128000;
+                  output = 65536;
                 };
               };
               "ibm-granite/granite-4.1:8b" = {
                 name = "ibm-granite/granite-4.1:8b";
                 limit = {
                   context = 128000;
+                  output = 65536;
                 };
               };
               "ibm-granite/granite-4.1:30b" = {
                 name = "ibm-granite/granite-4.1:30b";
                 limit = {
                   context = 128000;
+                  output = 65536;
                 };
               };
             };
