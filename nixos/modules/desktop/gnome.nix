@@ -102,6 +102,7 @@
       networkmanager-l2tp
       networkmanager-openconnect
       networkmanager-openvpn
+      networkmanager-ssh
       networkmanager-sstp
       networkmanager-strongswan
       networkmanager-vpnc
