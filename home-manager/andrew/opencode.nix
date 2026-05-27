@@ -48,8 +48,7 @@
             npm = "@ai-sdk/openai-compatible";
             name = "llama-cpp";
             options = {
-              # Using the hostName works both inside and outside the container
-              baseURL = "http://${if osConfig != null then osConfig.networking.hostName + ".local" else "localhost"}:11444/v1";
+              baseURL = "http://localhost:11444/v1";
             };
             # Models need to be manually listed for now
             # https://github.com/anomalyco/opencode/issues/6231
