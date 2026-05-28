@@ -39,7 +39,7 @@
       { appId = "org.libreoffice.LibreOffice"; origin = "flathub-nix"; }
       { appId = "org.localsend.localsend_app"; origin = "flathub-nix"; }
       { appId = "org.mozilla.firefox"; origin = "flathub-nix"; }
-      { appId = "org.mozilla.Thunderbird"; origin = "flathub-nix"; }
+      { appId = "org.mozilla.thunderbird"; origin = "flathub-nix"; }
       { appId = "org.telegram.desktop"; origin = "flathub-nix"; }
       { appId = "org.videolan.VLC"; origin = "flathub-nix"; }
       { appId = "us.zoom.Zoom"; origin = "flathub-nix"; }

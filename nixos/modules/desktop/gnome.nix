@@ -53,7 +53,7 @@
         disable-user-extensions = false
         # NOTE: could potentially use pkgs.gnome.Extensions.places-status-indicator.extensionUuid instead
         enabled-extensions = ['apps-menu@gnome-shell-extensions.gcampax.github.com', 'caffeine@patapon.info', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
-        favorite-apps = ['org.mozilla.firefox.desktop', 'org.mozilla.Thunderbird.desktop', 'org.gnome.Nautilus.desktop']
+        favorite-apps = ['org.mozilla.firefox.desktop', 'org.mozilla.thunderbird.desktop', 'org.gnome.Nautilus.desktop']
 
 
         # Enable location services for night light and other apps
@@ -146,9 +146,9 @@
       "x-scheme-handler/http" = [ "org.mozilla.firefox.desktop" ];
       "x-scheme-handler/https" = [ "org.mozilla.firefox.desktop" ];
       # Mail
-      "x-scheme-handler/mailto" = [ "org.mozilla.Thunderbird.desktop" ];
+      "x-scheme-handler/mailto" = [ "org.mozilla.thunderbird.desktop" ];
       # Calendar
-      "text/calendar" = [ "org.mozilla.Thunderbird.desktop" ];
+      "text/calendar" = [ "org.mozilla.thunderbird.desktop" ];
       # Music
       "audio/x-vorbis+ogg" = [ "org.videolan.VLC.desktop" ];
       # FIXME: these don't work would need to do all possibles
