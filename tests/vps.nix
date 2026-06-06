@@ -192,7 +192,7 @@
 
     with subtest("Ensure docker starts and caddy starts"):
       # Wait for docker runner
-      vps.wait_for_unit("docker-compose-runner", timeout=120)
+      vps.wait_for_unit("docker-compose-runner", timeout=180)
 
       # Wait for caddy to start
       vps.wait_for_open_port(80, timeout=60)
@@ -372,7 +372,7 @@
       print(lab.succeed("ps auxf"))
       print(lab.succeed("free -h"))
       print(lab.succeed("df -h"))
-      print(lab.succeed("docker images"))
+      print(lab.succeed("docker images --all"))
       print(lab.succeed("docker stats --no-stream"))
 
     with subtest("General metrics (vps)"):

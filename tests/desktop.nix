@@ -78,7 +78,7 @@
         path1 = os.path.join(desktop.out_dir, f"{filename}.png")
 
         desktopPath2 = f"/etc/ahayzen.com/expected/gnome/{filename}.png"
-        desktop.copy_from_vm(desktopPath2, "expected")
+        desktop.copy_from_machine(desktopPath2, "expected")
         path2 = os.path.join(desktop.out_dir, "expected", f"{filename}.png")
 
         # Print base64 output of image so we can download
@@ -89,6 +89,10 @@
         # Load the images
         img1 = cv2.imread(path1, 0)
         img2 = cv2.imread(path2, 0)
+
+        # Check the files loaded
+        if img1 is None or img2 is None:
+          return 100.0
 
         # Check shape is the same
         if img1.shape != img2.shape:

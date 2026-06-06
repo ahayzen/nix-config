@@ -266,7 +266,7 @@
       print(lab.succeed("ps auxf"))
       print(lab.succeed("free -h"))
       print(lab.succeed("df -h"))
-      print(lab.succeed("docker images"))
+      print(lab.succeed("docker images --all"))
       print(lab.succeed("docker stats --no-stream"))
 
     with subtest("General metrics (vps)"):
@@ -274,7 +274,7 @@
       print(vps.succeed("ps auxf"))
       print(vps.succeed("free -h"))
       print(vps.succeed("df -h"))
-      print(vps.succeed("docker images"))
+      print(vps.succeed("docker images --all"))
       print(vps.succeed("docker stats --no-stream"))
   '';
 }

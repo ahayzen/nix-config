@@ -15,12 +15,12 @@
 
     catppuccin = {
       inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:catppuccin/nix/release-25.11";
+      url = "github:catppuccin/nix/release-26.05";
     };
 
     disko = {
       inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:nix-community/disko/v1.12.0";
+      url = "github:nix-community/disko/latest";
     };
 
     folderbox = {
@@ -30,14 +30,17 @@
 
     home-manager = {
       inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
     };
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/latest";
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixos-hardware = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:NixOS/nixos-hardware/master";
+    };
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
     # TODO: FUTURE: potentially remove after 26.05
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -123,6 +126,14 @@
             ./nixos/users/headless
             {
               ahayzen.testing = true;
+
+              # Force shutdown of the machine as it appears to hang
+              disko.tests.extraChecks = ''
+                machine.shutdown()
+              '';
+
+              # Disable docker-compose-runner as there is no network
+              systemd.services.docker-compose-runner.enable = nixpkgs.lib.mkForce false;
             }
           ];
         };
@@ -145,6 +156,14 @@
             ./nixos/users/headless
             {
               ahayzen.testing = true;
+
+              # Force shutdown of the machine as it appears to hang
+              disko.tests.extraChecks = ''
+                machine.shutdown()
+              '';
+
+              # Disable docker-compose-runner as there is no network
+              systemd.services.docker-compose-runner.enable = nixpkgs.lib.mkForce false;
             }
           ];
         };
