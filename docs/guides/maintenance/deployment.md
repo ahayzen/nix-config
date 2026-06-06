@@ -4,7 +4,6 @@ SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
 SPDX-License-Identifier: MPL-2.0
 -->
 
-
 # `nixos-anywhere`
 
 Use `nixos-anywhere` to install this flake on an existing machine Linux machine.

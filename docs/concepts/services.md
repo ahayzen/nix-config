@@ -6,16 +6,16 @@ SPDX-License-Identifier: MPL-2.0
 
 # Services
 
-General requirements for services.
+Containers are used for services so that they are not tied to a host platform.
 
 ## Must
 
-  * Docker permissions (no network host or docker socket mount)
   * OSI approved license
   * Web interface or similar to avoid 10yr problem if apps aren't relevant
 
 ## Should
 
   * Use Go/Rust/C# for compiled or Python/TypeScript or similar for interpreted
+  * Reasonable docker permissions (no network host or docker socket mount etc)
   * Use sqlite for database or no database
   * Be one container image

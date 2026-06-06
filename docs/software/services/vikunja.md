@@ -29,5 +29,5 @@ Use the CLI to create user accounts - https://vikunja.io/docs/cli/#user
 This can be used via docker with - https://vikunja.io/docs/cli/#using-the-cli-in-docker
 
 ```console
-sudo docker exec -it <imageid> /app/vikunja/vikunja user create --email <email>k --username <username>
+sudo docker exec -it <imageid> /app/vikunja/vikunja user create --email <email> --username <username>
 ```
