@@ -46,6 +46,9 @@
           # Highlight the line of the cursor
           cursorline = true;
 
+          # Enable soft wrapping for long lines in the view
+          soft-wrap.enable = true;
+
           # Force true-color even if the terminal detection failed
           #
           # NOTE: this may not be required anymore, was this for running in containers?
