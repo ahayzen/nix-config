@@ -144,7 +144,7 @@
         # Wait for GNOME Shell ready message
         desktop.wait_until_succeeds('journalctl --boot --no-pager --quiet --grep "GNOME Shell started"', timeout=30)
         # Wait for any initial setup
-        desktop.sleep(5)
+        desktop.sleep(10)
 
         # Compare the screenshot
         desktop.screenshot("desktop")
@@ -154,7 +154,7 @@
       with subtest("Dismiss initial setup"):
         # Click skip
         desktop.send_chars("\n")
-        desktop.sleep(1)
+        desktop.sleep(5)
 
         # Compare the screenshot
         desktop.screenshot("activities")
@@ -164,18 +164,18 @@
       with subtest("Open alacritty (checks home-manager themes)"):
         # Type alacritty and launch it, wait for it to start
         desktop.send_chars("alacritty", delay=0.2)
-        desktop.sleep(3)
+        desktop.sleep(5)
         desktop.send_chars("\n")
-        desktop.sleep(3)
+        desktop.sleep(5)
 
         # Ensure that our keybinding works
         #
         # Also ensures that window size is consistent
         #
         # Wait long enough for focus to have moved so that F11 works
-        desktop.sleep(3)
+        desktop.sleep(5)
         desktop.send_key("f11")
-        desktop.sleep(3)
+        desktop.sleep(5)
 
         # Compare the screenshot
         desktop.screenshot("alacritty")
