@@ -4,9 +4,7 @@
 
 { config, inputs, osConfig, ... }:
 {
-  # TODO: FUTURE: nixos-26.05 enable opencode
-  # https://github.com/catppuccin/nix/pull/794
-  # catppuccin.opencode.enable = true;
+  catppuccin.opencode.enable = true;
 
   programs = {
     opencode = {
