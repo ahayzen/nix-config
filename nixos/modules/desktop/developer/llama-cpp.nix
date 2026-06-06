@@ -87,33 +87,41 @@
       # Google - gemma-4
       # https://deepmind.google/models/gemma/
       # https://deepmind.google/models/gemma/gemma-4/
-      "unsloth/gemma-4-E2B-it-GGUF:Q4_K_M" = {
-        hf-repo = "unsloth/gemma-4-E2B-it-GGUF";
-        hf-file = "gemma-4-E2B-it-Q4_K_M.gguf";
+      "google/gemma-4-E2B-it-qat-q4_0-gguf:Q4_0" = {
+        hf-repo = "google/gemma-4-E2B-it-qat-q4_0-gguf";
+        hf-file = " gemma-4-E2B_q4_0-it.gguf";
         alias = "google/gemma-4:e2b";
         temperature = "1.0";
         top-k = "64";
         top-p = "0.95";
       };
-      "unsloth/gemma-4-E4B-it-GGUF:Q4_K_M" = {
-        hf-repo = "unsloth/gemma-4-E4B-it-GGUF";
-        hf-file = "gemma-4-E4B-it-Q4_K_M.gguf";
+      "google/gemma-4-E4B-it-qat-q4_0-gguf:Q4_0" = {
+        hf-repo = "google/gemma-4-E4B-it-qat-q4_0-gguf";
+        hf-file = "gemma-4-E4B_q4_0-it.gguf";
         alias = "google/gemma-4:e4b";
         temperature = "1.0";
         top-k = "64";
         top-p = "0.95";
       };
-      "unsloth/gemma-4-26B-A4B-it-GGUF:Q4_K_M" = {
-        hf-repo = "unsloth/gemma-4-26B-A4B-it-GGUF";
-        hf-file = "gemma-4-26B-A4B-it-UD-Q4_K_M.gguf";
+      "google/gemma-4-12B-it-qat-q4_0-gguf:Q4_0" = {
+        hf-repo = "google/gemma-4-12B-it-qat-q4_0-gguf";
+        hf-file = "gemma-4-12b-it-qat-q4_0.gguf";
+        alias = "google/gemma-4:12b";
+        temperature = "1.0";
+        top-k = "64";
+        top-p = "0.95";
+      };
+      "google/gemma-4-26B-A4B-it-qat-q4_0-gguf:Q4_0" = {
+        hf-repo = "google/gemma-4-26B-A4B-it-qat-q4_0-gguf";
+        hf-file = "gemma-4-26B_q4_0-it.gguf";
         alias = "google/gemma-4:26b-a4b";
         temperature = "1.0";
         top-k = "64";
         top-p = "0.95";
       };
-      "unsloth/gemma-4-31B-it-GGUF:Q4_K_M" = {
-        hf-repo = "unsloth/gemma-4-31B-it-GGUF";
-        hf-file = "gemma-4-31B-it-Q4_K_M.gguf";
+      "google/gemma-4-31B-it-qat-q4_0-gguf:Q4_0" = {
+        hf-repo = "google/gemma-4-31B-it-qat-q4_0-gguf";
+        hf-file = "gemma-4-31B_q4_0-it.gguf";
         alias = "google/gemma-4:31b";
         temperature = "1.0";
         top-k = "64";
