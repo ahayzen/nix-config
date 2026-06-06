@@ -89,7 +89,7 @@
       # https://deepmind.google/models/gemma/gemma-4/
       "google/gemma-4-E2B-it-qat-q4_0-gguf:Q4_0" = {
         hf-repo = "google/gemma-4-E2B-it-qat-q4_0-gguf";
-        hf-file = " gemma-4-E2B_q4_0-it.gguf";
+        hf-file = "gemma-4-E2B_q4_0-it.gguf";
         alias = "google/gemma-4:e2b";
         temperature = "1.0";
         top-k = "64";
