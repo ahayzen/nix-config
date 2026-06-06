@@ -14,6 +14,8 @@ There are multiple different possible approaches to handle networking for to the
 
 ## Reverse Proxy
 
+Reverse proxy on VPS and each service tunneled.
+
 ```
 External Device ---> Public DNS ---> VPS (caddy HTTPS termination) --- tunnel ---> Lab (HTTP service)
 Internal Device ---> ^^
@@ -23,6 +25,8 @@ Internal Device ---> ^^
 
 ## Split DNS
 
+Reverse proxy on both VPS and Lab, each service is tunneled, and DNS on the LAN redirects.
+
 ```
 External Device ---> Public DNS   ---> VPS (caddy HTTPS termination?) --- tunnel ---> Lab (HTTPS service)
 Internal Device ---> Internal DNS ---> Lab (HTTPS service)
@@ -31,6 +35,8 @@ Internal Device ---> Internal DNS ---> Lab (HTTPS service)
 > Note this requires DNS-01 or DNS-PERSIST-01 for Lab HTTPS certificates
 
 ## VPN
+
+Reverse proxy on both VPS and Lab, VPN hosted on VPS, and either DNS on the LAN redirects or clients use VPN.
 
 ```
 External Device ---> Public DNS ---> VPN ---> VPS (VPN server) --- VPN ---> Internal DNS ---> Lab (HTTPS Service)
@@ -42,6 +48,29 @@ Internal Device ---> Internal DNS ---> Lab (HTTPS Service)
 > Note for internal devices the internal DNS needs to unset the vpn domain so that the VPN connection is disabled
 
 > Note services now require VPN to be accessed
+
+## Double VPN
+
+Reverse proxy on both VPS and Lab, VPN hosted on Lab, second VPN for tunneling, and either DNS on the LAN redirects or clients use VPN.
+
+```
+External Device ---> Public DNS ---> VPS (caddy HTTPS termination) ---> VPN tunnel ---> Lab (HTTPS Service)
+Internal Device ---> Internal DNS ---> Lab (HTTPS Service)
+
+External Device ---> VPN ---> Public DNS ---> VPS (caddy HTTPS termination) ---> VPN tunnel ---> Lab (VPN Server) ---> VPN DNS ---> Lab (HTTPS Service)
+External Device ---> VPN ---> Internal DNS ---> Lab (VPN Server) ---> VPN DNS ---> Lab (HTTPS Service)
+```
+
+This allows for the VPN to remain connected and for services to be both public and private.
+
+To implement this `socat` could be used in a container to bounce connections between wg-easy and the services.
+Then caddy/traefix bind can be used to limit the IP ranges of public vs private services.
+
+Likely these are useful to impement this:
+
+  - https://oslks.medium.com/how-i-exposed-my-home-server-behind-cgnat-securely-without-port-forwarding-d54c52e640c6
+  - https://github.com/ondrasalek/cgnat-vps-gateway
+  - https://caddyserver.com/docs/caddyfile/directives/bind
 
 ## Phases
 

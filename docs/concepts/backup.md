@@ -24,9 +24,9 @@ SPDX-License-Identifier: MPL-2.0
 
 From left to right
 
-```
-VPS
-    \
+```plain
+VPS         Snapshot
+    \     /
 PC  -- NAS -- Offsite
     /     \
 Phone       Cold storage
@@ -34,28 +34,7 @@ Phone       Cold storage
 
 ## Schedule
 
-### Daily / Constant
-
-  * Backup NAS to offsite
-  * Phone sync with NAS
-  * PC sync with NAS
-
-### Weekly
-
-  * Backup VPSs to NAS
-
-### Monthly
-
-  * Verify 10% of offsite backup
-  * Verify 50% of local backup
-  * Backup to local cold storage
-
-## Quarterly
-
-  * Restore selected file from offsite and cold storage
-
-# Sqlite backup
-
-```console
-$ sqlite3 data/db.sqlite3 ".backup '/path/to/backups/db-$(date '+%Y%m%d-%H%M').sqlite3'"
-```
+  * Devices sync as events occur to NAS
+  * Daily sync of VPS to NAS
+  * Daily backup of NAS to Snapshot and Offsite
+  * Daily verify of subset of backups

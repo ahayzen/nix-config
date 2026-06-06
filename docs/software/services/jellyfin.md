@@ -55,3 +55,10 @@ https://jellyfin.org/docs/general/administration/hardware-acceleration/intel/#co
     - Tile height and width to 5 from 10 for [Roku](https://github.com/jellyfin/jellyfin-roku/issues/14)
 
 > Without Low Power Encoding enabled on modern Intel [visual corruption](https://www.reddit.com/r/jellyfin/comments/xihkz2/visual_artifacts_every_couple_of_seconds_when/) can occur.
+
+## Clients
+
+### Google Android TV
+
+  - Playback -> Advanced Playback Preferences -> Refresh Rate Switching
+    - Set to Scale on TV (for TV to do upscaling), this resolves deinterlacing and smooth motion issues
