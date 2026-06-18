@@ -21,6 +21,11 @@
   # TODO: FUTURE: potentially remove unstable after 26.05
   environment.systemPackages = [ inputs.nixpkgs-unstable.legacyPackages.${config.ahayzen.platform}.llama-cpp ];
 
+  # Store presets in /etc then can be easily used for custom runners too
+  environment.etc = {
+    "llama-cpp/models-preset.ini".source = ./llama-preset.ini;
+  };
+
   services.llama-cpp = {
     enable = true;
 
@@ -29,7 +34,7 @@
       # NOTE: we use 11444 to not conflict with any ollama instance for now
       port = 11444;
 
-      models-preset = builtins.toString ./llama-preset.ini;
+      models-preset = "/etc/llama-cpp/models-preset.ini";
     };
 
     # Do not open the firewall for llama-cpp externally
