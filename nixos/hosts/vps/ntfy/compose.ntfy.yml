@@ -9,7 +9,7 @@ services:
       - /etc/caddy/sites/ntfy.Caddyfile:/etc/caddy/sites/ntfy.Caddyfile:ro
 
   ntfy:
-    image: docker.io/binwiederhier/ntfy:v2.24@sha256:f8a9b104313b87cc24ae4f775f39e6328205b57dff6ede3eaf098a91e5d79f59
+    image: docker.io/binwiederhier/ntfy:v2.25@sha256:cfbbb1bac9196cb711e29ef0ac4adaeb033be6235f1df857705dc39c14384a1d
     command:
       - serve
     environment:
