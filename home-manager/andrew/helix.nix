@@ -10,11 +10,26 @@
       enable = true;
 
       defaultEditor = true;
+
+      # Default language settings in Helix are defined here
+      # https://github.com/helix-editor/helix/blob/master/languages.toml
+      #
+      # Enable auto-format for C/C++/QML which aren't enabled by default
       languages = {
-        language = [{
-          name = "cpp";
-          auto-format = true;
-        }];
+        language = [
+          {
+            name = "c";
+            auto-format = true;
+          }
+          {
+            name = "cpp";
+            auto-format = true;
+          }
+          {
+            name = "qml";
+            auto-format = true;
+          }
+        ];
 
         language-server.rust-analyzer.config.checkOnSave = false;
       };
