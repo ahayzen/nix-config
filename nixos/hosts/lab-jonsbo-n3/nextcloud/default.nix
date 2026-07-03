@@ -20,6 +20,7 @@
         user = "unpriv";
       };
       "nextcloud/custom.ini".source = ./custom.ini;
+      "traefik/dynamic/traefik.nextcloud.yml".source = ./traefik.nextcloud.yml;
     };
 
     # Restart if static files change
@@ -29,6 +30,7 @@
     systemd.services."docker-compose-runner".restartTriggers = [
       (builtins.hashFile "sha256" config.environment.etc."nextcloud/custom.config.php".source)
       (builtins.hashFile "sha256" config.environment.etc."nextcloud/custom.ini".source)
+      (builtins.hashFile "sha256" config.environment.etc."traefik/dynamic/traefik.nextcloud.yml".source)
     ];
 
     # As the folders are mapped we need to create with the right permissions

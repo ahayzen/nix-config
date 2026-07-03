@@ -60,3 +60,7 @@ services:
     networks:
       - app-nextcloud
     restart: unless-stopped
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.nextcloud.yml:/etc/traefik/dynamic/traefik.nextcloud.yml:ro
