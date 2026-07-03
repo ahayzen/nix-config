@@ -18,3 +18,7 @@ services:
       # TODO: could add audiobook storage and support
     environment:
       - TZ=Europe/London
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.audiobookshelf.yml:/etc/traefik/dynamic/traefik.audiobookshelf.yml:ro

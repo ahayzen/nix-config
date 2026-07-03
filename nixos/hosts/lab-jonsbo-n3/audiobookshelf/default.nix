@@ -12,6 +12,10 @@
   config = lib.mkIf (config.ahayzen.lab.audiobookshelf) {
     ahayzen.docker-compose-files = [ ./compose.audiobookshelf.yml ];
 
+    environment.etc = {
+      "traefik/dynamic/traefik.audiobookshelf.yml".source = ./traefik.audiobookshelf.yml;
+    };
+
     # Take a snapshot of the database daily
     systemd = {
       services."audiobookshelf-db-snapshot" = {
@@ -34,6 +38,14 @@
           Persistent = true;
         };
       };
+
+      # Restart if static files change
+      #
+      # Note agenix files are not possible and will need the version bumping
+      # which causes the hash of the docker-compose file to change.
+      services."docker-compose-runner".restartTriggers = [
+        (builtins.hashFile "sha256" config.environment.etc."traefik/dynamic/traefik.audiobookshelf.yml".source)
+      ];
     };
   };
 }
