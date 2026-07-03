@@ -12,3 +12,7 @@ services:
     restart: unless-stopped
     volumes:
       - /var/lib/docker-compose-runner/actual/data:/data
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.actual.yml:/etc/traefik/dynamic/traefik.actual.yml:ro

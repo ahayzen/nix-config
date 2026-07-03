@@ -12,6 +12,10 @@
   config = lib.mkIf (config.ahayzen.lab.actual) {
     ahayzen.docker-compose-files = [ ./compose.actual.yml ];
 
+    environment.etc = {
+      "traefik/dynamic/traefik.actual.yml".source = ./traefik.actual.yml;
+    };
+
     # Take a snapshot of the database daily
     systemd = {
       services."actual-db-snapshot" = {
@@ -32,6 +36,14 @@
           Persistent = true;
         };
       };
+
+      # Restart if static files change
+      #
+      # Note agenix files are not possible and will need the version bumping
+      # which causes the hash of the docker-compose file to change.
+      services."docker-compose-runner".restartTriggers = [
+        (builtins.hashFile "sha256" config.environment.etc."traefik/dynamic/traefik.actual.yml".source)
+      ];
     };
   };
 }
