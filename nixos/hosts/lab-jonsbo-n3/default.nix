@@ -30,6 +30,7 @@
     ./rathole
     ./restic
     ./sftpgo
+    ./traefik
     ./vikunja
   ];
 
