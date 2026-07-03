@@ -57,6 +57,7 @@
         if config.ahayzen.testing
         then ./bookstack_secrets.vm.env
         else config.age.secrets.bookstack_env.path;
+      "traefik/dynamic/traefik.bookstack.yml".source = ./traefik.bookstack.yml;
     };
 
     # Restart if static files change
@@ -65,6 +66,7 @@
     # which causes the hash of the docker-compose file to change.
     systemd.services."docker-compose-runner".restartTriggers = [
       (builtins.hashFile "sha256" config.environment.etc."bookstack/settings.env".source)
+      (builtins.hashFile "sha256" config.environment.etc."traefik/dynamic/traefik.bookstack.yml".source)
       # Agenix path with a version that can be bumped
       "/etc/bookstack/settings_secrets.env-1"
     ];

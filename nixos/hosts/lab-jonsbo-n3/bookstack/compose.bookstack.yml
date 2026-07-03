@@ -54,3 +54,7 @@ services:
       - /var/cache/docker-compose-runner-user1000/bookstack/database:/config
       - /var/lib/docker-compose-runner-user1000/bookstack/database:/var/lib/docker-compose-runner/bookstack/database
     restart: unless-stopped
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.bookstack.yml:/etc/traefik/dynamic/traefik.bookstack.yml:ro
