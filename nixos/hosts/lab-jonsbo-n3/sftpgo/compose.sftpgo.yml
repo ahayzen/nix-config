@@ -40,3 +40,7 @@ services:
       - /mnt/mapping-pool-user1000/data/recordings:/mnt/data/recordings
       - /mnt/mapping-pool-user1000/data/shows:/mnt/data/shows
       - /mnt/mapping-pool-user1000/data/user:/mnt/data/user
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.sftpgo.yml:/etc/traefik/dynamic/traefik.sftpgo.yml:ro
