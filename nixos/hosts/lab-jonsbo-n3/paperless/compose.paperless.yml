@@ -41,3 +41,7 @@ services:
       # Where document_exporter can export to
       - /mnt/mapping-pool-user1000/data/app/paperless/export:/usr/src/paperless/export
     restart: unless-stopped
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.paperless.yml:/etc/traefik/dynamic/traefik.paperless.yml:ro
