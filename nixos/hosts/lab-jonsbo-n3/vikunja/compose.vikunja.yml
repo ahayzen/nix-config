@@ -28,3 +28,7 @@ services:
       - /mnt/mapping-pool-user1000/data/app/vikunja/files:/app/vikunja/files
       # Database
       - /var/cache/docker-compose-runner-user1000/vikunja/db:/db
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.vikunja.yml:/etc/traefik/dynamic/traefik.vikunja.yml:ro
