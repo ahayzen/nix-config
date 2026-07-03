@@ -28,3 +28,7 @@ services:
     volumes:
       # Bitwarden uses uid 1000, so use our mapped folder
       - /var/cache/docker-compose-runner-user1000/bitwarden/config:/etc/bitwarden
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.bitwarden.yml:/etc/traefik/dynamic/traefik.bitwarden.yml:ro
