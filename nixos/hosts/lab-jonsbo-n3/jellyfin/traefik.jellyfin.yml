@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+http:
+  routers:
+    jellyfin:
+      rule: Host(`jellyfin.hayzen.uk`)
+      service: jellyfin
+
+  services:
+    jellyfin:
+      loadBalancer:
+        servers:
+          - url: http://jellyfin:8096

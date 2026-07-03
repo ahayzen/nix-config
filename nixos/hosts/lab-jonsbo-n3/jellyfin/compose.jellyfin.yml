@@ -38,3 +38,7 @@ services:
       - /mnt/pool/data/movies:/mnt/data/movies:ro
       - /mnt/pool/data/shows:/mnt/data/shows:ro
       - /mnt/pool/data/recordings:/mnt/data/recordings:ro
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.jellyfin.yml:/etc/traefik/dynamic/traefik.jellyfin.yml:ro
