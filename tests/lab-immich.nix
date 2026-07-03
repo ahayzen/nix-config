@@ -40,7 +40,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "immich.hayzen.uk" "ahayzen.com" ];
       };
 
       # Preseed host key
@@ -92,7 +92,8 @@
 
       networking.hosts = {
         # TODO: can we fix the IP addresses of the testing hosts?
-        "192.168.1.3" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "immich.hayzen.uk" "ahayzen.com" "yumekasaito.com" ];
+        "127.0.0.1" = [ "immich.hayzen.uk" ];
+        "192.168.1.3" = [ "ahayzen.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
@@ -198,6 +199,9 @@
     with subtest("Ensure docker starts"):
       lab.wait_for_unit("docker-compose-runner", timeout=600)
 
+      # Wait for caddy to start
+      lab.wait_for_open_port(80, timeout=60)
+
     with subtest("Rathole connection"):
       # Check we have a server control channel
       vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=immich"' , timeout=10)
@@ -213,8 +217,12 @@
       wait_for_immich_microservice_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Immich Microservices is running"'
       lab.wait_until_succeeds(wait_for_immich_microservice_cmd, timeout=60)
 
-      # Test login page
+      # Test login page rathole
       output = vps.succeed("curl --insecure --location --silent immich.hayzen.uk")
+      assert "immich" in output, f"'{output}' does not contain 'immich'"
+
+      # Test login page direct
+      output = lab.succeed("curl --insecure --location --silent immich.hayzen.uk")
       assert "immich" in output, f"'{output}' does not contain 'immich'"
 
     #

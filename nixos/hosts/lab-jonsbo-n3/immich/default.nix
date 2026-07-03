@@ -29,6 +29,7 @@
         if config.ahayzen.testing
         then ./immich-secrets.vm.env
         else config.age.secrets.immich_env.path;
+      "traefik/dynamic/traefik.immich.yml".source = ./traefik.immich.yml;
     };
 
     # Restart if static files change
@@ -37,6 +38,7 @@
     # which causes the hash of the docker-compose file to change.
     systemd.services."docker-compose-runner".restartTriggers = [
       (builtins.hashFile "sha256" config.environment.etc."immich/settings.env".source)
+      (builtins.hashFile "sha256" config.environment.etc."traefik/dynamic/traefik.immich.yml".source)
       # Agenix path with a version that can be bumped
       "/etc/immich/settings_secrets.env-1"
     ];

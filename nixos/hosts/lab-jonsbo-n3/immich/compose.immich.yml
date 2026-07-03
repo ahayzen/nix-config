@@ -75,3 +75,7 @@ services:
       - /var/cache/docker-compose-runner/immich/postgres:/var/lib/postgresql/data
       - /var/lib/docker-compose-runner/immich/postgres:/var/lib/docker-compose-runner/immich/postgres
     restart: always
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.immich.yml:/etc/traefik/dynamic/traefik.immich.yml:ro

@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+http:
+  routers:
+    immich:
+      rule: Host(`immich.hayzen.uk`)
+      service: immich
+
+  services:
+    immich:
+      loadBalancer:
+        servers:
+          - url: http://immich-server:2283
