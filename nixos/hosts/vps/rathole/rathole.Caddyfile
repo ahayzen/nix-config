@@ -12,14 +12,29 @@
 actual.hayzen.uk {
     log
 
-    reverse_proxy rathole:8506
+    # Use socat from host
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # Audiobookshelf proxy
 audiobookshelf.hayzen.uk {
     log
 
-    reverse_proxy rathole:13378
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # Bitwarden proxy
@@ -33,7 +48,14 @@ bitwarden.hayzen.uk {
 bookstack.hayzen.uk {
     log
 
-    reverse_proxy rathole:6875
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # Immich proxy
@@ -54,7 +76,15 @@ jellyfin.hayzen.uk {
 nextcloud.hayzen.uk {
     log
 
-    reverse_proxy rathole:8081
+    # Use socat from host
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # SFTPGo proxy
@@ -68,7 +98,14 @@ sftpgo.hayzen.uk {
 paperless.hayzen.uk {
     log
 
-    reverse_proxy rathole:8026
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # WebDav proxy
@@ -85,5 +122,12 @@ webdav.hayzen.uk {
 vikunja.hayzen.uk {
     log
 
-    reverse_proxy rathole:3456
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
