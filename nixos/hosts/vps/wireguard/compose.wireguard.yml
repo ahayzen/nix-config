@@ -21,7 +21,7 @@ services:
       - ALLOWEDIPS=10.13.13.0/24
       - PERSISTENTKEEPALIVE_PEERS=all
       - LOG_CONFS=true
-    network:
+    networks:
       - internet
       - group-proxy
     ports:
