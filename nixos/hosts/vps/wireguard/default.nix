@@ -17,7 +17,7 @@
 
     networking.firewall =
       {
-        allowedUDPPorts = [ 51821 ];
+        allowedUDPPorts = [ 51820 ];
       };
   };
 }
