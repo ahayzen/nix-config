@@ -48,6 +48,8 @@ services:
     env_file:
       - /etc/immich/settings.env
       - /etc/immich/settings_secrets.env
+    expose:
+      - 3003
     networks:
       - app-immich
     restart: always
