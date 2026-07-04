@@ -12,8 +12,8 @@
   config = lib.mkIf (config.ahayzen.vps.wireguard) {
     ahayzen.docker-compose-files = [ ./compose.wireguard.yml ];
 
-    # Add the wireguard kernel module
-    boot.extraModulePackages = [ config.boot.kernelPackages.wireguard ];
+    # Load the wireguard kernel module
+    boot.kernelModules = [ "wireguard" ];
 
     networking.firewall =
       {
