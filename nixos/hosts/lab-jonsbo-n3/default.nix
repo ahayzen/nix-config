@@ -32,6 +32,7 @@
     ./sftpgo
     ./traefik
     ./vikunja
+    ./wg-quick
   ];
 
   ahayzen = {
