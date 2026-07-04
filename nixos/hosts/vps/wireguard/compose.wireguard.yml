@@ -14,17 +14,20 @@ services:
       - PGID=0
       - TZ=Europe/London
       - SERVERURL=ahayzen.com
-      - SERVERPORT=51821
-      - PEERS=lab-jonsbo-n3
+      - SERVERPORT=51820
+      - PEERS=lab
       - PEERDNS=auto
       - INTERNAL_SUBNET=10.13.13.0
       - ALLOWEDIPS=10.13.13.0/24
       - PERSISTENTKEEPALIVE_PEERS=all
       - LOG_CONFS=true
+    network:
+      - internet
+      - group-proxy
+    ports:
+      - "51820:51820/udp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
     volumes:
       - /var/lib/docker-compose-runner/wireguard/config:/config
       - /run/current-system/kernel-modules/lib/modules:/lib/modules:ro
-    ports:
-      - 51821:51821/udp
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
