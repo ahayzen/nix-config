@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  wireguard:
+    image: docker.io/linuxserver/wireguard:1.0.20250521@sha256:f33891344345b1f78705e723b633e3a3f94d08ae75ca1a5f48c5a449c35bf460
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/London
+      - SERVERURL=ahayzen.com
+      - SERVERPORT=51821
+      - PEERS=lab-jonsbo-n3
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+      - ALLOWEDIPS=10.13.13.0/24
+      - PERSISTENTKEEPALIVE_PEERS=all
+      - LOG_CONFS=true
+    volumes:
+      - /var/lib/docker-compose-runner/wireguard/config:/config
+      - /run/current-system/kernel-modules/lib/modules:/lib/modules:ro
+    ports:
+      - 51821:51821/udp
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
