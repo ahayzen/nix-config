@@ -19,6 +19,7 @@
     ./rathole
     ./wagtail-ahayzen
     ./wagtail-yumekasaito
+    ./wireguard
   ];
 
   # OVH uses BIOS so we need to disable systemd-boot and use grub
