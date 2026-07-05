@@ -11,7 +11,7 @@
 
   config = lib.mkIf (config.ahayzen.vps.wg-quick) {
     age.secrets = lib.mkIf (!config.ahayzen.testing) {
-      wg-lab-private = {
+      wg-vps-private = {
         file = ../../../../secrets/wg_vps_private.age;
         # Set correct owner otherwise docker cannot read the file
         mode = "0600";
