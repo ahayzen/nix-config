@@ -25,6 +25,8 @@ in
   "vikunja_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
   "wg_lab_private.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
 
+  "wg_pre_shared.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 publicKeys.host.vps ] ++ publicKeys.group.users.developer;
+
   # For avoiding new lines use
   # EDITOR="nano --nonewlines"
   #
