@@ -11,9 +11,15 @@
 
   config = lib.mkIf (config.ahayzen.lab.wg-quick) {
     age.secrets = lib.mkIf (!config.ahayzen.testing) {
+      wg-pre-shared = {
+        file = ../../../../secrets/wg_pre_shared.age;
+        mode = "0600";
+        owner = "root";
+        group = "root";
+      };
+
       wg-lab-private = {
         file = ../../../../secrets/wg_lab_private.age;
-        # Set correct owner otherwise docker cannot read the file
         mode = "0600";
         owner = "root";
         group = "root";
@@ -35,6 +41,7 @@
             allowedIPs = [ "172.28.228.0/24" ];
             endpoint = "ahayzen.com:51820";
             persistentKeepalive = 25;
+            presharedKeyFile = if config.ahayzen.testing then "${./wg-pre-shared-test}" else config.age.secrets.wg-pre-shared.path;
           }
         ];
       };

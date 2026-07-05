@@ -11,9 +11,15 @@
 
   config = lib.mkIf (config.ahayzen.vps.wg-quick) {
     age.secrets = lib.mkIf (!config.ahayzen.testing) {
+      wg-pre-shared = {
+        file = ../../../../secrets/wg_pre_shared.age;
+        mode = "0600";
+        owner = "root";
+        group = "root";
+      };
+
       wg-vps-private = {
         file = ../../../../secrets/wg_vps_private.age;
-        # Set correct owner otherwise docker cannot read the file
         mode = "0600";
         owner = "root";
         group = "root";
@@ -41,6 +47,7 @@
               publicKey = if config.ahayzen.testing then "iSJhX9/U0wZ/VyztUBnkEmFw9TVVPNtQwlmTCUaB2QY=" else "f/hmn0DmhLT0JoVrA8HtBEE3KbKvJgrT9u2UZk/Qc1w=";
               allowedIPs = [ "172.28.228.0/24" ];
               persistentKeepalive = 25;
+              presharedKeyFile = if config.ahayzen.testing then "${./wg-pre-shared-test}" else config.age.secrets.wg-pre-shared.path;
             }
           ];
         };
