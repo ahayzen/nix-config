@@ -7,12 +7,12 @@
 #
 # Lab
 # - bookstack
-# - rathole
+# - wg-quick
 # - backup machines of lab
 #
 # VPS
 # - caddy
-# - rathole
+# - wg-quick
 #
 # Backup
 # - backup script
@@ -32,7 +32,6 @@
         testing = true;
 
         vps = {
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -84,7 +83,6 @@
 
         lab = {
           bookstack = true;
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -204,20 +202,13 @@
       # Wait for caddy to start
       lab.wait_for_open_port(80, timeout=60)
 
-    with subtest("Rathole connection"):
-      # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=bookstack"' , timeout=10)
-
-      # Check we have a client control channel
-      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
-
     with subtest("Test bookstack"):
       # Wait for linuxserver containers to start
       wait_for_bookstack_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "\[ls.io-init\] done."'
       # Wait for at least two linuxservers to start
       lab.wait_until_succeeds(wait_for_bookstack_cmd + " | wc -l | awk '{if ($1 > 1) {exit 0} else {exit 1}}'", timeout=120)
 
-      # Test login page rathole
+      # Test login page wg-quick
       output = vps.succeed("curl --insecure --location --silent bookstack.hayzen.uk")
       assert "BookStack" in output, f"'{output}' does not contain 'BookStack'"
 

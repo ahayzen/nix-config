@@ -7,12 +7,12 @@
 #
 # Lab
 # - nextcloud
-# - rathole
+# - wg-quick
 # - backup machines of lab
 #
 # VPS
 # - caddy
-# - rathole
+# - wg-quick
 #
 # Backup
 # - backup script
@@ -32,7 +32,6 @@
         testing = true;
 
         vps = {
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -83,7 +82,6 @@
         testing = true;
 
         lab = {
-          rathole = true;
           nextcloud = true;
           wg-quick = true;
         };
@@ -204,13 +202,6 @@
       # Wait for caddy to start
       lab.wait_for_open_port(80, timeout=60)
 
-    with subtest("Rathole connection"):
-      # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=nextcloud"' , timeout=10)
-
-      # Check we have a client control channel
-      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
-
     with subtest("Test nextcloud"):
       # Wait for nextcloud to start
       wait_for_nextcloud_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Initializing nextcloud"'
@@ -233,7 +224,7 @@
       wait_for_nextcloud_db = 'ls -nd /var/cache/docker-compose-runner/nextcloud/html/data/owncloud.db'
       lab.wait_until_succeeds(wait_for_nextcloud_db, timeout=60)
 
-      # Test login page rathole
+      # Test login page wg-quick
       output = vps.succeed("curl --insecure --location --silent nextcloud.hayzen.uk/login")
       assert "Login – Nextcloud" in output, f"'{output}' does not contain 'Login – Nextcloud'"
 

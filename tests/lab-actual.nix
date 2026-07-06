@@ -7,12 +7,12 @@
 #
 # Lab
 # - actual
-# - rathole
+# - wg-quick
 # - backup machines of lab
 #
 # VPS
 # - caddy
-# - rathole
+# - wg-quick
 #
 # Backup
 # - backup script
@@ -32,7 +32,6 @@
         testing = true;
 
         vps = {
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -84,7 +83,6 @@
 
         lab = {
           actual = true;
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -204,19 +202,12 @@
       # Wait for caddy to start
       lab.wait_for_open_port(80, timeout=60)
 
-    with subtest("Rathole connection"):
-      # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=actual"' , timeout=10)
-
-      # Check we have a client control channel
-      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
-
     with subtest("Test actual"):
       # Wait for actual to start
       wait_for_actual_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening on :::5006..."'
       lab.wait_until_succeeds(wait_for_actual_cmd, timeout=60)
 
-      # Test login page rathole
+      # Test login page wg-quick
       output = vps.succeed("curl --insecure --location --silent actual.hayzen.uk/login")
       assert "Actual" in output, f"'{output}' does not contain 'Actual'"
 

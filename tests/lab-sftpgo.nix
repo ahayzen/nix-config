@@ -7,12 +7,12 @@
 #
 # Lab
 # - sftpgo
-# - rathole
+# - wg-quick
 # - backup machines of lab
 #
 # VPS
 # - caddy
-# - rathole
+# - wg-quick
 #
 # Backup
 # - backup script
@@ -32,7 +32,6 @@
         testing = true;
 
         vps = {
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -83,7 +82,6 @@
         testing = true;
 
         lab = {
-          rathole = true;
           sftpgo = true;
           wg-quick = true;
         };
@@ -205,13 +203,6 @@
       # Wait for caddy to start
       lab.wait_for_open_port(80, timeout=60)
 
-    with subtest("Rathole connection"):
-      # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=sftpgo"' , timeout=10)
-
-      # Check we have a client control channel
-      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
-
     with subtest("Test sftpgo"):
       # Wait for sftpgo to start
       wait_for_sftpgo_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "starting SFTPGo"'
@@ -219,7 +210,7 @@
       wait_for_sftpgo_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "server listener registered, address"'
       lab.wait_until_succeeds(wait_for_sftpgo_cmd, timeout=60)
 
-      # Test login page rathole
+      # Test login page wg-quick
       output = vps.succeed("curl --insecure --location --silent sftpgo.hayzen.uk/web/admin/setup")
       assert "WebAdmin" in output, f"'{output}' does not contain 'WebAdmin'"
 
@@ -228,7 +219,7 @@
       assert "WebAdmin" in output, f"'{output}' does not contain 'WebAdmin'"
 
     with subtest("Test WebDav"):
-      # Rathole
+      # wg-quick
       output = vps.succeed("curl --insecure --location --verbose webdav.hayzen.uk")
       assert "Authentication error: no credential provided" in output, f"'{output}' does not contain 'Authentication error: no credential provided'"
 

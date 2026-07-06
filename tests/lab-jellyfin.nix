@@ -7,12 +7,12 @@
 #
 # Lab
 # - jellyfin
-# - rathole
+# - wg-quick
 # - backup machines of lab
 #
 # VPS
 # - caddy
-# - rathole
+# - wg-quick
 #
 # Backup
 # - backup script
@@ -32,7 +32,6 @@
         testing = true;
 
         vps = {
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -84,7 +83,6 @@
 
         lab = {
           jellyfin = true;
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -199,19 +197,12 @@
       # Wait for caddy to start
       lab.wait_for_open_port(80, timeout=60)
 
-    with subtest("Rathole connection"):
-      # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=jellyfin"' , timeout=10)
-
-      # Check we have a client control channel
-      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
-
     with subtest("Test jellyfin"):
       # Wait for jellyfin to start
       wait_for_jellyfin_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Emby.Server.Implementations.ApplicationHost.*Core startup complete"'
       lab.wait_until_succeeds(wait_for_jellyfin_cmd, timeout=60)
 
-      # Test login page via rathole
+      # Test login page via wg-quick
       output = vps.succeed("curl --insecure --location --silent jellyfin.hayzen.uk")
       assert "Jellyfin" in output, f"'{output}' does not contain 'Jellyfin'"
 

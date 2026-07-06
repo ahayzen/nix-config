@@ -16,7 +16,6 @@
     ./hayzen-uk
     ./homepage
     ./ntfy
-    ./rathole
     ./wagtail-ahayzen
     ./wagtail-yumekasaito
     ./wg-quick

@@ -8,71 +8,71 @@
         href: https://nextcloud.hayzen.uk/
         icon: nextcloud.png
         description: "Regain control over your data"
-        # Nextcloud likely requires correct address otherwise insecure proxy
+        # NOTE: Nextcloud likely requires correct address otherwise insecure proxy when using rathole
         siteMonitor: "https://nextcloud.hayzen.uk"
 
     - Paperless:
         href: https://paperless.hayzen.uk/
         icon: paperless-ngx.png
         description: "A supercharged document management system"
-        siteMonitor: "http://rathole:8026"
+        siteMonitor: "https://paperless.hayzen.uk"
 
     - SFTPGo:
         href: https://sftpgo.hayzen.uk/
         icon: sftpgo.png
         description: "Bring your file transfers anywhere"
-        siteMonitor: "http://rathole:8880"
+        siteMonitor: "https://sftpgo.hayzen.uk"
 
     - WebDav:
         href: https://webdav.hayzen.uk/
         icon: webdav.png
         description: "Web-based Distributed Authoring and Versioning"
-        siteMonitor: "http://rathole:8890"
+        siteMonitor: "https://webdav.hayzen.uk"
 
 - Media:
     - Audiobookshelf:
         href: https://audiobookshelf.hayzen.uk/
         icon: audiobookshelf.png
         description: "Self-hosted audiobook and podcast server"
-        siteMonitor: "http://rathole:13378"
+        siteMonitor: "https://audiobookshelf.hayzen.uk"
 
     - Immich:
         href: https://immich.hayzen.uk/
         icon: immich.png
         description: "Self-hosted photo and video management solution"
-        siteMonitor: "http://rathole:8283"
+        siteMonitor: "https://immich.hayzen.uk"
 
     - Jellyfin:
         href: https://jellyfin.hayzen.uk/
         icon: jellyfin.png
         description: "The Free Software Media System"
-        siteMonitor: "http://rathole:8896"
+        siteMonitor: "https://jellyfin.hayzen.uk"
 
 - Utilities:
     - Actual:
         href: https://actual.hayzen.uk/
         icon: actual-budget.png
         description: "Your Finances - made simple"
-        siteMonitor: "http://rathole:8506"
+        siteMonitor: "https://actual.hayzen.uk"
 
     - Bitwarden:
         href: https://bitwarden.hayzen.uk/
         icon: bitwarden.png
         description: "The #1 most trusted password manager"
-        siteMonitor: "http://rathole:8080"
+        siteMonitor: "https://bitwarden.hayzen.uk"
 
     - Bookstack:
         href: https://bookstack.hayzen.uk/
         icon: bookstack.png
         description: "Simple & Free Wiki Software"
-        # BookStack causes error 500 when using rathole url
+        # NOTE: BookStack causes error 500 when using rathole url
         siteMonitor: "https://bookstack.hayzen.uk"
 
     - Vikunja:
         href: https://vikunja.hayzen.uk/
         icon: vikunja.png
         description: "The open-source, self-hostable to-do app"
-        siteMonitor: "http://rathole:3456"
+        siteMonitor: "https://vikunja.hayzen.uk"
 
 - VPS:
     - CPU:
@@ -96,38 +96,40 @@
             metric: "fs:/etc/hosts"
             version: 4
 
-- Lab:
-    - CPU:
-        widget:
-            url: http://rathole:61208
-            type: glances
-            metric: cpu
-            version: 4
+# TODO: move away from glances to an alternative maybe beszel
+#
+# - Lab:
+#     - CPU:
+#         widget:
+#             url: http://rathole:61208
+#             type: glances
+#             metric: cpu
+#             version: 4
 
-    - RAM:
-        widget:
-            url: http://rathole:61208
-            type: glances
-            metric: memory
-            version: 4
+#     - RAM:
+#         widget:
+#             url: http://rathole:61208
+#             type: glances
+#             metric: memory
+#             version: 4
 
-    - Temperature:
-        widget:
-            url: http://rathole:61208
-            type: glances
-            metric: "sensor:Package id 0"
-            version: 4
+#     - Temperature:
+#         widget:
+#             url: http://rathole:61208
+#             type: glances
+#             metric: "sensor:Package id 0"
+#             version: 4
 
-    - Host Disk:
-        widget:
-            url: http://rathole:61208
-            type: glances
-            metric: "fs:/etc/hosts"
-            version: 4
+#     - Host Disk:
+#         widget:
+#             url: http://rathole:61208
+#             type: glances
+#             metric: "fs:/etc/hosts"
+#             version: 4
 
-    - Data Disk:
-        widget:
-            url: http://rathole:61208
-            type: glances
-            metric: "fs:/mnt/pool/cache"
-            version: 4
+#     - Data Disk:
+#         widget:
+#             url: http://rathole:61208
+#             type: glances
+#             metric: "fs:/mnt/pool/cache"
+#             version: 4

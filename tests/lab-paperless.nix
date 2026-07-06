@@ -7,12 +7,12 @@
 #
 # Lab
 # - paperless
-# - rathole
+# - wg-quick
 # - backup machines of lab
 #
 # VPS
 # - caddy
-# - rathole
+# - wg-quick
 #
 # Backup
 # - backup script
@@ -32,7 +32,6 @@
         testing = true;
 
         vps = {
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -83,7 +82,6 @@
         testing = true;
 
         lab = {
-          rathole = true;
           paperless = true;
           wg-quick = true;
         };
@@ -205,13 +203,6 @@
       # Wait for caddy to start
       lab.wait_for_open_port(80, timeout=60)
 
-    with subtest("Rathole connection"):
-      # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=paperless"' , timeout=10)
-
-      # Check we have a client control channel
-      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
-
     with subtest("Test paperless"):
       # Wait for paperless to start
       wait_for_paperless_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening at: http://:::8000"'
@@ -224,7 +215,7 @@
       # TODO: test waiting longer
       time.sleep(30)
 
-      # Test login page rathole
+      # Test login page wg-quick
       output = vps.succeed("curl --insecure --location --silent paperless.hayzen.uk/accounts/login/")
       assert "Paperless" in output, f"'{output}' does not contain 'Paperless'"
 

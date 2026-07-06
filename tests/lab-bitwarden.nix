@@ -7,12 +7,12 @@
 #
 # Lab
 # - bitwarden
-# - rathole
+# - wg-quick
 # - backup machines of lab
 #
 # VPS
 # - caddy
-# - rathole
+# - wg-quick
 #
 # Backup
 # - backup script
@@ -32,7 +32,6 @@
         testing = true;
 
         vps = {
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -84,7 +83,6 @@
 
         lab = {
           bitwarden = true;
-          rathole = true;
           wg-quick = true;
         };
       };
@@ -205,19 +203,12 @@
       # Wait for caddy to start
       lab.wait_for_open_port(80, timeout=60)
 
-    with subtest("Rathole connection"):
-      # Check we have a server control channel
-      vps.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::server: Control channel established service=bitwarden"' , timeout=10)
-
-      # Check we have a client control channel
-      lab.wait_until_succeeds('journalctl --boot --no-pager --quiet --unit docker.service --grep "rathole::client: Control channel established"' , timeout=10)
-
     with subtest("Test bitwarden"):
       # Wait for bitwarden to start
       wait_for_bitwarden_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "INFO success: nginx entered RUNNING state"'
       lab.wait_until_succeeds(wait_for_bitwarden_cmd, timeout=60)
 
-      # Test login page rathole
+      # Test login page wg-quick
       output = vps.succeed("curl --insecure --location --silent bitwarden.hayzen.uk/#/login")
       assert "Bitwarden" in output, f"'{output}' does not contain 'Bitwarden'"
 
