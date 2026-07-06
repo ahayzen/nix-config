@@ -33,6 +33,7 @@
 
         vps = {
           rathole = true;
+          wg-quick = true;
         };
       };
 
@@ -84,6 +85,7 @@
         lab = {
           bitwarden = true;
           rathole = true;
+          wg-quick = true;
         };
       };
 
