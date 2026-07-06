@@ -19,7 +19,6 @@ in
   "immich_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
   "ntfy_lab_jonsbo_n3_token.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
   "paperless_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
-  "rathole_toml.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 publicKeys.host.vps ] ++ publicKeys.group.users.developer;
   "restic_offsite_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
   "restic_password.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;
   "vikunja_env.age".publicKeys = [ publicKeys.host.lab-jonsbo-n3 ] ++ publicKeys.group.users.developer;

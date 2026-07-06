@@ -27,7 +27,6 @@
     ./jellyfin
     ./nextcloud
     ./paperless
-    ./rathole
     ./restic
     ./sftpgo
     ./traefik
