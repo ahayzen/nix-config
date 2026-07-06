@@ -1,0 +1,26 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  caddy:
+    depends_on:
+      - socat-https
+    volumes:
+      # Caddy configuration file
+      - /etc/caddy/sites/wg-quick.Caddyfile:/etc/caddy/sites/wg-quick.Caddyfile:ro
+
+  # Forward wg-quick connections for containers via socat
+
+  socat-https:
+    image: docker.io/alpine/socat:1.8.1.3@sha256:188fe0a22182f81c16def9d1137930121eaa3023f427164e32c0d2f118f79dd6
+    restart: unless-stopped
+    command: "TCP4-LISTEN:9443,fork,reuseaddr TCP4:172.28.228.130:443"
+    expose:
+      - 9443
+    # NOTE: this is not network=host so that caddy container can reach it
+    #
+    # This creates an outbound connection which is routed through the VPN,
+    # which is not possible from caddy directly.
+    networks:
+      - group-proxy

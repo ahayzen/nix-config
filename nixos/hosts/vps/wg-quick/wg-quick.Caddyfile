@@ -41,7 +41,15 @@ audiobookshelf.hayzen.uk {
 bitwarden.hayzen.uk {
     log
 
-    reverse_proxy rathole:8080
+    # Use socat from host
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # Bookstack proxy
@@ -62,14 +70,30 @@ bookstack.hayzen.uk {
 immich.hayzen.uk {
     log
 
-    reverse_proxy rathole:8283
+    # Use socat from host
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # Jellyfin proxy
 jellyfin.hayzen.uk {
     log
 
-    reverse_proxy rathole:8896
+    # Use socat from host
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # Nextcloud proxy
@@ -91,7 +115,15 @@ nextcloud.hayzen.uk {
 sftpgo.hayzen.uk {
     log
 
-    reverse_proxy rathole:8880
+    # Use socat from host
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # Paperless proxy
@@ -115,7 +147,15 @@ paperless.hayzen.uk {
 webdav.hayzen.uk {
     log
 
-    reverse_proxy rathole:8890
+    # Use socat from host
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
 }
 
 # Vikunja proxy

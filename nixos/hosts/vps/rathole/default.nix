@@ -25,7 +25,6 @@
     ahayzen.docker-compose-files = [ ./compose.rathole.yml ];
 
     environment.etc = {
-      "caddy/sites/rathole.Caddyfile".source = ./rathole.Caddyfile;
       "rathole/config.toml".
       source =
         if config.ahayzen.testing
@@ -50,7 +49,6 @@
     # Note agenix files are not possible and will need the version bumping
     # which causes the hash of the docker-compose file to change.
     systemd.services."docker-compose-runner".restartTriggers = [
-      (builtins.hashFile "sha256" config.environment.etc."caddy/sites/rathole.Caddyfile".source)
       # Agenix path with a version that can be bumped
       "/etc/rathole/config.toml-5"
     ];
