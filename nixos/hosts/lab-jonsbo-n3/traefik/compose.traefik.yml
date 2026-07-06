@@ -18,6 +18,9 @@ services:
       - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      # Trusted VPN IPs so that X-Forwarded-* is passed through
+      - "--entryPoints.web.forwardedHeaders.trustedIPs=172.28.228.128/25"
+      - "--entryPoints.websecure.forwardedHeaders.trustedIPs=172.28.228.128/25"
       # Enable INFO logging so we know when the service starts
       - "--log.level=INFO"
       # Enable access logging
