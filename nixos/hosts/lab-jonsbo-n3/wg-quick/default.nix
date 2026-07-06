@@ -28,7 +28,7 @@
 
     networking.wg-quick.interfaces = {
       wg0 = {
-        address = [ "172.28.228.2/24" ];
+        address = [ "172.28.228.130/32" ];
         dns = [ "9.9.9.9" ];
         listenPort = 51820;
         mtu = 1420;
@@ -38,7 +38,7 @@
           {
             # VPS public key
             publicKey = if config.ahayzen.testing then "etSgGU6oJzeVY9hTESENy09pC2UVBMKAlqRpyGwC0wY=" else "x/OmP3Aa3i7XhsuoZT6svz56eLdv0E8oUtYV4jqkmTs=";
-            allowedIPs = [ "172.28.228.0/24" ];
+            allowedIPs = [ "172.28.228.128/25" ];
             endpoint = "ahayzen.com:51820";
             persistentKeepalive = 25;
             presharedKeyFile = if config.ahayzen.testing then "${./wg-pre-shared-test}" else config.age.secrets.wg-pre-shared.path;

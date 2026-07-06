@@ -35,7 +35,7 @@
 
       wg-quick.interfaces = {
         wg0 = {
-          address = [ "172.28.228.1/24" ];
+          address = [ "172.28.228.129/32" ];
           dns = [ "9.9.9.9" ];
           listenPort = 51820;
           mtu = 1420;
@@ -45,7 +45,7 @@
             {
               # Lab public key
               publicKey = if config.ahayzen.testing then "iSJhX9/U0wZ/VyztUBnkEmFw9TVVPNtQwlmTCUaB2QY=" else "f/hmn0DmhLT0JoVrA8HtBEE3KbKvJgrT9u2UZk/Qc1w=";
-              allowedIPs = [ "172.28.228.0/24" ];
+              allowedIPs = [ "172.28.228.128/25" ];
               persistentKeepalive = 25;
               presharedKeyFile = if config.ahayzen.testing then "${./wg-pre-shared-test}" else config.age.secrets.wg-pre-shared.path;
             }
