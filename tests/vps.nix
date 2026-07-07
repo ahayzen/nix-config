@@ -178,6 +178,7 @@
 
   testScript = ''
     import datetime
+    import zoneinfo
 
     start_all()
 
@@ -260,7 +261,7 @@
       vps.succeed("ls -nd /var/cache/docker-compose-runner/ntfy/auth.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
-      vpsdayofweek = datetime.datetime.today().strftime('%w')
+      vpsdayofweek = datetime.datetime.now(zoneinfo.ZoneInfo("Europe/London")).strftime('%w')
       vps.succeed("systemctl start wagtail-ahayzen-db-snapshot.service")
       vps.succeed("systemctl start wagtail-yumekasaito-db-snapshot.service")
       vps.succeed("systemctl start ntfy-db-snapshot.service")
