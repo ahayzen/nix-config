@@ -175,6 +175,7 @@
 
   testScript = ''
     import datetime
+    import zoneinfo
 
     start_all()
 
@@ -250,7 +251,7 @@
       lab.succeed("ls -nd /var/cache/docker-compose-runner/nextcloud/html/data/owncloud.db | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
-      labdayofweek = datetime.datetime.today().strftime('%w')
+      labdayofweek = datetime.datetime.now(zoneinfo.ZoneInfo("Europe/London")).strftime('%w')
       lab.succeed("systemctl start nextcloud-db-snapshot.service")
 
       # Run the backup

@@ -175,6 +175,7 @@
 
   testScript = ''
     import datetime
+    import zoneinfo
 
     start_all()
 
@@ -229,7 +230,7 @@
       backup.succeed("mkdir -p /tmp/backup-root-lab")
 
       # Trigger a snapshot
-      labdayofweek = datetime.datetime.today().strftime('%w')
+      labdayofweek = datetime.datetime.now(zoneinfo.ZoneInfo("Europe/London")).strftime('%w')
       lab.succeed("systemctl start immich-db-snapshot.service")
 
       # Run the backup

@@ -176,6 +176,7 @@
   testScript = ''
     import datetime
     import time
+    import zoneinfo
 
     start_all()
 
@@ -241,7 +242,7 @@
       lab.succeed("ls -nd /var/cache/docker-compose-runner/paperless/data/db.sqlite3 | awk 'NR==1 {if ($3 == 2000) {exit 0} else {exit 1}}'")
 
       # Trigger a snapshot
-      labdayofweek = datetime.datetime.today().strftime('%w')
+      labdayofweek = datetime.datetime.now(zoneinfo.ZoneInfo("Europe/London")).strftime('%w')
       lab.succeed("systemctl start paperless-db-snapshot.service")
 
       # Test that export works
