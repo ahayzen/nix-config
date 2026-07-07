@@ -12,14 +12,14 @@ services:
       SFTPGO_SFTPD__BINDINGS__0__PORT: 0
       # Set root for web gui
       SFTPGO_HTTPD__WEB_ROOT: "/"
-      # Web GUI Proxy settings to read IP from traefik group-proxy
-      SFTPGO_HTTPD__BINDINGS__0__PROXY_ALLOW: "172.20.20.0/24"
-      SFTPGO_HTTPD__BINDINGS__0__CLIENT_IP_PROXY_HEADER: "X-Forwarded-For"
+      # Web GUI Proxy settings to read IP from traefik, group-proxy, and VPN tunnel
+      SFTPGO_HTTPD__PROXY_ALLOW: "172.20.20.0/24,172.28.228.128/25"
+      SFTPGO_HTTPD__CLIENT_IP_PROXY_HEADER: "X-Forwarded-For"
       # Enable WebDAV
       SFTPGO_WEBDAVD__BINDINGS__0__PORT: 8090
       SFTPGO_WEBDAVD__BINDINGS__0__PREFIX: "/"
-      # WebDAV Proxy settings to read IP from traefik group-proxy
-      SFTPGO_WEBDAVD__BINDINGS__0__PROXY_ALLOW: "172.20.20.0/24"
+      # WebDAV Proxy settings to read IP from traefik, group-proxy, and VPN tunnel
+      SFTPGO_WEBDAVD__BINDINGS__0__PROXY_ALLOW: "172.20.20.0/24,172.28.228.128/25"
       SFTPGO_WEBDAVD__BINDINGS__0__CLIENT_IP_PROXY_HEADER: "X-Forwarded-For"
     expose:
       - 8080

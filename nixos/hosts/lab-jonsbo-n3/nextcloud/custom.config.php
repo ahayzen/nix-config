@@ -9,10 +9,10 @@ $CONFIG = array(
       'port' => 6379,
     ),
 
-    // Trust traefik and group-proxy
+    // Trust traefik, group-proxy, and VPN tunnel
     // https://docs.nextcloud.com/server/34/admin_manual/configuration_server/reverse_proxy_configuration.html#defining-trusted-proxies
     'trusted_proxies' => array(
-        "172.20.20.0/24",
+        "172.20.20.0/24,172.28.228.128/25",
     ),
 
     // Do not include external storage in quotes
