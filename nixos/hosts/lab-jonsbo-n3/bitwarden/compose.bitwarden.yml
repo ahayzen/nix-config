@@ -13,6 +13,8 @@ services:
       # Use sqlite
       BW_DB_PROVIDER: "sqlite"
       BW_DB_FILE: "/etc/bitwarden/vault.db"
+      # Configure real IPs from traefik group-proxy
+      BW_REAL_IPS: "172.20.20.0/24"
       # Disable account registration
       globalSettings__disableUserRegistration: true
     expose:
