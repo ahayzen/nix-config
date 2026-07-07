@@ -6,11 +6,32 @@ networks:
   # Disable internet access by default
   default:
     internal: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.10.0/24
   # Allow for internet
   internet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.12.0/24
+  
   # A group for proxied items
   group-proxy:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.20.0/24
   # A group for services
   group-services:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.21.0/24
   # A group for web
   group-web:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.22.0/24

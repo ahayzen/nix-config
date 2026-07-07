@@ -9,6 +9,12 @@ $CONFIG = array(
       'port' => 6379,
     ),
 
+    // Trust traefik and group-proxy
+    // https://docs.nextcloud.com/server/34/admin_manual/configuration_server/reverse_proxy_configuration.html#defining-trusted-proxies
+    'trusted_proxies' => array(
+        "172.20.20.0/24",
+    ),
+
     // Do not include external storage in quotes
     // As we set quota to zero to only allow external storage
     // https://docs.nextcloud.com/server/20/admin_manual/configuration_user/user_configuration.html#setting-storage-quotas

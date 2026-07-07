@@ -32,6 +32,8 @@ TODO
     - Automatically add to collection
     - Trick play extraction and during scan
     - Chapter extraction and during scan
+  - Networking
+    - Add `172.20.20.0/24` to Known proxies
 
 ### Intel Hardware Acceleration
 

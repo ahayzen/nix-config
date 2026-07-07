@@ -6,14 +6,48 @@ networks:
   # Disable internet access by default
   default:
     internal: true
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.10.0/24
   # Allow for exposing ports on lan
   lan:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.11.0/24
   # Allow for internet
   internet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.12.0/24
+
   # A group for proxied items
   group-proxy:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.20.0/24
+
   # App specific group
   app-bookstack:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.30.0/24
   app-immich:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.31.0/24
   app-nextcloud:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.32.0/24
   app-paperless:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.33.0/24

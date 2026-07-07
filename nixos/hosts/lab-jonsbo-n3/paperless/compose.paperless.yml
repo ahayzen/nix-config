@@ -24,6 +24,8 @@ services:
       PAPERLESS_REDIS: redis://paperless-broker:6379
       PAPERLESS_TIME_ZONE: "Europe/London"
       PAPERLESS_URL: https://paperless.hayzen.uk
+      # Trust traefik and group-proxy
+      PAPERLESS_TRUSTED_PROXIES: "172.20.20.0/24"
     env_file:
       - /etc/paperless/settings_secrets.env
     expose:

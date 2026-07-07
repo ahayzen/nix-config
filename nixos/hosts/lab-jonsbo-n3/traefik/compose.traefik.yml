@@ -34,7 +34,6 @@ services:
       - "--providers.file.directory=/etc/traefik/dynamic"
       - "--providers.file.watch=true"
     networks:
-      - internet
       - group-proxy
     ports:
       - "80:80"
