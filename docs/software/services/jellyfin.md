@@ -32,8 +32,11 @@ TODO
     - Automatically add to collection
     - Trick play extraction and during scan
     - Chapter extraction and during scan
+  - Playback -> Streaming
+    - Set Internet Streaming Bitrate Limit to half your internet upload speed (use worst server location for speed test)
   - Networking
-    - Add `172.20.20.0/24` to Known proxies
+    - Add `192.168.1.0/24` to LAN network
+    - Add `172.20.20.0/24,172.28.228.128/25` to Known proxies (group-proxy and VPN tunnel)
 
 ### Intel Hardware Acceleration
 

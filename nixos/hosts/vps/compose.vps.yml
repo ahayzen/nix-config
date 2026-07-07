@@ -2,6 +2,12 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+# NOTE: if the subnets changes
+# - sudo systemctl stop docker-compose-runner
+# - sudo docker network prune
+# - Find the docker compose up command from the reload script and add --force-recreate
+# - sudo systemctl restart docker-compose-runner
+
 networks:
   # Disable internet access by default
   default:
