@@ -29,7 +29,7 @@
     networking.wg-quick.interfaces = {
       wg0 = {
         address = [ "172.28.228.130/32" ];
-        dns = [ "9.9.9.9" ];
+        dns = [ "9.9.9.9" "149.112.112.112" ];
         mtu = 1420;
         # Lab private key
         privateKeyFile = if config.ahayzen.testing then "${./wg-lab-test-private}" else config.age.secrets.wg-lab-private.path;
