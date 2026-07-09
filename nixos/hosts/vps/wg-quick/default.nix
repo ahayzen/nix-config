@@ -36,11 +36,12 @@
       nat = {
         enable = true;
         externalInterface = if config.ahayzen.testing then "eth1" else "ens3";
-        internalInterfaces = [ "wg0" ];
+        internalInterfaces = [ "wg1" ];
       };
 
       wg-quick.interfaces = {
-        wg0 = {
+        # NOTE: use wg1 so we don't collide with other defaults (eg wg-easy)
+        wg1 = {
           address = [ "172.28.228.129/32" ];
           dns = [ "9.9.9.9" "149.112.112.112" ];
           listenPort = 51821;
@@ -62,7 +63,7 @@
 
     networking.firewall =
       {
-        allowedUDPPorts = [ 51821 ];
+        allowedUDPPorts = [ 51820 51821 ];
       };
 
     # Restart if static files change

@@ -276,6 +276,7 @@
             lab-restic-test = import ./tests/lab-restic.nix checkArgs;
             lab-sftpgo-test = import ./tests/lab-sftpgo.nix checkArgs;
             lab-vikunja-test = import ./tests/lab-vikunja.nix checkArgs;
+            lab-wg-easy-test = import ./tests/lab-wg-easy.nix checkArgs;
             vps-test = import ./tests/vps.nix checkArgs;
           };
       };

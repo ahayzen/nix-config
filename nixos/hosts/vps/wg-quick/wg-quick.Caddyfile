@@ -158,6 +158,20 @@ webdav.hayzen.uk {
     }
 }
 
+# wg-easy proxy
+wg-easy.hayzen.uk {
+    log
+
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
+}
+
 # Vikunja proxy
 vikunja.hayzen.uk {
     log

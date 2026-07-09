@@ -1,0 +1,74 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy:15.3.0@sha256:93bbd593e07bab98d02807a28770ac87ab6c48818e319e68c1f66561feb99876 
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      # We do not need IPv6
+      - DISABLE_IPV6=true
+      # Unattended Setup
+      - INIT_ENABLED=true
+      # Init group 1
+      - INIT_USERNAME=admin
+      - INIT_PASSWORD=changeme
+      - INIT_HOST=wg-easy.hayzen.uk
+      - INIT_PORT=51820
+      # Init group 2
+      - INIT_DNS=172.29.229.254
+      # Inir group 3
+      - INIT_IPV4_CIDR=172.29.229.128/25
+      - INIT_IPV6_CIDR=2001:0DB8::/32
+      # Init group 4
+      - INIT_ALLOWED_IPS=172.29.229.128/25
+      # Web port
+      - PORT=80
+      - INSECURE=true
+    networks:
+      wg:
+        interface_name: eth0
+        gw_priority: 1
+        ipv4_address: 172.29.229.129
+      group-proxy:
+        interface_name: eth1
+        gw_priority: 0
+    expose:
+      - 80
+    ports:
+      - "51820:51820/udp"
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    volumes:
+      - /var/cache/docker-compose-runner/wg-easy/config:/etc/wireguard
+      - /run/current-system/kernel-modules/lib/modules:/lib/modules:ro
+
+  coredns:
+    image: docker.io/coredns/coredns:1.14.6@sha256:900f9c109f7a33545d3c811516e8376df9019147b750f5ce3e254468769176ea
+    restart: unless-stopped
+    command: ["-conf", "/etc/coredns/Corefile"]
+    expose:
+      - 53
+    networks:
+      wg:
+        ipv4_address: 172.29.229.253
+    volumes:
+      - /etc/coredns/Corefile:/etc/coredns/Corefile:ro
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.wg-easy.yml:/etc/traefik/dynamic/traefik.wg-easy.yml:ro
+
+networks:
+  wg:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.29.229.128/25
+          gateway: 172.29.229.254
