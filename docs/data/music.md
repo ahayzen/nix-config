@@ -13,6 +13,7 @@ There are three file types to consider
 * Track in FLAC and metadata
 * Lyrics in LRC
 * Album art in JPG
+* Artist images in various image formats (PNG, JPG, WEBP)
 
 ## Folder structure
 
@@ -21,6 +22,9 @@ For a number album this means the following
 ```
 /music
   /<artist>
+    /backdrop.jpg
+    /logo.png
+    /folder.jpg
     /<album>
       /NN <song>.flac
       /NN <song.lrc
