@@ -42,7 +42,7 @@
       wg-quick.interfaces = {
         wg0 = {
           address = [ "172.28.228.129/32" ];
-          dns = [ "9.9.9.9" ];
+          dns = [ "9.9.9.9" "149.112.112.112" ];
           listenPort = 51820;
           mtu = 1420;
           # VPS private key
