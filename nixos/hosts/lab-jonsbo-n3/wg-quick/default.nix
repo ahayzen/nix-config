@@ -27,7 +27,8 @@
     };
 
     networking.wg-quick.interfaces = {
-      wg0 = {
+      # NOTE: use wg1 so we don't collide with other defaults (eg wg-easy)
+      wg1 = {
         address = [ "172.28.228.130/32" ];
         dns = [ "9.9.9.9" "149.112.112.112" ];
         mtu = 1420;

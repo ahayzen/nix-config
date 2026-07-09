@@ -31,6 +31,7 @@
     ./sftpgo
     ./traefik
     ./vikunja
+    ./wg-easy
     ./wg-quick
   ];
 

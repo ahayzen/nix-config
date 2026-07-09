@@ -67,6 +67,7 @@ jobs:
           - lab-restic-test
           - lab-sftpgo-test
           - lab-vikunja-test
+          - lab-wg-easy-test
           - vps-test
     steps:
       - uses: actions/checkout@v7.0.0
