@@ -21,6 +21,10 @@ Use [Kid3](https://flathub.org/apps/org.kde.kid3) to edit meta data, ensure that
 * Date field is set
 * Disc Number is correct if there are multiple discs
 
+For sourcing images of the artist or album [https://www.theaudiodb.com/](https://www.theaudiodb.com/) can be used.
+
+> The first fan art image is usually the backdrop file that Jellyfin automatically picks
+
 ## Lyrics
 
 Use [LRCGet](https://github.com/tranxuanthang/lrcget) to download lyrics.
