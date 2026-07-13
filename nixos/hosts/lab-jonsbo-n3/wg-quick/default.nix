@@ -30,7 +30,6 @@
       wg0 = {
         address = [ "172.28.228.130/32" ];
         dns = [ "9.9.9.9" ];
-        listenPort = 51820;
         mtu = 1420;
         # Lab private key
         privateKeyFile = if config.ahayzen.testing then "${./wg-lab-test-private}" else config.age.secrets.wg-lab-private.path;
@@ -46,10 +45,5 @@
         ];
       };
     };
-
-    networking.firewall =
-      {
-        allowedUDPPorts = [ 51820 ];
-      };
   };
 }
