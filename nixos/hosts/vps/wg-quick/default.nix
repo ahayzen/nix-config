@@ -43,7 +43,7 @@
         wg0 = {
           address = [ "172.28.228.129/32" ];
           dns = [ "9.9.9.9" "149.112.112.112" ];
-          listenPort = 51820;
+          listenPort = 51821;
           mtu = 1420;
           # VPS private key
           privateKeyFile = if config.ahayzen.testing then "${./wg-vps-test-private}" else config.age.secrets.wg-vps-private.path;
@@ -62,7 +62,7 @@
 
     networking.firewall =
       {
-        allowedUDPPorts = [ 51820 ];
+        allowedUDPPorts = [ 51821 ];
       };
 
     # Restart if static files change

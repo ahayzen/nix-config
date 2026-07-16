@@ -38,7 +38,7 @@
             # VPS public key
             publicKey = if config.ahayzen.testing then "etSgGU6oJzeVY9hTESENy09pC2UVBMKAlqRpyGwC0wY=" else "x/OmP3Aa3i7XhsuoZT6svz56eLdv0E8oUtYV4jqkmTs=";
             allowedIPs = [ "172.28.228.128/25" ];
-            endpoint = "ahayzen.com:51820";
+            endpoint = "ahayzen.com:51821";
             persistentKeepalive = 25;
             presharedKeyFile = if config.ahayzen.testing then "${./wg-pre-shared-test}" else config.age.secrets.wg-pre-shared.path;
           }
