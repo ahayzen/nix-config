@@ -2,18 +2,27 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
+# For subdomains that are still on the VPS forward upstream
+home.hayzen.uk:53 {
+    forward . 9.9.9.9 149.112.112.112
+    errors
+    log
+}
+
+ntfy.hayzen.uk:53 {
+    forward . 9.9.9.9 149.112.112.112
+    errors
+    log
+}
+
 .:53 {
+    # Any remaining subdomains are hosted on lab
     hosts {
-	    # Point the whole subdomain to ourselves otherwise fallback to upstream
         172.29.230.131 *.hayzen.uk
-
-        # Have specific paths that are still on the VPS
-        hayzen.uk home.hayzen.uk
-        hayzen.uk ntfy.hayzen.uk
-
         fallthrough
     }
 
+    # Otherwise forward to upstream
     forward . 9.9.9.9 149.112.112.112
     errors
     log
