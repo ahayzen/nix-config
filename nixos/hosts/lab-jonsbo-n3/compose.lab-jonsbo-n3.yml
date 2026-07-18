@@ -57,3 +57,9 @@ networks:
     ipam:
       config:
         - subnet: 172.20.33.0/24
+  app-wg-easy:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.29.230.128/25
+          gateway: 172.29.230.254
