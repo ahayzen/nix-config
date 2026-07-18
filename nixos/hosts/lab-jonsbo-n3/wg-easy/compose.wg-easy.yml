@@ -56,7 +56,6 @@ services:
       - 53
     networks:
       wg:
-        interface_name: eth0
         ipv4_address: 172.29.229.253
     volumes:
       - /etc/coredns/Corefile:/etc/coredns/Corefile:ro
@@ -64,7 +63,6 @@ services:
   traefik:
     networks:
       wg:
-        interface_name: eth0
         ipv4_address: 172.29.229.252
     volumes:
       - /etc/traefik/dynamic/traefik.wg-easy.yml:/etc/traefik/dynamic/traefik.wg-easy.yml:ro
@@ -72,7 +70,6 @@ services:
 networks:
   wg:
     driver: bridge
-    name: wg
     ipam:
       driver: default
       config:
