@@ -6,6 +6,11 @@
     hosts {
 	    # Point the whole subdomain to ourselves otherwise fallback to upstream
         172.29.230.131 *.hayzen.uk
+
+        # Have specific paths that are still on the VPS
+        hayzen.uk home.hayzen.uk
+        hayzen.uk ntfy.hayzen.uk
+
         fallthrough
     }
 
