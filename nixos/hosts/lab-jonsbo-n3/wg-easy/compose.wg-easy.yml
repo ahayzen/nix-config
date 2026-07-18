@@ -20,7 +20,7 @@ services:
       - INIT_HOST=wg-easy.hayzen.uk
       - INIT_PORT=51820
       # Init group 2
-      - INIT_DNS=172.29.229.254
+      - INIT_DNS=172.29.229.253
       # Inir group 3
       - INIT_IPV4_CIDR=172.29.229.128/25
       - INIT_IPV6_CIDR=2001:0DB8::/32
@@ -56,17 +56,23 @@ services:
       - 53
     networks:
       wg:
+        interface_name: eth0
         ipv4_address: 172.29.229.253
     volumes:
       - /etc/coredns/Corefile:/etc/coredns/Corefile:ro
 
   traefik:
+    networks:
+      wg:
+        interface_name: eth0
+        ipv4_address: 172.29.229.252
     volumes:
       - /etc/traefik/dynamic/traefik.wg-easy.yml:/etc/traefik/dynamic/traefik.wg-easy.yml:ro
 
 networks:
   wg:
     driver: bridge
+    name: wg
     ipam:
       driver: default
       config:

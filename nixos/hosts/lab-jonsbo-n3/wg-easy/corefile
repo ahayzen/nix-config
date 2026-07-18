@@ -5,7 +5,7 @@
 .:53 {
     hosts {
 	    # Point the whole subdomain to ourselves otherwise fallback to upstream
-        172.29.229.129 *.hayzen.uk
+        172.29.229.252 *.hayzen.uk
         fallthrough
     }
 

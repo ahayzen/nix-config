@@ -41,3 +41,20 @@ In the admin panel interface section, set MTU to the rules above and persistent 
 
 Update the hooks to use nftables as wg-easy still uses iptables, as seen in the podman documentation
 https://wg-easy.github.io/wg-easy/v15.3/examples/tutorials/podman-nft/#edit-hooks
+
+The default hooks are the following
+
+PostUp
+```console
+iptables -t nat -A POSTROUTING -s {{ipv4Cidr}} -o {{device}} -j MASQUERADE;
+iptables -A INPUT -p udp -m udp --dport {{port}} -j ACCEPT;
+iptables -A FORWARD -i wg0 -j ACCEPT;
+iptables -A FORWARD -o wg0 -j ACCEPT;
+```
+
+PostDown
+```console
+iptables -t nat -D POSTROUTING -s {{ipv4Cidr}} -o {{device}} -j MASQUERADE;
+iptables -D INPUT -p udp -m udp --dport {{port}} -j ACCEPT;
+iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT;
+```
