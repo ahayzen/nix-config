@@ -20,12 +20,12 @@ services:
       - INIT_HOST=wg-easy.hayzen.uk
       - INIT_PORT=51820
       # Init group 2
-      - INIT_DNS=172.29.229.253
+      - INIT_DNS=172.29.230.130
       # Inir group 3
       - INIT_IPV4_CIDR=172.29.229.128/25
       - INIT_IPV6_CIDR=2001:0DB8::/32
       # Init group 4
-      - INIT_ALLOWED_IPS=172.29.229.128/25
+      - INIT_ALLOWED_IPS="172.29.229.128/25,172.29.230.128/25"
       # Web port
       - PORT=80
       - INSECURE=true
@@ -37,6 +37,11 @@ services:
       group-proxy:
         interface_name: eth1
         gw_priority: 0
+      # NOTE: we use a separate ip range for DNS and traefik so routing is simpler
+      app-wg-easy:
+        interface_name: eth2
+        gw_priority: 0
+        ipv4_address: 172.29.230.129
     expose:
       - 80
     ports:
@@ -55,15 +60,15 @@ services:
     expose:
       - 53
     networks:
-      wg:
-        ipv4_address: 172.29.229.253
+      app-wg-easy:
+        ipv4_address: 172.29.230.130
     volumes:
       - /etc/coredns/Corefile:/etc/coredns/Corefile:ro
 
   traefik:
     networks:
-      wg:
-        ipv4_address: 172.29.229.252
+      app-wg-easy:
+        ipv4_address: 172.29.230.131
     volumes:
       - /etc/traefik/dynamic/traefik.wg-easy.yml:/etc/traefik/dynamic/traefik.wg-easy.yml:ro
 
