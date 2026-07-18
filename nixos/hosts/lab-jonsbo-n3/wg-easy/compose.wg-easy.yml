@@ -16,7 +16,7 @@ services:
       - INIT_ENABLED=true
       # Init group 1
       - INIT_USERNAME=admin
-      - INIT_PASSWORD=changeme
+      - INIT_PASSWORD=changeme1234
       - INIT_HOST=wg-easy.hayzen.uk
       - INIT_PORT=51820
       # Init group 2
