@@ -31,8 +31,13 @@ This means that the first wireguard layer should use a MTU of 1420, the second 1
 
 ## `wg-easy`
 
-Change the password after initial login.
+Change the password after initial login, this can be done via the CLI with similar to the following
+```console
+docker compose exec -it wg-easy cli db:admin:reset
+```
+https://wg-easy.github.io/wg-easy/v15.3/guides/cli/#reset-password
 
 In the admin panel interface section, set MTU to the rules above and persistent keepalive to 25s.
 
-Update the hooks to use nftables as wg-easy still uses iptables, as seen in the podman documentation https://wg-easy.github.io/wg-easy/v15.3/examples/tutorials/podman-nft/#edit-hooks
+Update the hooks to use nftables as wg-easy still uses iptables, as seen in the podman documentation
+https://wg-easy.github.io/wg-easy/v15.3/examples/tutorials/podman-nft/#edit-hooks
