@@ -58,3 +58,22 @@ iptables -t nat -D POSTROUTING -s {{ipv4Cidr}} -o {{device}} -j MASQUERADE;
 iptables -D INPUT -p udp -m udp --dport {{port}} -j ACCEPT;
 iptables -D FORWARD -i wg0 -j ACCEPT; iptables -D FORWARD -o wg0 -j ACCEPT;
 ```
+
+To have networking able to reach a DNS server and reverse proxy on a second interface (eth2),
+add the following to which solves asymmetric routing problems.
+
+```console
+# Translate from source IP to eth2 gateway (so target responds back to the wg-easy container)
+nft add rule inet wg_table postrouting ip saddr {{ipv4Cidr}} oifname "eth2" masquerade;
+
+# Allow for bidirection packet forwarding between wg-easy and the other interface
+nft add rule inet wg_table forward iifname "eth2" accept;
+nft add rule inet wg_table forward oifname "eth2" accept;
+
+# Intercept outbound packets destined for wg-easy subnet
+#
+# NOTE: otherwise the eth0 interface 
+ip rule add to 172.29.229.128/25 lookup 200 priority 10;
+# Then send them to the wg0 interface created by wg-easy
+ip route add 172.29.229.128/25 dev wg0 table 200;
+```
