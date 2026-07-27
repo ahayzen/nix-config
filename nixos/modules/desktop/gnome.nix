@@ -51,7 +51,7 @@
         app-picker-layout = []
         disable-user-extensions = false
         # NOTE: could potentially use pkgs.gnome.Extensions.places-status-indicator.extensionUuid instead
-        enabled-extensions = ['apps-menu@gnome-shell-extensions.gcampax.github.com', 'caffeine@patapon.info', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
+        enabled-extensions = ['caffeine@patapon.info', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
         favorite-apps = ['org.mozilla.firefox.desktop', 'org.mozilla.thunderbird.desktop', 'org.gnome.Nautilus.desktop']
 
 
