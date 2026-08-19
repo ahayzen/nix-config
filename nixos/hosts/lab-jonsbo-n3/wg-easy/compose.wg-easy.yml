@@ -54,7 +54,7 @@ services:
       - /run/current-system/kernel-modules/lib/modules:/lib/modules:ro
 
   coredns:
-    image: docker.io/coredns/coredns:1.14.6@sha256:900f9c109f7a33545d3c811516e8376df9019147b750f5ce3e254468769176ea
+    image: docker.io/coredns/coredns:1.14.7@sha256:7efd3c635b03efd68c4e8398fc45f0d993d0e9ab016f72c1cefb0fd6d01aa286
     restart: unless-stopped
     command: ["-conf", "/etc/coredns/Corefile"]
     expose:
