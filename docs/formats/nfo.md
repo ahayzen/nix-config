@@ -120,6 +120,8 @@ If there are multiple movies that are part of a collection this information can 
 
 > Do not rescan just the collections library, rescan all libraries
 
+> Only pre-defined XML items are available, so eg `&amp;` works but `&lsquo;` is from HTML so causes a parser error
+
 ## Specials
 
 Specials that are in `Season 00` can be ordered using the following tags in NFO files.
