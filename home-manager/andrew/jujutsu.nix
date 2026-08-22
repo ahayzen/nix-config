@@ -14,7 +14,7 @@
           behavior = "own";
           backend = "ssh";
           key = "~/.ssh/id_ed25519.pub";
-          backends.ssh."allowd-signers" = "~/.ssh/allowed_keys";
+          backends.ssh."allowed-signers" = "~/.ssh/allowed_keys";
         };
 
         # Show digital signatures
