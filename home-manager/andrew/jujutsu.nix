@@ -9,6 +9,19 @@
       enable = true;
 
       settings = {
+        # Enable SSH signing for all repos by default
+        signing = {
+          behavior = "own";
+          backend = "ssh";
+          key = "~/.ssh/id_ed25519.pub";
+          backends.ssh."allowd-signers" = "~/.ssh/allowed_keys";
+        };
+
+        # Show digital signatures
+        ui = {
+          "show-cryptographic-signatures" = true;
+        };
+
         user = {
           email = if !config.ahayzen.kdab then "ahayzen@gmail.com" else "andrew.hayzen@kdab.com";
           name = "Andrew Hayzen";
