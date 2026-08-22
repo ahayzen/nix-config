@@ -53,13 +53,13 @@
             "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
         },
         // Jellyfin also have date tags which confuse renovate
-        // eg we want 10.9.9 not v2024081205
+        // eg we want 12.0 not v2024081205
         {
             "matchDatasources": [
                 "docker"
             ],
             "matchFileNames": ["nixos/hosts/lab-jonsbo-n3/jellyfin/**"],
-            "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+            "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)$",
         },
         // Update immich together as these likely need manually pinning
         {
@@ -67,6 +67,7 @@
                 "docker"
             ],
             "matchFileNames": ["nixos/hosts/lab-jonsbo-n3/immich/**"],
+            "matchPackageNames": ["ghcr.io/immich-app/**"],
             "groupName": "docker-immich",
         },
         // Immich also have raw version number tags which confuse renovate
