@@ -20,14 +20,4 @@ $ cd secrets/
 $ nix run github:ryantm/agenix -- --rekey
 ```
 
-# Generating a SSH key for a user
-
-```console
-ssh-keygen -f ~/.ssh/id_ed25519 -t ed25519
-```
-
-Update a password using
-
-```console
-ssh-keygen -f ~/.ssh/id_ed25519 -p
-```
+> See [SSH](./ssh.md) for generating keys for the user
