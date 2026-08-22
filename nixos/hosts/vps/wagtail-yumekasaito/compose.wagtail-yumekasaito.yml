@@ -8,6 +8,8 @@ services:
       # Caddy configuration file
       - /etc/caddy/sites/yumekasaito.Caddyfile:/etc/caddy/sites/yumekasaito.Caddyfile:ro
 
+      # Robots.txt
+      - /etc/yumekasaito.com/robots.txt:/srv/wagtail-yumekasaito/robots/robots.txt:ro
       # Wagtail media data
       - /var/lib/docker-compose-runner/wagtail-yumekasaito/media:/srv/wagtail-yumekasaito/media:ro
       # Wagtail static data

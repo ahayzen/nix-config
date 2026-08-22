@@ -17,6 +17,12 @@ yumekasaito.com www.yumekasaito.com {
         file_server
     }
 
+    # Robots.txt
+    handle /robots.txt {
+        root * /srv/wagtail-yumekasaito/robots
+        file_server
+    }
+
     # Anything else goes to wagtail
     handle {
         reverse_proxy wagtail-yumekasaito:8080

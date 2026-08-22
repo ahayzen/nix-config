@@ -24,6 +24,7 @@
 
     environment.etc = {
       "caddy/sites/ahayzen.Caddyfile".source = ./ahayzen.Caddyfile;
+      "ahayzen.com/robots.txt".source = ./robots.txt;
       "ahayzen.com/local.py".
       source =
         if config.ahayzen.testing
