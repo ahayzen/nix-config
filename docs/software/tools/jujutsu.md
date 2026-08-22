@@ -21,7 +21,7 @@ format_signed_off_by_trailer(self)'''
 behavior = "own"
 backend = "ssh"
 key = "~/.ssh/id_ed25519.pub"
-backends.ssh.allowed-signers = "~/.ssh/allowed_keys"
+backends.ssh.allowed-signers = "~/.ssh/allowed_signers"
 
 # Only sign when pushing not making changes locally
 # [git]
