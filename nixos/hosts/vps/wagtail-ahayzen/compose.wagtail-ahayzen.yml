@@ -8,6 +8,8 @@ services:
       # Caddy configuration file
       - /etc/caddy/sites/ahayzen.Caddyfile:/etc/caddy/sites/ahayzen.Caddyfile:ro
 
+      # Robots.txt
+      - /etc/ahayzen.com/robots.txt:/srv/wagtail-ahayzen/robots/robots.txt:ro
       # Wagtail media data
       - /var/lib/docker-compose-runner/wagtail-ahayzen/media:/srv/wagtail-ahayzen/media:ro
       # Wagtail static data

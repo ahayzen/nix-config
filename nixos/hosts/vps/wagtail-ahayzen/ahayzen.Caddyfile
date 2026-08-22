@@ -23,6 +23,12 @@ ahayzen.com www.ahayzen.com {
         file_server
     }
 
+    # Robots.txt
+    handle /robots.txt {
+        root * /srv/wagtail-ahayzen/robots
+        file_server
+    }
+
     # Anything else goes to wagtail
     handle {
         reverse_proxy wagtail-ahayzen:8080
