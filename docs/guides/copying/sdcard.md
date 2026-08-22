@@ -17,9 +17,17 @@ Generate [XMP sidecar](../../formats/xmp.md) to ensure that Immich correctly pic
 If the files are from a SD card which had an incorrect timestamp it is possible to use the following argument to mount
 
 ```console
--o time_offset=-360
+-o time_offset=180
 ```
 
-This is also due to Linux considering SD cards / exFAT as UTC, using -360 is effectively UTC-6.
+THe following offsets could be used for different timezones
 
-> This can be changed via Edit Mount Options in GNOME Disks by adding `time_offset=-360`
+| Camera Timezone | `time_offset` |
+|-----------------|---------------|
+| EST (UTC+2)     | 120           |
+| EEST (UTC+3)    | 180           |
+| JST (UTC+9)     | 480           |
+
+> Linux considers SD cards / exFAT as UTC so the Linux machine timezone does not matter only the camera
+
+> This can be changed via Edit Mount Options in GNOME Disks by adding `time_offset=180`
