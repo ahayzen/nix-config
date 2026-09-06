@@ -42,15 +42,13 @@ services:
       # PHP temp directory
       - /mnt/mapping-pool-user1000/data/app/nextcloud/tmp:/var/tmp/nextcloud/upload
       # External writable mounts
-      #
-      # TODO: mark items as writable
-      - /mnt/mapping-pool-user1000/data/camera:/mnt/pool/data/camera:ro
-      - /mnt/mapping-pool-user1000/data/files:/mnt/pool/data/files:ro
-      - /mnt/mapping-pool-user1000/data/movies:/mnt/pool/data/movies:ro
-      - /mnt/mapping-pool-user1000/data/music:/mnt/pool/data/music:ro
-      - /mnt/mapping-pool-user1000/data/recordings:/mnt/pool/data/recordings:ro
-      - /mnt/mapping-pool-user1000/data/shows:/mnt/pool/data/shows:ro
-      - /mnt/mapping-pool-user1000/data/user:/mnt/pool/data/user:ro
+      - /mnt/mapping-pool-user1000/data/camera:/mnt/pool/data/camera:rw
+      - /mnt/mapping-pool-user1000/data/files:/mnt/pool/data/files:rw
+      - /mnt/mapping-pool-user1000/data/movies:/mnt/pool/data/movies:rw
+      - /mnt/mapping-pool-user1000/data/music:/mnt/pool/data/music:rw
+      - /mnt/mapping-pool-user1000/data/recordings:/mnt/pool/data/recordings:rw
+      - /mnt/mapping-pool-user1000/data/shows:/mnt/pool/data/shows:rw
+      - /mnt/mapping-pool-user1000/data/user:/mnt/pool/data/user:rw
       # External readonly mounts
       - /mnt/mapping-pool-user1000/data/documents:/mnt/pool/data/documents:ro
       - /mnt/mapping-pool-user1000/data/photostream:/mnt/pool/data/photostream:ro
