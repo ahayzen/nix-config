@@ -15,7 +15,7 @@ services:
 
   paperless-webserver:
     container_name: paperless_webserver
-    image: ghcr.io/paperless-ngx/paperless-ngx:3.1@sha256:aa810a36942c63d4ee70d00eda7236cd3d6acfb7eb3f7987fb568ed14df8817a
+    image: ghcr.io/paperless-ngx/paperless-ngx:3.1.3@sha256:aa810a36942c63d4ee70d00eda7236cd3d6acfb7eb3f7987fb568ed14df8817a
     environment:
       # No automatic consumption directory
       PAPERLESS_CONSUMER_DISABLE: true
