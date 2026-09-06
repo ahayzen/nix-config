@@ -56,7 +56,7 @@ services:
       - /mnt/mapping-pool-user1000/data/photostream:/mnt/pool/data/photostream:ro
 
   nextcloud-redis:
-    image: ghcr.io/valkey-io/valkey:9.1.1@sha256:70739f85ad2ee01a726a965584a0f94895f01b0c60b3cc8b0aeef11eaa6888cf
+    image: ghcr.io/valkey-io/valkey:9.1.1@sha256:64e361b630ecf18dff7ca4df6a88e6eafc193687eb48cff2c7e0a293ab67d29a
     healthcheck:
       test: redis-cli ping || exit 1
     networks:
