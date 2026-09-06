@@ -17,6 +17,9 @@ services:
       BW_REAL_IPS: "172.20.20.0/16,172.28.228.128/25"
       # Disable account registration
       globalSettings__disableUserRegistration: true
+      # Set user ids to 1000 manually as defaults as 911
+      PGID: 1000
+      PUID: 1000
     expose:
       - "8080"
     # Bitwarden requires at least 200M
