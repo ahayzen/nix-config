@@ -18,14 +18,14 @@ concurrency:
 
 jobs:
   license-check:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7.0.1
       - name: REUSE Compliance Check
         uses: fsfe/reuse-action@v6
 
   nix-fmt:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: cachix/install-nix-action@v31
@@ -37,7 +37,7 @@ jobs:
         run: git diff --exit-code
 
   shellcheck:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7.0.1
       # Shellcheck should already be installed on github runners
@@ -49,7 +49,7 @@ jobs:
   nix-build-check:
     # Run after pre checks
     needs: [license-check, nix-fmt, shellcheck]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     name: "nix-build-check-${{ matrix.test }}"
     strategy:
       fail-fast: false
@@ -82,7 +82,7 @@ jobs:
   nix-eval-home-configuration:
     # Run after pre checks
     needs: [license-check, nix-fmt, shellcheck]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: cachix/install-nix-action@v31
@@ -96,7 +96,7 @@ jobs:
   nixos-anywhere-vm-test:
     # Run after pre checks
     needs: [license-check, nix-fmt, shellcheck]
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     name: "nixos-anywhere-${{ matrix.test }}"
     strategy:
       fail-fast: false
