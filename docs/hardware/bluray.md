@@ -32,20 +32,22 @@ Space: 47305728 sectors, 2048 sector size, 96882130944 bytes total (92394 MiB)
 
 | Disc | Quantity | ID | Source | Price | Price / TB |
 |------|----------|----|--------|-------|------------|
-| Verbatim BD-R Blue | 2x 25G | - | Bundled | - | - |
 | Sony BD-R Blue | 10x 25G | `CMCMAG/BA3/0, CMC Magnetics Corporation` | Donkey Japan | ¥1650 | £34.73 |
-| Verbatim BD-R Rainbow | 10x 25G | `CMCMAG/BA5/0, CMC Magnetics Corporation` | Donkey Japan | ¥800 | £16.84 |
 | Sony BD-R Blue | 10x 25G | - | Bookshop | ¥1830 | £34.3 |
+| Verbatim BD-R Blue | 2x 25G | - | Bundled | - | - |
+| Verbatim BD-R Rainbow | 10x 25G | `CMCMAG/BA5/0, CMC Magnetics Corporation` | Donkey Japan | ¥800 | £16.84 |
 
 ## 50G
 
+| Disc | Quantity | ID | Source | Price | Price / TB |
+|------|----------|----|--------|-------|------------|
 | Verbatim BD-R Rainbow | 5x 50G | - | Yodobashi | ¥1600 | £30 |
 
 ### 100G
 
 | Disc | Quantity | ID | Source | Price | Price / TB |
 |------|----------|----|--------|-------|------------|
-| Verbatim BD-XL Purple | 9x 100G | `VERBAT/IMk/0, Mitsubishi Chemical Media Co., Ltd.` | Donkey Japan | ¥1958 | £34.33 |
-| Verbatim BD-XL Purple | 3x 100G | - | Yamada | - | - |
-| Verbatim BD-XL Purple | 3x 100G | `VERBAT/IMk/0 , Mitsubishi Kagaku Media Co.` | Donkey Japan | ¥3405 | £53 |
 | Maxell BD-XL | 3x 100G | - | Yodobashi | ¥3680 | £57 |
+| Verbatim BD-XL Purple | 9x 100G | `VERBAT/IMk/0, Mitsubishi Chemical Media Co., Ltd.` | Donkey Japan | ¥1958 | £34.33 |
+| Verbatim BD-XL Purple | 3x 100G | `VERBAT/IMk/0 , Mitsubishi Kagaku Media Co.` | Donkey Japan | ¥3405 | £53 |
+| Verbatim BD-XL Purple | 3x 100G | - | Yamada | - | - |

@@ -134,7 +134,7 @@ Create the following `cover.tex` file and enter the label and QR image.
 
 Now convert this to a pdf.
 
-```console
+```bash
 nix-shell -p texlive.combined.scheme-small
 
 pdflatex cover.tex
