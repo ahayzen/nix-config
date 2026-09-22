@@ -54,6 +54,12 @@
           # NOTE: this may not be required anymore, was this for running in containers?
           true-color = true;
 
+          # Enable inline diagnostics, these tend to be better than the top right overlay
+          inline-diagnostics = {
+            cursor-line = "hint";
+            other-lines = "hint";
+          };
+
           lsp = {
             # Display LSP progress messages below the status line
             display-progress-messages = true;
