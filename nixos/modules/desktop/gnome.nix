@@ -103,7 +103,6 @@
       networkmanager-openconnect
       networkmanager-openvpn
       networkmanager-ssh
-      networkmanager-sstp
       networkmanager-strongswan
     ];
 
