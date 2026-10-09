@@ -54,10 +54,11 @@
           # NOTE: this may not be required anymore, was this for running in containers?
           true-color = true;
 
-          # Enable inline diagnostics, these tend to be better than the top right overlay
           inline-diagnostics = {
+            # Enable inline cursor diagnostics, these don't get in the way like the top right overlay
             cursor-line = "hint";
-            other-lines = "hint";
+            # Do not enable other lines as when the file is being changed this causes lots of movement
+            other-lines = "disable";
           };
 
           lsp = {
