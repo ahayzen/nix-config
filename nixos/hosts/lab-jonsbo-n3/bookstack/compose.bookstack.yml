@@ -4,7 +4,7 @@
 
 services:
   bookstack:
-    image: ghcr.io/linuxserver/bookstack:version-v26.09.1@sha256:0d66f65417fa667085849bf9b32b412ec9a90420773c4f47a95138c4711876b7
+    image: ghcr.io/linuxserver/bookstack:version-v26.09.1@sha256:1fdbaf1908cbe0e92960b45f39404745e3e37392732c131940a163455632e9cd
     depends_on:
       - bookstack-database
     environment:
