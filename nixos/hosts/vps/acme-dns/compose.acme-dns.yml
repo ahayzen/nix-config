@@ -1,0 +1,25 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  caddy:
+    depends_on:
+      - acme-dns
+    volumes:
+      # Caddy configuration file
+      - /etc/caddy/sites/acme-dns.Caddyfile:/etc/caddy/sites/acme-dns.Caddyfile:ro
+
+  acme-dns:
+    image: docker.io/joohoi/acme-dns:v2.0.2@sha256:8d327df58b1c9f6361c76734f9761a108fa4f12cf7ca94440a0404a28f75de62
+    expose:
+      - "8053"
+    networks:
+      - internet
+      - group-proxy
+    ports:
+      - "53:53"
+      - "53:53/udp"
+    volumes:
+      - /etc/acme-dns/config/acme-dns.cfg:/etc/acme-dns/config.cfg:ro
+      - /var/cache/docker-compose-runner/acme-dns/data:/var/lib/acme-dns

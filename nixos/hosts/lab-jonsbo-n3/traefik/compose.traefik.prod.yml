@@ -1,0 +1,14 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  traefik:
+    environment:
+      # Tell Traefik where to find the acme-dns server API
+      - ACME_DNS_API_BASE=https://acme-dns.hayzen.uk 
+      # Where Traefik saves its generated registration credential strings
+      - ACME_DNS_STORAGE_PATH=/var/lib/docker-compose-runner/traefik/acme/acme-accounts.json
+    volumes:
+      - /etc/traefik/dynamic/traefik.prod.yml:/etc/traefik/dynamic/traefik.prod.yml:ro
+      - /var/lib/docker-compose-runner/traefik/acme:/var/lib/docker-compose-runner/traefik/acme

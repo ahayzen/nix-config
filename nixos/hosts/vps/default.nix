@@ -12,6 +12,7 @@
     #
     # Note that caddy should be first as other depend on it
     ./caddy
+    ./acme-dns
     ./glances
     ./hayzen-uk
     ./homepage

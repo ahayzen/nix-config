@@ -1,0 +1,16 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+#
+# NOTE: for acme-dns to work we need the follow records in the DNS
+# - NS record for acme-dns.hayzen.uk pointing to itself
+# - A record for acme-dns.hayzen.uk pointing to the IP/base domain
+# - CNAME record for the _acme-challenge with the result from the traefik client
+#
+
+acme-dns.hayzen.uk {
+    log
+
+    reverse_proxy http://acme-dns:8053
+}
