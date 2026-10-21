@@ -4,7 +4,15 @@
 
 { config, lib, ... }:
 {
-  ahayzen.docker-compose-files = [ ./compose.traefik.yml ];
+  ahayzen.docker-compose-files = [ ./compose.traefik.yml ]
+    ++ lib.optional (!config.ahayzen.testing) ./compose.traefik.prod.yml;
+
+  environment.etc = {
+    # When using production enable https certs
+    "traefik/dynamic/traefik.prod.yml" = lib.mkIf (!config.ahayzen.testing) {
+      source = ./traefik.prod.yml;
+    };
+  };
 
   # Ensure that http and https is open
   networking.firewall =

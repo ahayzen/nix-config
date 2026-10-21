@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+# Configure the letsencrypt resolver to use the acmedns
+#
+# NOTE: env vars are set on the container to for ACME_DNS_*
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: ahayzen@gmail.com
+      storage: /var/lib/docker-compose-runner/traefik/acme/acme-certificates.json
+      dnsChallenge:
+        provider: acmedns
+
+# Configure all routers to be default use the letsencrypt resolver
+entryPoints:
+  websecure:
+    tls:
+      certResolver: letsencrypt
+      domains:
+        - main: "hayzen.uk"
+          sans: "*.hayzen.uk"
