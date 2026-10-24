@@ -16,8 +16,9 @@ certificatesResolvers:
 # Configure all routers to be default use the letsencrypt resolver
 entryPoints:
   websecure:
-    tls:
-      certResolver: letsencrypt
-      domains:
-        - main: "hayzen.uk"
-          sans: "*.hayzen.uk"
+    http:
+      tls:
+        certResolver: letsencrypt
+        domains:
+          - main: "hayzen.uk"
+            sans: "*.hayzen.uk"
