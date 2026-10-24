@@ -12,6 +12,7 @@ services:
 
   acme-dns:
     image: docker.io/joohoi/acme-dns:v2.0.2@sha256:8d327df58b1c9f6361c76734f9761a108fa4f12cf7ca94440a0404a28f75de62
+    restart: unless-stopped
     expose:
       - "8053"
     networks:
@@ -21,5 +22,5 @@ services:
       - "53:53"
       - "53:53/udp"
     volumes:
-      - /etc/acme-dns/config/acme-dns.cfg:/etc/acme-dns/config.cfg:ro
+      - /etc/acme-dns/config/acme-dns/config.cfg:/etc/acme-dns/config.cfg:ro
       - /var/cache/docker-compose-runner/acme-dns/data:/var/lib/acme-dns
