@@ -7,7 +7,7 @@
   ahayzen.docker-compose-files = [ ./compose.acme-dns.yml ];
 
   environment.etc = {
-    "acme-dns/config/config.cfg".source = ./acme-dns.cfg;
+    "acme-dns/config.cfg".source = ./acme-dns.cfg;
     "caddy/sites/acme-dns.Caddyfile".source = ./acme-dns.Caddyfile;
   };
 
