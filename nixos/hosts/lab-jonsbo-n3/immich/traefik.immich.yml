@@ -6,6 +6,8 @@ http:
   routers:
     immich:
       rule: Host(`immich.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: immich
 
   services:

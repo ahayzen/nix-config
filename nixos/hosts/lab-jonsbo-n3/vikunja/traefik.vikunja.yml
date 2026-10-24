@@ -6,6 +6,8 @@ http:
   routers:
     vikunja:
       rule: Host(`vikunja.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: vikunja
 
   services:

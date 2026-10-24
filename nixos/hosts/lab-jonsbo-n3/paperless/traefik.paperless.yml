@@ -6,6 +6,8 @@ http:
   routers:
     paperless:
       rule: Host(`paperless.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: paperless
 
   services:
