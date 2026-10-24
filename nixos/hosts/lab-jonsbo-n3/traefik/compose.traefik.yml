@@ -27,7 +27,9 @@ services:
       - "--entryPoints.web.forwardedHeaders.trustedIPs=172.28.228.128/25"
       - "--entryPoints.websecure.forwardedHeaders.trustedIPs=172.28.228.128/25"
       # Enable INFO logging so we know when the service starts
-      - "--log.level=INFO"
+      #
+      # NOTE: use DEBUG when retrieving the _acme-challenge
+      - "--log.level=DEBUG"
       # Enable access logging
       - "--accesslog=true"
       # Load configuration from directory
