@@ -30,7 +30,7 @@ services:
       # Enable INFO logging so we know when the service starts
       #
       # NOTE: use DEBUG when retrieving the _acme-challenge
-      - TRAEFIK_LOG_LEVEL=DEBUG
+      - TRAEFIK_LOG_LEVEL=INFO
       # Enable access logging
       - TRAEFIK_ACCESSLOG=true
       # Load configuration from directory
