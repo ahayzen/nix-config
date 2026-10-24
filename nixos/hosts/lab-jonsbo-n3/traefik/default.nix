@@ -9,7 +9,7 @@
 
   environment.etc = {
     # When using production enable https certs
-    "traefik/dynamic/traefik.prod.yml" = lib.mkIf (!config.ahayzen.testing) {
+    "traefik/traefik.prod.yml" = lib.mkIf (!config.ahayzen.testing) {
       source = ./traefik.prod.yml;
     };
   };
@@ -20,4 +20,12 @@
       allowedTCPPorts = [ 80 443 ];
       allowedUDPPorts = [ 443 ];
     };
+
+  # Restart if static files change
+  #
+  # Note agenix files are not possible and will need the version bumping
+  # which causes the hash of the docker-compose file to change.
+  systemd.services."docker-compose-runner".restartTriggers = [ ] ++ lib.optional (!config.ahayzen.testing) [
+    (builtins.hashFile "sha256" config.environment.etc."traefik/traefik.prod.yml".source)
+  ];
 }

@@ -4,11 +4,15 @@
 
 services:
   traefik:
+    # NOTE: certificatesResolvers can not be dynamically loaded
+    # so we need to add this to the manually loaded config files
+    command:
+      - "--configFile=/etc/traefik/traefik.prod.yml" 
     environment:
       # Tell Traefik where to find the acme-dns server API
       - ACME_DNS_API_BASE=https://acme-dns.hayzen.uk 
       # Where Traefik saves its generated registration credential strings
       - ACME_DNS_STORAGE_PATH=/var/lib/docker-compose-runner/traefik/acme/acme-accounts.json
     volumes:
-      - /etc/traefik/dynamic/traefik.prod.yml:/etc/traefik/dynamic/traefik.prod.yml:ro
+      - /etc/traefik/traefik.prod.yml:/etc/traefik/traefik.prod.yml:ro
       - /var/lib/docker-compose-runner/traefik/acme:/var/lib/docker-compose-runner/traefik/acme
