@@ -23,6 +23,6 @@ services:
       # Configure all routers to be default use the letsencrypt resolver
       - TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_CERTRESOLVER=letsencrypt
       - TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_0_MAIN=hayzen.uk
-      - TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_1_SANS=*.hayzen.uk
+      - TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_0_SANS=*.hayzen.uk
     volumes:
       - /var/lib/docker-compose-runner/traefik/acme:/var/lib/docker-compose-runner/traefik/acme
