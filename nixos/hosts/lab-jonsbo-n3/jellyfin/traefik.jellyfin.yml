@@ -6,6 +6,8 @@ http:
   routers:
     jellyfin:
       rule: Host(`jellyfin.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: jellyfin
 
   services:

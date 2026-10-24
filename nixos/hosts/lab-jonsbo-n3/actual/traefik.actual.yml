@@ -6,6 +6,8 @@ http:
   routers:
     actual:
       rule: Host(`actual.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: actual
 
   services:

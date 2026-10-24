@@ -6,6 +6,8 @@ http:
   routers:
     audiobookshelf:
       rule: Host(`audiobookshelf.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: audiobookshelf
 
   services:

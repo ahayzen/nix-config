@@ -6,6 +6,8 @@ http:
   routers:
     wg-easy:
       rule: Host(`wg-easy.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: wg-easy
 
   services:

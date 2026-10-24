@@ -6,6 +6,8 @@ http:
   routers:
     bitwarden:
       rule: Host(`bitwarden.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: bitwarden
 
   services:

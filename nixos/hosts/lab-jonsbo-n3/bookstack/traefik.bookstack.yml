@@ -6,6 +6,8 @@ http:
   routers:
     bookstack:
       rule: Host(`bookstack.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: bookstack
 
   services:

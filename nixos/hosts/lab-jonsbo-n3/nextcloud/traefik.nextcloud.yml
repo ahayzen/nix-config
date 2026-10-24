@@ -6,6 +6,8 @@ http:
   routers:
     nextcloud:
       rule: Host(`nextcloud.hayzen.uk`)
+      entryPoints:
+        - websecure
       service: nextcloud
 
   services:
