@@ -5,23 +5,24 @@
 services:
   traefik:
     # NOTE: certificatesResolvers can not be dynamically loaded
-    # so we need to add this to the commands
-    command:
-      # Configure the letsencrypt resolver to use the acmedns
-      #
-      # NOTE: env vars are set on the container to for ACME_DNS_*
-      - "--certificatesresolvers.letsencrypt.acme.email=ahayzen@gmail.com"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/var/lib/docker-compose-runner/traefik/acme/acme-certificates.json"
-      - "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.dnschallenge.provider=acme-dns"
-      # Configure all routers to be default use the letsencrypt resolver
-      - "--entrypoints.websecure.http.tls.certresolver=letsencrypt"
-      - "--entrypoints.websecure.http.tls.domains[0].main=hayzen.uk"
-      - "--entrypoints.websecure.http.tls.domains[1].sans=*.hayzen.uk"
+    # so we need to inject these via env variables
     environment:
       # Tell Traefik where to find the acme-dns server API
       - ACME_DNS_API_BASE=https://acme-dns.hayzen.uk 
       # Where Traefik saves its generated registration credential strings
       - ACME_DNS_STORAGE_PATH=/var/lib/docker-compose-runner/traefik/acme/acme-accounts.json
+
+      # Configure the letsencrypt resolver to use the acmedns
+      #
+      # NOTE: env vars are set on the container to for ACME_DNS_*
+      - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL=ahayzen@gmail.com
+      - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_STORAGE=/var/lib/docker-compose-runner/traefik/acme/acme-certificates.json
+      - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_DNSCHALLENGE=true
+      - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_DNSCHALLENGE_PROVIDER=acme-dns
+
+      # Configure all routers to be default use the letsencrypt resolver
+      - TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_CERTRESOLVER=letsencrypt
+      - TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_0_MAIN=hayzen.uk
+      - TRAEFIK_ENTRYPOINTS_WEBSECURE_HTTP_TLS_DOMAINS_1_SANS=*.hayzen.uk
     volumes:
       - /var/lib/docker-compose-runner/traefik/acme:/var/lib/docker-compose-runner/traefik/acme
