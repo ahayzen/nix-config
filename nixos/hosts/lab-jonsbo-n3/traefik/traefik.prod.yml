@@ -11,7 +11,7 @@ certificatesResolvers:
       email: ahayzen@gmail.com
       storage: /var/lib/docker-compose-runner/traefik/acme/acme-certificates.json
       dnsChallenge:
-        provider: acmedns
+        provider: acme-dns
 
 # Configure all routers to be default use the letsencrypt resolver
 entryPoints:
