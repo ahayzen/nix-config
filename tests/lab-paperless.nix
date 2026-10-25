@@ -7,12 +7,7 @@
 #
 # Lab
 # - paperless
-# - wg-quick
 # - backup machines of lab
-#
-# VPS
-# - caddy
-# - wg-quick
 #
 # Backup
 # - backup script
@@ -20,55 +15,6 @@
 (import ./lib.nix) {
   name = "lab-paperless-test";
   nodes = {
-    vps = { self, pkgs, ... }: {
-      imports =
-        [
-          self.nixosModules.headlessSystem
-          ../nixos/hosts/vps/default.nix
-          ../nixos/users/headless
-        ];
-
-      ahayzen = {
-        testing = true;
-
-        vps = {
-          wg-quick = true;
-        };
-      };
-
-      # Extra packages for the test
-      environment.systemPackages = [ pkgs.curl ];
-
-      networking.hosts = {
-        "127.0.0.1" = [ "paperless.hayzen.uk" "ahayzen.com" ];
-      };
-
-      # Preseed host key
-      services.openssh.hostKeys = [ ];
-      environment.etc = {
-        # Map the test SSH key for backups
-        "ssh/ssh_host_ed25519_key" = {
-          mode = "0400";
-          source = ./files/test_vps_ssh_id_ed25519;
-        };
-        "ssh/ssh_host_ed25519_key.pub".source = ./files/test_vps_ssh_id_ed25519.pub;
-      };
-
-      # Allow test ssh authentication
-      users.users.headless.openssh.authorizedKeys.keyFiles = [
-        ./files/test_backup_ssh_id_ed25519.pub
-        ./files/test_lab_ssh_id_ed25519.pub
-      ];
-
-      # Match VPS specifications
-      virtualisation = {
-        cores = 2;
-        # Increase so we can fit docker images
-        diskSize = 2 * 1024;
-        memorySize = 2 * 1024;
-      };
-    };
-
     lab = { self, lib, pkgs, ... }: {
       imports =
         [
@@ -83,7 +29,6 @@
 
         lab = {
           paperless = true;
-          wg-quick = true;
         };
       };
 
@@ -91,22 +36,12 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        # TODO: can we fix the IP addresses of the testing hosts?
         "127.0.0.1" = [ "paperless.hayzen.uk" ];
-        "192.168.1.3" = [ "ahayzen.com" ];
       };
 
       # Preseed host hey so we can run automatic backups
       services.openssh = {
         hostKeys = [ ];
-
-        # Seed known hosts
-        knownHosts = {
-          vps = {
-            extraHostNames = [ "ahayzen.com" ];
-            publicKeyFile = ./files/test_vps_ssh_id_ed25519.pub;
-          };
-        };
       };
       environment.etc = {
         # Map the test SSH key for backups
@@ -137,9 +72,6 @@
           "ahayzen.com/backup.sh".source = ../scripts/backup.sh;
           "ahayzen.com/restore.sh".source = ../scripts/restore.sh;
 
-          # Map restore fixtures
-          "ahayzen.com/restore/fixtures".source = ./fixtures/vps;
-
           # Map the test SSH key for backups
           "ssh/test_ssh_id_ed25519" = {
             mode = "0400";
@@ -161,10 +93,6 @@
         # Seed known hosts
         knownHosts = {
           lab.publicKeyFile = ./files/test_lab_ssh_id_ed25519.pub;
-          vps = {
-            extraHostNames = [ "ahayzen.com" ];
-            publicKeyFile = ./files/test_vps_ssh_id_ed25519.pub;
-          };
         };
       };
 
@@ -181,18 +109,6 @@
     start_all()
 
     labdayofweek = ""
-    vpsdayofweek = ""
-
-    #
-    # Test that the VPS boots and shows wagtail admin
-    #
-
-    with subtest("Ensure docker starts and caddy starts"):
-      # Wait for docker runner
-      vps.wait_for_unit("docker-compose-runner", timeout=120)
-
-      # Wait for caddy to start
-      vps.wait_for_open_port(80, timeout=60)
 
     #
     # Test that Lab works
@@ -215,10 +131,6 @@
 
       # TODO: test waiting longer
       time.sleep(30)
-
-      # Test login page wg-quick
-      output = vps.succeed("curl --insecure --location --silent paperless.hayzen.uk/accounts/login/")
-      assert "Paperless" in output, f"'{output}' does not contain 'Paperless'"
 
       # Test login page direct
       output = lab.succeed("curl --insecure --location --silent paperless.hayzen.uk/accounts/login/")
@@ -267,7 +179,7 @@
     # Do this after other backups so that we have snapshots
     with subtest("Test Auto Backup Machines"):
       # Run backup command
-      lab.succeed("systemctl start backup-machines.service")
+      lab.succeed("systemctl start backup-machine-lab.service")
 
       #
       # Check lab is correct
@@ -287,14 +199,6 @@
       print(lab.succeed("df -h"))
       print(lab.succeed("docker images --all"))
       print(lab.succeed("docker stats --no-stream"))
-
-    with subtest("General metrics (vps)"):
-      print(vps.succeed("cat /etc/hosts"))
-      print(vps.succeed("ps auxf"))
-      print(vps.succeed("free -h"))
-      print(vps.succeed("df -h"))
-      print(vps.succeed("docker images"))
-      print(vps.succeed("docker stats --no-stream"))
   '';
 }
 

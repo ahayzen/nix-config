@@ -250,7 +250,7 @@
     # Do this after other backups so that we have snapshots
     with subtest("Test Auto Backup Machines"):
       # Run backup command
-      lab.succeed("systemctl start backup-machines.service")
+      lab.succeed("systemctl start backup-machine-lab.service")
 
       #
       # Check lab is correct
