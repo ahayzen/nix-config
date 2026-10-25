@@ -13,14 +13,14 @@ services:
       - ACME_DNS_STORAGE_PATH=/var/lib/docker-compose-runner/traefik/acme/acme-accounts.json
 
       # Configure the letsencrypt resolver to use the acmedns
-      #
-      # NOTE: env vars are set on the container to for ACME_DNS_*
       - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_EMAIL=ahayzen@gmail.com
       - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_STORAGE=/var/lib/docker-compose-runner/traefik/acme/acme-certificates.json
       - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_DNSCHALLENGE=true
       - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_DNSCHALLENGE_PROVIDER=acme-dns
+      # NOTE: ensure that we use public DNS for resolvers
       - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_DNSCHALLENGE_RESOLVERS_0=9.9.9.9:53
       - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_DNSCHALLENGE_RESOLVERS_1=149.112.112.112:53
+      # NOTE: solves Lego trying to find the TXT records that are on the acme-dns server not public
       - TRAEFIK_CERTIFICATESRESOLVERS_LETSENCRYPT_ACME_DNSCHALLENGE_PROPAGATION_DISABLEANSCHECKS=true
 
       # Configure all routers to be default use the letsencrypt resolver

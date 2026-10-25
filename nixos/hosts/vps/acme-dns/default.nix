@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: MPL-2.0
 
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   ahayzen.docker-compose-files = [ ./compose.acme-dns.yml ];
 
@@ -17,6 +17,31 @@
       allowedTCPPorts = [ 53 ];
       allowedUDPPorts = [ 53 ];
     };
+
+  # Take a snapshot of the database daily
+  systemd = {
+    services."acme-db-snapshot" = {
+      serviceConfig = {
+        Type = "oneshot";
+      };
+
+      script = ''
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.coreutils}/bin/mkdir -p /var/lib/docker-compose-runner/acme-dns/data
+        /run/wrappers/bin/sudo --user=unpriv ${pkgs.sqlite}/bin/sqlite3 /var/cache/docker-compose-runner/acme-dns/data/acme-dns.db ".backup /var/lib/docker-compose-runner/acme-dns/data/acme-dns-snapshot-$(date +%w).db"
+      '';
+    };
+
+    timers."acme-db-snapshot" = {
+      enable = !config.ahayzen.testing;
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "22:15";
+        Unit = "acme-db-snapshot.service";
+        Persistent = true;
+      };
+    };
+  };
+
 
   # Restart if static files change
   #
