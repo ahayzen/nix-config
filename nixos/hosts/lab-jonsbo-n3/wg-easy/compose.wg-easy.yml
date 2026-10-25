@@ -9,6 +9,13 @@ services:
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
+    # NOTE: we are using nft rather tha legacy, so override the default command so CI passes
+    command: >
+      sh -c "
+      ln -sf /usr/sbin/iptables-nft /usr/sbin/iptables &&
+      ln -sf /usr/sbin/ip6tables-nft /usr/sbin/ip6tables &&
+      /usr/bin/dumb-init node server/index.mjs
+      "
     environment:
       # We do not need IPv6
       - DISABLE_IPV6=true
