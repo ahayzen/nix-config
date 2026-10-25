@@ -8,33 +8,27 @@
         href: https://nextcloud.hayzen.uk/
         icon: nextcloud.png
         description: "Regain control over your data"
-        # NOTE: Nextcloud likely requires correct address otherwise insecure proxy when using rathole
-        siteMonitor: "https://nextcloud.hayzen.uk"
 
     - Paperless:
         href: https://paperless.hayzen.uk/
         icon: paperless-ngx.png
         description: "A supercharged document management system"
-        siteMonitor: "https://paperless.hayzen.uk"
 
     - SFTPGo:
         href: https://sftpgo.hayzen.uk/
         icon: sftpgo.png
         description: "Bring your file transfers anywhere"
-        siteMonitor: "https://sftpgo.hayzen.uk"
 
     - WebDav:
         href: https://webdav.hayzen.uk/
         icon: webdav.png
         description: "Web-based Distributed Authoring and Versioning"
-        siteMonitor: "https://webdav.hayzen.uk"
 
 - Media:
     - Audiobookshelf:
         href: https://audiobookshelf.hayzen.uk/
         icon: audiobookshelf.png
         description: "Self-hosted audiobook and podcast server"
-        siteMonitor: "https://audiobookshelf.hayzen.uk"
 
     - Immich:
         href: https://immich.hayzen.uk/
@@ -53,7 +47,6 @@
         href: https://actual.hayzen.uk/
         icon: actual-budget.png
         description: "Your Finances - made simple"
-        siteMonitor: "https://actual.hayzen.uk"
 
     - Bitwarden:
         href: https://bitwarden.hayzen.uk/
@@ -65,14 +58,11 @@
         href: https://bookstack.hayzen.uk/
         icon: bookstack.png
         description: "Simple & Free Wiki Software"
-        # NOTE: BookStack causes error 500 when using rathole url
-        siteMonitor: "https://bookstack.hayzen.uk"
 
     - Vikunja:
         href: https://vikunja.hayzen.uk/
         icon: vikunja.png
         description: "The open-source, self-hostable to-do app"
-        siteMonitor: "https://vikunja.hayzen.uk"
 
 - VPS:
     - CPU:
