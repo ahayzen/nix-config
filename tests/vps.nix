@@ -45,7 +45,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "actual.hayzen.uk" "bitwarden.hayzen.uk" "immich.hayzen.uk" "ntfy.hayzen.uk" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
+        "127.0.0.1" = [ "bitwarden.hayzen.uk" "immich.hayzen.uk" "ntfy.hayzen.uk" "ahayzen.com" "home.hayzen.uk" "hayzen.uk" "yumekasaito.com" ];
       };
 
       # Preseed host key
@@ -338,7 +338,7 @@
     # Do this after other backups so that we have snapshots
     with subtest("Test Auto Backup Machines"):
       # Run backup command
-      lab.succeed("systemctl start backup-machines.service")
+      lab.succeed("systemctl start backup-machine-vps.service")
 
       #
       # Check vps is correct
