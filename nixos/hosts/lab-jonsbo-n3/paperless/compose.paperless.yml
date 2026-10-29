@@ -28,6 +28,13 @@ services:
       PAPERLESS_URL: https://paperless.hayzen.uk
       # Trust traefik, group-proxy, and VPN tunnel
       PAPERLESS_TRUSTED_PROXIES: "172.20.20.0/24,172.28.228.128/25"
+      # We have to set proxy count to one
+      # otherwise it defaults to the count of the trusted proxies
+      #
+      # NOTE: if this is exposed publically we would have two
+      # https://docs.paperless-ngx.com/migration-v3/#reverse-proxy-and-login-rate-limiting
+      # https://docs.paperless-ngx.com/configuration/#PAPERLESS_ALLAUTH_TRUSTED_PROXY_COUNT
+      PAPERLESS_ALLAUTH_TRUSTED_PROXY_COUNT: 1
     env_file:
       - /etc/paperless/settings_secrets.env
     expose:
