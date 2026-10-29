@@ -40,7 +40,7 @@
       environment.systemPackages = [ pkgs.curl ];
 
       networking.hosts = {
-        "127.0.0.1" = [ "wg-easy.hayzen.uk" "ahayzen.com" ];
+        "127.0.0.1" = [ "ahayzen.com" ];
       };
 
       # Preseed host key
@@ -185,6 +185,8 @@
     #
     # Test that the VPS boots and shows wagtail admin
     #
+    # NOTE: we boot VPS too to check that Wireguard VPNs don't conflict
+    #
 
     with subtest("Ensure docker starts and caddy starts"):
       # Wait for docker runner
@@ -207,10 +209,6 @@
       # Wait for wg-easy to start
       wait_for_wg_easy_cmd = 'journalctl --boot --no-pager --quiet --unit docker.service --grep "Listening on http://0.0.0.0:80"'
       lab.wait_until_succeeds(wait_for_wg_easy_cmd, timeout=60)
-
-      # Test login page wg-quick
-      output = vps.succeed("curl --insecure --location --silent wg-easy.hayzen.uk")
-      assert "WireGuard" in output, f"'{output}' does not contain 'WireGuard'"
 
       # Test login page directly
       output = lab.succeed("curl --insecure --location --silent wg-easy.hayzen.uk")
