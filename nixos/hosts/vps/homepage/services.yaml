@@ -29,6 +29,7 @@
         href: https://audiobookshelf.hayzen.uk/
         icon: audiobookshelf.png
         description: "Self-hosted audiobook and podcast server"
+        siteMonitor: "https://audiobookshelf.hayzen.uk"
 
     - Immich:
         href: https://immich.hayzen.uk/
