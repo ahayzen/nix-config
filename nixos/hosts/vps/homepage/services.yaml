@@ -65,6 +65,11 @@
         icon: vikunja.png
         description: "The open-source, self-hostable to-do app"
 
+    - Wireguard:
+        href: https://wg-easy.hayzen.uk/
+        icon: wireguard.png
+        description: "Fast, Modern, Secure VPN Tunnel"
+
 - VPS:
     - CPU:
         widget:
