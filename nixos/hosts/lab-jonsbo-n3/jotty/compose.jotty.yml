@@ -1,0 +1,33 @@
+# SPDX-FileCopyrightText: Andrew Hayzen <ahayzen@gmail.com>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+services:
+  actual:
+    image: ghcr.io/fccview/jotty:1.29.2@ sha256:5295d8a85aada46519ed6a1822d5989a373583f42017a346e8a62b44d75af71a
+    environment:
+      APP_URL: "https://jotty.hayzen.uk"
+      JOTTY_RELATIONS_DB: /app/db/relations.db
+      NODE_ENV: production
+      STOP_CHECK_UPDATES: yes
+    expose:
+      - "3000"
+    # Turn on init otherwise jotty does not stop without killing
+    init: true
+    networks:
+      - group-proxy
+    restart: unless-stopped
+    user: "1000:1000"
+    volumes:
+      # Cache data
+      - /var/cache/docker-compose-runner-user1000/jotty/cache:/app/cache
+      # Custom mapped relations database
+      - /var/cache/docker-compose-runner-user1000/jotty/db:/app/db
+      # Config settings
+      - /var/lib/docker-compose-runner-user1000/jotty/config:/app/config
+      # Actual data
+      - /mnt/mapping-pool-user1000/data/app/jotty/data:/app/data
+
+  traefik:
+    volumes:
+      - /etc/traefik/dynamic/traefik.jotty.yml:/etc/traefik/dynamic/traefik.jotty.yml:ro

@@ -66,3 +66,18 @@ jellyfin.hayzen.uk {
         header_up Host {host}
     }
 }
+
+# Jotty proxy
+jotty.hayzen.uk {
+    log
+
+    # Use socat from host
+    reverse_proxy https://socat-https:9443 {
+        transport http {
+            tls_server_name {http.request.host}
+            tls_insecure_skip_verify
+        }
+
+        header_up Host {host}
+    }
+}
