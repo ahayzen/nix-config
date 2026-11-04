@@ -25,6 +25,7 @@
     ./glances
     ./immich
     ./jellyfin
+    ./jotty
     ./nextcloud
     ./paperless
     ./restic
