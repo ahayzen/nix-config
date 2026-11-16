@@ -47,8 +47,16 @@
           };
 
           # Upon reload pull new container images and restart any containers
+          #
+          # NOTE: only attempt to pull images that do not exist locally
+          # otherwise we cause error toomanyrequests pulling all images
           reload = ''
-            ${pkgs.docker-compose}/bin/docker-compose ${docker-compose-file-args} pull --quiet
+            for img in $(${pkgs.docker-compose}/bin/docker-compose ${docker-compose-file-args} config --images); do
+              if ! ${pkgs.docker}/bin/docker image inspect "$img" >/dev/null 2>&1; then
+                ${pkgs.docker}/bin/docker pull --quiet "$img"
+              fi
+            done
+
             ${pkgs.docker-compose}/bin/docker-compose ${docker-compose-file-args} up --detach --remove-orphans
           '';
 
