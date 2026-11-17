@@ -12,6 +12,8 @@
     desktopManager.gnome = {
       enable = true;
 
+      # NOTE: consider using dconf with locks on the paths
+      # this would prevent the user from changing the settings
       extraGSettingsOverrides = ''
         # Enable week numbers in top bar calendar
         [org.gnome.desktop.calendar]
@@ -51,7 +53,7 @@
         app-picker-layout = []
         disable-user-extensions = false
         # NOTE: could potentially use pkgs.gnome.Extensions.places-status-indicator.extensionUuid instead
-        enabled-extensions = ['caffeine@patapon.info', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com']
+        enabled-extensions = ['caffeine@patapon.info', 'drive-menu@gnome-shell-extensions.gcampax.github.com', 'places-menu@gnome-shell-extensions.gcampax.github.com', 'system-monitor@gnome-shell-extensions.gcampax.github.com']
         favorite-apps = ['org.mozilla.firefox.desktop', 'org.mozilla.thunderbird.desktop', 'org.gnome.Nautilus.desktop']
 
 
