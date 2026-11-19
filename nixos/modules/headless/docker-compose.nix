@@ -52,7 +52,9 @@
           # otherwise we cause error toomanyrequests pulling all images
           reload = ''
             for img in $(${pkgs.docker-compose}/bin/docker-compose ${docker-compose-file-args} config --images); do
+              echo "Inspecting image: $img"
               if ! ${pkgs.docker}/bin/docker image inspect "$img" >/dev/null 2>&1; then
+                echo "Pulling image: $img"
                 ${pkgs.docker}/bin/docker pull --quiet "$img"
               fi
             done
