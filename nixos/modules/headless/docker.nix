@@ -76,6 +76,7 @@
 
     daemon.settings = {
       dns = [ "9.9.9.9" "149.112.112.112" ];
+      max-concurrent-downloads = 1;
       no-new-privileges = true;
       userns-remap = "unpriv:unpriv";
     };
