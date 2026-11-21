@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: cachix/install-nix-action@v31
+      - uses: cachix/install-nix-action@v32
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: nix fmt
@@ -71,7 +71,7 @@ jobs:
           - vps-test
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: cachix/install-nix-action@v31
+      - uses: cachix/install-nix-action@v32
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: nix build
@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: cachix/install-nix-action@v31
+      - uses: cachix/install-nix-action@v32
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: nix eval
@@ -106,7 +106,7 @@ jobs:
           - vps-vm-test
     steps:
       - uses: actions/checkout@v7.0.1
-      - uses: cachix/install-nix-action@v31
+      - uses: cachix/install-nix-action@v32
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}
       - name: nixos-anywhere --vm-test
