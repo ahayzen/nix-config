@@ -4,7 +4,7 @@
 
 services:
   audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:2.38.0@sha256:60064c23f32fd9099fd39e82c5132c51701d1221135bbca04cd099b589e1edc3
+    image: ghcr.io/advplyr/audiobookshelf:v3@sha256:8b5a246c0aff88232465a1f109d23b87b2ca78462f629f8bba414a4137f278fc
     expose:
       - 80
     networks:
